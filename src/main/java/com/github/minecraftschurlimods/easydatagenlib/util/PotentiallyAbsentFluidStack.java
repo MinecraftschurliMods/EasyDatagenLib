@@ -59,6 +59,20 @@ public class PotentiallyAbsentFluidStack {
     }
 
     /**
+     * @return The id of the fluid to use.
+     */
+    public ResourceLocation getFluid() {
+        return fluid;
+    }
+
+    /**
+     * @return The amount to use.
+     */
+    public int getAmount() {
+        return amount;
+    }
+
+    /**
      * @return The NBT tag to use.
      */
     public CompoundTag getTag() {

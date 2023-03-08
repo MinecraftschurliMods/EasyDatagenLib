@@ -3,21 +3,29 @@ package com.github.minecraftschurlimods.easydatagenlib.mods;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeBuilder;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeProvider;
 import com.github.minecraftschurlimods.easydatagenlib.util.FluidIngredient;
+import com.github.minecraftschurlimods.easydatagenlib.util.JsonUtils;
 import com.github.minecraftschurlimods.easydatagenlib.util.ModdedValues;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentFluidStack;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentItemStack;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
 import org.apache.commons.lang3.SerializationException;
+import oshi.util.tuples.Pair;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> extends AbstractRecipeProvider<T> {
     protected CreateDataProvider(String folder, String namespace, DataGenerator generator) {
@@ -72,7 +80,164 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
         }
     }
 
-    //TODO mechanical crafting
+    public static class MechanicalCrafting extends CreateDataProvider<MechanicalCrafting.Builder> {
+        public MechanicalCrafting(String namespace, DataGenerator generator) {
+            super("mechanical_crafting", namespace, generator);
+        }
+
+        /**
+         * @param id   The id of the recipe builder.
+         * @param item The result item to use.
+         * @return A new recipe builder.
+         */
+        public Builder builder(String id, Item item) {
+            return builder(id, item, 1);
+        }
+
+        /**
+         * @param id    The id of the recipe builder.
+         * @param item  The result item to use.
+         * @param count The result count to use.
+         * @return A new recipe builder.
+         */
+        public Builder builder(String id, Item item, int count) {
+            return builder(id, item, count, new CompoundTag());
+        }
+
+        /**
+         * @param id    The id of the recipe builder.
+         * @param item  The result item to use.
+         * @param count The result count to use.
+         * @param tag   The result NBT to use.
+         * @return A new recipe builder.
+         */
+        public Builder builder(String id, Item item, int count, CompoundTag tag) {
+            return new Builder(new ResourceLocation(namespace, id)).setResult(item.getRegistryName(), count, tag);
+        }
+
+        /**
+         * @param id   The id of the recipe builder.
+         * @param item The id of the result item to use.
+         * @return A new recipe builder.
+         */
+        public Builder builder(String id, ResourceLocation item) {
+            return builder(id, item, 1);
+        }
+
+        /**
+         * @param id    The id of the recipe builder.
+         * @param item  The id of the result item to use.
+         * @param count The result count to use.
+         * @return A new recipe builder.
+         */
+        public Builder builder(String id, ResourceLocation item, int count) {
+            return builder(id, item, count, new CompoundTag());
+        }
+
+        /**
+         * @param id    The id of the recipe builder.
+         * @param item  The id of the result item to use.
+         * @param count The result count to use.
+         * @param tag   The result NBT to use.
+         * @return A new recipe builder.
+         */
+        public Builder builder(String id, ResourceLocation item, int count, CompoundTag tag) {
+            return new Builder(new ResourceLocation(namespace, id)).setResult(item, count, tag).addCondition(new ModLoadedCondition("create"));
+        }
+
+        public static class Builder extends AbstractRecipeBuilder<Builder> {
+            private final List<String> pattern = new ArrayList<>();
+            private final Map<Character, Ingredient> key = new HashMap<>();
+            private PotentiallyAbsentItemStack result;
+            private boolean acceptMirrored = true;
+
+            /**
+             * Creates a new builder with the given id.
+             *
+             * @param id The id to use. Should be unique within the same data provider and the same namespace.
+             */
+            public Builder(ResourceLocation id) {
+                super(id);
+            }
+
+            /**
+             * Sets the result of this recipe.
+             *
+             * @param item  The item id to use.
+             * @param count The count to use.
+             * @param tag   The NBT to use.
+             * @return This builder, for chaining.
+             */
+            public Builder setResult(ResourceLocation item, int count, CompoundTag tag) {
+                this.result = new PotentiallyAbsentItemStack(item, count, tag);
+                return this;
+            }
+
+            /**
+             * Sets this recipe to not accept mirrored inputs.
+             *
+             * @return This builder, for chaining.
+             */
+            public Builder dontAcceptMirrored() {
+                acceptMirrored = false;
+                return this;
+            }
+
+            /**
+             * Adds a pattern line to this recipe.
+             *
+             * @param pattern The pattern line to add.
+             * @return This builder, for chaining.
+             */
+            public Builder pattern(String pattern) {
+                this.pattern.add(pattern);
+                return this;
+            }
+
+            /**
+             * Adds a key to this recipe.
+             *
+             * @param key   The key to add.
+             * @param value The value associated with the key.
+             * @return This builder, for chaining.
+             */
+            public Builder key(char key, Ingredient value) {
+                this.key.put(key, value);
+                return this;
+            }
+
+            @Override
+            protected void toJson(JsonObject json) {
+                validate();
+                JsonArray pattern = new JsonArray();
+                for (String s : this.pattern) {
+                    pattern.add(s);
+                }
+                json.add("pattern", pattern);
+                JsonObject key = new JsonObject();
+                for (Map.Entry<Character, Ingredient> s : this.key.entrySet()) {
+                    json.add(String.valueOf(s.getKey()), s.getValue().toJson());
+                }
+                json.add("key", key);
+                json.add("result", result.toJson());
+                json.addProperty("acceptMirrored", acceptMirrored);
+            }
+
+            private void validate() {
+                if (pattern.isEmpty()) throw new IllegalStateException("No pattern defined for recipe " + id);
+                Set<Character> set = new HashSet<>(key.keySet());
+                set.remove(' ');
+                for (String s : pattern) {
+                    for (int i = 0; i < s.length(); i++) {
+                        char c = s.charAt(i);
+                        if (!key.containsKey(c) && c != ' ') throw new IllegalStateException("Pattern in recipe " + id + " uses undefined symbol '" + c + "'");
+                        set.remove(c);
+                    }
+                }
+                if (!set.isEmpty()) throw new IllegalStateException("Ingredients are defined but not used in pattern for recipe " + id);
+            }
+        }
+    }
 
     public static class Milling extends Processing {
         public Milling(String namespace, DataGenerator generator) {
@@ -98,7 +263,131 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
         }
     }
 
-    //TODO sequenced assembly
+    public static class SequencedAssembly extends CreateDataProvider<SequencedAssembly.Builder> {
+        public SequencedAssembly(String namespace, DataGenerator generator) {
+            super("sequenced_assembly", namespace, generator);
+        }
+
+        public Builder builder(String id, Ingredient ingredient, Item transitionalItem) {
+            return builder(id, ingredient, transitionalItem.getRegistryName());
+        }
+
+        public Builder builder(String id, Ingredient ingredient, ResourceLocation transitionalItem) {
+            return new Builder(new ResourceLocation(namespace, id)).setIngredient(ingredient).setTransitionalItem(transitionalItem);
+        }
+
+        public static class Builder extends AbstractRecipeBuilder<Builder> {
+            private final List<Processing.Builder> sequence = new ArrayList<>();
+            private final List<Pair<PotentiallyAbsentItemStack, Float>> results = new ArrayList<>();
+            private Ingredient ingredient;
+            private PotentiallyAbsentItemStack transitionalItem;
+            private int loops = 1;
+
+            public Builder(ResourceLocation id) {
+                super(id);
+            }
+
+            /**
+             * Sets the base ingredient of this recipe.
+             *
+             * @param ingredient The ingredient to use.
+             * @return This builder, for chaining.
+             */
+            public Builder setIngredient(Ingredient ingredient) {
+                this.ingredient = ingredient;
+                return this;
+            }
+
+            /**
+             * Sets the transitional item to use while the recipe is in progress.
+             *
+             * @param transitionalItem The transitional item to use.
+             * @return This builder, for chaining.
+             */
+            public Builder setTransitionalItem(Item transitionalItem) {
+                return setTransitionalItem(transitionalItem.getRegistryName());
+            }
+
+            /**
+             * Sets the transitional item to use while the recipe is in progress.
+             *
+             * @param transitionalItem The id of the transitional item to use.
+             * @return This builder, for chaining.
+             */
+            public Builder setTransitionalItem(ResourceLocation transitionalItem) {
+                this.transitionalItem = new PotentiallyAbsentItemStack(transitionalItem);
+                return this;
+            }
+
+            /**
+             * Sets the amount of loops this recipe will take. Must not be less than 1.
+             *
+             * @param loops The amount of loops to use.
+             * @return This builder, for chaining.
+             */
+            public Builder setLoops(int loops) {
+                if (loops < 1) throw new IllegalArgumentException("Recipe " + id + "has an illegal loop count of " + loops);
+                this.loops = loops;
+                return this;
+            }
+
+            /**
+             * Adds a processing step to this recipe.
+             *
+             * @param processing The processing step to add.
+             * @return This builder, for chaining.
+             */
+            public Builder addProcessing(Processing.Builder processing) {
+                sequence.add(processing);
+                return this;
+            }
+
+            /**
+             * Adds a result to this recipe.
+             *
+             * @param result The result item to use.
+             * @param weight The weight of this output. Only one result item will be the actual output, the weight determines the chance of this happening, compared to other results.
+             * @return This builder, for chaining.
+             */
+            public Builder addResult(Item result, float weight) {
+                return addResult(result.getRegistryName(), weight);
+            }
+
+            /**
+             * Adds a result to this recipe.
+             *
+             * @param result The id of the result item to use.
+             * @param weight The weight of this output. Only one result item will be the actual output, the weight determines the chance of this happening, compared to other results.
+             * @return This builder, for chaining.
+             */
+            public Builder addResult(ResourceLocation result, float weight) {
+                results.add(new Pair<>(new PotentiallyAbsentItemStack(result), weight));
+                return this;
+            }
+
+            @Override
+            protected void toJson(JsonObject json) {
+                json.add("ingredient", ingredient.toJson());
+                json.add("transitionalItem", transitionalItem.toJson());
+                json.addProperty("loops", loops);
+                JsonArray sequence = new JsonArray();
+                for (Processing.Builder builder : this.sequence) {
+                    JsonObject processing = new JsonObject();
+                    builder.toJson(processing);
+                    sequence.add(processing);
+                }
+                json.add("sequence", sequence);
+                JsonArray results = new JsonArray();
+                for (Pair<PotentiallyAbsentItemStack, Float> pair : this.results) {
+                    JsonObject result = new JsonObject();
+                    result.addProperty("item", pair.getA().getItem().toString());
+                    result.addProperty("chance", pair.getB());
+                    results.add(result);
+                }
+                json.add("results", results);
+            }
+        }
+    }
 
     public static class Splashing extends Processing {
         public Splashing(String namespace, DataGenerator generator) {
@@ -106,7 +395,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
         }
     }
 
-    private static abstract class Processing extends CreateDataProvider<Processing.Builder> {
+    protected static abstract class Processing extends CreateDataProvider<Processing.Builder> {
         protected Processing(String folder, String namespace, DataGenerator generator) {
             super(folder, namespace, generator);
         }
@@ -117,7 +406,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
          * @return A new recipe builder.
          */
         public Builder builder(String id, int processingTime) {
-            return new Builder(folder, new ResourceLocation(namespace, id)).setProcessingTime(processingTime);
+            return new Builder(new ResourceLocation(namespace, id)).setProcessingTime(processingTime).addCondition(new ModLoadedCondition("create"));
         }
 
         /**
@@ -126,7 +415,6 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
          * {@see https://github.com/Creators-of-Create/Create/blob/mc1.18/dev/src/main/java/com/simibubi/create/content/contraptions/processing/ProcessingRecipeBuilder.java}
          */
         public static class Builder extends AbstractRecipeBuilder<Builder> {
-            private final String folder;
             private final List<Ingredient> ingredients = new ArrayList<>();
             private final List<FluidIngredient> fluidIngredients = new ArrayList<>();
             private final List<PotentiallyAbsentItemStack> results = new ArrayList<>();
@@ -135,9 +423,8 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             private boolean keepHeldItem;
             private ModdedValues.Create.HeatRequirement heatRequirement = ModdedValues.Create.HeatRequirement.NONE;
 
-            public Builder(String folder, ResourceLocation id) {
+            public Builder(ResourceLocation id) {
                 super(id);
-                this.folder = folder;
             }
 
             /**
@@ -152,19 +439,19 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             }
 
             /**
-             * Sets this recipe's keepHeldItem property to true.
-             */
-            public void keepHeldItem() {
-                keepHeldItem = true;
-            }
-
-            /**
              * Sets the heat requirement of the recipe.
              *
              * @param heatRequirement The heat requirement to set.
              */
             public void setHeatRequirement(ModdedValues.Create.HeatRequirement heatRequirement) {
                 this.heatRequirement = heatRequirement;
+            }
+
+            /**
+             * Sets this recipe's keepHeldItem property to true.
+             */
+            public void keepHeldItem() {
+                keepHeldItem = true;
             }
 
             /**
@@ -378,22 +665,8 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
                 if (heatRequirement != ModdedValues.Create.HeatRequirement.NONE) {
                     json.addProperty("heatRequirement", heatRequirement.toString());
                 }
-                JsonArray ingredients = new JsonArray();
-                for (Ingredient ingredient : this.ingredients) {
-                    ingredients.add(ingredient.toJson());
-                }
-                for (FluidIngredient ingredient : fluidIngredients) {
-                    ingredients.add(ingredient.toJson());
-                }
-                json.add("ingredients", ingredients);
-                JsonArray results = new JsonArray();
-                for (PotentiallyAbsentItemStack stack : this.results) {
-                    results.add(stack.toJson());
-                }
-                for (PotentiallyAbsentFluidStack stack : fluidResults) {
-                    results.add(stack.toJson());
-                }
-                json.add("results", results);
+                JsonUtils.addIngredientsToJson(json, ingredients, fluidIngredients);
+                JsonUtils.addResultsToJson(json, results, fluidResults);
             }
         }
     }

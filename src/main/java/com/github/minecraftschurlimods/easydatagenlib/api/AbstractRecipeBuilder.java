@@ -24,8 +24,9 @@ public abstract class AbstractRecipeBuilder<T extends AbstractRecipeBuilder<T>> 
      * @param condition The condition to add.
      * @return This builder, for chaining.
      */
-    public AbstractRecipeBuilder<T> addCondition(ICondition condition) {
+    @SuppressWarnings("unchecked")
+    public T addCondition(ICondition condition) {
         conditions.add(condition);
-        return this;
+        return (T) this;
     }
 }

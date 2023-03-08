@@ -59,6 +59,20 @@ public class PotentiallyAbsentItemStack {
     }
 
     /**
+     * @return The id of the item to use.
+     */
+    public ResourceLocation getItem() {
+        return item;
+    }
+
+    /**
+     * @return The count to use.
+     */
+    public int getCount() {
+        return count;
+    }
+
+    /**
      * @return The NBT tag to use.
      */
     public CompoundTag getTag() {

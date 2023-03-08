@@ -8,10 +8,9 @@ only some of them are already implemented.
 
 A library that provides utilities for modded datagen. These include:
 
-- A large collection of datagen classes for a large variety of mods
+- A large collection of datagen classes for a wide variety of mods
 - Helper methods to generate similar recipes for different mods (e.g. 5 variants of ore processing in one method call)
 - An easy-to-use way to add datagen support for your own JSON-driven systems, both recipes and non-recipes
-- Can be used standalone as well, for changing recipes in modpacks or similar
 
 This library does not import any preexisting mods into the environment; instead, it replicates modded JSON formats.
 

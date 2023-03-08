@@ -19,12 +19,12 @@ public abstract class CompatDataProvider {
     public final CreateDataProvider.Filling CREATE_FILLING;
     public final CreateDataProvider.Haunting CREATE_HAUNTING;
     public final CreateDataProvider.ItemApplication CREATE_ITEM_APPLICATION;
-    // TODO public final CreateDataProvider.MechanicalCrafting CREATE_MECHANICAL_CRAFTING;
+    public final CreateDataProvider.MechanicalCrafting CREATE_MECHANICAL_CRAFTING;
     public final CreateDataProvider.Milling CREATE_MILLING;
     public final CreateDataProvider.Mixing CREATE_MIXING;
     public final CreateDataProvider.Pressing CREATE_PRESSING;
     public final CreateDataProvider.SandpaperPolishing CREATE_SANDPAPER_POLISHING;
-    // TODO public final CreateDataProvider.SequencedAssembly  CREATE_SEQUENCED_ASSEMBLY;
+    public final CreateDataProvider.SequencedAssembly  CREATE_SEQUENCED_ASSEMBLY;
     public final CreateDataProvider.Splashing CREATE_SPLASHING;
     //@formatter:on
     //endregion
@@ -38,12 +38,12 @@ public abstract class CompatDataProvider {
         CREATE_FILLING = new CreateDataProvider.Filling(namespace, generator);
         CREATE_HAUNTING = new CreateDataProvider.Haunting(namespace, generator);
         CREATE_ITEM_APPLICATION = new CreateDataProvider.ItemApplication(namespace, generator);
-        //CREATE_MECHANICAL_CRAFTING = new CreateDataProvider.MechanicalCrafting(namespace, generator);
+        CREATE_MECHANICAL_CRAFTING = new CreateDataProvider.MechanicalCrafting(namespace, generator);
         CREATE_MILLING = new CreateDataProvider.Milling(namespace, generator);
         CREATE_MIXING = new CreateDataProvider.Mixing(namespace, generator);
         CREATE_PRESSING = new CreateDataProvider.Pressing(namespace, generator);
         CREATE_SANDPAPER_POLISHING = new CreateDataProvider.SandpaperPolishing(namespace, generator);
-        //CREATE_SEQUENCED_ASSEMBLY  = new CreateDataProvider.SequencedAssembly(namespace, generator);
+        CREATE_SEQUENCED_ASSEMBLY  = new CreateDataProvider.SequencedAssembly(namespace, generator);
         CREATE_SPLASHING = new CreateDataProvider.Splashing(namespace, generator);
         generator.addProvider(CREATE_COMPACTING);
         generator.addProvider(CREATE_CRUSHING);
@@ -53,12 +53,12 @@ public abstract class CompatDataProvider {
         generator.addProvider(CREATE_FILLING);
         generator.addProvider(CREATE_HAUNTING);
         generator.addProvider(CREATE_ITEM_APPLICATION);
-        //generator.addProvider(CREATE_MECHANICAL_CRAFTING);
+        generator.addProvider(CREATE_MECHANICAL_CRAFTING);
         generator.addProvider(CREATE_MILLING);
         generator.addProvider(CREATE_MIXING);
         generator.addProvider(CREATE_PRESSING);
         generator.addProvider(CREATE_SANDPAPER_POLISHING);
-        //generator.addProvider(CREATE_SEQUENCED_ASSEMBLY);
+        generator.addProvider(CREATE_SEQUENCED_ASSEMBLY);
         generator.addProvider(CREATE_SPLASHING);
         generate();
     }
@@ -132,9 +132,9 @@ public abstract class CompatDataProvider {
     /**
      * Adds processing for a gem ore, such as diamonds or emeralds.
      *
-     * @param ore The ore item to be processed.
+     * @param ore          The ore item to be processed.
      * @param deepslateOre The deepslate ore item to be processed.
-     * @param output The id of the output.
+     * @param output       The id of the output.
      */
     protected void addGemOreProcessing(Item ore, Item deepslateOre, ResourceLocation output) {
         CREATE_CRUSHING.add(CREATE_CRUSHING.builder(itemId(ore).getPath(), 350)
