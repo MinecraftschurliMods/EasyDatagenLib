@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class CompatDataProvider {
@@ -29,7 +30,7 @@ public abstract class CompatDataProvider {
     //@formatter:on
     //endregion
 
-    public CompatDataProvider(String namespace, DataGenerator generator) {
+    public CompatDataProvider(String namespace, DataGenerator generator, boolean runServer, boolean runClient) {
         CREATE_COMPACTING = new CreateDataProvider.Compacting(namespace, generator);
         CREATE_CRUSHING = new CreateDataProvider.Crushing(namespace, generator);
         CREATE_CUTTING = new CreateDataProvider.Cutting(namespace, generator);
@@ -45,21 +46,21 @@ public abstract class CompatDataProvider {
         CREATE_SANDPAPER_POLISHING = new CreateDataProvider.SandpaperPolishing(namespace, generator);
         CREATE_SEQUENCED_ASSEMBLY  = new CreateDataProvider.SequencedAssembly(namespace, generator);
         CREATE_SPLASHING = new CreateDataProvider.Splashing(namespace, generator);
-        generator.addProvider(CREATE_COMPACTING);
-        generator.addProvider(CREATE_CRUSHING);
-        generator.addProvider(CREATE_CUTTING);
-        generator.addProvider(CREATE_DEPLOYING);
-        generator.addProvider(CREATE_EMPTYING);
-        generator.addProvider(CREATE_FILLING);
-        generator.addProvider(CREATE_HAUNTING);
-        generator.addProvider(CREATE_ITEM_APPLICATION);
-        generator.addProvider(CREATE_MECHANICAL_CRAFTING);
-        generator.addProvider(CREATE_MILLING);
-        generator.addProvider(CREATE_MIXING);
-        generator.addProvider(CREATE_PRESSING);
-        generator.addProvider(CREATE_SANDPAPER_POLISHING);
-        generator.addProvider(CREATE_SEQUENCED_ASSEMBLY);
-        generator.addProvider(CREATE_SPLASHING);
+        generator.addProvider(runServer, CREATE_COMPACTING);
+        generator.addProvider(runServer, CREATE_CRUSHING);
+        generator.addProvider(runServer, CREATE_CUTTING);
+        generator.addProvider(runServer, CREATE_DEPLOYING);
+        generator.addProvider(runServer, CREATE_EMPTYING);
+        generator.addProvider(runServer, CREATE_FILLING);
+        generator.addProvider(runServer, CREATE_HAUNTING);
+        generator.addProvider(runServer, CREATE_ITEM_APPLICATION);
+        generator.addProvider(runServer, CREATE_MECHANICAL_CRAFTING);
+        generator.addProvider(runServer, CREATE_MILLING);
+        generator.addProvider(runServer, CREATE_MIXING);
+        generator.addProvider(runServer, CREATE_PRESSING);
+        generator.addProvider(runServer, CREATE_SANDPAPER_POLISHING);
+        generator.addProvider(runServer, CREATE_SEQUENCED_ASSEMBLY);
+        generator.addProvider(runServer, CREATE_SPLASHING);
         generate();
     }
 
@@ -75,7 +76,7 @@ public abstract class CompatDataProvider {
      */
     @SuppressWarnings("ConstantConditions")
     protected ResourceLocation itemId(Item item) {
-        return item.getRegistryName(); //change to ForgeRegistries.ITEMS.getKey(item) in 1.19
+        return ForgeRegistries.ITEMS.getKey(item);
     }
 
     /**

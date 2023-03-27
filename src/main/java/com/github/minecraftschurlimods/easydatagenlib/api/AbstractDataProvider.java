@@ -1,14 +1,10 @@
 package com.github.minecraftschurlimods.easydatagenlib.api;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,8 +18,6 @@ import java.util.Set;
  * @param <T> The builder class associated with this provider.
  */
 public abstract class AbstractDataProvider<T extends AbstractDataBuilder<?>> implements DataProvider {
-    protected static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    protected static final Logger LOGGER = LogManager.getLogger();
     protected final String folder;
     protected final String namespace;
     protected final DataGenerator generator;
@@ -41,12 +35,12 @@ public abstract class AbstractDataProvider<T extends AbstractDataBuilder<?>> imp
     }
 
     @Override
-    public void run(HashCache cache) {
+    public void run(CachedOutput output) {
         Set<ResourceLocation> ids = new HashSet<>();
         values.forEach(o -> {
             if (!ids.add(o.id)) throw new IllegalStateException("Duplicate datagenned object " + o.id);
             try {
-                DataProvider.save(GSON, cache, toJson(o), generator.getOutputFolder().resolve("data/" + o.id.getNamespace() + "/" + folder + "/" + o.id.getPath() + ".json"));
+                DataProvider.saveStable(output, toJson(o), generator.getOutputFolder().resolve("data/" + o.id.getNamespace() + "/" + folder + "/" + o.id.getPath() + ".json"));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
