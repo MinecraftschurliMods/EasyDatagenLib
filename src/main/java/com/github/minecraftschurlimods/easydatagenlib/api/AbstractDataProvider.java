@@ -6,11 +6,11 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.resources.ResourceLocation;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * The abstract class all other data provider classes extend from. Contains some common functionality, such as saving to disk.
@@ -35,16 +35,14 @@ public abstract class AbstractDataProvider<T extends AbstractDataBuilder<?>> imp
     }
 
     @Override
-    public void run(CachedOutput output) {
+    public CompletableFuture<?> run(CachedOutput output) {
         Set<ResourceLocation> ids = new HashSet<>();
+        List<CompletableFuture<?>> list = new ArrayList<>();
         values.forEach(o -> {
             if (!ids.add(o.id)) throw new IllegalStateException("Duplicate datagenned object " + o.id);
-            try {
-                DataProvider.saveStable(output, toJson(o), generator.getOutputFolder().resolve("data/" + o.id.getNamespace() + "/" + folder + "/" + o.id.getPath() + ".json"));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            list.add(DataProvider.saveStable(output, toJson(o), generator.getPackOutput().getOutputFolder().resolve("data/" + o.id.getNamespace() + "/" + folder + "/" + o.id.getPath() + ".json")));
         });
+        return CompletableFuture.allOf(list.toArray(CompletableFuture[]::new));
     }
 
     /**

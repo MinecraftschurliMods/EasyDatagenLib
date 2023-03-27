@@ -16,6 +16,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.SerializationException;
 import oshi.util.tuples.Pair;
 
@@ -112,7 +113,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
          * @return A new recipe builder.
          */
         public Builder builder(String id, Item item, int count, CompoundTag tag) {
-            return new Builder(new ResourceLocation(namespace, id)).setResult(item.getRegistryName(), count, tag);
+            return new Builder(new ResourceLocation(namespace, id)).setResult(ForgeRegistries.ITEMS.getKey(item), count, tag);
         }
 
         /**
@@ -269,7 +270,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
         }
 
         public Builder builder(String id, Ingredient ingredient, Item transitionalItem) {
-            return builder(id, ingredient, transitionalItem.getRegistryName());
+            return builder(id, ingredient, Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(transitionalItem)));
         }
 
         public Builder builder(String id, Ingredient ingredient, ResourceLocation transitionalItem) {
@@ -305,7 +306,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
              * @return This builder, for chaining.
              */
             public Builder setTransitionalItem(Item transitionalItem) {
-                return setTransitionalItem(transitionalItem.getRegistryName());
+                return setTransitionalItem(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(transitionalItem)));
             }
 
             /**
@@ -350,7 +351,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
              * @return This builder, for chaining.
              */
             public Builder addResult(Item result, float weight) {
-                return addResult(result.getRegistryName(), weight);
+                return addResult(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(result)), weight);
             }
 
             /**
@@ -530,7 +531,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
              * @return This builder, for chaining.
              */
             public Builder addResult(Item item, int count, float chance) {
-                return addResult(Objects.requireNonNull(item.getRegistryName()), count, chance);
+                return addResult(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)), count, chance);
             }
 
             /**
@@ -619,7 +620,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
              * @return This builder, for chaining.
              */
             public Builder addFluidResult(Fluid fluid, int count, float chance) {
-                return addFluidResult(Objects.requireNonNull(fluid.getRegistryName()), count, chance);
+                return addFluidResult(Objects.requireNonNull(ForgeRegistries.FLUIDS.getKey(fluid)), count, chance);
             }
 
             /**
