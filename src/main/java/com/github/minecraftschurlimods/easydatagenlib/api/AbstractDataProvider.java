@@ -13,9 +13,7 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * The abstract class all other data provider classes extend from. Contains some common functionality, such as saving to disk.
- *
- * @param <T> The builder class associated with this provider.
+ * {@see <a href="https://github.com/MinecraftschurliMods/EasyDatagenLib/wiki/Custom-Datagen-Base-Classes">Custom Datagen Base Classes documentation</a>}
  */
 public abstract class AbstractDataProvider<T extends AbstractDataBuilder<?>> implements DataProvider {
     protected final String folder;

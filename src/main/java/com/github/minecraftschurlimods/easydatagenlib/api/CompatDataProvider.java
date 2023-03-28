@@ -6,9 +6,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * {@see <a href="https://github.com/MinecraftschurliMods/EasyDatagenLib/wiki/Compat-Datagen">Compat Datagen documentation</a>}
+ */
 public abstract class CompatDataProvider {
     //region PROVIDERS
     //@formatter:off
@@ -25,12 +29,14 @@ public abstract class CompatDataProvider {
     public final CreateDataProvider.Mixing CREATE_MIXING;
     public final CreateDataProvider.Pressing CREATE_PRESSING;
     public final CreateDataProvider.SandpaperPolishing CREATE_SANDPAPER_POLISHING;
-    public final CreateDataProvider.SequencedAssembly  CREATE_SEQUENCED_ASSEMBLY;
+    public final CreateDataProvider.SequencedAssembly CREATE_SEQUENCED_ASSEMBLY;
     public final CreateDataProvider.Splashing CREATE_SPLASHING;
     //@formatter:on
     //endregion
 
-    public CompatDataProvider(String namespace, DataGenerator generator, boolean runServer, boolean runClient) {
+    public CompatDataProvider(GatherDataEvent event, String namespace) {
+        DataGenerator generator = event.getGenerator();
+        boolean runServer = event.includeServer();
         CREATE_COMPACTING = new CreateDataProvider.Compacting(namespace, generator);
         CREATE_CRUSHING = new CreateDataProvider.Crushing(namespace, generator);
         CREATE_CUTTING = new CreateDataProvider.Cutting(namespace, generator);
@@ -44,7 +50,7 @@ public abstract class CompatDataProvider {
         CREATE_MIXING = new CreateDataProvider.Mixing(namespace, generator);
         CREATE_PRESSING = new CreateDataProvider.Pressing(namespace, generator);
         CREATE_SANDPAPER_POLISHING = new CreateDataProvider.SandpaperPolishing(namespace, generator);
-        CREATE_SEQUENCED_ASSEMBLY  = new CreateDataProvider.SequencedAssembly(namespace, generator);
+        CREATE_SEQUENCED_ASSEMBLY = new CreateDataProvider.SequencedAssembly(namespace, generator);
         CREATE_SPLASHING = new CreateDataProvider.Splashing(namespace, generator);
         generator.addProvider(runServer, CREATE_COMPACTING);
         generator.addProvider(runServer, CREATE_CRUSHING);
@@ -64,9 +70,12 @@ public abstract class CompatDataProvider {
         generate();
     }
 
+    /**
+     * Override this method to add your to-be-datagenned objects.
+     */
     public abstract void generate();
     //region HELPERS
-    private static final ResourceLocation EXPERIENCE_NUGGET = new ResourceLocation("create", "experience_nugget");
+    protected static final ResourceLocation EXPERIENCE_NUGGET = new ResourceLocation("create", "experience_nugget");
 
     /**
      * Shortcut to get an item's registry name.

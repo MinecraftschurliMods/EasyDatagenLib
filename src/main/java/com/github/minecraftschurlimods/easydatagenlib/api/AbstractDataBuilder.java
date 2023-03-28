@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * The abstract parent class of builder classes used by {@link AbstractDataProvider} for generating data contents.
+ * {@see <a href="https://github.com/MinecraftschurliMods/EasyDatagenLib/wiki/Custom-Datagen-Base-Classes">Custom Datagen Base Classes documentation</a>}
  */
 public abstract class AbstractDataBuilder<T extends AbstractDataBuilder<T>> {
     public final ResourceLocation id;

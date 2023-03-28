@@ -9,9 +9,7 @@ import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
 
 /**
- * The abstract parent class for anything that generates recipes.
- *
- * @param <T> The builder class associated with this provider.
+ * {@see <a href="https://github.com/MinecraftschurliMods/EasyDatagenLib/wiki/Custom-Datagen-Base-Classes">Custom Datagen Base Classes documentation</a>}
  */
 public abstract class AbstractRecipeProvider<T extends AbstractRecipeBuilder<?>> extends AbstractDataProvider<T> {
     private final ResourceLocation recipeType;

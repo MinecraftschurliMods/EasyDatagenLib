@@ -6,6 +6,9 @@ import net.minecraftforge.common.crafting.conditions.ICondition;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * {@see <a href="https://github.com/MinecraftschurliMods/EasyDatagenLib/wiki/Custom-Datagen-Base-Classes">Custom Datagen Base Classes documentation</a>}
+ */
 public abstract class AbstractRecipeBuilder<T extends AbstractRecipeBuilder<T>> extends AbstractDataBuilder<T> {
     public final List<ICondition> conditions = new ArrayList<>();
 
