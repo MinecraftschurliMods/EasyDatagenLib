@@ -72,7 +72,7 @@ public abstract class CompatDataProvider {
      * @return The registry name of the given item.
      */
     @SuppressWarnings("ConstantConditions")
-    protected ResourceLocation itemId(Item item) {
+    protected static ResourceLocation itemId(Item item) {
         return ForgeRegistries.ITEMS.getKey(item);
     }
 
@@ -83,7 +83,7 @@ public abstract class CompatDataProvider {
      * @return The registry name of the given fluid.
      */
     @SuppressWarnings("ConstantConditions")
-    protected ResourceLocation fluidId(Fluid fluid) {
+    protected static ResourceLocation fluidId(Fluid fluid) {
         return ForgeRegistries.FLUIDS.getKey(fluid);
     }
 
