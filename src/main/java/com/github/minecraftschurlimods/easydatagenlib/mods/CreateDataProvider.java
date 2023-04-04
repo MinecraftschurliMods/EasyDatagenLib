@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> extends AbstractRecipeProvider<T> {
@@ -112,7 +111,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
          * @return A new recipe builder.
          */
         public Builder builder(String id, Item item, int count, CompoundTag tag) {
-            return new Builder(new ResourceLocation(namespace, id)).setResult(item.getRegistryName(), count, tag);
+            return new Builder(new ResourceLocation(namespace, id)).setResult(itemId(item), count, tag);
         }
 
         /**
@@ -269,7 +268,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
         }
 
         public Builder builder(String id, Ingredient ingredient, Item transitionalItem) {
-            return builder(id, ingredient, transitionalItem.getRegistryName());
+            return builder(id, ingredient, itemId(transitionalItem));
         }
 
         public Builder builder(String id, Ingredient ingredient, ResourceLocation transitionalItem) {
@@ -305,7 +304,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
              * @return This builder, for chaining.
              */
             public Builder setTransitionalItem(Item transitionalItem) {
-                return setTransitionalItem(transitionalItem.getRegistryName());
+                return setTransitionalItem(itemId(transitionalItem));
             }
 
             /**
@@ -350,7 +349,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
              * @return This builder, for chaining.
              */
             public Builder addResult(Item result, float weight) {
-                return addResult(result.getRegistryName(), weight);
+                return addResult(itemId(result), weight);
             }
 
             /**
@@ -530,7 +529,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
              * @return This builder, for chaining.
              */
             public Builder addResult(Item item, int count, float chance) {
-                return addResult(Objects.requireNonNull(item.getRegistryName()), count, chance);
+                return addResult(itemId(item), count, chance);
             }
 
             /**
@@ -619,7 +618,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
              * @return This builder, for chaining.
              */
             public Builder addFluidResult(Fluid fluid, int count, float chance) {
-                return addFluidResult(Objects.requireNonNull(fluid.getRegistryName()), count, chance);
+                return addFluidResult(fluidId(fluid), count, chance);
             }
 
             /**

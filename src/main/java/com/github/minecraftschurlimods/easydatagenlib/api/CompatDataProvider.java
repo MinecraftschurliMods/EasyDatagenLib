@@ -6,12 +6,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class CompatDataProvider {
-    //region PROVIDERS
-    //@formatter:off
     public final CreateDataProvider.Compacting CREATE_COMPACTING;
     public final CreateDataProvider.Crushing CREATE_CRUSHING;
     public final CreateDataProvider.Cutting CREATE_CUTTING;
@@ -27,8 +26,6 @@ public abstract class CompatDataProvider {
     public final CreateDataProvider.SandpaperPolishing CREATE_SANDPAPER_POLISHING;
     public final CreateDataProvider.SequencedAssembly  CREATE_SEQUENCED_ASSEMBLY;
     public final CreateDataProvider.Splashing CREATE_SPLASHING;
-    //@formatter:on
-    //endregion
 
     public CompatDataProvider(String namespace, DataGenerator generator, boolean runServer, boolean runClient) {
         CREATE_COMPACTING = new CreateDataProvider.Compacting(namespace, generator);
@@ -65,7 +62,7 @@ public abstract class CompatDataProvider {
     }
 
     public abstract void generate();
-    //region HELPERS
+
     private static final ResourceLocation EXPERIENCE_NUGGET = new ResourceLocation("create", "experience_nugget");
 
     /**
@@ -77,6 +74,17 @@ public abstract class CompatDataProvider {
     @SuppressWarnings("ConstantConditions")
     protected ResourceLocation itemId(Item item) {
         return ForgeRegistries.ITEMS.getKey(item);
+    }
+
+    /**
+     * Shortcut to get a fluid's registry name.
+     *
+     * @param fluid The fluid to get the registry name for.
+     * @return The registry name of the given fluid.
+     */
+    @SuppressWarnings("ConstantConditions")
+    protected ResourceLocation fluidId(Fluid fluid) {
+        return ForgeRegistries.FLUIDS.getKey(fluid);
     }
 
     /**
@@ -151,5 +159,4 @@ public abstract class CompatDataProvider {
                 .addResult(EXPERIENCE_NUGGET, 0.75f)
                 .addResult(Items.COBBLED_DEEPSLATE, 0.125f));
     }
-    //endregion
 }

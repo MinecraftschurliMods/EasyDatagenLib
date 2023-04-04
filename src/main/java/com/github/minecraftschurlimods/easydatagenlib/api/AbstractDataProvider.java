@@ -5,6 +5,9 @@ import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,5 +84,27 @@ public abstract class AbstractDataProvider<T extends AbstractDataBuilder<?>> imp
         JsonObject json = new JsonObject();
         builder.toJson(json);
         return json;
+    }
+
+    /**
+     * Shortcut to get an item's registry name.
+     *
+     * @param item The item to get the registry name for.
+     * @return The registry name of the given item.
+     */
+    @SuppressWarnings("ConstantConditions")
+    protected ResourceLocation itemId(Item item) {
+        return ForgeRegistries.ITEMS.getKey(item);
+    }
+
+    /**
+     * Shortcut to get a fluid's registry name.
+     *
+     * @param fluid The fluid to get the registry name for.
+     * @return The registry name of the given fluid.
+     */
+    @SuppressWarnings("ConstantConditions")
+    protected ResourceLocation fluidId(Fluid fluid) {
+        return ForgeRegistries.FLUIDS.getKey(fluid);
     }
 }

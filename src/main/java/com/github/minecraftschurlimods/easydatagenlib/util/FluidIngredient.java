@@ -22,6 +22,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 /**
@@ -123,7 +124,7 @@ public abstract class FluidIngredient implements Predicate<FluidStack> {
 
         @Override
         protected void write(JsonObject json) {
-            json.addProperty("fluid", ForgeRegistries.FLUIDS.getKey(fluid.getFluid()).toString());
+            json.addProperty("fluid", Objects.requireNonNull(ForgeRegistries.FLUIDS.getKey(fluid.getFluid())).toString());
             if (!tag.isEmpty()) {
                 json.add("nbt", JsonParser.parseString(tag.toString()));
             }
@@ -138,6 +139,7 @@ public abstract class FluidIngredient implements Predicate<FluidStack> {
     public static class FluidTagIngredient extends FluidIngredient {
         protected TagKey<Fluid> tag;
 
+        @SuppressWarnings("deprecation")
         @Override
         public boolean test(FluidStack t) {
             if (tag == null) {
@@ -161,7 +163,7 @@ public abstract class FluidIngredient implements Predicate<FluidStack> {
 
         @Override
         protected List<FluidStack> getMatches() {
-            return ForgeRegistries.FLUIDS.tags()
+            return Objects.requireNonNull(ForgeRegistries.FLUIDS.tags())
                     .getTag(tag)
                     .stream()
                     .map(e -> e instanceof FlowingFluid ? ((FlowingFluid) e).getSource() : e)
