@@ -15,7 +15,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
 import org.apache.commons.lang3.SerializationException;
 import oshi.util.tuples.Pair;
 
@@ -153,8 +152,8 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             /**
              * Creates a new builder with the given id.
              *
-             * @param id    The id to use. Should be unique within the same data provider and the same namespace.
-             * @param item  The result item id to use.
+             * @param id   The id to use. Should be unique within the same data provider and the same namespace.
+             * @param item The result item id to use.
              */
             public Builder(ResourceLocation id, Item item) {
                 this(id, item, 1, new CompoundTag());
@@ -186,8 +185,8 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             /**
              * Creates a new builder with the given id.
              *
-             * @param id    The id to use. Should be unique within the same data provider and the same namespace.
-             * @param item  The result item id to use.
+             * @param id   The id to use. Should be unique within the same data provider and the same namespace.
+             * @param item The result item id to use.
              */
             public Builder(ResourceLocation id, ResourceLocation item) {
                 this(id, item, 1, new CompoundTag());
@@ -274,11 +273,13 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
                 for (String s : pattern) {
                     for (int i = 0; i < s.length(); i++) {
                         char c = s.charAt(i);
-                        if (!key.containsKey(c) && c != ' ') throw new IllegalStateException("Pattern in recipe " + id + " uses undefined symbol '" + c + "'");
+                        if (!key.containsKey(c) && c != ' ')
+                            throw new IllegalStateException("Pattern in recipe " + id + " uses undefined symbol '" + c + "'");
                         set.remove(c);
                     }
                 }
-                if (!set.isEmpty()) throw new IllegalStateException("Ingredients are defined but not used in pattern for recipe " + id);
+                if (!set.isEmpty())
+                    throw new IllegalStateException("Ingredients are defined but not used in pattern for recipe " + id);
             }
         }
     }
@@ -358,7 +359,8 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
              * @return This builder, for chaining.
              */
             public Builder setLoops(int loops) {
-                if (loops < 1) throw new IllegalArgumentException("Recipe " + id + "has an illegal loop count of " + loops);
+                if (loops < 1)
+                    throw new IllegalArgumentException("Recipe " + id + "has an illegal loop count of " + loops);
                 this.loops = loops;
                 return this;
             }
@@ -507,8 +509,8 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             /**
              * Adds a result to the recipe.
              *
-             * @param item   The result item.
-             * @param count  The result count.
+             * @param item   The result item to use.
+             * @param count  The result count to use.
              * @param chance The chance that the result stack is returned.
              * @return This builder, for chaining.
              */
@@ -520,8 +522,8 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             /**
              * Adds a result to the recipe.
              *
-             * @param item  The result item.
-             * @param count The result count.
+             * @param item  The result item to use.
+             * @param count The result count to use.
              * @return This builder, for chaining.
              */
             public Builder addResult(ResourceLocation item, int count) {
@@ -531,7 +533,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             /**
              * Adds a result to the recipe.
              *
-             * @param item   The result item.
+             * @param item   The result item to use.
              * @param chance The chance that the result stack is returned.
              * @return This builder, for chaining.
              */
@@ -542,7 +544,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             /**
              * Adds a result to the recipe.
              *
-             * @param item The result item.
+             * @param item The result item to use.
              * @return This builder, for chaining.
              */
             public Builder addResult(ResourceLocation item) {
@@ -552,8 +554,8 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             /**
              * Adds a result to the recipe.
              *
-             * @param item   The result item.
-             * @param count  The result count.
+             * @param item   The result item to use.
+             * @param count  The result count to use.
              * @param chance The chance that the result stack is returned.
              * @return This builder, for chaining.
              */
@@ -564,8 +566,8 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             /**
              * Adds a result to the recipe.
              *
-             * @param item  The result item.
-             * @param count The result count.
+             * @param item  The result item to use.
+             * @param count The result count to use.
              * @return This builder, for chaining.
              */
             public Builder addResult(Item item, int count) {
@@ -575,7 +577,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             /**
              * Adds a result to the recipe.
              *
-             * @param item   The result item.
+             * @param item   The result item to use.
              * @param chance The chance that the result stack is returned.
              * @return This builder, for chaining.
              */
@@ -586,7 +588,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             /**
              * Adds a result to the recipe.
              *
-             * @param item The result item.
+             * @param item The result item to use.
              * @return This builder, for chaining.
              */
             public Builder addResult(Item item) {
