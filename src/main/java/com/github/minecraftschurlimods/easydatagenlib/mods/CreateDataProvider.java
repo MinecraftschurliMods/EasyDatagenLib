@@ -414,7 +414,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
                 JsonArray results = new JsonArray();
                 for (Pair<PotentiallyAbsentItemStack, Float> pair : this.results) {
                     JsonObject result = new JsonObject();
-                    result.addProperty("item", pair.getA().getItem().toString());
+                    result.addProperty("item", pair.getA().item.toString());
                     result.addProperty("chance", pair.getB());
                     results.add(result);
                 }

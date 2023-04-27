@@ -2,6 +2,8 @@ package com.github.minecraftschurlimods.easydatagenlib.api;
 
 import com.github.minecraftschurlimods.easydatagenlib.mods.ArsNouveauDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.CreateDataProvider;
+import com.github.minecraftschurlimods.easydatagenlib.mods.ImmersiveEngineeringDataProvider;
+import com.github.minecraftschurlimods.easydatagenlib.util.ModdedValues;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -9,7 +11,10 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.common.crafting.conditions.NotCondition;
+import net.minecraftforge.common.crafting.conditions.TagEmptyCondition;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,6 +44,10 @@ public abstract class CompatDataProvider {
     public final CreateDataProvider.SandpaperPolishing CREATE_SANDPAPER_POLISHING;
     public final CreateDataProvider.SequencedAssembly  CREATE_SEQUENCED_ASSEMBLY;
     public final CreateDataProvider.Splashing CREATE_SPLASHING;
+    public final ImmersiveEngineeringDataProvider.ArcFurnace IMMERSIVE_ENGINEERING_ARC_FURNACE;
+    public final ImmersiveEngineeringDataProvider.Cloche IMMERSIVE_ENGINEERING_CLOCHE;
+    public final ImmersiveEngineeringDataProvider.Crusher IMMERSIVE_ENGINEERING_CRUSHER;
+    public final ImmersiveEngineeringDataProvider.Sawmill IMMERSIVE_ENGINEERING_SAWMILL;
 
     public CompatDataProvider(String namespace, DataGenerator generator, boolean runServer, boolean runClient) {
         ARS_NOUVEAU_CRUSHING = addServer(new ArsNouveauDataProvider.Crushing(namespace, generator));
@@ -59,6 +68,10 @@ public abstract class CompatDataProvider {
         CREATE_SANDPAPER_POLISHING = addServer(new CreateDataProvider.SandpaperPolishing(namespace, generator));
         CREATE_SEQUENCED_ASSEMBLY  = addServer(new CreateDataProvider.SequencedAssembly(namespace, generator));
         CREATE_SPLASHING = addServer(new CreateDataProvider.Splashing(namespace, generator));
+        IMMERSIVE_ENGINEERING_ARC_FURNACE = addServer(new ImmersiveEngineeringDataProvider.ArcFurnace(namespace, generator));
+        IMMERSIVE_ENGINEERING_CLOCHE = addServer(new ImmersiveEngineeringDataProvider.Cloche(namespace, generator));
+        IMMERSIVE_ENGINEERING_CRUSHER = addServer(new ImmersiveEngineeringDataProvider.Crusher(namespace, generator));
+        IMMERSIVE_ENGINEERING_SAWMILL = addServer(new ImmersiveEngineeringDataProvider.Sawmill(namespace, generator));
         for (AbstractDataProvider<?> provider : SERVER_PROVIDERS) {
             generator.addProvider(runServer, provider);
         }
@@ -94,6 +107,20 @@ public abstract class CompatDataProvider {
 
     //region HELPER
     protected static final ResourceLocation EXPERIENCE_NUGGET = new ResourceLocation("create", "experience_nugget");
+    protected static final Ingredient SLAG = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "slag")));
+    protected static final Ingredient WOOD_DUST = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "dusts/wood")));
+    protected static final Ingredient MUSHROOM_SOIL = Ingredient.of(Items.MYCELIUM, Items.PODZOL);
+
+    /**
+     * Shortcut to get an block's registry name.
+     *
+     * @param block The block to get the registry name for.
+     * @return The registry name of the given block.
+     */
+    @SuppressWarnings("ConstantConditions")
+    protected static ResourceLocation blockId(Block block) {
+        return ForgeRegistries.BLOCKS.getKey(block);
+    }
 
     /**
      * Shortcut to get an item's registry name.
@@ -115,6 +142,56 @@ public abstract class CompatDataProvider {
     @SuppressWarnings("ConstantConditions")
     protected static ResourceLocation fluidId(Fluid fluid) {
         return ForgeRegistries.FLUIDS.getKey(fluid);
+    }
+
+    /**
+     * Transforms a resource location into a string ready to be used in recipe names.
+     *
+     * @param rl The resource location to transform.
+     * @return A string representation of the resource location.
+     */
+    protected static String toName(ResourceLocation rl) {
+        return rl.getPath().replace('/', '_');
+    }
+
+    /**
+     * Transforms a tag into a string ready to be used in recipe names.
+     *
+     * @param tag The tag to transform.
+     * @return A string representation of the tag name.
+     */
+    protected static String toName(TagKey<?> tag) {
+        return toName(tag.location());
+    }
+
+    /**
+     * Transforms a block into a string ready to be used in recipe names.
+     *
+     * @param block The block to transform.
+     * @return A string representation of the block name.
+     */
+    protected static String toName(Block block) {
+        return toName(blockId(block));
+    }
+
+    /**
+     * Transforms an item into a string ready to be used in recipe names.
+     *
+     * @param item The item to transform.
+     * @return A string representation of the item name.
+     */
+    protected static String toName(Item item) {
+        return toName(itemId(item));
+    }
+
+    /**
+     * Transforms a fluid into a string ready to be used in recipe names.
+     *
+     * @param fluid The fluid to transform.
+     * @return A string representation of the fluid name.
+     */
+    protected static String toName(Fluid fluid) {
+        return toName(fluidId(fluid));
     }
 
     /**
@@ -155,16 +232,23 @@ public abstract class CompatDataProvider {
     /**
      * Adds processing for a metal ore, such as iron or gold. This assumes that the ores drop one item by default, and thus does not support ores that drop multiple items, such as copper.
      *
-     * @param ore          The ore to be processed.
-     * @param deepslateOre The deepslate ore to be processed.
-     * @param rawOre       The raw ore item.
-     * @param rawOreBlock  The raw ore block item. Can be null. If null, no recipes using or producing this item will be generated.
-     * @param ingot        The id of the ingot item.
-     * @param ingotBlock   The id of the ingot block item. Can be null. If null, no recipes using or producing this item will be generated.
-     * @param dust         The id of the dust item. Used in various mods for ore duplication. Can be null. If null, no recipes using or producing this item will be generated.
-     * @param crushedOre   The id of the crushed ore item. Used in Create crushing. Can be null. If null, no recipes using or producing this item will be generated.
+     * @param ore              The ore to be processed.
+     * @param deepslateOre     The deepslate ore to be processed.
+     * @param oreTag           The ore tag to be processed.
+     * @param rawOre           The raw ore item.
+     * @param rawOreTag        The raw ore tag.
+     * @param rawOreBlock      The raw ore block item. Can be null. If null, no recipes producing this item will be generated.
+     * @param rawOreBlockTag   The raw ore block tag.
+     * @param ingot            The id of the ingot item.
+     * @param ingotTag         The ingot tag.
+     * @param ingotBlock       The id of the ingot block item. Can be null. If null, no recipes producing this item will be generated.
+     * @param ingotBlockTag    The ingot block tag.
+     * @param dust             The id of the dust item. Used in various mods for ore duplication. Can be null. If null, no recipes producing this item will be generated.
+     * @param dustTag          The dust tag.
+     * @param crushedOre       The id of the crushed ore item. Used in Create crushing. Can be null. If null, no recipes using or producing this item will be generated.
+     * @param secondaryDustTag The secondary dust tag. Used in Immersive Engineering crushing. Can be null. If null, no recipes using or producing this item will be generated.
      */
-    protected void addMetalOreProcessing(Item ore, Item deepslateOre, TagKey<Item> oreTag, ResourceLocation rawOre, TagKey<Item> rawOreTag, @Nullable ResourceLocation rawOreBlock, TagKey<Item> rawOreBlockTag, ResourceLocation ingot, TagKey<Item> ingotTag, @Nullable ResourceLocation ingotBlock, TagKey<Item> ingotBlockTag, @Nullable ResourceLocation dust, TagKey<Item> dustTag, @Nullable ResourceLocation crushedOre) {
+    protected void addMetalOreProcessing(Item ore, Item deepslateOre, TagKey<Item> oreTag, ResourceLocation rawOre, TagKey<Item> rawOreTag, @Nullable ResourceLocation rawOreBlock, TagKey<Item> rawOreBlockTag, ResourceLocation ingot, TagKey<Item> ingotTag, @Nullable ResourceLocation ingotBlock, TagKey<Item> ingotBlockTag, @Nullable ResourceLocation dust, TagKey<Item> dustTag, @Nullable ResourceLocation crushedOre, @Nullable TagKey<Item> secondaryDustTag) {
         //TODO Botany Pots Soil
         if (crushedOre != null) {
             CREATE_CRUSHING.add(CREATE_CRUSHING.builder(itemId(ore).getPath(), 250)
@@ -184,7 +268,30 @@ public abstract class CompatDataProvider {
                     .addResult(crushedOre)
                     .addResult(EXPERIENCE_NUGGET, 0.75f));
         }
-        //TODO Immersive Engineering Arc Furnace, Crusher
+        IMMERSIVE_ENGINEERING_ARC_FURNACE.add(IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(dustTag), 100, 51200, Ingredient.of(dustTag))
+                .addResult(Ingredient.of(ingotTag)));
+        IMMERSIVE_ENGINEERING_ARC_FURNACE.add(IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(oreTag), 200, 102400, Ingredient.of(oreTag))
+                .addResult(Ingredient.of(ingotTag), 2)
+                .setSlag(SLAG));
+        IMMERSIVE_ENGINEERING_ARC_FURNACE.add(IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(rawOreBlockTag), 900, 230400, Ingredient.of(rawOreBlockTag))
+                .addResult(Ingredient.of(ingotTag), 13)
+                .addSecondary(Ingredient.of(ingotTag), 0.5f));
+        IMMERSIVE_ENGINEERING_ARC_FURNACE.add(IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(rawOreTag), 100, 25600, Ingredient.of(rawOreTag))
+                .addResult(Ingredient.of(ingotTag))
+                .addSecondary(Ingredient.of(ingotTag), 0.5f));
+        IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(ingotTag), 3000, Ingredient.of(ingotTag), Ingredient.of(dustTag)));
+        if (secondaryDustTag == null) {
+            IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(oreTag), 6000, Ingredient.of(oreTag), Ingredient.of(dustTag), 2));
+        } else {
+            IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(oreTag), 6000, Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
+                    .addSecondary(Ingredient.of(secondaryDustTag), 0.1f)
+                    .addCondition(new NotCondition(new TagEmptyCondition(secondaryDustTag.location()))));
+            IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(oreTag) + "_without_secondary", 6000, Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
+                    .addCondition(new TagEmptyCondition(secondaryDustTag.location())));
+        }
+        IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(rawOreBlockTag), 54000, Ingredient.of(rawOreBlockTag), Ingredient.of(rawOreTag), 12));
+        IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(rawOreTag), 6000, Ingredient.of(rawOreTag), Ingredient.of(dustTag))
+                .addSecondary(Ingredient.of(dustTag), 1 / 3f));
         //TODO Integrated Dynamics Squeezing
         //TODO Mekanism Crushing, Enriching
         //TODO Occultism Ritual Dummy
@@ -306,7 +413,8 @@ public abstract class CompatDataProvider {
      */
     protected void addMushroomProcessing(Item mushroom) {
         //TODO Botany Pots Crop
-        //TODO Immersive Engineering Cloche
+        IMMERSIVE_ENGINEERING_CLOCHE.add(IMMERSIVE_ENGINEERING_CLOCHE.builder(toName(mushroom), 480, Ingredient.of(mushroom), MUSHROOM_SOIL, ModdedValues.ImmersiveEngineering.ClocheRenderType.GENERIC, itemId(mushroom))
+                .addResult(Ingredient.of(mushroom)));
         //TODO Mekanism Crushing
         //TODO Thermal Insolating
     }
@@ -325,47 +433,64 @@ public abstract class CompatDataProvider {
     /**
      * Adds processing for a wooden block family.
      *
-     * @param family       The wooden block family to be processed.
-     * @param log          The log item associated with the wooden block family.
-     * @param wood         The wood item associated with the wooden block family.
-     * @param strippedLog  The stripped log item associated with the wooden block family.
-     * @param strippedWood The stripped wood item associated with the wooden block family.
-     * @param logs         The logs tag associated with the wooden block family.
-     * @param leaves       The leaves item associated with the wooden block family.
-     * @param sapling      The sapling item associated with the wooden block family.
-     * @param boat         The boat item associated with the wooden block family.
-     * @param chestBoat    The chest boat item associated with the wooden block family.
+     * @param family    The wooden block family to be processed.
+     * @param leaves    The leaves item associated with the wooden block family.
+     * @param sapling   The sapling item associated with the wooden block family.
+     * @param boat      The boat item associated with the wooden block family.
+     * @param chestBoat The chest boat item associated with the wooden block family.
      */
-    protected void addWoodenProcessing(BlockFamily family, @Nullable Item log, @Nullable Item wood, @Nullable Item strippedLog, @Nullable Item strippedWood, TagKey<Item> logs, @Nullable Item leaves, @Nullable Item sapling, @Nullable Item boat, @Nullable Item chestBoat) {
+    protected void addWoodenProcessing(BlockFamily family, @Nullable Item leaves, @Nullable Item sapling, @Nullable Item boat, @Nullable Item chestBoat) {
+        Item planks = family.getBaseBlock().asItem();
+        Item slab = family.get(BlockFamily.Variant.SLAB).asItem();
+        Item stairs = family.get(BlockFamily.Variant.STAIRS).asItem();
         //TODO Botania Mana Infusion
         //TODO Botany Pots Crop
         //TODO Corail Woodcutter Woodcutting
-        if (strippedLog != null) {
-            if (log != null) {
-                CREATE_CUTTING.add(CREATE_CUTTING.builder(itemId(log).getPath(), 50)
-                        .addIngredient(Ingredient.of(log))
-                        .addResult(strippedLog));
-            }
-            CREATE_CUTTING.add(CREATE_CUTTING.builder(itemId(strippedLog).getPath(), 50)
-                    .addIngredient(Ingredient.of(strippedLog))
-                    .addResult(family.getBaseBlock().asItem(), 6));
-        }
-        if (strippedWood != null) {
-            if (wood != null) {
-                CREATE_CUTTING.add(CREATE_CUTTING.builder(itemId(wood).getPath(), 50)
-                        .addIngredient(Ingredient.of(wood))
-                        .addResult(strippedWood));
-            }
-            CREATE_CUTTING.add(CREATE_CUTTING.builder(itemId(strippedWood).getPath(), 50)
-                    .addIngredient(Ingredient.of(strippedWood))
-                    .addResult(family.getBaseBlock().asItem(), 6));
-        }
         //TODO Elementalcraft Cutting
         //TODO Farmer's Delight Cutting
         //TODO Hexerei Cutting
-        //TODO Immersive Engineering Sawmill
+        if (family.getVariants().containsKey(BlockFamily.Variant.DOOR)) {
+            Item door = family.get(BlockFamily.Variant.DOOR).asItem();
+            IMMERSIVE_ENGINEERING_SAWMILL.add(IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(door), 800, Ingredient.of(door), planks)
+                    .addSecondary(WOOD_DUST, false));
+        }
+        IMMERSIVE_ENGINEERING_SAWMILL.add(IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(slab), 800, Ingredient.of(planks), slab, 2)
+                .addSecondary(WOOD_DUST, false));
+        IMMERSIVE_ENGINEERING_SAWMILL.add(IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(stairs), 1600, Ingredient.of(stairs), planks)
+                .addSecondary(WOOD_DUST, false));
         //TODO Mekanism Crushing, Sawing
         //TODO Thermal Insolating, Sawing
+    }
+
+    /**
+     * Adds processing for wooden logs.
+     *
+     * @param log          The log item to process.
+     * @param wood         The wood item to process.
+     * @param strippedLog  The stripped log item to process.
+     * @param strippedWood The stripped wood item to process.
+     * @param logs         The tag associated with the wooden logs.
+     * @param planks       The id of the planks item associated with the wooden logs.
+     */
+    protected void addLogsProcessing(Item log, Item wood, Item strippedLog, Item strippedWood, TagKey<Item> logs, ResourceLocation planks) {
+        CREATE_CUTTING.add(CREATE_CUTTING.builder(toName(log), 50)
+                .addIngredient(Ingredient.of(log))
+                .addResult(strippedLog));
+        CREATE_CUTTING.add(CREATE_CUTTING.builder(toName(strippedLog), 50)
+                .addIngredient(Ingredient.of(strippedLog))
+                .addResult(planks, 6));
+        CREATE_CUTTING.add(CREATE_CUTTING.builder(toName(wood), 50)
+                .addIngredient(Ingredient.of(wood))
+                .addResult(strippedWood));
+        CREATE_CUTTING.add(CREATE_CUTTING.builder(toName(strippedWood), 50)
+                .addIngredient(Ingredient.of(strippedWood))
+                .addResult(planks, 6));
+        IMMERSIVE_ENGINEERING_SAWMILL.add(IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(log), 1600, Ingredient.of(log, wood), planks, 6)
+                .setStripped(Ingredient.of(strippedLog))
+                .addSecondary(WOOD_DUST, true)
+                .addSecondary(WOOD_DUST, false));
+        IMMERSIVE_ENGINEERING_SAWMILL.add(IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(strippedLog), 800, Ingredient.of(strippedLog), planks, 6)
+                .addSecondary(WOOD_DUST, false));
     }
     //endregion
 }

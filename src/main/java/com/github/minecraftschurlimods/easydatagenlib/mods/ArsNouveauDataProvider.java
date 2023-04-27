@@ -295,8 +295,8 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
 
             @Override
             protected void toJson(JsonObject json) {
-                json.addProperty("output", output.getItem().toString());
-                json.addProperty("count", output.getCount());
+                json.addProperty("output", output.item.toString());
+                json.addProperty("count", output.count);
                 json.addProperty("exp", experience);
                 if (this.inputItems.isEmpty())
                     throw new IllegalStateException("Input item list is empty for recipe " + id);
@@ -389,8 +389,8 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
             @Override
             protected void toJson(JsonObject json) {
                 json.add("input", input.toJson());
-                json.addProperty("output", output.getItem().toString());
-                json.addProperty("count", output.getCount());
+                json.addProperty("output", output.item.toString());
+                json.addProperty("count", output.count);
                 json.addProperty("source", source);
                 JsonArray pedestalItems = new JsonArray();
                 for (Ingredient i : this.pedestalItems) {

@@ -6,6 +6,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -84,6 +85,17 @@ public abstract class AbstractDataProvider<T extends AbstractDataBuilder<?>> imp
         JsonObject json = new JsonObject();
         builder.toJson(json);
         return json;
+    }
+
+    /**
+     * Shortcut to get an block's registry name.
+     *
+     * @param block The block to get the registry name for.
+     * @return The registry name of the given block.
+     */
+    @SuppressWarnings("ConstantConditions")
+    protected static ResourceLocation blockId(Block block) {
+        return ForgeRegistries.BLOCKS.getKey(block);
     }
 
     /**

@@ -12,9 +12,9 @@ import net.minecraft.world.item.ItemStack;
  * This means that you can use item ids that may not be valid, e.g. from other mods, in your datagen.
  */
 public class PotentiallyAbsentItemStack {
-    private final ResourceLocation item;
-    private final int count;
-    private CompoundTag tag;
+    public final ResourceLocation item;
+    public final int count;
+    public CompoundTag tag;
 
     /**
      * Creates a new instance of this class. Use this if you want the output to have additional NBT data.
@@ -56,34 +56,6 @@ public class PotentiallyAbsentItemStack {
      */
     public PotentiallyAbsentItemStack(ResourceLocation item) {
         this(item, 1, new CompoundTag());
-    }
-
-    /**
-     * @return The id of the item to use.
-     */
-    public ResourceLocation getItem() {
-        return item;
-    }
-
-    /**
-     * @return The count to use.
-     */
-    public int getCount() {
-        return count;
-    }
-
-    /**
-     * @return The NBT tag to use.
-     */
-    public CompoundTag getTag() {
-        return tag;
-    }
-
-    /**
-     * @param tag The NBT tag to use.
-     */
-    public void setTag(CompoundTag tag) {
-        this.tag = tag;
     }
 
     /**

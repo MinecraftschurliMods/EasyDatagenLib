@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.easydatagenlib.api;
 import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -25,6 +26,17 @@ public abstract class AbstractDataBuilder<T extends AbstractDataBuilder<T>> {
      * Adds this builder's contents to the given {@link JsonObject}.
      */
     protected abstract void toJson(JsonObject json);
+
+    /**
+     * Shortcut to get an block's registry name.
+     *
+     * @param block The block to get the registry name for.
+     * @return The registry name of the given block.
+     */
+    @SuppressWarnings("ConstantConditions")
+    protected static ResourceLocation blockId(Block block) {
+        return ForgeRegistries.BLOCKS.getKey(block);
+    }
 
     /**
      * Shortcut to get an item's registry name.
