@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.easydatagenlib.api;
 
 import com.github.minecraftschurlimods.easydatagenlib.mods.ArsNouveauDataProvider;
+import com.github.minecraftschurlimods.easydatagenlib.mods.BotaniaDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.CreateDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.ImmersiveEngineeringDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.util.ModdedValues;
@@ -29,6 +30,7 @@ public abstract class CompatDataProvider {
     public final ArsNouveauDataProvider.Crushing ARS_NOUVEAU_CRUSHING;
     public final ArsNouveauDataProvider.Glyph ARS_NOUVEAU_GLYPH;
     public final ArsNouveauDataProvider.Imbuement ARS_NOUVEAU_IMBUEMENT;
+    public final BotaniaDataProvider.ManaInfusion BOTANIA_MANA_INFUSION;
     public final CreateDataProvider.Compacting CREATE_COMPACTING;
     public final CreateDataProvider.Crushing CREATE_CRUSHING;
     public final CreateDataProvider.Cutting CREATE_CUTTING;
@@ -53,6 +55,7 @@ public abstract class CompatDataProvider {
         ARS_NOUVEAU_CRUSHING = addServer(new ArsNouveauDataProvider.Crushing(namespace, generator));
         ARS_NOUVEAU_GLYPH = addServer(new ArsNouveauDataProvider.Glyph(namespace, generator));
         ARS_NOUVEAU_IMBUEMENT = addServer(new ArsNouveauDataProvider.Imbuement(namespace, generator));
+        BOTANIA_MANA_INFUSION = addServer(new BotaniaDataProvider.ManaInfusion(namespace, generator));
         CREATE_COMPACTING = addServer(new CreateDataProvider.Compacting(namespace, generator));
         CREATE_CRUSHING = addServer(new CreateDataProvider.Crushing(namespace, generator));
         CREATE_CUTTING = addServer(new CreateDataProvider.Cutting(namespace, generator));
@@ -106,6 +109,8 @@ public abstract class CompatDataProvider {
     //endregion
 
     //region HELPER
+    protected static final ResourceLocation ALCHEMY_CATALYST = new ResourceLocation("botania", "alchemy_catalyst");
+    protected static final ResourceLocation CONJURATION_CATALYST = new ResourceLocation("botania", "conjuration_catalyst");
     protected static final ResourceLocation EXPERIENCE_NUGGET = new ResourceLocation("create", "experience_nugget");
     protected static final Ingredient SLAG = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "slag")));
     protected static final Ingredient WOOD_DUST = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "dusts/wood")));
@@ -443,7 +448,10 @@ public abstract class CompatDataProvider {
         Item planks = family.getBaseBlock().asItem();
         Item slab = family.get(BlockFamily.Variant.SLAB).asItem();
         Item stairs = family.get(BlockFamily.Variant.STAIRS).asItem();
-        //TODO Botania Mana Infusion
+        if (leaves != null) {
+            BOTANIA_MANA_INFUSION.add(BOTANIA_MANA_INFUSION.builder(toName(leaves) + "_dupe", 2000, Ingredient.of(leaves), leaves, 2)
+                    .setCatalyst(CONJURATION_CATALYST));
+        }
         //TODO Botany Pots Crop
         //TODO Corail Woodcutter Woodcutting
         //TODO Elementalcraft Cutting
