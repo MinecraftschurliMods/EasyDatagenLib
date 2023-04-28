@@ -4,7 +4,7 @@ import com.github.minecraftschurlimods.easydatagenlib.mods.ArsNouveauDataProvide
 import com.github.minecraftschurlimods.easydatagenlib.mods.BotaniaDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.CreateDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.ImmersiveEngineeringDataProvider;
-import com.github.minecraftschurlimods.easydatagenlib.util.ModdedValues;
+import com.github.minecraftschurlimods.easydatagenlib.util.immersiveengineering.ClocheRenderType;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -117,7 +117,7 @@ public abstract class CompatDataProvider {
     protected static final Ingredient MUSHROOM_SOIL = Ingredient.of(Items.MYCELIUM, Items.PODZOL);
 
     /**
-     * Shortcut to get an block's registry name.
+     * Shortcut to get a block's registry name.
      *
      * @param block The block to get the registry name for.
      * @return The registry name of the given block.
@@ -418,7 +418,7 @@ public abstract class CompatDataProvider {
      */
     protected void addMushroomProcessing(Item mushroom) {
         //TODO Botany Pots Crop
-        IMMERSIVE_ENGINEERING_CLOCHE.add(IMMERSIVE_ENGINEERING_CLOCHE.builder(toName(mushroom), 480, Ingredient.of(mushroom), MUSHROOM_SOIL, ModdedValues.ImmersiveEngineering.ClocheRenderType.GENERIC, itemId(mushroom))
+        IMMERSIVE_ENGINEERING_CLOCHE.add(IMMERSIVE_ENGINEERING_CLOCHE.builder(toName(mushroom), 480, Ingredient.of(mushroom), MUSHROOM_SOIL, ClocheRenderType.GENERIC, itemId(mushroom))
                 .addResult(Ingredient.of(mushroom)));
         //TODO Mekanism Crushing
         //TODO Thermal Insolating

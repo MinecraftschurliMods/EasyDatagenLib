@@ -28,7 +28,7 @@ import java.util.function.Predicate;
 /**
  * {@see https://github.com/Creators-of-Create/Create/blob/mc1.18/dev/src/main/java/com/simibubi/create/foundation/fluid/FluidIngredient.java}
  */
-public abstract class FluidIngredient implements Predicate<FluidStack> {
+public abstract class FluidIngredient implements Predicate<FluidStack>, JsonSerializable {
     public static final FluidIngredient EMPTY = FluidIngredient.of(new FluidStack(Fluids.EMPTY, 0));
     private static final Gson GSON = new GsonBuilder().create();
     private List<FluidStack> matchingFluidStacks;
@@ -86,6 +86,7 @@ public abstract class FluidIngredient implements Predicate<FluidStack> {
         return ingredient;
     }
 
+    @Override
     public JsonObject toJson() {
         JsonObject json = new JsonObject();
         write(json);

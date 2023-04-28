@@ -2,9 +2,10 @@ package com.github.minecraftschurlimods.easydatagenlib.mods;
 
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeBuilder;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeProvider;
-import com.github.minecraftschurlimods.easydatagenlib.util.IngredientWithCount;
-import com.github.minecraftschurlimods.easydatagenlib.util.ModdedValues;
+import com.github.minecraftschurlimods.easydatagenlib.util.immersiveengineering.IngredientWithCount;
+import com.github.minecraftschurlimods.easydatagenlib.util.JsonUtil;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentItemStack;
+import com.github.minecraftschurlimods.easydatagenlib.util.immersiveengineering.ClocheRenderType;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
@@ -22,23 +23,6 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
         super(new ResourceLocation("immersiveengineering", folder), namespace, generator);
     }
     //TODO Alloy Furnace, Blast Furnace, Blast Furnace Fuel, Bottling Machine, Cloche Fertilizer, Coke Oven, Fermenter, Generator Fuel, Metal Press, Mineral Mix, Mixer, Refinery, Squeezer, Thermoelectric Source
-
-    /**
-     * Serializes an {@link IngredientWithCount} into Immersive Engineering's format. This is needed because Immersive Engineering uses a different format than other mods.
-     *
-     * @param iwc The {@link IngredientWithCount} to serialize.
-     * @return A JSON representation of the given {@link IngredientWithCount} in Immersive Engineering's format.
-     */
-    static JsonObject ingredientWithCountToJson(IngredientWithCount iwc) {
-        JsonObject json = new JsonObject();
-        if (iwc.count == 1) {
-            json = iwc.ingredient.toJson().getAsJsonObject();
-        } else {
-            json.add("base_ingredient", iwc.ingredient.toJson());
-            json.addProperty("count", iwc.count);
-        }
-        return json;
-    }
 
     public static class ArcFurnace extends ImmersiveEngineeringDataProvider<ArcFurnace.Builder> {
         public ArcFurnace(String namespace, DataGenerator generator) {
@@ -222,29 +206,17 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
             protected void toJson(JsonObject json) {
                 json.addProperty("time", time);
                 json.addProperty("energy", energy);
-                json.add("input", ingredientWithCountToJson(input));
+                json.add("input", input.toJson());
                 if (slag != null) {
-                    json.add("slag", ingredientWithCountToJson(slag));
+                    json.add("slag", slag.toJson());
                 }
                 if (results.isEmpty()) throw new IllegalStateException("Results cannot be empty for recipe" + id + "!");
-                JsonArray results = new JsonArray();
-                for (IngredientWithCount result : this.results) {
-                    results.add(ingredientWithCountToJson(result));
-                }
-                json.add("results", results);
+                json.add("results", JsonUtil.toList(results));
                 if (!additives.isEmpty()) {
-                    JsonArray additives = new JsonArray();
-                    for (IngredientWithCount additive : this.additives) {
-                        additives.add(ingredientWithCountToJson(additive));
-                    }
-                    json.add("additives", additives);
+                    json.add("additives", JsonUtil.toList(additives));
                 }
                 if (!secondaries.isEmpty()) {
-                    JsonArray secondaries = new JsonArray();
-                    for (IngredientWithCount secondary : this.secondaries) {
-                        secondaries.add(ingredientWithCountToJson(secondary));
-                    }
-                    json.add("secondaries", secondaries);
+                    json.add("secondaries", JsonUtil.toList(secondaries));
                 }
             }
         }
@@ -265,7 +237,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
          * @param renderType The render mode to use in the recipe renderer.
          * @param block      The id of the block to use in the recipe renderer.
          */
-        public Builder builder(String id, int time, Ingredient input, Ingredient soil, ModdedValues.ImmersiveEngineering.ClocheRenderType renderType, ResourceLocation block) {
+        public Builder builder(String id, int time, Ingredient input, Ingredient soil, ClocheRenderType renderType, ResourceLocation block) {
             return new Builder(new ResourceLocation(namespace, id), time, input, soil, renderType, block);
         }
 
@@ -279,7 +251,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
          * @param renderType The render mode to use in the recipe renderer.
          * @param block      The block to use in the recipe renderer.
          */
-        public Builder builder(String id, int time, Ingredient input, Ingredient soil, ModdedValues.ImmersiveEngineering.ClocheRenderType renderType, Block block) {
+        public Builder builder(String id, int time, Ingredient input, Ingredient soil, ClocheRenderType renderType, Block block) {
             return new Builder(new ResourceLocation(namespace, id), time, input, soil, renderType, block);
         }
 
@@ -288,7 +260,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
             private final int time;
             private final Ingredient input;
             private final Ingredient soil;
-            private final ModdedValues.ImmersiveEngineering.ClocheRenderType renderType;
+            private final ClocheRenderType renderType;
             private final ResourceLocation block;
 
             /**
@@ -301,7 +273,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
              * @param renderType The render mode to use in the recipe renderer.
              * @param block      The id of the block to use in the recipe renderer.
              */
-            public Builder(ResourceLocation id, int time, Ingredient input, Ingredient soil, ModdedValues.ImmersiveEngineering.ClocheRenderType renderType, ResourceLocation block) {
+            public Builder(ResourceLocation id, int time, Ingredient input, Ingredient soil, ClocheRenderType renderType, ResourceLocation block) {
                 super(id);
                 this.time = time;
                 this.input = input;
@@ -320,7 +292,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
              * @param renderType The render mode to use in the recipe renderer.
              * @param block      The block to use in the recipe renderer.
              */
-            public Builder(ResourceLocation id, int time, Ingredient input, Ingredient soil, ModdedValues.ImmersiveEngineering.ClocheRenderType renderType, Block block) {
+            public Builder(ResourceLocation id, int time, Ingredient input, Ingredient soil, ClocheRenderType renderType, Block block) {
                 this(id, time, input, soil, renderType, blockId(block));
             }
 
@@ -351,11 +323,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
                 json.addProperty("time", time);
                 json.add("input", input.toJson());
                 json.add("soil", soil.toJson());
-                JsonArray results = new JsonArray();
-                for (IngredientWithCount result : this.results) {
-                    results.add(ingredientWithCountToJson(result));
-                }
-                json.add("results", results);
+                json.add("results", JsonUtil.toList(results));
                 JsonObject render = new JsonObject();
                 render.addProperty("type", renderType.toString());
                 render.addProperty("block", block.toString());
@@ -477,12 +445,8 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
             protected void toJson(JsonObject json) {
                 json.addProperty("energy", energy);
                 json.add("input", input.toJson());
-                json.add("result", ingredientWithCountToJson(result));
-                JsonArray secondaries = new JsonArray();
-                for (IngredientWithCount secondary : this.secondaries) {
-                    secondaries.add(ingredientWithCountToJson(secondary));
-                }
-                json.add("secondaries", secondaries);
+                json.add("result", result.toJson());
+                json.add("secondaries", JsonUtil.toList(secondaries));
             }
         }
     }
@@ -652,16 +616,14 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
                 json.add("input", input.toJson());
                 json.add("result", result.toJson());
                 if (stripped != null) {
-                    json.add("stripped", ingredientWithCountToJson(stripped));
+                    json.add("stripped", stripped.toJson());
                 }
-                JsonArray secondaries = new JsonArray();
-                for (Pair<IngredientWithCount, Boolean> secondary : this.secondaries) {
-                    JsonObject s = new JsonObject();
-                    s.add("output", ingredientWithCountToJson(secondary.getFirst()));
-                    s.addProperty("stripping", secondary.getSecond());
-                    secondaries.add(s);
-                }
-                json.add("secondaries", secondaries);
+                json.add("secondaries", JsonUtil.toList(secondaries, e -> {
+                    JsonObject o = new JsonObject();
+                    o.add("output", e.getFirst().toJson());
+                    o.addProperty("stripping", e.getSecond());
+                    return o;
+                }));
             }
         }
     }

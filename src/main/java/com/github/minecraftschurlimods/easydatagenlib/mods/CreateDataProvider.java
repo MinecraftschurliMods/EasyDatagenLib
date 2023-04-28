@@ -3,12 +3,12 @@ package com.github.minecraftschurlimods.easydatagenlib.mods;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeBuilder;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeProvider;
 import com.github.minecraftschurlimods.easydatagenlib.util.FluidIngredient;
-import com.github.minecraftschurlimods.easydatagenlib.util.JsonUtils;
-import com.github.minecraftschurlimods.easydatagenlib.util.ModdedValues;
+import com.github.minecraftschurlimods.easydatagenlib.util.JsonUtil;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentFluidStack;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentItemStack;
-import com.google.gson.JsonArray;
+import com.github.minecraftschurlimods.easydatagenlib.util.create.HeatRequirement;
 import com.google.gson.JsonObject;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -16,7 +16,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.material.Fluid;
 import org.apache.commons.lang3.SerializationException;
-import oshi.util.tuples.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -252,11 +251,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             @Override
             protected void toJson(JsonObject json) {
                 validate();
-                JsonArray pattern = new JsonArray();
-                for (String s : this.pattern) {
-                    pattern.add(s);
-                }
-                json.add("pattern", pattern);
+                json.add("pattern", JsonUtil.toStringList(pattern));
                 JsonObject key = new JsonObject();
                 for (Map.Entry<Character, Ingredient> s : this.key.entrySet()) {
                     json.add(String.valueOf(s.getKey()), s.getValue().toJson());
@@ -404,21 +399,17 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
                 json.add("ingredient", ingredient.toJson());
                 json.add("transitionalItem", transitionalItem.toJson());
                 json.addProperty("loops", loops);
-                JsonArray sequence = new JsonArray();
-                for (Processing.Builder builder : this.sequence) {
-                    JsonObject processing = new JsonObject();
-                    builder.toJson(processing);
-                    sequence.add(processing);
-                }
-                json.add("sequence", sequence);
-                JsonArray results = new JsonArray();
-                for (Pair<PotentiallyAbsentItemStack, Float> pair : this.results) {
-                    JsonObject result = new JsonObject();
-                    result.addProperty("item", pair.getA().item.toString());
-                    result.addProperty("chance", pair.getB());
-                    results.add(result);
-                }
-                json.add("results", results);
+                json.add("sequence", JsonUtil.toList(sequence, e -> {
+                    JsonObject o = new JsonObject();
+                    e.toJson(o);
+                    return o;
+                }));
+                json.add("results", JsonUtil.toList(results, e -> {
+                    JsonObject o = new JsonObject();
+                    o.addProperty("item", e.getFirst().item.toString());
+                    o.addProperty("chance", e.getSecond());
+                    return o;
+                }));
             }
         }
     }
@@ -455,7 +446,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             private final List<PotentiallyAbsentFluidStack> fluidResults = new ArrayList<>();
             private final int processingTime;
             private boolean keepHeldItem;
-            private ModdedValues.Create.HeatRequirement heatRequirement = ModdedValues.Create.HeatRequirement.NONE;
+            private HeatRequirement heatRequirement = HeatRequirement.NONE;
 
             /**
              * Creates a new builder with the given id.
@@ -473,7 +464,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
              *
              * @param heatRequirement The heat requirement to set.
              */
-            public void setHeatRequirement(ModdedValues.Create.HeatRequirement heatRequirement) {
+            public void setHeatRequirement(HeatRequirement heatRequirement) {
                 this.heatRequirement = heatRequirement;
             }
 
@@ -692,11 +683,11 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
                 if (keepHeldItem) {
                     json.addProperty("keepHeldItem", true);
                 }
-                if (heatRequirement != ModdedValues.Create.HeatRequirement.NONE) {
+                if (heatRequirement != HeatRequirement.NONE) {
                     json.addProperty("heatRequirement", heatRequirement.toString());
                 }
-                JsonUtils.addIngredientsToJson(json, ingredients, fluidIngredients);
-                JsonUtils.addResultsToJson(json, results, fluidResults);
+                json.add("ingredients", JsonUtil.mergeArrays(JsonUtil.toIngredientList(ingredients), JsonUtil.toList(fluidIngredients)));
+                json.add("results", JsonUtil.mergeArrays(JsonUtil.toList(results), JsonUtil.toList(fluidResults)));
             }
         }
     }

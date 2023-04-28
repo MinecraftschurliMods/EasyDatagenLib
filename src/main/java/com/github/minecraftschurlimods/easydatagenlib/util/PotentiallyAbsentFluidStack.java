@@ -11,7 +11,7 @@ import net.minecraftforge.fluids.FluidStack;
  * When serializing to JSON, no {@link FluidStack} will be used. Instead, the correct JSON syntax is recreated by hand.
  * This means that you can use fluid ids that may not be valid, e.g. from other mods, in your datagen.
  */
-public class PotentiallyAbsentFluidStack {
+public class PotentiallyAbsentFluidStack implements JsonSerializable {
     public final ResourceLocation fluid;
     public final int amount;
     public CompoundTag tag;
@@ -61,6 +61,7 @@ public class PotentiallyAbsentFluidStack {
     /**
      * @return The JSON representation of this object.
      */
+    @Override
     public JsonObject toJson() {
         JsonObject json = new JsonObject();
         if (fluid == null) throw new IllegalArgumentException("Cannot serialize an fluid stack without an fluid id!");

@@ -2,8 +2,8 @@ package com.github.minecraftschurlimods.easydatagenlib.mods;
 
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeBuilder;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeProvider;
+import com.github.minecraftschurlimods.easydatagenlib.util.JsonUtil;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentItemStack;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -154,13 +154,11 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
             @Override
             protected void toJson(JsonObject json) {
                 json.add("input", input.toJson());
-                JsonArray output = new JsonArray();
-                for (Output o : this.output) {
-                    JsonObject object = o.stack.toJson();
-                    object.addProperty("maxRange", o.maxRange);
-                    output.add(object);
-                }
-                json.add("output", output);
+                json.add("output", JsonUtil.toList(output, e -> {
+                    JsonObject o = e.stack.toJson();
+                    o.addProperty("maxRange", e.maxRange);
+                    return o;
+                }));
                 json.addProperty("skip_block_place", skipBlockPlace);
             }
 
@@ -295,18 +293,12 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
 
             @Override
             protected void toJson(JsonObject json) {
+                if (this.inputItems.isEmpty())
+                    throw new IllegalStateException("Input item list is empty for recipe " + id);
                 json.addProperty("output", output.item.toString());
                 json.addProperty("count", output.count);
                 json.addProperty("exp", experience);
-                if (this.inputItems.isEmpty())
-                    throw new IllegalStateException("Input item list is empty for recipe " + id);
-                JsonArray inputItems = new JsonArray();
-                for (Ingredient i : this.inputItems) {
-                    JsonObject object = new JsonObject();
-                    object.add("item", i.toJson());
-                    inputItems.add(object);
-                }
-                json.add("inputItems", inputItems);
+                json.add("inputItems", JsonUtil.toIngredientList(inputItems));
             }
         }
     }
@@ -392,13 +384,7 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
                 json.addProperty("output", output.item.toString());
                 json.addProperty("count", output.count);
                 json.addProperty("source", source);
-                JsonArray pedestalItems = new JsonArray();
-                for (Ingredient i : this.pedestalItems) {
-                    JsonObject object = new JsonObject();
-                    object.add("item", i.toJson());
-                    pedestalItems.add(object);
-                }
-                json.add("pedestalItems", pedestalItems);
+                json.add("pedestalItems", JsonUtil.toIngredientList(pedestalItems));
             }
         }
     }

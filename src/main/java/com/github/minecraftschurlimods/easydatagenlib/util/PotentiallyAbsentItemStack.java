@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
  * When serializing to JSON, no {@link ItemStack} will be used. Instead, the correct JSON syntax is recreated by hand.
  * This means that you can use item ids that may not be valid, e.g. from other mods, in your datagen.
  */
-public class PotentiallyAbsentItemStack {
+public class PotentiallyAbsentItemStack implements JsonSerializable {
     public final ResourceLocation item;
     public final int count;
     public CompoundTag tag;
@@ -61,6 +61,7 @@ public class PotentiallyAbsentItemStack {
     /**
      * @return The JSON representation of this object.
      */
+    @Override
     public JsonObject toJson() {
         JsonObject json = new JsonObject();
         if (item == null) throw new IllegalArgumentException("Cannot serialize an item stack without an item id!");
