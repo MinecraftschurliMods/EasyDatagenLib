@@ -2,17 +2,22 @@ package com.github.minecraftschurlimods.easydatagenlib.api;
 
 import com.github.minecraftschurlimods.easydatagenlib.mods.ArsNouveauDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.BotaniaDataProvider;
+import com.github.minecraftschurlimods.easydatagenlib.mods.BotanyPotsDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.CreateDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.ImmersiveEngineeringDataProvider;
+import com.github.minecraftschurlimods.easydatagenlib.util.botanypots.DisplayState;
 import com.github.minecraftschurlimods.easydatagenlib.util.immersiveengineering.ClocheRenderType;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.TallFlowerBlock;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.common.crafting.conditions.NotCondition;
 import net.minecraftforge.common.crafting.conditions.TagEmptyCondition;
@@ -31,6 +36,8 @@ public abstract class CompatDataProvider {
     public final ArsNouveauDataProvider.Glyph ARS_NOUVEAU_GLYPH;
     public final ArsNouveauDataProvider.Imbuement ARS_NOUVEAU_IMBUEMENT;
     public final BotaniaDataProvider.ManaInfusion BOTANIA_MANA_INFUSION;
+    public final BotanyPotsDataProvider.Crop BOTANY_POTS_CROP;
+    public final BotanyPotsDataProvider.Soil BOTANY_POTS_SOIL;
     public final CreateDataProvider.Compacting CREATE_COMPACTING;
     public final CreateDataProvider.Crushing CREATE_CRUSHING;
     public final CreateDataProvider.Cutting CREATE_CUTTING;
@@ -56,6 +63,8 @@ public abstract class CompatDataProvider {
         ARS_NOUVEAU_GLYPH = addServer(new ArsNouveauDataProvider.Glyph(namespace, generator));
         ARS_NOUVEAU_IMBUEMENT = addServer(new ArsNouveauDataProvider.Imbuement(namespace, generator));
         BOTANIA_MANA_INFUSION = addServer(new BotaniaDataProvider.ManaInfusion(namespace, generator));
+        BOTANY_POTS_CROP = addServer(new BotanyPotsDataProvider.Crop(namespace, generator));
+        BOTANY_POTS_SOIL = addServer(new BotanyPotsDataProvider.Soil(namespace, generator));
         CREATE_COMPACTING = addServer(new CreateDataProvider.Compacting(namespace, generator));
         CREATE_CRUSHING = addServer(new CreateDataProvider.Crushing(namespace, generator));
         CREATE_CUTTING = addServer(new CreateDataProvider.Cutting(namespace, generator));
@@ -112,6 +121,7 @@ public abstract class CompatDataProvider {
     protected static final ResourceLocation ALCHEMY_CATALYST = new ResourceLocation("botania", "alchemy_catalyst");
     protected static final ResourceLocation CONJURATION_CATALYST = new ResourceLocation("botania", "conjuration_catalyst");
     protected static final ResourceLocation EXPERIENCE_NUGGET = new ResourceLocation("create", "experience_nugget");
+    protected static final ResourceLocation SHROOMLIGHT = new ResourceLocation("minecraft", "shroomlight");
     protected static final Ingredient SLAG = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "slag")));
     protected static final Ingredient WOOD_DUST = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "dusts/wood")));
     protected static final Ingredient MUSHROOM_SOIL = Ingredient.of(Items.MYCELIUM, Items.PODZOL);
@@ -206,7 +216,12 @@ public abstract class CompatDataProvider {
      * @param polishedStone  The polished variant of the stone.
      */
     protected void addStoneProcessing(Item stone, ResourceLocation polishedStone) {
-        //TODO Botany Pots Soil
+        if (stone instanceof BlockItem bi) {
+            BOTANY_POTS_SOIL.add(BOTANY_POTS_SOIL.builder(toName(stone), Ingredient.of(stone), new DisplayState.Simple(bi.getBlock().defaultBlockState()))
+                    .addCategory("stone")
+                    .addCategory("mushroom")
+                    .addCategory(toName(stone)));
+        }
         //TODO Mekanism Enriching
         //TODO Twilight Forest Crumbling
     }
@@ -219,7 +234,22 @@ public abstract class CompatDataProvider {
      * @param gem          The id of the gem item.
      */
     protected void addGemOreProcessing(Item ore, Item deepslateOre, ResourceLocation gem) {
-        //TODO Botany Pots Soil
+        if (ore instanceof BlockItem bi) {
+            BOTANY_POTS_SOIL.add(BOTANY_POTS_SOIL.builder(toName(ore), Ingredient.of(ore), new DisplayState.Simple(bi.getBlock().defaultBlockState()))
+                    .addCategory("stone")
+                    .addCategory("mushroom")
+                    .addCategory("ore")
+                    .addCategory(toName(ore)));
+        }
+        if (deepslateOre instanceof BlockItem bi) {
+            BOTANY_POTS_SOIL.add(BOTANY_POTS_SOIL.builder(toName(deepslateOre), Ingredient.of(deepslateOre), new DisplayState.Simple(bi.getBlock().defaultBlockState()))
+                    .addCategory("stone")
+                    .addCategory("mushroom")
+                    .addCategory("ore")
+                    .addCategory(toName(ore))
+                    .addCategory("deepslate")
+                    .addCategory(toName(deepslateOre)));
+        }
         CREATE_CRUSHING.add(CREATE_CRUSHING.builder(itemId(ore).getPath(), 250)
                 .addIngredient(Ingredient.of(ore))
                 .addResult(gem)
@@ -254,7 +284,22 @@ public abstract class CompatDataProvider {
      * @param secondaryDustTag The secondary dust tag. Used in Immersive Engineering crushing. Can be null. If null, no recipes using or producing this item will be generated.
      */
     protected void addMetalOreProcessing(Item ore, Item deepslateOre, TagKey<Item> oreTag, ResourceLocation rawOre, TagKey<Item> rawOreTag, @Nullable ResourceLocation rawOreBlock, TagKey<Item> rawOreBlockTag, ResourceLocation ingot, TagKey<Item> ingotTag, @Nullable ResourceLocation ingotBlock, TagKey<Item> ingotBlockTag, @Nullable ResourceLocation dust, TagKey<Item> dustTag, @Nullable ResourceLocation crushedOre, @Nullable TagKey<Item> secondaryDustTag) {
-        //TODO Botany Pots Soil
+        if (ore instanceof BlockItem bi) {
+            BOTANY_POTS_SOIL.add(BOTANY_POTS_SOIL.builder(toName(ore), Ingredient.of(ore), new DisplayState.Simple(bi.getBlock().defaultBlockState()))
+                    .addCategory("stone")
+                    .addCategory("mushroom")
+                    .addCategory("ore")
+                    .addCategory(toName(ore)));
+        }
+        if (deepslateOre instanceof BlockItem bi) {
+            BOTANY_POTS_SOIL.add(BOTANY_POTS_SOIL.builder(toName(deepslateOre), Ingredient.of(deepslateOre), new DisplayState.Simple(bi.getBlock().defaultBlockState()))
+                    .addCategory("stone")
+                    .addCategory("mushroom")
+                    .addCategory("ore")
+                    .addCategory(toName(ore))
+                    .addCategory("deepslate")
+                    .addCategory(toName(deepslateOre)));
+        }
         if (crushedOre != null) {
             CREATE_CRUSHING.add(CREATE_CRUSHING.builder(itemId(ore).getPath(), 250)
                     .addIngredient(Ingredient.of(ore))
@@ -318,7 +363,12 @@ public abstract class CompatDataProvider {
      */
     protected void addFlowerProcessing(Item flower, ResourceLocation output1, int count1, @Nullable ResourceLocation output2, int count2, float chance2, @Nullable ResourceLocation output3, int count3, float chance3) {
         ARS_NOUVEAU_CRUSHING.add(ARS_NOUVEAU_CRUSHING.builder(itemId(flower).getPath(), Ingredient.of(flower)).addOutput(output1, 2));
-        //TODO Botany Pots Crop
+        if (flower instanceof BlockItem bi) {
+            BOTANY_POTS_CROP.add(BOTANY_POTS_CROP.builder(toName(flower), Ingredient.of(flower), 1200)
+                    .addCategory("dirt")
+                    .addDisplay(new DisplayState.Simple(bi.getBlock().defaultBlockState()))
+                    .addDrop(flower));
+        }
         var milling = CREATE_MILLING.builder(itemId(flower).getPath(), 50)
                 .addIngredient(Ingredient.of(flower))
                 .addResult(output1, count1);
@@ -370,7 +420,13 @@ public abstract class CompatDataProvider {
      */
     protected void addTallFlowerProcessing(Item flower, ResourceLocation output1, int count1, @Nullable ResourceLocation output2, int count2, float chance2, @Nullable ResourceLocation output3, int count3, float chance3) {
         //TODO Ars Nouveau Crushing - awaiting response from mod author
-        //TODO Botany Pots Crop
+        if (flower instanceof BlockItem bi && bi.getBlock() instanceof TallFlowerBlock tfb) {
+            BOTANY_POTS_CROP.add(BOTANY_POTS_CROP.builder(toName(flower), Ingredient.of(flower), 1200)
+                    .addCategory("dirt")
+                    .addDisplay(new DisplayState.Simple(tfb.defaultBlockState().setValue(TallFlowerBlock.HALF, DoubleBlockHalf.LOWER)))
+                    .addDisplay(new DisplayState.Simple(tfb.defaultBlockState().setValue(TallFlowerBlock.HALF, DoubleBlockHalf.UPPER)))
+                    .addDrop(flower));
+        }
         var milling = CREATE_MILLING.builder(itemId(flower).getPath(), 100)
                 .addIngredient(Ingredient.of(flower))
                 .addResult(output1, count1);
@@ -417,7 +473,14 @@ public abstract class CompatDataProvider {
      * @param mushroom The mushroom to be processed.
      */
     protected void addMushroomProcessing(Item mushroom) {
-        //TODO Botany Pots Crop
+        if (mushroom instanceof BlockItem bi) {
+            BOTANY_POTS_CROP.add(BOTANY_POTS_CROP.builder(toName(mushroom), Ingredient.of(mushroom), 1200)
+                    .addCategory("stone")
+                    .addCategory("mushroom")
+                    .addCategory("mulch")
+                    .addDisplay(new DisplayState.Simple(bi.getBlock().defaultBlockState()))
+                    .addDrop(mushroom));
+        }
         IMMERSIVE_ENGINEERING_CLOCHE.add(IMMERSIVE_ENGINEERING_CLOCHE.builder(toName(mushroom), 480, Ingredient.of(mushroom), MUSHROOM_SOIL, ClocheRenderType.GENERIC, itemId(mushroom))
                 .addResult(Ingredient.of(mushroom)));
         //TODO Mekanism Crushing
@@ -427,11 +490,28 @@ public abstract class CompatDataProvider {
     /**
      * Adds processing for a fungus and roots type.
      *
-     * @param fungus The fungus to be processed.
-     * @param roots  The roots to be processed.
+     * @param fungus    The fungus to be processed.
+     * @param roots     The roots to be processed.
+     * @param nylium    The id of the nylium item associated with the fungus.
+     * @param stem      The id of the stem item associated with the fungus.
+     * @param wartBlock The id of the wart block item associated with the fungus.
      */
-    protected void addFungusAndRootsProcessing(Item fungus, Item roots) {
-        //TODO Botany Pots Crop
+    protected void addFungusAndRootsProcessing(Item fungus, Item roots, ResourceLocation nylium, ResourceLocation stem, ResourceLocation wartBlock) {
+        if (fungus instanceof BlockItem bi) {
+            BOTANY_POTS_CROP.add(BOTANY_POTS_CROP.builder(toName(fungus), Ingredient.of(fungus), 1200)
+                    .addCategory(toName(nylium))
+                    .addDisplay(new DisplayState.Simple(bi.getBlock().defaultBlockState()))
+                    .addDrop(fungus)
+                    .addDrop(stem)
+                    .addDrop(wartBlock, 0.25f)
+                    .addDrop(SHROOMLIGHT, 0.05f));
+        }
+        if (roots instanceof BlockItem bi) {
+            BOTANY_POTS_CROP.add(BOTANY_POTS_CROP.builder(toName(roots), Ingredient.of(roots), 1200)
+                    .addCategory(toName(nylium))
+                    .addDisplay(new DisplayState.Simple(bi.getBlock().defaultBlockState()))
+                    .addDrop(roots));
+        }
         //TODO Mekanism Crushing
     }
 
@@ -452,7 +532,6 @@ public abstract class CompatDataProvider {
             BOTANIA_MANA_INFUSION.add(BOTANIA_MANA_INFUSION.builder(toName(leaves) + "_dupe", 2000, Ingredient.of(leaves), leaves, 2)
                     .setCatalyst(CONJURATION_CATALYST));
         }
-        //TODO Botany Pots Crop
         //TODO Corail Woodcutter Woodcutting
         //TODO Elementalcraft Cutting
         //TODO Farmer's Delight Cutting
@@ -477,10 +556,17 @@ public abstract class CompatDataProvider {
      * @param wood         The wood item to process.
      * @param strippedLog  The stripped log item to process.
      * @param strippedWood The stripped wood item to process.
-     * @param logs         The tag associated with the wooden logs.
      * @param planks       The id of the planks item associated with the wooden logs.
      */
-    protected void addLogsProcessing(Item log, Item wood, Item strippedLog, Item strippedWood, TagKey<Item> logs, ResourceLocation planks) {
+    protected void addLogsProcessing(Item log, Item wood, Item strippedLog, Item strippedWood, ResourceLocation planks) {
+        if (wood instanceof BlockItem bi) {
+            BOTANY_POTS_SOIL.add(BOTANY_POTS_SOIL.builder(toName(wood), Ingredient.of(log, wood), new DisplayState.Simple(bi.getBlock().defaultBlockState()))
+                    .addCategory("wood")
+                    .addCategory("log")
+                    .addCategory("mushroom")
+                    .addCategory(toName(wood).replace("_wood", ""))
+                    .addCategory(toName(wood)));
+        }
         CREATE_CUTTING.add(CREATE_CUTTING.builder(toName(log), 50)
                 .addIngredient(Ingredient.of(log))
                 .addResult(strippedLog));

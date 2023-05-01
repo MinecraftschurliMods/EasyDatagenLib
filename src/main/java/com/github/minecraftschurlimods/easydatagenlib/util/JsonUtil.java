@@ -2,8 +2,16 @@ package com.github.minecraftschurlimods.easydatagenlib.util;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 import java.util.function.Function;
@@ -30,10 +38,10 @@ public class JsonUtil {
     }
 
     /**
-     * @param list A list.
+     * @param list     A list.
      * @param function A function that determines how the list elements will be converted into JSON.
+     * @param <T>      The list element type.
      * @return A {@link JsonArray}, constructed from the given list.
-     * @param <T> The list element type.
      */
     public static <T> JsonArray toList(List<T> list, Function<? super T, JsonElement> function) {
         JsonArray array = new JsonArray();
@@ -95,5 +103,53 @@ public class JsonUtil {
      */
     public static JsonArray toIngredientList(List<? extends Ingredient> list) {
         return toList(list, Ingredient::toJson);
+    }
+
+    /**
+     * Converts a {@link Vec3} to a {@link JsonObject}.
+     *
+     * @param vec3 The {@link Vec3} to convert.
+     * @return A {@link JsonObject}, constructed from the given parameters.
+     */
+    public static JsonObject toJson(Vec3 vec3) {
+        JsonObject json = new JsonObject();
+        json.addProperty("x", vec3.x);
+        json.addProperty("y", vec3.y);
+        json.addProperty("z", vec3.z);
+        return json;
+    }
+
+    /**
+     * Converts a {@link BlockState} to a {@link JsonObject}.
+     *
+     * @param state The {@link BlockState} to convert.
+     * @return A {@link JsonObject}, constructed from the given parameters.
+     */
+    public static JsonObject toJson(BlockState state) {
+        JsonObject json = new JsonObject();
+        json.addProperty("block", ForgeRegistries.BLOCKS.getKey(state.getBlock()).toString());
+        json.add("properties", propertiesToJson(state));
+        return json;
+    }
+
+    /**
+     * Converts a {@link BlockState}'s properties to a {@link JsonElement}.
+     *
+     * @param state The {@link BlockState} of which to convert the properties.
+     * @return A {@link JsonElement}, constructed from the given parameters.
+     */
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public static JsonElement propertiesToJson(BlockState state) {
+        JsonObject json = new JsonObject();
+        for (Property property : state.getProperties()) {
+            if (property instanceof IntegerProperty ip) {
+                json.addProperty(property.getName(), state.getValue(ip));
+            } else if (property instanceof BooleanProperty bp) {
+                json.addProperty(property.getName(), state.getValue(bp));
+            } else {
+                json.addProperty(property.getName(), property.getName(state.getValue(property)));
+            }
+        }
+        return json;
     }
 }
