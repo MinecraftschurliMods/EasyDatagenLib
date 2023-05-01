@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.easydatagenlib.api;
 import com.github.minecraftschurlimods.easydatagenlib.mods.ArsNouveauDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.BotaniaDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.BotanyPotsDataProvider;
+import com.github.minecraftschurlimods.easydatagenlib.mods.CorailWoodcutterDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.CreateDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.ImmersiveEngineeringDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.util.botanypots.DisplayState;
@@ -38,6 +39,7 @@ public abstract class CompatDataProvider {
     public final BotaniaDataProvider.ManaInfusion BOTANIA_MANA_INFUSION;
     public final BotanyPotsDataProvider.Crop BOTANY_POTS_CROP;
     public final BotanyPotsDataProvider.Soil BOTANY_POTS_SOIL;
+    public final CorailWoodcutterDataProvider.Woodcutting CORAIL_WOODCUTTER_WOODCUTTING;
     public final CreateDataProvider.Compacting CREATE_COMPACTING;
     public final CreateDataProvider.Crushing CREATE_CRUSHING;
     public final CreateDataProvider.Cutting CREATE_CUTTING;
@@ -65,6 +67,7 @@ public abstract class CompatDataProvider {
         BOTANIA_MANA_INFUSION = addServer(new BotaniaDataProvider.ManaInfusion(namespace, generator));
         BOTANY_POTS_CROP = addServer(new BotanyPotsDataProvider.Crop(namespace, generator));
         BOTANY_POTS_SOIL = addServer(new BotanyPotsDataProvider.Soil(namespace, generator));
+        CORAIL_WOODCUTTER_WOODCUTTING = addServer(new CorailWoodcutterDataProvider.Woodcutting(namespace, generator));
         CREATE_COMPACTING = addServer(new CreateDataProvider.Compacting(namespace, generator));
         CREATE_CRUSHING = addServer(new CreateDataProvider.Crushing(namespace, generator));
         CREATE_CUTTING = addServer(new CreateDataProvider.Cutting(namespace, generator));
@@ -523,28 +526,89 @@ public abstract class CompatDataProvider {
      * @param sapling   The sapling item associated with the wooden block family.
      * @param boat      The boat item associated with the wooden block family.
      * @param chestBoat The chest boat item associated with the wooden block family.
+     * @param logs      The logs tag associated with the wooden block family.
      */
-    protected void addWoodenProcessing(BlockFamily family, @Nullable Item leaves, @Nullable Item sapling, @Nullable Item boat, @Nullable Item chestBoat) {
+    protected void addWoodenProcessing(BlockFamily family, @Nullable Item leaves, @Nullable Item sapling, @Nullable Item boat, @Nullable Item chestBoat, @Nullable TagKey<Item> logs) {
         Item planks = family.getBaseBlock().asItem();
-        Item slab = family.get(BlockFamily.Variant.SLAB).asItem();
-        Item stairs = family.get(BlockFamily.Variant.STAIRS).asItem();
+        Item slab = family.getVariants().containsKey(BlockFamily.Variant.SLAB) ? family.get(BlockFamily.Variant.SLAB).asItem() : null;
+        Item stairs = family.getVariants().containsKey(BlockFamily.Variant.STAIRS) ? family.get(BlockFamily.Variant.STAIRS).asItem() : null;
+        Item fence = family.getVariants().containsKey(BlockFamily.Variant.FENCE) ? family.get(BlockFamily.Variant.FENCE).asItem() : null;
+        Item fenceGate = family.getVariants().containsKey(BlockFamily.Variant.FENCE_GATE) ? family.get(BlockFamily.Variant.FENCE_GATE).asItem() : null;
+        Item door = family.getVariants().containsKey(BlockFamily.Variant.DOOR) ? family.get(BlockFamily.Variant.DOOR).asItem() : null;
+        Item trapdoor = family.getVariants().containsKey(BlockFamily.Variant.TRAPDOOR) ? family.get(BlockFamily.Variant.TRAPDOOR).asItem() : null;
+        Item button = family.getVariants().containsKey(BlockFamily.Variant.BUTTON) ? family.get(BlockFamily.Variant.BUTTON).asItem() : null;
+        Item pressurePlate = family.getVariants().containsKey(BlockFamily.Variant.PRESSURE_PLATE) ? family.get(BlockFamily.Variant.PRESSURE_PLATE).asItem() : null;
+        Item sign = family.getVariants().containsKey(BlockFamily.Variant.SIGN) ? family.get(BlockFamily.Variant.SIGN).asItem() : null;
+        if (slab != null) {
+            CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(slab) + "_from_" + toName(planks), Ingredient.of(planks), slab, 2));
+            IMMERSIVE_ENGINEERING_SAWMILL.add(IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(slab), 800, Ingredient.of(planks), slab, 2)
+                    .addSecondary(WOOD_DUST, false));
+        }
+        if (stairs != null) {
+            CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(stairs) + "_from_" + toName(planks), Ingredient.of(planks), stairs));
+            IMMERSIVE_ENGINEERING_SAWMILL.add(IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(stairs), 1600, Ingredient.of(stairs), planks)
+                    .addSecondary(WOOD_DUST, false));
+        }
+        if (fence != null) {
+            CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(fence) + "_from_" + toName(planks), Ingredient.of(planks), fence));
+        }
+        if (door != null) {
+            CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(door) + "_from_" + toName(planks), Ingredient.of(planks), door));
+            IMMERSIVE_ENGINEERING_SAWMILL.add(IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(door), 800, Ingredient.of(door), planks)
+                    .addSecondary(WOOD_DUST, false));
+        }
+        if (trapdoor != null) {
+            CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(trapdoor) + "_from_" + toName(planks), Ingredient.of(planks), trapdoor));
+        }
+        if (button != null) {
+            CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(button) + "_from_" + toName(planks), Ingredient.of(planks), button));
+        }
+        if (pressurePlate != null) {
+            CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(pressurePlate) + "_from_" + toName(planks), Ingredient.of(planks), pressurePlate));
+        }
+        if (sign != null) {
+            CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(sign) + "_from_" + toName(planks), Ingredient.of(planks), sign));
+        }
         if (leaves != null) {
             BOTANIA_MANA_INFUSION.add(BOTANIA_MANA_INFUSION.builder(toName(leaves) + "_dupe", 2000, Ingredient.of(leaves), leaves, 2)
                     .setCatalyst(CONJURATION_CATALYST));
         }
-        //TODO Corail Woodcutter Woodcutting
+        if (logs != null) {
+            CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(planks) + "_from_" + toName(logs), Ingredient.of(logs), planks, 4));
+            if (slab != null) {
+                CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(slab) + "_from_" + toName(logs), Ingredient.of(planks), slab, 8));
+            }
+            if (stairs != null) {
+                CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(stairs) + "_from_" + toName(logs), Ingredient.of(planks), stairs, 4));
+            }
+            if (fence != null) {
+                CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(fence) + "_from_" + toName(logs), Ingredient.of(planks), fence, 4));
+            }
+            if (fenceGate != null) {
+                CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(fenceGate) + "_from_" + toName(logs), Ingredient.of(planks), fenceGate));
+            }
+            if (door != null) {
+                CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(door) + "_from_" + toName(logs), Ingredient.of(planks), door, 4));
+            }
+            if (trapdoor != null) {
+                CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(trapdoor) + "_from_" + toName(logs), Ingredient.of(planks), trapdoor, 4));
+            }
+            if (button != null) {
+                CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(button) + "_from_" + toName(logs), Ingredient.of(planks), button, 4));
+            }
+            if (pressurePlate != null) {
+                CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(pressurePlate) + "_from_" + toName(logs), Ingredient.of(planks), pressurePlate, 4));
+            }
+            if (sign != null) {
+                CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(sign) + "_from_" + toName(logs), Ingredient.of(planks), sign, 4));
+            }
+            if (boat != null) {
+                CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(boat) + "_from_" + toName(logs), Ingredient.of(planks), boat));
+            }
+        }
         //TODO Elementalcraft Cutting
         //TODO Farmer's Delight Cutting
         //TODO Hexerei Cutting
-        if (family.getVariants().containsKey(BlockFamily.Variant.DOOR)) {
-            Item door = family.get(BlockFamily.Variant.DOOR).asItem();
-            IMMERSIVE_ENGINEERING_SAWMILL.add(IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(door), 800, Ingredient.of(door), planks)
-                    .addSecondary(WOOD_DUST, false));
-        }
-        IMMERSIVE_ENGINEERING_SAWMILL.add(IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(slab), 800, Ingredient.of(planks), slab, 2)
-                .addSecondary(WOOD_DUST, false));
-        IMMERSIVE_ENGINEERING_SAWMILL.add(IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(stairs), 1600, Ingredient.of(stairs), planks)
-                .addSecondary(WOOD_DUST, false));
         //TODO Mekanism Crushing, Sawing
         //TODO Thermal Insolating, Sawing
     }
