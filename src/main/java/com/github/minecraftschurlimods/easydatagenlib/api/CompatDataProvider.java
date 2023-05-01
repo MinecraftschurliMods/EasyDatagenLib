@@ -419,7 +419,7 @@ public abstract class CompatDataProvider {
      * @param count1  The count of the primary output. Used in Create milling. Some mods may use different, fixed amounts.
      */
     protected void addTallFlowerProcessing(Item flower, ResourceLocation output1, int count1, @Nullable ResourceLocation output2, int count2, float chance2, @Nullable ResourceLocation output3, int count3, float chance3) {
-        //TODO Ars Nouveau Crushing - awaiting response from mod author
+        ARS_NOUVEAU_CRUSHING.add(ARS_NOUVEAU_CRUSHING.builder(itemId(flower).getPath(), Ingredient.of(flower)).addOutput(output1, 4));
         if (flower instanceof BlockItem bi && bi.getBlock() instanceof TallFlowerBlock tfb) {
             BOTANY_POTS_CROP.add(BOTANY_POTS_CROP.builder(toName(flower), Ingredient.of(flower), 1200)
                     .addCategory("dirt")

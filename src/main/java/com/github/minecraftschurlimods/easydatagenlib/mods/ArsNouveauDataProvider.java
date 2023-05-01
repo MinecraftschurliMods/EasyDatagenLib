@@ -5,6 +5,7 @@ import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeProvider
 import com.github.minecraftschurlimods.easydatagenlib.util.JsonUtil;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentItemStack;
 import com.google.gson.JsonObject;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -33,7 +34,7 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
-            private final List<Output> output = new ArrayList<>();
+            private final List<Pair<PotentiallyAbsentItemStack, Integer>> output = new ArrayList<>();
             private final Ingredient input;
             private boolean skipBlockPlace = false;
 
@@ -147,7 +148,7 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
              * @return This builder, for chaining.
              */
             public Builder addOutput(ResourceLocation item, int count, float chance, int maxRange) {
-                output.add(new Output(new PotentiallyAbsentItemStack.WithChance(item, count, chance), maxRange)); // doesn't support NBT
+                output.add(Pair.of(new PotentiallyAbsentItemStack.WithChance(item, count, chance), maxRange)); // doesn't support NBT
                 return this;
             }
 
@@ -155,25 +156,11 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
             protected void toJson(JsonObject json) {
                 json.add("input", input.toJson());
                 json.add("output", JsonUtil.toList(output, e -> {
-                    JsonObject o = e.stack.toJson();
-                    o.addProperty("maxRange", e.maxRange);
+                    JsonObject o = e.getFirst().toJson();
+                    o.addProperty("maxRange", e.getSecond());
                     return o;
                 }));
                 json.addProperty("skip_block_place", skipBlockPlace);
-            }
-
-            private static final class Output {
-                final PotentiallyAbsentItemStack.WithChance stack;
-                final int maxRange;
-
-                private Output(PotentiallyAbsentItemStack.WithChance stack) {
-                    this(stack, 1);
-                }
-
-                private Output(PotentiallyAbsentItemStack.WithChance stack, int maxRange) {
-                    this.stack = stack;
-                    this.maxRange = maxRange;
-                }
             }
         }
     }
