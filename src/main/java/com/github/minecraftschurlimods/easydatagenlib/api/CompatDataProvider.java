@@ -5,6 +5,7 @@ import com.github.minecraftschurlimods.easydatagenlib.mods.BotaniaDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.BotanyPotsDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.CorailWoodcutterDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.CreateDataProvider;
+import com.github.minecraftschurlimods.easydatagenlib.mods.ElementalcraftDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.ImmersiveEngineeringDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.util.botanypots.DisplayState;
 import com.github.minecraftschurlimods.easydatagenlib.util.immersiveengineering.ClocheRenderType;
@@ -55,6 +56,8 @@ public abstract class CompatDataProvider {
     public final CreateDataProvider.SandpaperPolishing CREATE_SANDPAPER_POLISHING;
     public final CreateDataProvider.SequencedAssembly  CREATE_SEQUENCED_ASSEMBLY;
     public final CreateDataProvider.Splashing CREATE_SPLASHING;
+    public final ElementalcraftDataProvider.Grinding ELEMENTALCRAFT_GRINDING;
+    public final ElementalcraftDataProvider.Sawing ELEMENTALCRAFT_SAWING;
     public final ImmersiveEngineeringDataProvider.ArcFurnace IMMERSIVE_ENGINEERING_ARC_FURNACE;
     public final ImmersiveEngineeringDataProvider.Cloche IMMERSIVE_ENGINEERING_CLOCHE;
     public final ImmersiveEngineeringDataProvider.Crusher IMMERSIVE_ENGINEERING_CRUSHER;
@@ -83,6 +86,8 @@ public abstract class CompatDataProvider {
         CREATE_SANDPAPER_POLISHING = addServer(new CreateDataProvider.SandpaperPolishing(namespace, generator));
         CREATE_SEQUENCED_ASSEMBLY  = addServer(new CreateDataProvider.SequencedAssembly(namespace, generator));
         CREATE_SPLASHING = addServer(new CreateDataProvider.Splashing(namespace, generator));
+        ELEMENTALCRAFT_GRINDING = addServer(new ElementalcraftDataProvider.Grinding(namespace, generator));
+        ELEMENTALCRAFT_SAWING = addServer(new ElementalcraftDataProvider.Sawing(namespace, generator));
         IMMERSIVE_ENGINEERING_ARC_FURNACE = addServer(new ImmersiveEngineeringDataProvider.ArcFurnace(namespace, generator));
         IMMERSIVE_ENGINEERING_CLOCHE = addServer(new ImmersiveEngineeringDataProvider.Cloche(namespace, generator));
         IMMERSIVE_ENGINEERING_CRUSHER = addServer(new ImmersiveEngineeringDataProvider.Crusher(namespace, generator));
@@ -440,7 +445,6 @@ public abstract class CompatDataProvider {
             milling.addResult(output3, count3, chance3);
         }
         CREATE_MILLING.add(milling);
-        //TODO Elementalcraft Grinding
         //TODO Integrated Dynamics Squeezing
         //TODO Mekanism Crushing, Enriching, Extracting
         //TODO Thermal Centrifuging, Insolating
@@ -606,7 +610,6 @@ public abstract class CompatDataProvider {
                 CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(boat) + "_from_" + toName(logs), Ingredient.of(planks), boat));
             }
         }
-        //TODO Elementalcraft Cutting
         //TODO Farmer's Delight Cutting
         //TODO Hexerei Cutting
         //TODO Mekanism Crushing, Sawing
@@ -643,6 +646,9 @@ public abstract class CompatDataProvider {
         CREATE_CUTTING.add(CREATE_CUTTING.builder(toName(strippedWood), 50)
                 .addIngredient(Ingredient.of(strippedWood))
                 .addResult(planks, 6));
+        ELEMENTALCRAFT_SAWING.add(ELEMENTALCRAFT_SAWING.builder(toName(planks), Ingredient.of(strippedLog, strippedWood), planks, 6, 1000, 3));
+        ELEMENTALCRAFT_SAWING.add(ELEMENTALCRAFT_SAWING.builder(toName(strippedLog), Ingredient.of(log), strippedLog, 1000, 0));
+        ELEMENTALCRAFT_SAWING.add(ELEMENTALCRAFT_SAWING.builder(toName(strippedWood), Ingredient.of(wood), strippedWood, 1000, 0));
         IMMERSIVE_ENGINEERING_SAWMILL.add(IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(log), 1600, Ingredient.of(log, wood), planks, 6)
                 .setStripped(Ingredient.of(strippedLog))
                 .addSecondary(WOOD_DUST, true)
