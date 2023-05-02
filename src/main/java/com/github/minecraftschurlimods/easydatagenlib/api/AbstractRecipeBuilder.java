@@ -6,6 +6,9 @@ import net.minecraftforge.common.crafting.conditions.ICondition;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The abstract parent class of builder classes used by {@link AbstractRecipeProvider} for generating recipes.
+ */
 public abstract class AbstractRecipeBuilder<T extends AbstractRecipeBuilder<T>> extends AbstractDataBuilder<T> {
     public final List<ICondition> conditions = new ArrayList<>();
 
