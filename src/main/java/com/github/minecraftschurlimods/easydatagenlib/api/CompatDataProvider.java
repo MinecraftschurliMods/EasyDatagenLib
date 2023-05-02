@@ -6,8 +6,10 @@ import com.github.minecraftschurlimods.easydatagenlib.mods.BotanyPotsDataProvide
 import com.github.minecraftschurlimods.easydatagenlib.mods.CorailWoodcutterDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.CreateDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.ElementalcraftDataProvider;
+import com.github.minecraftschurlimods.easydatagenlib.mods.FarmersDelightDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.ImmersiveEngineeringDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.util.botanypots.DisplayState;
+import com.github.minecraftschurlimods.easydatagenlib.util.farmersdelight.ToolActionIngredient;
 import com.github.minecraftschurlimods.easydatagenlib.util.immersiveengineering.ClocheRenderType;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.DataGenerator;
@@ -21,14 +23,19 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.TallFlowerBlock;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.common.crafting.conditions.NotCondition;
 import net.minecraftforge.common.crafting.conditions.TagEmptyCondition;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Extend this class and override {@link CompatDataProvider#generate()} to add your own datagen entries.
+ */
 public abstract class CompatDataProvider {
     //region CORE
     private final List<AbstractDataProvider<?>> SERVER_PROVIDERS = new ArrayList<>();
@@ -58,11 +65,21 @@ public abstract class CompatDataProvider {
     public final CreateDataProvider.Splashing CREATE_SPLASHING;
     public final ElementalcraftDataProvider.Grinding ELEMENTALCRAFT_GRINDING;
     public final ElementalcraftDataProvider.Sawing ELEMENTALCRAFT_SAWING;
+    public final FarmersDelightDataProvider.Cooking FARMERS_DELIGHT_COOKING;
+    public final FarmersDelightDataProvider.Cutting FARMERS_DELIGHT_CUTTING;
     public final ImmersiveEngineeringDataProvider.ArcFurnace IMMERSIVE_ENGINEERING_ARC_FURNACE;
     public final ImmersiveEngineeringDataProvider.Cloche IMMERSIVE_ENGINEERING_CLOCHE;
     public final ImmersiveEngineeringDataProvider.Crusher IMMERSIVE_ENGINEERING_CRUSHER;
     public final ImmersiveEngineeringDataProvider.Sawmill IMMERSIVE_ENGINEERING_SAWMILL;
 
+    /**
+     * Constructs a new {@link CompatDataProvider}. Initializes the providers and calls {@link CompatDataProvider#generate()}.
+     *
+     * @param namespace The namespace to use. In most cases, this is your own mod id.
+     * @param generator The {@link DataGenerator} to use. Get this via {@link GatherDataEvent#getGenerator()}.
+     * @param runServer Whether to generate data files. Get this via {@link GatherDataEvent#includeServer()}.
+     * @param runClient Whether to generate asset files. Get this via {@link GatherDataEvent#includeClient()}.
+     */
     public CompatDataProvider(String namespace, DataGenerator generator, boolean runServer, boolean runClient) {
         ARS_NOUVEAU_CRUSHING = addServer(new ArsNouveauDataProvider.Crushing(namespace, generator));
         ARS_NOUVEAU_GLYPH = addServer(new ArsNouveauDataProvider.Glyph(namespace, generator));
@@ -88,6 +105,8 @@ public abstract class CompatDataProvider {
         CREATE_SPLASHING = addServer(new CreateDataProvider.Splashing(namespace, generator));
         ELEMENTALCRAFT_GRINDING = addServer(new ElementalcraftDataProvider.Grinding(namespace, generator));
         ELEMENTALCRAFT_SAWING = addServer(new ElementalcraftDataProvider.Sawing(namespace, generator));
+        FARMERS_DELIGHT_COOKING = addServer(new FarmersDelightDataProvider.Cooking(namespace, generator));
+        FARMERS_DELIGHT_CUTTING = addServer(new FarmersDelightDataProvider.Cutting(namespace, generator));
         IMMERSIVE_ENGINEERING_ARC_FURNACE = addServer(new ImmersiveEngineeringDataProvider.ArcFurnace(namespace, generator));
         IMMERSIVE_ENGINEERING_CLOCHE = addServer(new ImmersiveEngineeringDataProvider.Cloche(namespace, generator));
         IMMERSIVE_ENGINEERING_CRUSHER = addServer(new ImmersiveEngineeringDataProvider.Crusher(namespace, generator));
@@ -102,6 +121,18 @@ public abstract class CompatDataProvider {
             generator.addProvider(runServer || runClient, provider);
         }
         generate();
+    }
+
+    /**
+     * Constructs a new {@link CompatDataProvider}. Initializes the providers and calls {@link CompatDataProvider#generate()}.
+     *
+     * <p>Unlike {@link CompatDataProvider#CompatDataProvider(String, DataGenerator, boolean, boolean)}, this variant extracts the necessary information from the given {@link GatherDataEvent}.</p>
+     *
+     * @param namespace The namespace to use. In most cases, this is your own mod id.
+     * @param event The event object to get the values from.
+     */
+    public CompatDataProvider(String namespace, GatherDataEvent event) {
+        this(namespace, event.getGenerator(), event.includeServer(), event.includeClient());
     }
 
     /**
@@ -130,9 +161,13 @@ public abstract class CompatDataProvider {
     protected static final ResourceLocation CONJURATION_CATALYST = new ResourceLocation("botania", "conjuration_catalyst");
     protected static final ResourceLocation EXPERIENCE_NUGGET = new ResourceLocation("create", "experience_nugget");
     protected static final ResourceLocation SHROOMLIGHT = new ResourceLocation("minecraft", "shroomlight");
+    protected static final ResourceLocation TREE_BARK = new ResourceLocation("farmersdelight", "tree_bark");
+    protected static final Ingredient AXE_DIG = new ToolActionIngredient(ToolActions.AXE_DIG);
+    protected static final Ingredient AXE_STRIP = new ToolActionIngredient(ToolActions.AXE_STRIP);
+    protected static final Ingredient KNIVES = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "tools/knives")));
+    protected static final Ingredient MUSHROOM_SOIL = Ingredient.of(Items.MYCELIUM, Items.PODZOL);
     protected static final Ingredient SLAG = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "slag")));
     protected static final Ingredient WOOD_DUST = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "dusts/wood")));
-    protected static final Ingredient MUSHROOM_SOIL = Ingredient.of(Items.MYCELIUM, Items.PODZOL);
 
     /**
      * Shortcut to get a block's registry name.
@@ -387,8 +422,8 @@ public abstract class CompatDataProvider {
             milling.addResult(output3, count3, chance3);
         }
         CREATE_MILLING.add(milling);
-        //TODO Elementalcraft Grinding
-        //TODO Farmer's Delight Cutting
+        FARMERS_DELIGHT_CUTTING.add(FARMERS_DELIGHT_CUTTING.builder(toName(flower), Ingredient.of(flower), KNIVES)
+                .addResult(output1, 2));
         //TODO Integrated Dynamics Squeezing
         //TODO Mekanism Crushing, Enriching, Extracting
         //TODO Thermal Centrifuging, Insolating
@@ -558,11 +593,15 @@ public abstract class CompatDataProvider {
         }
         if (door != null) {
             CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(door) + "_from_" + toName(planks), Ingredient.of(planks), door));
+            FARMERS_DELIGHT_CUTTING.add(FARMERS_DELIGHT_CUTTING.builder(toName(door), Ingredient.of(door), AXE_DIG)
+                    .addResult(planks));
             IMMERSIVE_ENGINEERING_SAWMILL.add(IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(door), 800, Ingredient.of(door), planks)
                     .addSecondary(WOOD_DUST, false));
         }
         if (trapdoor != null) {
             CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(trapdoor) + "_from_" + toName(planks), Ingredient.of(planks), trapdoor));
+            FARMERS_DELIGHT_CUTTING.add(FARMERS_DELIGHT_CUTTING.builder(toName(trapdoor), Ingredient.of(trapdoor), AXE_DIG)
+                    .addResult(planks));
         }
         if (button != null) {
             CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(button) + "_from_" + toName(planks), Ingredient.of(planks), button));
@@ -572,6 +611,8 @@ public abstract class CompatDataProvider {
         }
         if (sign != null) {
             CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(sign) + "_from_" + toName(planks), Ingredient.of(planks), sign));
+            FARMERS_DELIGHT_CUTTING.add(FARMERS_DELIGHT_CUTTING.builder(toName(sign), Ingredient.of(sign), AXE_DIG)
+                    .addResult(planks));
         }
         if (leaves != null) {
             BOTANIA_MANA_INFUSION.add(BOTANIA_MANA_INFUSION.builder(toName(leaves) + "_dupe", 2000, Ingredient.of(leaves), leaves, 2)
@@ -610,7 +651,6 @@ public abstract class CompatDataProvider {
                 CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(boat) + "_from_" + toName(logs), Ingredient.of(planks), boat));
             }
         }
-        //TODO Farmer's Delight Cutting
         //TODO Hexerei Cutting
         //TODO Mekanism Crushing, Sawing
         //TODO Thermal Insolating, Sawing
@@ -649,6 +689,14 @@ public abstract class CompatDataProvider {
         ELEMENTALCRAFT_SAWING.add(ELEMENTALCRAFT_SAWING.builder(toName(planks), Ingredient.of(strippedLog, strippedWood), planks, 6, 1000, 3));
         ELEMENTALCRAFT_SAWING.add(ELEMENTALCRAFT_SAWING.builder(toName(strippedLog), Ingredient.of(log), strippedLog, 1000, 0));
         ELEMENTALCRAFT_SAWING.add(ELEMENTALCRAFT_SAWING.builder(toName(strippedWood), Ingredient.of(wood), strippedWood, 1000, 0));
+        FARMERS_DELIGHT_CUTTING.add(FARMERS_DELIGHT_CUTTING.builder(toName(log), Ingredient.of(log), AXE_STRIP)
+                .setSound("minecraft:item.axe.strip")
+                .addResult(strippedLog)
+                .addResult(TREE_BARK));
+        FARMERS_DELIGHT_CUTTING.add(FARMERS_DELIGHT_CUTTING.builder(toName(wood), Ingredient.of(wood), AXE_STRIP)
+                .setSound("minecraft:item.axe.strip")
+                .addResult(strippedWood)
+                .addResult(TREE_BARK));
         IMMERSIVE_ENGINEERING_SAWMILL.add(IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(log), 1600, Ingredient.of(log, wood), planks, 6)
                 .setStripped(Ingredient.of(strippedLog))
                 .addSecondary(WOOD_DUST, true)
