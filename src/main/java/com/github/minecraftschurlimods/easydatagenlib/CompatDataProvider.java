@@ -1,5 +1,6 @@
-package com.github.minecraftschurlimods.easydatagenlib.api;
+package com.github.minecraftschurlimods.easydatagenlib;
 
+import com.github.minecraftschurlimods.easydatagenlib.api.AbstractDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.ArsNouveauDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.BotaniaDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.BotanyPotsDataProvider;
