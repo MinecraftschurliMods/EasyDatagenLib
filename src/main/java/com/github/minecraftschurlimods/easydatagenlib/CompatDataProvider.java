@@ -10,6 +10,7 @@ import com.github.minecraftschurlimods.easydatagenlib.mods.ElementalcraftDataPro
 import com.github.minecraftschurlimods.easydatagenlib.mods.FarmersDelightDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.ImmersiveEngineeringDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.IntegratedDynamicsDataProvider;
+import com.github.minecraftschurlimods.easydatagenlib.mods.OccultismDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.util.botanypots.DisplayState;
 import com.github.minecraftschurlimods.easydatagenlib.util.farmersdelight.ToolActionIngredient;
 import com.github.minecraftschurlimods.easydatagenlib.util.immersiveengineering.ClocheRenderType;
@@ -75,6 +76,7 @@ public abstract class CompatDataProvider {
     public final ImmersiveEngineeringDataProvider.Sawmill IMMERSIVE_ENGINEERING_SAWMILL;
     public final IntegratedDynamicsDataProvider.MechanicalSqueezing INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING;
     public final IntegratedDynamicsDataProvider.Squeezing INTEGRATED_DYNAMICS_SQUEEZING;
+    public final OccultismDataProvider.Crushing OCCULTISM_CRUSHING;
 
     /**
      * Constructs a new {@link CompatDataProvider}. Initializes the providers and calls {@link CompatDataProvider#generate()}.
@@ -117,6 +119,7 @@ public abstract class CompatDataProvider {
         IMMERSIVE_ENGINEERING_SAWMILL = addServer(new ImmersiveEngineeringDataProvider.Sawmill(namespace, generator));
         INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING = addServer(new IntegratedDynamicsDataProvider.MechanicalSqueezing(namespace, generator));
         INTEGRATED_DYNAMICS_SQUEEZING = addServer(new IntegratedDynamicsDataProvider.Squeezing(namespace, generator));
+        OCCULTISM_CRUSHING = addServer(new OccultismDataProvider.Crushing(namespace, generator));
         for (AbstractDataProvider<?> provider : SERVER_PROVIDERS) {
             generator.addProvider(runServer, provider);
         }
@@ -422,8 +425,17 @@ public abstract class CompatDataProvider {
                 .addItem(rawOre, 0.5f)
                 .addItem(rawOre, 0.5f)
                 .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location()))));
+        OCCULTISM_CRUSHING.add(OCCULTISM_CRUSHING.builder(toName(dustTag), Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
+                .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location())))
+                .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
+        OCCULTISM_CRUSHING.add(OCCULTISM_CRUSHING.builder(toName(dustTag) + "_from_ingot", Ingredient.of(oreTag), Ingredient.of(ingotTag))
+                .ignoreCrushingMultiplier()
+                .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location())))
+                .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
+        OCCULTISM_CRUSHING.add(OCCULTISM_CRUSHING.builder(toName(dustTag) + "_from_raw", Ingredient.of(rawOreTag), Ingredient.of(dustTag), 2)
+                .addCondition(new NotCondition(new TagEmptyCondition(rawOreTag.location())))
+                .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
         //TODO Mekanism Crushing, Enriching
-        //TODO Occultism Ritual Dummy
         //TODO Thermal Press, Pulverizer, Smelter
     }
 
