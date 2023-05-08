@@ -11,6 +11,7 @@ import com.github.minecraftschurlimods.easydatagenlib.mods.FarmersDelightDataPro
 import com.github.minecraftschurlimods.easydatagenlib.mods.ImmersiveEngineeringDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.IntegratedDynamicsDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.OccultismDataProvider;
+import com.github.minecraftschurlimods.easydatagenlib.mods.TwilightForestDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.util.botanypots.DisplayState;
 import com.github.minecraftschurlimods.easydatagenlib.util.farmersdelight.ToolActionIngredient;
 import com.github.minecraftschurlimods.easydatagenlib.util.immersiveengineering.ClocheRenderType;
@@ -77,6 +78,8 @@ public abstract class CompatDataProvider {
     public final IntegratedDynamicsDataProvider.MechanicalSqueezing INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING;
     public final IntegratedDynamicsDataProvider.Squeezing INTEGRATED_DYNAMICS_SQUEEZING;
     public final OccultismDataProvider.Crushing OCCULTISM_CRUSHING;
+    public final TwilightForestDataProvider.Crumbling TWILIGHT_FOREST_CRUMBLING;
+    public final TwilightForestDataProvider.Transforming TWILIGHT_FOREST_TRANSFORMING;
 
     /**
      * Constructs a new {@link CompatDataProvider}. Initializes the providers and calls {@link CompatDataProvider#generate()}.
@@ -120,6 +123,8 @@ public abstract class CompatDataProvider {
         INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING = addServer(new IntegratedDynamicsDataProvider.MechanicalSqueezing(namespace, generator));
         INTEGRATED_DYNAMICS_SQUEEZING = addServer(new IntegratedDynamicsDataProvider.Squeezing(namespace, generator));
         OCCULTISM_CRUSHING = addServer(new OccultismDataProvider.Crushing(namespace, generator));
+        TWILIGHT_FOREST_CRUMBLING = addServer(new TwilightForestDataProvider.Crumbling(namespace, generator));
+        TWILIGHT_FOREST_TRANSFORMING = addServer(new TwilightForestDataProvider.Transforming(namespace, generator));
         for (AbstractDataProvider<?> provider : SERVER_PROVIDERS) {
             generator.addProvider(runServer, provider);
         }
@@ -166,6 +171,7 @@ public abstract class CompatDataProvider {
     //endregion
 
     //region HELPER
+    protected static final ResourceLocation AIR = new ResourceLocation("minecraft", "air");
     protected static final ResourceLocation ALCHEMY_CATALYST = new ResourceLocation("botania", "alchemy_catalyst");
     protected static final ResourceLocation CONJURATION_CATALYST = new ResourceLocation("botania", "conjuration_catalyst");
     protected static final ResourceLocation EXPERIENCE_NUGGET = new ResourceLocation("create", "experience_nugget");
@@ -273,9 +279,9 @@ public abstract class CompatDataProvider {
                     .addCategory("stone")
                     .addCategory("mushroom")
                     .addCategory(toName(stone)));
+            TWILIGHT_FOREST_CRUMBLING.add(TWILIGHT_FOREST_CRUMBLING.builder("dissolve_" + toName(stone), itemId(stone), AIR));
         }
         //TODO Mekanism Enriching
-        //TODO Twilight Forest Crumbling
     }
 
     /**
