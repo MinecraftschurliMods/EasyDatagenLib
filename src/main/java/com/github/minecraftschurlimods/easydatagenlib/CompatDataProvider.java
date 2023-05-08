@@ -9,6 +9,7 @@ import com.github.minecraftschurlimods.easydatagenlib.mods.CreateDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.ElementalcraftDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.FarmersDelightDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.ImmersiveEngineeringDataProvider;
+import com.github.minecraftschurlimods.easydatagenlib.mods.IntegratedDynamicsDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.util.botanypots.DisplayState;
 import com.github.minecraftschurlimods.easydatagenlib.util.farmersdelight.ToolActionIngredient;
 import com.github.minecraftschurlimods.easydatagenlib.util.immersiveengineering.ClocheRenderType;
@@ -72,6 +73,8 @@ public abstract class CompatDataProvider {
     public final ImmersiveEngineeringDataProvider.Cloche IMMERSIVE_ENGINEERING_CLOCHE;
     public final ImmersiveEngineeringDataProvider.Crusher IMMERSIVE_ENGINEERING_CRUSHER;
     public final ImmersiveEngineeringDataProvider.Sawmill IMMERSIVE_ENGINEERING_SAWMILL;
+    public final IntegratedDynamicsDataProvider.MechanicalSqueezing INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING;
+    public final IntegratedDynamicsDataProvider.Squeezing INTEGRATED_DYNAMICS_SQUEEZING;
 
     /**
      * Constructs a new {@link CompatDataProvider}. Initializes the providers and calls {@link CompatDataProvider#generate()}.
@@ -112,6 +115,8 @@ public abstract class CompatDataProvider {
         IMMERSIVE_ENGINEERING_CLOCHE = addServer(new ImmersiveEngineeringDataProvider.Cloche(namespace, generator));
         IMMERSIVE_ENGINEERING_CRUSHER = addServer(new ImmersiveEngineeringDataProvider.Crusher(namespace, generator));
         IMMERSIVE_ENGINEERING_SAWMILL = addServer(new ImmersiveEngineeringDataProvider.Sawmill(namespace, generator));
+        INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING = addServer(new IntegratedDynamicsDataProvider.MechanicalSqueezing(namespace, generator));
+        INTEGRATED_DYNAMICS_SQUEEZING = addServer(new IntegratedDynamicsDataProvider.Squeezing(namespace, generator));
         for (AbstractDataProvider<?> provider : SERVER_PROVIDERS) {
             generator.addProvider(runServer, provider);
         }
@@ -360,33 +365,63 @@ public abstract class CompatDataProvider {
             CREATE_CRUSHING.add(CREATE_CRUSHING.builder(rawOre.getPath(), 400)
                     .addIngredient(Ingredient.of(rawOreTag))
                     .addResult(crushedOre)
-                    .addResult(EXPERIENCE_NUGGET, 0.75f));
+                    .addResult(EXPERIENCE_NUGGET, 0.75f)
+                    .addCondition(new NotCondition(new TagEmptyCondition(rawOreTag.location()))));
         }
         IMMERSIVE_ENGINEERING_ARC_FURNACE.add(IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(dustTag), 100, 51200, Ingredient.of(dustTag))
-                .addResult(Ingredient.of(ingotTag)));
+                .addResult(Ingredient.of(ingotTag))
+                .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location())))
+                .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location()))));
         IMMERSIVE_ENGINEERING_ARC_FURNACE.add(IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(oreTag), 200, 102400, Ingredient.of(oreTag))
                 .addResult(Ingredient.of(ingotTag), 2)
-                .setSlag(SLAG));
+                .setSlag(SLAG)
+                .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location())))
+                .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location()))));
         IMMERSIVE_ENGINEERING_ARC_FURNACE.add(IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(rawOreBlockTag), 900, 230400, Ingredient.of(rawOreBlockTag))
                 .addResult(Ingredient.of(ingotTag), 13)
-                .addSecondary(Ingredient.of(ingotTag), 0.5f));
+                .addSecondary(Ingredient.of(ingotTag), 0.5f)
+                .addCondition(new NotCondition(new TagEmptyCondition(rawOreBlockTag.location())))
+                .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location()))));
         IMMERSIVE_ENGINEERING_ARC_FURNACE.add(IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(rawOreTag), 100, 25600, Ingredient.of(rawOreTag))
                 .addResult(Ingredient.of(ingotTag))
-                .addSecondary(Ingredient.of(ingotTag), 0.5f));
-        IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(ingotTag), 3000, Ingredient.of(ingotTag), Ingredient.of(dustTag)));
+                .addSecondary(Ingredient.of(ingotTag), 0.5f)
+                .addCondition(new NotCondition(new TagEmptyCondition(rawOreTag.location())))
+                .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location()))));
+        IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(ingotTag), 3000, Ingredient.of(ingotTag), Ingredient.of(dustTag))
+                .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location())))
+                .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
         if (secondaryDustTag == null) {
-            IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(oreTag), 6000, Ingredient.of(oreTag), Ingredient.of(dustTag), 2));
+            IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(oreTag), 6000, Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
+                    .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location())))
+                    .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
         } else {
             IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(oreTag), 6000, Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
                     .addSecondary(Ingredient.of(secondaryDustTag), 0.1f)
+                    .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location())))
+                    .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location())))
                     .addCondition(new NotCondition(new TagEmptyCondition(secondaryDustTag.location()))));
             IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(oreTag) + "_without_secondary", 6000, Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
+                    .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location())))
+                    .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location())))
                     .addCondition(new TagEmptyCondition(secondaryDustTag.location())));
         }
-        IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(rawOreBlockTag), 54000, Ingredient.of(rawOreBlockTag), Ingredient.of(rawOreTag), 12));
+        IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(rawOreBlockTag), 54000, Ingredient.of(rawOreBlockTag), Ingredient.of(rawOreTag), 12)
+                .addCondition(new NotCondition(new TagEmptyCondition(rawOreBlockTag.location())))
+                .addCondition(new NotCondition(new TagEmptyCondition(rawOreTag.location()))));
         IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(rawOreTag), 6000, Ingredient.of(rawOreTag), Ingredient.of(dustTag))
-                .addSecondary(Ingredient.of(dustTag), 1 / 3f));
-        //TODO Integrated Dynamics Squeezing
+                .addSecondary(Ingredient.of(dustTag), 0.33333334f)
+                .addCondition(new NotCondition(new TagEmptyCondition(rawOreTag.location())))
+                .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
+        INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.add(INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.builder(toName(oreTag), Ingredient.of(oreTag), 40)
+                .addItem(rawOre, 3)
+                .addItem(rawOre, 0.5f)
+                .addItem(rawOre, 0.5f)
+                .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location()))));
+        INTEGRATED_DYNAMICS_SQUEEZING.add(INTEGRATED_DYNAMICS_SQUEEZING.builder(toName(oreTag), Ingredient.of(oreTag))
+                .addItem(rawOre, 3)
+                .addItem(rawOre, 0.5f)
+                .addItem(rawOre, 0.5f)
+                .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location()))));
         //TODO Mekanism Crushing, Enriching
         //TODO Occultism Ritual Dummy
         //TODO Thermal Press, Pulverizer, Smelter
@@ -425,7 +460,11 @@ public abstract class CompatDataProvider {
         CREATE_MILLING.add(milling);
         FARMERS_DELIGHT_CUTTING.add(FARMERS_DELIGHT_CUTTING.builder(toName(flower), Ingredient.of(flower), KNIVES)
                 .addResult(output1, 2));
-        //TODO Integrated Dynamics Squeezing
+        INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.add(INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.builder(toName(flower), Ingredient.of(flower), 5)
+                .addItem(output1, 4)
+                .addItem(output1, 2, 0.5f));
+        INTEGRATED_DYNAMICS_SQUEEZING.add(INTEGRATED_DYNAMICS_SQUEEZING.builder(toName(flower), Ingredient.of(flower))
+                .addItem(output1, 4));
         //TODO Mekanism Crushing, Enriching, Extracting
         //TODO Thermal Centrifuging, Insolating
     }
@@ -481,7 +520,12 @@ public abstract class CompatDataProvider {
             milling.addResult(output3, count3, chance3);
         }
         CREATE_MILLING.add(milling);
-        //TODO Integrated Dynamics Squeezing
+        INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.add(INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.builder(toName(flower), Ingredient.of(flower), 5)
+                .addItem(output1, 8)
+                .addItem(output1, 2, 0.5f)
+                .addItem(output1, 2, 0.5f));
+        INTEGRATED_DYNAMICS_SQUEEZING.add(INTEGRATED_DYNAMICS_SQUEEZING.builder(toName(flower), Ingredient.of(flower))
+                .addItem(output1, 8));
         //TODO Mekanism Crushing, Enriching, Extracting
         //TODO Thermal Centrifuging, Insolating
     }
@@ -652,7 +696,6 @@ public abstract class CompatDataProvider {
                 CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(boat) + "_from_" + toName(logs), Ingredient.of(planks), boat));
             }
         }
-        //TODO Hexerei Cutting
         //TODO Mekanism Crushing, Sawing
         //TODO Thermal Insolating, Sawing
     }
