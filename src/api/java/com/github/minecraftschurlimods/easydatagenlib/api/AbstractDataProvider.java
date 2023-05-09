@@ -88,7 +88,7 @@ public abstract class AbstractDataProvider<T extends AbstractDataBuilder<?>> imp
     }
 
     /**
-     * Shortcut to get an block's registry name.
+     * Shortcut to get a block's registry name.
      *
      * @param block The block to get the registry name for.
      * @return The registry name of the given block.

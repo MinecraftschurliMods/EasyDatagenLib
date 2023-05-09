@@ -2,6 +2,6 @@
 @MethodsReturnNonnullByDefault
 package com.github.minecraftschurlimods.easydatagenlib.api;
 
-import net.minecraft.MethodsReturnNonnullByDefault;
+import com.mojang.blaze3d.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;

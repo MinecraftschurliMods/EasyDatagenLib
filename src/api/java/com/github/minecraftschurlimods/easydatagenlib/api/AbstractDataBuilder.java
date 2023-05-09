@@ -28,7 +28,7 @@ public abstract class AbstractDataBuilder<T extends AbstractDataBuilder<T>> {
     protected abstract void toJson(JsonObject json);
 
     /**
-     * Shortcut to get an block's registry name.
+     * Shortcut to get a block's registry name.
      *
      * @param block The block to get the registry name for.
      * @return The registry name of the given block.
