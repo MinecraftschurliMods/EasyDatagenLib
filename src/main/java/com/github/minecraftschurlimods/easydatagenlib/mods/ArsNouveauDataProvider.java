@@ -25,9 +25,10 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
         }
 
         /**
-         * @param id    The id of the recipe builder.
+         * Creates a new builder with the given id.
+         *
+         * @param id    The id to use.
          * @param input The input item to use.
-         * @return A new recipe builder.
          */
         public Builder builder(String id, Ingredient input) {
             return new Builder(new ResourceLocation(namespace, id), input);
@@ -38,12 +39,6 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
             private final Ingredient input;
             private boolean skipBlockPlace = false;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id    The id to use. Should be unique within the same data provider and the same namespace.
-             * @param input The input to use.
-             */
             public Builder(ResourceLocation id, Ingredient input) {
                 super(id);
                 this.input = input;
@@ -171,41 +166,45 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
         }
 
         /**
-         * @param id   The id of the recipe builder.
-         * @param item The result item id to use.
-         * @return A new recipe builder.
-         */
-        public Glyph.Builder builder(String id, ResourceLocation item) {
-            return new Glyph.Builder(new ResourceLocation(namespace, id), item);
-        }
-
-        /**
-         * @param id    The id of the recipe builder.
-         * @param item  The result item id to use.
+         * Creates a new builder with the given id.
+         *
+         * @param id    The id to use.
+         * @param item  The id of the result item to use.
          * @param count The result count to use.
-         * @return A new recipe builder.
          */
         public Glyph.Builder builder(String id, ResourceLocation item, int count) {
             return new Glyph.Builder(new ResourceLocation(namespace, id), item, count);
         }
 
         /**
-         * @param id   The id of the recipe builder.
-         * @param item The result item to use.
-         * @return A new recipe builder.
+         * Creates a new builder with the given id.
+         *
+         * @param id   The id to use.
+         * @param item The id of the result item to use.
          */
-        public Glyph.Builder builder(String id, Item item) {
+        public Glyph.Builder builder(String id, ResourceLocation item) {
             return new Glyph.Builder(new ResourceLocation(namespace, id), item);
         }
 
         /**
-         * @param id    The id of the recipe builder.
+         * Creates a new builder with the given id.
+         *
+         * @param id    The id to use.
          * @param item  The result item to use.
          * @param count The result count to use.
-         * @return A new recipe builder.
          */
         public Glyph.Builder builder(String id, Item item, int count) {
             return new Glyph.Builder(new ResourceLocation(namespace, id), item, count);
+        }
+
+        /**
+         * Creates a new builder with the given id.
+         *
+         * @param id   The id to use.
+         * @param item The result item to use.
+         */
+        public Glyph.Builder builder(String id, Item item) {
+            return new Glyph.Builder(new ResourceLocation(namespace, id), item);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -213,47 +212,21 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
             private final PotentiallyAbsentItemStack output;
             private int experience = 0;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id   The id to use. Should be unique within the same data provider and the same namespace.
-             * @param item The result item to use.
-             */
-            public Builder(ResourceLocation id, Item item) {
-                this(id, item, 1);
+            public Builder(ResourceLocation id, ResourceLocation item, int count) {
+                super(id);
+                output = new PotentiallyAbsentItemStack(item, count); // doesn't support NBT
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id    The id to use. Should be unique within the same data provider and the same namespace.
-             * @param item  The result item to use.
-             * @param count The result count to use.
-             */
-            public Builder(ResourceLocation id, Item item, int count) {
-                this(id, itemId(item), count);
-            }
-
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id   The id to use. Should be unique within the same data provider and the same namespace.
-             * @param item The result item id to use.
-             */
             public Builder(ResourceLocation id, ResourceLocation item) {
                 this(id, item, 1);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id    The id to use. Should be unique within the same data provider and the same namespace.
-             * @param item  The result item id to use.
-             * @param count The result count to use.
-             */
-            public Builder(ResourceLocation id, ResourceLocation item, int count) {
-                super(id);
-                output = new PotentiallyAbsentItemStack(item, count); // doesn't support NBT
+            public Builder(ResourceLocation id, Item item, int count) {
+                this(id, itemId(item), count);
+            }
+
+            public Builder(ResourceLocation id, Item item) {
+                this(id, item, 1);
             }
 
             /**
@@ -295,63 +268,79 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
             super("imbuement", namespace, generator);
         }
 
+        /**
+         * Creates a new builder with the given id.
+         *
+         * @param id     The id to use.
+         * @param input  The input item to use.
+         * @param output The id of the output item to use.
+         * @param count  The output count to use.
+         * @param source The amount of source to use.
+         */
+        public Builder builder(String id, Ingredient input, ResourceLocation output, int count, int source) {
+            return new Builder(new ResourceLocation(namespace, id), input, output, count, source);
+        }
+
+        /**
+         * Creates a new builder with the given id.
+         *
+         * @param id     The id to use.
+         * @param input  The input item to use.
+         * @param output The id of the output item to use.
+         * @param source The amount of source to use.
+         */
+        public Builder builder(String id, Ingredient input, ResourceLocation output, int source) {
+            return new Builder(new ResourceLocation(namespace, id), input, output, source);
+        }
+
+        /**
+         * Creates a new builder with the given id.
+         *
+         * @param id     The id to use.
+         * @param input  The input item to use.
+         * @param output The id of the output item to use.
+         * @param count  The output count to use.
+         * @param source The amount of source to use.
+         */
+        public Builder builder(String id, Ingredient input, Item output, int count, int source) {
+            return new Builder(new ResourceLocation(namespace, id), input, output, count, source);
+        }
+
+        /**
+         * Creates a new builder with the given id.
+         *
+         * @param id     The id to use.
+         * @param input  The input item to use.
+         * @param output The id of the output item to use.
+         * @param source The amount of source to use.
+         */
+        public Builder builder(String id, Ingredient input, Item output, int source) {
+            return new Builder(new ResourceLocation(namespace, id), input, output, source);
+        }
+
         public static class Builder extends AbstractRecipeBuilder<Builder> {
             private final List<Ingredient> pedestalItems = new ArrayList<>();
             private final Ingredient input;
             private final PotentiallyAbsentItemStack output;
             private final int source;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param input  The input item to use.
-             * @param output The output item id to use.
-             * @param source The amount of source to use.
-             */
-            public Builder(ResourceLocation id, Ingredient input, Item output, int source) {
-                this(id, input, output, 1, source);
-            }
-
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param input  The input item to use.
-             * @param output The output item id to use.
-             * @param count  The output count to use.
-             * @param source The amount of source to use.
-             */
-            public Builder(ResourceLocation id, Ingredient input, Item output, int count, int source) {
-                this(id, input, itemId(output), count, source);
-            }
-
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param input  The input item to use.
-             * @param output The output item id to use.
-             * @param source The amount of source to use.
-             */
-            public Builder(ResourceLocation id, Ingredient input, ResourceLocation output, int source) {
-                this(id, input, output, 1, source);
-            }
-
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param input  The input item to use.
-             * @param output The output item id to use.
-             * @param count  The output count to use.
-             * @param source The amount of source to use.
-             */
             public Builder(ResourceLocation id, Ingredient input, ResourceLocation output, int count, int source) {
                 super(id);
                 this.input = input;
                 this.output = new PotentiallyAbsentItemStack(output, count); // doesn't support NBT
                 this.source = source;
+            }
+
+            public Builder(ResourceLocation id, Ingredient input, ResourceLocation output, int source) {
+                this(id, input, output, 1, source);
+            }
+
+            public Builder(ResourceLocation id, Ingredient input, Item output, int count, int source) {
+                this(id, input, itemId(output), count, source);
+            }
+
+            public Builder(ResourceLocation id, Ingredient input, Item output, int source) {
+                this(id, input, output, 1, source);
             }
 
             /**

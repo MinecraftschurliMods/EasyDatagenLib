@@ -27,7 +27,7 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
         /**
          * Creates a new builder with the given id.
          *
-         * @param id          The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id          The id to use.
          * @param cookingTime The amount of time this recipe takes.
          * @param experience  The amount of experience to award when the recipe is completed.
          * @param result      The id of the result item to use.
@@ -40,7 +40,7 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
         /**
          * Creates a new builder with the given id.
          *
-         * @param id          The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id          The id to use.
          * @param cookingTime The amount of time this recipe takes.
          * @param experience  The amount of experience to award when the recipe is completed.
          * @param result      The id of the result item to use.
@@ -52,7 +52,7 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
         /**
          * Creates a new builder with the given id.
          *
-         * @param id          The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id          The id to use.
          * @param cookingTime The amount of time this recipe takes.
          * @param experience  The amount of experience to award when the recipe is completed.
          * @param result      The result item to use.
@@ -65,7 +65,7 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
         /**
          * Creates a new builder with the given id.
          *
-         * @param id          The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id          The id to use.
          * @param cookingTime The amount of time this recipe takes.
          * @param experience  The amount of experience to award when the recipe is completed.
          * @param result      The result item to use.
@@ -82,55 +82,21 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
             private PotentiallyAbsentItemStack container = null;
             private String recipeBookTab = null;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id          The id to use. Should be unique within the same data provider and the same namespace.
-             * @param cookingTime The amount of time this recipe takes.
-             * @param experience  The amount of experience to award when the recipe is completed.
-             * @param result      The id of the result item to use.
-             * @param count       The result count to use.
-             */
             public Builder(ResourceLocation id, int cookingTime, float experience, ResourceLocation result, int count) {
                 super(id);
                 this.cookingTime = cookingTime;
                 this.experience = experience;
-                this.result = new PotentiallyAbsentItemStack(result, count);
+                this.result = new PotentiallyAbsentItemStack(result, count); // doesn't support NBT
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id          The id to use. Should be unique within the same data provider and the same namespace.
-             * @param cookingTime The amount of time this recipe takes.
-             * @param experience  The amount of experience to award when the recipe is completed.
-             * @param result      The id of the result item to use.
-             */
             public Builder(ResourceLocation id, int cookingTime, float experience, ResourceLocation result) {
                 this(id, cookingTime, experience, result, 1);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id          The id to use. Should be unique within the same data provider and the same namespace.
-             * @param cookingTime The amount of time this recipe takes.
-             * @param experience  The amount of experience to award when the recipe is completed.
-             * @param result      The result item to use.
-             * @param count       The result count to use.
-             */
             public Builder(ResourceLocation id, int cookingTime, float experience, Item result, int count) {
                 this(id, cookingTime, experience, itemId(result), count);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id          The id to use. Should be unique within the same data provider and the same namespace.
-             * @param cookingTime The amount of time this recipe takes.
-             * @param experience  The amount of experience to award when the recipe is completed.
-             * @param result      The result item to use.
-             */
             public Builder(ResourceLocation id, int cookingTime, float experience, Item result) {
                 this(id, cookingTime, experience, result, 1);
             }
@@ -202,7 +168,7 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
         /**
          * Creates a new builder with the given id.
          *
-         * @param id The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id The id to use.
          * @param ingredient The ingredient to use.
          * @param tool The tool to use.
          */
@@ -216,13 +182,6 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
             private final Ingredient tool;
             private String sound;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The ingredient to use.
-             * @param tool The tool to use.
-             */
             public Builder(ResourceLocation id, Ingredient ingredient, Ingredient tool) {
                 super(id);
                 this.ingredient = ingredient;

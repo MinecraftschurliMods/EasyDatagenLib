@@ -83,63 +83,69 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
         }
 
         /**
-         * @param id   The id of the recipe builder.
-         * @param item The result item to use.
-         * @return A new recipe builder.
-         */
-        public Builder builder(String id, Item item) {
-            return new Builder(new ResourceLocation(namespace, id), item);
-        }
-
-        /**
-         * @param id    The id of the recipe builder.
-         * @param item  The result item to use.
-         * @param count The result count to use.
-         * @return A new recipe builder.
-         */
-        public Builder builder(String id, Item item, int count) {
-            return new Builder(new ResourceLocation(namespace, id), item, count);
-        }
-
-        /**
-         * @param id    The id of the recipe builder.
-         * @param item  The result item to use.
+         * Creates a new builder with the given id.
+         *
+         * @param id    The id to use.
+         * @param item  The id of the result item to use.
          * @param count The result count to use.
          * @param tag   The result NBT to use.
-         * @return A new recipe builder.
          */
-        public Builder builder(String id, Item item, int count, CompoundTag tag) {
+        public Builder builder(String id, ResourceLocation item, int count, CompoundTag tag) {
             return new Builder(new ResourceLocation(namespace, id), item, count, tag);
         }
 
         /**
-         * @param id   The id of the recipe builder.
-         * @param item The id of the result item to use.
-         * @return A new recipe builder.
-         */
-        public Builder builder(String id, ResourceLocation item) {
-            return new Builder(new ResourceLocation(namespace, id), item);
-        }
-
-        /**
-         * @param id    The id of the recipe builder.
+         * Creates a new builder with the given id.
+         *
+         * @param id    The id to use.
          * @param item  The id of the result item to use.
          * @param count The result count to use.
-         * @return A new recipe builder.
          */
         public Builder builder(String id, ResourceLocation item, int count) {
             return new Builder(new ResourceLocation(namespace, id), item, count);
         }
 
         /**
-         * @param id    The id of the recipe builder.
-         * @param item  The id of the result item to use.
+         * Creates a new builder with the given id.
+         *
+         * @param id   The id to use.
+         * @param item The id of the result item to use.
+         */
+        public Builder builder(String id, ResourceLocation item) {
+            return new Builder(new ResourceLocation(namespace, id), item);
+        }
+
+        /**
+         * Creates a new builder with the given id.
+         *
+         * @param id    The id to use.
+         * @param item  The result item to use.
          * @param count The result count to use.
          * @param tag   The result NBT to use.
-         * @return A new recipe builder.
          */
-        public Builder builder(String id, ResourceLocation item, int count, CompoundTag tag) {
+        public Builder builder(String id, Item item, int count, CompoundTag tag) {
             return new Builder(new ResourceLocation(namespace, id), item, count, tag);
+        }
+
+        /**
+         * Creates a new builder with the given id.
+         *
+         * @param id    The id to use.
+         * @param item  The result item to use.
+         * @param count The result count to use.
+         */
+        public Builder builder(String id, Item item, int count) {
+            return new Builder(new ResourceLocation(namespace, id), item, count);
+        }
+
+        /**
+         * Creates a new builder with the given id.
+         *
+         * @param id   The id to use.
+         * @param item The result item to use.
+         */
+        public Builder builder(String id, Item item) {
+            return new Builder(new ResourceLocation(namespace, id), item);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -148,71 +154,29 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             private final PotentiallyAbsentItemStack result;
             private boolean acceptMirrored = true;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id   The id to use. Should be unique within the same data provider and the same namespace.
-             * @param item The result item id to use.
-             */
-            public Builder(ResourceLocation id, Item item) {
-                this(id, item, 1, new CompoundTag());
+            public Builder(ResourceLocation id, ResourceLocation item, int count, CompoundTag tag) {
+                super(id);
+                result = new PotentiallyAbsentItemStack(item, count, tag);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id    The id to use. Should be unique within the same data provider and the same namespace.
-             * @param item  The result item id to use.
-             * @param count The result count to use.
-             */
-            public Builder(ResourceLocation id, Item item, int count) {
-                this(id, item, count, new CompoundTag());
-            }
-
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id    The id to use. Should be unique within the same data provider and the same namespace.
-             * @param item  The result item id to use.
-             * @param count The result count to use.
-             * @param tag   The result NBT to use.
-             */
-            public Builder(ResourceLocation id, Item item, int count, CompoundTag tag) {
-                this(id, itemId(item), count, tag);
-            }
-
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id   The id to use. Should be unique within the same data provider and the same namespace.
-             * @param item The result item id to use.
-             */
-            public Builder(ResourceLocation id, ResourceLocation item) {
-                this(id, item, 1, new CompoundTag());
-            }
-
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id    The id to use. Should be unique within the same data provider and the same namespace.
-             * @param item  The result item id to use.
-             * @param count The result count to use.
-             */
             public Builder(ResourceLocation id, ResourceLocation item, int count) {
                 this(id, item, count, new CompoundTag());
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id    The id to use. Should be unique within the same data provider and the same namespace.
-             * @param item  The result item id to use.
-             * @param count The result count to use.
-             * @param tag   The result NBT to use.
-             */
-            public Builder(ResourceLocation id, ResourceLocation item, int count, CompoundTag tag) {
-                super(id);
-                result = new PotentiallyAbsentItemStack(item, count, tag);
+            public Builder(ResourceLocation id, ResourceLocation item) {
+                this(id, item, 1, new CompoundTag());
+            }
+
+            public Builder(ResourceLocation id, Item item, int count, CompoundTag tag) {
+                this(id, itemId(item), count, tag);
+            }
+
+            public Builder(ResourceLocation id, Item item, int count) {
+                this(id, item, count, new CompoundTag());
+            }
+
+            public Builder(ResourceLocation id, Item item) {
+                this(id, item, 1, new CompoundTag());
             }
 
             /**
@@ -308,11 +272,25 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             super("sequenced_assembly", namespace, generator);
         }
 
-        public Builder builder(String id, Ingredient ingredient, Item transitionalItem) {
+        /**
+         * Creates a new builder with the given id.
+         *
+         * @param id               The id to use.
+         * @param ingredient       The ingredient to use.
+         * @param transitionalItem The id of the transitional item to use.
+         */
+        public Builder builder(String id, Ingredient ingredient, ResourceLocation transitionalItem) {
             return new Builder(new ResourceLocation(namespace, id), ingredient, transitionalItem);
         }
 
-        public Builder builder(String id, Ingredient ingredient, ResourceLocation transitionalItem) {
+        /**
+         * Creates a new builder with the given id.
+         *
+         * @param id               The id to use.
+         * @param ingredient       The ingredient to use.
+         * @param transitionalItem The transitional item to use.
+         */
+        public Builder builder(String id, Ingredient ingredient, Item transitionalItem) {
             return new Builder(new ResourceLocation(namespace, id), ingredient, transitionalItem);
         }
 
@@ -323,28 +301,14 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             private final PotentiallyAbsentItemStack transitionalItem;
             private int loops = 1;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id               The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient       The ingredient to use.
-             * @param transitionalItem The transitional item to use.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, Item transitionalItem) {
-                this(id, ingredient, itemId(transitionalItem));
-            }
-
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id               The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient       The ingredient to use.
-             * @param transitionalItem The transitional item id to use.
-             */
             public Builder(ResourceLocation id, Ingredient ingredient, ResourceLocation transitionalItem) {
                 super(id);
                 this.ingredient = ingredient;
                 this.transitionalItem = new PotentiallyAbsentItemStack(transitionalItem);
+            }
+
+            public Builder(ResourceLocation id, Ingredient ingredient, Item transitionalItem) {
+                this(id, ingredient, itemId(transitionalItem));
             }
 
             /**
@@ -426,9 +390,10 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
         }
 
         /**
+         * Creates a new builder with the given id.
+         *
          * @param id             The id of the recipe.
          * @param processingTime The processing time of the recipe.
-         * @return A new recipe builder.
          */
         public Builder builder(String id, int processingTime) {
             return new Builder(new ResourceLocation(namespace, id), processingTime);
@@ -448,12 +413,6 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             private boolean keepHeldItem;
             private HeatRequirement heatRequirement = HeatRequirement.NONE;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id             The id to use. Should be unique within the same data provider and the same namespace.
-             * @param processingTime The processing time to use.
-             */
             public Builder(ResourceLocation id, int processingTime) {
                 super(id);
                 this.processingTime = processingTime;

@@ -22,7 +22,7 @@ public abstract class CorailWoodcutterDataProvider<T extends AbstractRecipeBuild
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The ingredient to use.
          * @param result     The id of the result item to use.
          * @param count      The result count to use.
@@ -34,7 +34,18 @@ public abstract class CorailWoodcutterDataProvider<T extends AbstractRecipeBuild
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
+         * @param ingredient The ingredient to use.
+         * @param result     The id of the result item to use.
+         */
+        public Builder builder(String id, Ingredient ingredient, ResourceLocation result) {
+            return new Builder(new ResourceLocation(namespace, id), ingredient, result);
+        }
+
+        /**
+         * Creates a new builder with the given id.
+         *
+         * @param id         The id to use.
          * @param ingredient The ingredient to use.
          * @param result     The result item to use.
          * @param count      The result count to use.
@@ -46,18 +57,7 @@ public abstract class CorailWoodcutterDataProvider<T extends AbstractRecipeBuild
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-         * @param ingredient The ingredient to use.
-         * @param result     The id of the result item to use.
-         */
-        public Builder builder(String id, Ingredient ingredient, ResourceLocation result) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, result);
-        }
-
-        /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The ingredient to use.
          * @param result     The result item to use.
          */
@@ -69,50 +69,20 @@ public abstract class CorailWoodcutterDataProvider<T extends AbstractRecipeBuild
             private final Ingredient ingredient;
             private final PotentiallyAbsentItemStack result;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The ingredient to use.
-             * @param result     The id of the result item to use.
-             * @param count      The result count to use.
-             */
             public Builder(ResourceLocation id, Ingredient ingredient, ResourceLocation result, int count) {
                 super(id);
                 this.ingredient = ingredient;
                 this.result = new PotentiallyAbsentItemStack(result, count); // doesn't support NBT
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The ingredient to use.
-             * @param result     The result item to use.
-             * @param count      The result count to use.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, Item result, int count) {
-                this(id, ingredient, itemId(result), count);
-            }
-
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The ingredient to use.
-             * @param result     The id of the result item to use.
-            */
             public Builder(ResourceLocation id, Ingredient ingredient, ResourceLocation result) {
                 this(id, ingredient, result, 1);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The ingredient to use.
-             * @param result     The result item to use.
-             */
+            public Builder(ResourceLocation id, Ingredient ingredient, Item result, int count) {
+                this(id, ingredient, itemId(result), count);
+            }
+
             public Builder(ResourceLocation id, Ingredient ingredient, Item result) {
                 this(id, ingredient, result, 1);
             }

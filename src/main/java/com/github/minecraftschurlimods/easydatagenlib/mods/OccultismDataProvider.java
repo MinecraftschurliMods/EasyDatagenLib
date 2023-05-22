@@ -21,7 +21,7 @@ public abstract class OccultismDataProvider<T extends AbstractRecipeBuilder<?>> 
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The input ingredient to use.
          * @param result     The result ingredient to use.
          * @param count      The result count to use.
@@ -33,7 +33,7 @@ public abstract class OccultismDataProvider<T extends AbstractRecipeBuilder<?>> 
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The input ingredient to use.
          * @param result     The result ingredient to use.
          */
@@ -49,14 +49,6 @@ public abstract class OccultismDataProvider<T extends AbstractRecipeBuilder<?>> 
             private int minTier = -1;
             private boolean ignoreCrushingMultiplier = false;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The input ingredient to use.
-             * @param result     The result ingredient to use.
-             * @param count      The result count to use.
-             */
             public Builder(ResourceLocation id, Ingredient ingredient, Ingredient result, int count) {
                 super(id);
                 this.ingredient = ingredient;
@@ -64,13 +56,6 @@ public abstract class OccultismDataProvider<T extends AbstractRecipeBuilder<?>> 
                 this.count = count;
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The input ingredient to use.
-             * @param result     The result ingredient to use.
-             */
             public Builder(ResourceLocation id, Ingredient ingredient, Ingredient result) {
                 this(id, ingredient, result, 1);
             }

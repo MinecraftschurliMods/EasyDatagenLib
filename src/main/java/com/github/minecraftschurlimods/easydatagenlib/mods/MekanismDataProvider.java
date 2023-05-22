@@ -42,7 +42,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param amount          The amount of ingredients to use.
          * @param extraIngredient The extra ingredient of this recipe.
@@ -58,7 +58,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param amount          The amount of ingredients to use.
          * @param extraIngredient The extra ingredient of this recipe.
@@ -73,7 +73,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param amount          The amount of ingredients to use.
          * @param extraIngredient The extra ingredient of this recipe.
@@ -87,7 +87,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param amount          The amount of ingredients to use.
          * @param extraIngredient The extra ingredient of this recipe.
@@ -103,7 +103,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param amount          The amount of ingredients to use.
          * @param extraIngredient The extra ingredient of this recipe.
@@ -118,7 +118,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param amount          The amount of ingredients to use.
          * @param extraIngredient The extra ingredient of this recipe.
@@ -132,7 +132,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param extraIngredient The extra ingredient of this recipe.
          * @param extraAmount     The amount of extra ingredients to use.
@@ -147,7 +147,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param extraIngredient The extra ingredient of this recipe.
          * @param extraAmount     The amount of extra ingredients to use.
@@ -161,7 +161,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param extraIngredient The extra ingredient of this recipe.
          * @param extraAmount     The amount of extra ingredients to use.
@@ -174,7 +174,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param extraIngredient The extra ingredient of this recipe.
          * @param extraAmount     The amount of extra ingredients to use.
@@ -189,7 +189,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param extraIngredient The extra ingredient of this recipe.
          * @param extraAmount     The amount of extra ingredients to use.
@@ -203,7 +203,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param extraIngredient The extra ingredient of this recipe.
          * @param extraAmount     The amount of extra ingredients to use.
@@ -216,7 +216,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param amount          The amount of ingredients to use.
          * @param extraIngredient The extra ingredient of this recipe.
@@ -231,7 +231,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param amount          The amount of ingredients to use.
          * @param extraIngredient The extra ingredient of this recipe.
@@ -245,7 +245,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param amount          The amount of ingredients to use.
          * @param extraIngredient The extra ingredient of this recipe.
@@ -258,7 +258,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param amount          The amount of ingredients to use.
          * @param extraIngredient The extra ingredient of this recipe.
@@ -273,7 +273,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param amount          The amount of ingredients to use.
          * @param extraIngredient The extra ingredient of this recipe.
@@ -287,7 +287,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param amount          The amount of ingredients to use.
          * @param extraIngredient The extra ingredient of this recipe.
@@ -300,7 +300,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param extraIngredient The extra ingredient of this recipe.
          * @param output          The id of the output item of this recipe.
@@ -314,7 +314,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param extraIngredient The extra ingredient of this recipe.
          * @param output          The id of the output item of this recipe.
@@ -327,7 +327,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param extraIngredient The extra ingredient of this recipe.
          * @param output          The id of the output item of this recipe.
@@ -339,7 +339,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param extraIngredient The extra ingredient of this recipe.
          * @param output          The output item of this recipe.
@@ -353,7 +353,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param extraIngredient The extra ingredient of this recipe.
          * @param output          The output item of this recipe.
@@ -366,7 +366,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id              The id to use.
          * @param ingredient      The input ingredient of this recipe.
          * @param extraIngredient The extra ingredient of this recipe.
          * @param output          The output item of this recipe.
@@ -381,7 +381,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param amount          The amount of ingredients to use.
              * @param extraIngredient The extra ingredient of this recipe.
@@ -398,7 +398,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param amount          The amount of ingredients to use.
              * @param extraIngredient The extra ingredient of this recipe.
@@ -414,7 +414,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param amount          The amount of ingredients to use.
              * @param extraIngredient The extra ingredient of this recipe.
@@ -429,7 +429,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param amount          The amount of ingredients to use.
              * @param extraIngredient The extra ingredient of this recipe.
@@ -446,7 +446,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param amount          The amount of ingredients to use.
              * @param extraIngredient The extra ingredient of this recipe.
@@ -462,7 +462,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param amount          The amount of ingredients to use.
              * @param extraIngredient The extra ingredient of this recipe.
@@ -477,7 +477,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param extraIngredient The extra ingredient of this recipe.
              * @param extraAmount     The amount of extra ingredients to use.
@@ -493,7 +493,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param extraIngredient The extra ingredient of this recipe.
              * @param extraAmount     The amount of extra ingredients to use.
@@ -508,7 +508,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param extraIngredient The extra ingredient of this recipe.
              * @param extraAmount     The amount of extra ingredients to use.
@@ -522,7 +522,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param extraIngredient The extra ingredient of this recipe.
              * @param extraAmount     The amount of extra ingredients to use.
@@ -538,7 +538,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param extraIngredient The extra ingredient of this recipe.
              * @param extraAmount     The amount of extra ingredients to use.
@@ -553,7 +553,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param extraIngredient The extra ingredient of this recipe.
              * @param extraAmount     The amount of extra ingredients to use.
@@ -567,7 +567,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param amount          The amount of ingredients to use.
              * @param extraIngredient The extra ingredient of this recipe.
@@ -582,7 +582,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param amount          The amount of ingredients to use.
              * @param extraIngredient The extra ingredient of this recipe.
@@ -596,7 +596,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param amount          The amount of ingredients to use.
              * @param extraIngredient The extra ingredient of this recipe.
@@ -609,7 +609,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param amount          The amount of ingredients to use.
              * @param extraIngredient The extra ingredient of this recipe.
@@ -624,7 +624,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param amount          The amount of ingredients to use.
              * @param extraIngredient The extra ingredient of this recipe.
@@ -638,7 +638,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param amount          The amount of ingredients to use.
              * @param extraIngredient The extra ingredient of this recipe.
@@ -651,7 +651,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param extraIngredient The extra ingredient of this recipe.
              * @param output          The id of the output item of this recipe.
@@ -665,7 +665,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param extraIngredient The extra ingredient of this recipe.
              * @param output          The id of the output item of this recipe.
@@ -678,7 +678,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param extraIngredient The extra ingredient of this recipe.
              * @param output          The id of the output item of this recipe.
@@ -690,7 +690,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param extraIngredient The extra ingredient of this recipe.
              * @param output          The output item of this recipe.
@@ -704,7 +704,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param extraIngredient The extra ingredient of this recipe.
              * @param output          The output item of this recipe.
@@ -717,7 +717,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id              The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id              The id to use.
              * @param ingredient      The input ingredient of this recipe.
              * @param extraIngredient The extra ingredient of this recipe.
              * @param output          The output item of this recipe.
@@ -779,7 +779,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The ingredient to use.
          * @param amount     The amount of ingredients to use.
          * @param output     The id of the output item to use.
@@ -793,7 +793,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The ingredient to use.
          * @param amount     The amount of ingredients to use.
          * @param output     The id of the output item to use.
@@ -806,7 +806,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The ingredient to use.
          * @param amount     The amount of ingredients to use.
          * @param output     The id of the output item to use.
@@ -818,7 +818,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The ingredient to use.
          * @param amount     The amount of ingredients to use.
          * @param output     The output item to use.
@@ -832,7 +832,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The ingredient to use.
          * @param amount     The amount of ingredients to use.
          * @param output     The output item to use.
@@ -845,7 +845,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The ingredient to use.
          * @param amount     The amount of ingredients to use.
          * @param output     The output item to use.
@@ -857,7 +857,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The ingredient to use.
          * @param output     The id of the output item to use.
          * @param count      The output count to use.
@@ -870,7 +870,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The ingredient to use.
          * @param output     The id of the output item to use.
          * @param count      The output count to use.
@@ -882,7 +882,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The ingredient to use.
          * @param output     The id of the output item to use.
          */
@@ -893,7 +893,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The ingredient to use.
          * @param output     The output item to use.
          * @param count      The output count to use.
@@ -906,7 +906,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The ingredient to use.
          * @param output     The output item to use.
          * @param count      The output count to use.
@@ -918,7 +918,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The ingredient to use.
          * @param output     The output item to use.
          */
@@ -933,7 +933,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id         The id to use.
              * @param ingredient The input ingredient of this recipe.
              * @param amount     The amount of ingredients to use.
              * @param output     The id of the output item of this recipe.
@@ -947,7 +947,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id         The id to use.
              * @param ingredient The input ingredient of this recipe.
              * @param amount     The amount of ingredients to use.
              * @param output     The id of the output item of this recipe.
@@ -960,7 +960,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id         The id to use.
              * @param ingredient The input ingredient of this recipe.
              * @param amount     The amount of ingredients to use.
              * @param output     The id of the output item of this recipe.
@@ -972,7 +972,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id         The id to use.
              * @param ingredient The input ingredient of this recipe.
              * @param amount     The amount of ingredients to use.
              * @param output     The id of the output item of this recipe.
@@ -986,7 +986,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id         The id to use.
              * @param ingredient The input ingredient of this recipe.
              * @param amount     The amount of ingredients to use.
              * @param output     The id of the output item of this recipe.
@@ -999,7 +999,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id         The id to use.
              * @param ingredient The input ingredient of this recipe.
              * @param amount     The amount of ingredients to use.
              * @param output     The id of the output item of this recipe.
@@ -1011,7 +1011,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id         The id to use.
              * @param ingredient The input ingredient of this recipe.
              * @param output     The id of the output item of this recipe.
              * @param count      The output count of this recipe.
@@ -1024,7 +1024,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id         The id to use.
              * @param ingredient The input ingredient of this recipe.
              * @param output     The id of the output item of this recipe.
              * @param count      The output count of this recipe.
@@ -1036,7 +1036,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id         The id to use.
              * @param ingredient The input ingredient of this recipe.
              * @param output     The id of the output item of this recipe.
              */
@@ -1047,7 +1047,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id         The id to use.
              * @param ingredient The input ingredient of this recipe.
              * @param output     The output item of this recipe.
              * @param count      The output count of this recipe.
@@ -1060,7 +1060,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id         The id to use.
              * @param ingredient The input ingredient of this recipe.
              * @param output     The output item of this recipe.
              * @param count      The output count of this recipe.
@@ -1072,7 +1072,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             /**
              * Creates a new builder with the given id.
              *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+             * @param id         The id to use.
              * @param ingredient The input ingredient of this recipe.
              * @param output     The output item of this recipe.
              */
@@ -1270,11 +1270,6 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
             protected final I input;
             protected final O output;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id The id to use. Should be unique within the same data provider and the same namespace.
-             */
             protected Builder(ResourceLocation id, I input, O output) {
                 super(id);
                 this.input = input;
@@ -1297,7 +1292,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param input  The input ingredient of this recipe.
          * @param amount The output amount of this recipe.
          * @param output The output chemical of this recipe.
@@ -1309,7 +1304,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param input  The input ingredient of this recipe.
          * @param output The output chemical of this recipe.
          */
@@ -1318,25 +1313,10 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         }
 
         public static class Builder<T extends JsonSerializable> extends Abstract1To1Recipe.Builder<IngredientWithAmount, T> {
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The input ingredient to use.
-             * @param amount     The amount of input ingredients to use.
-             * @param output     The output to use.
-             */
             public Builder(ResourceLocation id, Ingredient ingredient, int amount, T output) {
                 super(id, new IngredientWithAmount(ingredient, amount), output);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The input ingredient to use.
-             * @param output     The output to use.
-             */
             public Builder(ResourceLocation id, Ingredient ingredient, T output) {
                 this(id, ingredient, 1, output);
             }
@@ -1351,7 +1331,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param input  The input of this recipe.
          * @param output The id of the output item of this recipe.
          * @param count  The output count of this recipe.
@@ -1364,7 +1344,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param input  The input of this recipe.
          * @param output The id of the output item of this recipe.
          * @param count  The output count of this recipe.
@@ -1376,7 +1356,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param input  The input of this recipe.
          * @param output The id of the output item of this recipe.
          */
@@ -1387,7 +1367,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param input  The input of this recipe.
          * @param output The output item of this recipe.
          * @param count  The output count of this recipe.
@@ -1400,7 +1380,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param input  The input of this recipe.
          * @param output The output item of this recipe.
          * @param count  The output count of this recipe.
@@ -1412,7 +1392,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param input  The input of this recipe.
          * @param output The output item of this recipe.
          */
@@ -1421,74 +1401,26 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         }
 
         public static class Builder<T extends JsonSerializable> extends Abstract1To1Recipe.Builder<T, PotentiallyAbsentItemStack> {
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param input  The input of this recipe.
-             * @param output The id of the output item of this recipe.
-             * @param count  The output count of this recipe.
-             * @param tag    The output tag of this recipe.
-             */
             public Builder(ResourceLocation id, T input, ResourceLocation output, int count, CompoundTag tag) {
                 super(id, input, new PotentiallyAbsentItemStack(output, count, tag));
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param input  The input of this recipe.
-             * @param output The id of the output item of this recipe.
-             * @param count  The output count of this recipe.
-             */
             public Builder(ResourceLocation id, T input, ResourceLocation output, int count) {
                 this(id, input, output, count, new CompoundTag());
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param input  The input of this recipe.
-             * @param output The id of the output item of this recipe.
-             */
             public Builder(ResourceLocation id, T input, ResourceLocation output) {
                 this(id, input, output, 1);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param input  The input of this recipe.
-             * @param output The id of the output item of this recipe.
-             * @param count  The output count of this recipe.
-             * @param tag    The output tag of this recipe.
-             */
             public Builder(ResourceLocation id, T input, Item output, int count, CompoundTag tag) {
                 this(id, input, itemId(output), count, tag);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param input  The input of this recipe.
-             * @param output The id of the output item of this recipe.
-             * @param count  The output count of this recipe.
-             */
             public Builder(ResourceLocation id, T input, Item output, int count) {
                 this(id, input, output, count, new CompoundTag());
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param input  The input of this recipe.
-             * @param output The id of the output item of this recipe.
-             */
             public Builder(ResourceLocation id, T input, Item output) {
                 this(id, input, output, 1);
             }
@@ -1503,7 +1435,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The input ingredient of this recipe.
          * @param amount     The amount of ingredients to use.
          * @param output     The id of the output item of this recipe.
@@ -1517,7 +1449,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The input ingredient of this recipe.
          * @param amount     The amount of ingredients to use.
          * @param output     The id of the output item of this recipe.
@@ -1530,7 +1462,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The input ingredient of this recipe.
          * @param amount     The amount of ingredients to use.
          * @param output     The id of the output item of this recipe.
@@ -1542,7 +1474,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The input ingredient of this recipe.
          * @param amount     The amount of ingredients to use.
          * @param output     The id of the output item of this recipe.
@@ -1556,7 +1488,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The input ingredient of this recipe.
          * @param amount     The amount of ingredients to use.
          * @param output     The id of the output item of this recipe.
@@ -1569,7 +1501,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The input ingredient of this recipe.
          * @param amount     The amount of ingredients to use.
          * @param output     The id of the output item of this recipe.
@@ -1581,7 +1513,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The input ingredient of this recipe.
          * @param output     The id of the output item of this recipe.
          * @param count      The output count of this recipe.
@@ -1594,7 +1526,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The input ingredient of this recipe.
          * @param output     The id of the output item of this recipe.
          * @param count      The output count of this recipe.
@@ -1606,7 +1538,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The input ingredient of this recipe.
          * @param output     The id of the output item of this recipe.
          */
@@ -1617,7 +1549,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The input ingredient of this recipe.
          * @param output     The output item of this recipe.
          * @param count      The output count of this recipe.
@@ -1630,7 +1562,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The input ingredient of this recipe.
          * @param output     The output item of this recipe.
          * @param count      The output count of this recipe.
@@ -1642,7 +1574,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param ingredient The input ingredient of this recipe.
          * @param output     The output item of this recipe.
          */
@@ -1651,152 +1583,50 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         }
 
         public static class Builder extends Abstract1To1Recipe.Builder<IngredientWithAmount, PotentiallyAbsentItemStack> {
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The input ingredient of this recipe.
-             * @param amount     The amount of ingredients to use.
-             * @param output     The id of the output item of this recipe.
-             * @param count      The output count of this recipe.
-             * @param tag        The output tag of this recipe.
-             */
             public Builder(ResourceLocation id, Ingredient ingredient, int amount, ResourceLocation output, int count, CompoundTag tag) {
                 super(id, new IngredientWithAmount(ingredient, amount), new PotentiallyAbsentItemStack(output, count, tag));
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The input ingredient of this recipe.
-             * @param amount     The amount of ingredients to use.
-             * @param output     The id of the output item of this recipe.
-             * @param count      The output count of this recipe.
-             */
             public Builder(ResourceLocation id, Ingredient ingredient, int amount, ResourceLocation output, int count) {
                 this(id, ingredient, amount, output, count, new CompoundTag());
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The input ingredient of this recipe.
-             * @param amount     The amount of ingredients to use.
-             * @param output     The id of the output item of this recipe.
-             */
             public Builder(ResourceLocation id, Ingredient ingredient, int amount, ResourceLocation output) {
                 this(id, ingredient, amount, output, 1);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The input ingredient of this recipe.
-             * @param amount     The amount of ingredients to use.
-             * @param output     The id of the output item of this recipe.
-             * @param count      The output count of this recipe.
-             * @param tag        The output tag of this recipe.
-             */
             public Builder(ResourceLocation id, Ingredient ingredient, int amount, Item output, int count, CompoundTag tag) {
                 this(id, ingredient, amount, itemId(output), count, tag);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The input ingredient of this recipe.
-             * @param amount     The amount of ingredients to use.
-             * @param output     The id of the output item of this recipe.
-             * @param count      The output count of this recipe.
-             */
             public Builder(ResourceLocation id, Ingredient ingredient, int amount, Item output, int count) {
                 this(id, ingredient, amount, output, count, new CompoundTag());
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The input ingredient of this recipe.
-             * @param amount     The amount of ingredients to use.
-             * @param output     The id of the output item of this recipe.
-             */
             public Builder(ResourceLocation id, Ingredient ingredient, int amount, Item output) {
                 this(id, ingredient, amount, output, 1);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The input ingredient of this recipe.
-             * @param output     The id of the output item of this recipe.
-             * @param count      The output count of this recipe.
-             * @param tag        The output tag of this recipe.
-             */
             public Builder(ResourceLocation id, Ingredient ingredient, ResourceLocation output, int count, CompoundTag tag) {
                 this(id, ingredient, 1, output, count, tag);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The input ingredient of this recipe.
-             * @param output     The id of the output item of this recipe.
-             * @param count      The output count of this recipe.
-             */
             public Builder(ResourceLocation id, Ingredient ingredient, ResourceLocation output, int count) {
                 this(id, ingredient, output, count, new CompoundTag());
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The input ingredient of this recipe.
-             * @param output     The id of the output item of this recipe.
-             */
             public Builder(ResourceLocation id, Ingredient ingredient, ResourceLocation output) {
                 this(id, ingredient, output, 1);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The input ingredient of this recipe.
-             * @param output     The output item of this recipe.
-             * @param count      The output count of this recipe.
-             * @param tag        The output tag of this recipe.
-             */
             public Builder(ResourceLocation id, Ingredient ingredient, Item output, int count, CompoundTag tag) {
                 this(id, ingredient, itemId(output), count, tag);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The input ingredient of this recipe.
-             * @param output     The output item of this recipe.
-             * @param count      The output count of this recipe.
-             */
             public Builder(ResourceLocation id, Ingredient ingredient, Item output, int count) {
                 this(id, ingredient, output, count, new CompoundTag());
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param ingredient The input ingredient of this recipe.
-             * @param output     The output item of this recipe.
-             */
             public Builder(ResourceLocation id, Ingredient ingredient, Item output) {
                 this(id, ingredient, output, 1);
             }
@@ -1811,7 +1641,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param input  The input gas stack to use.
          * @param output The output gas stack to use.
          */
@@ -1820,13 +1650,6 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         }
 
         public static class Builder extends Abstract1To1Recipe.Builder<Chemical.Stack<Gas>, Chemical.Stack<Gas>> {
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param input  The input gas stack to use.
-             * @param output The output gas stack to use.
-             */
             public Builder(ResourceLocation id, Chemical.Stack<Gas> input, Chemical.Stack<Gas> output) {
                 super(id, input, output);
             }

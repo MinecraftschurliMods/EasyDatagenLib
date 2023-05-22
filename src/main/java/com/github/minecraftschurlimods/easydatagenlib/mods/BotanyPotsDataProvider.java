@@ -29,7 +29,7 @@ public abstract class BotanyPotsDataProvider<T extends AbstractRecipeBuilder<?>>
         /**
          * Creates a new builder with the given id.
          *
-         * @param id          The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id          The id to use.
          * @param seed        The seed ingredient to use.
          * @param growthTicks The time this recipe takes to complete.
          */
@@ -45,13 +45,6 @@ public abstract class BotanyPotsDataProvider<T extends AbstractRecipeBuilder<?>>
             private final int growthTicks;
             private int lightLevel = 0;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id          The id to use. Should be unique within the same data provider and the same namespace.
-             * @param seed        The seed ingredient to use.
-             * @param growthTicks The time this recipe takes to complete.
-             */
             public Builder(ResourceLocation id, Ingredient seed, int growthTicks) {
                 super(id);
                 this.seed = seed;
@@ -206,7 +199,7 @@ public abstract class BotanyPotsDataProvider<T extends AbstractRecipeBuilder<?>>
         /**
          * Creates a new builder with the given id.
          *
-         * @param id      The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id      The id to use.
          * @param input   The input ingredient to use.
          * @param display The {@link DisplayState} to use.
          */
@@ -221,13 +214,6 @@ public abstract class BotanyPotsDataProvider<T extends AbstractRecipeBuilder<?>>
             private float growthModifier = 1;
             private int lightLevel = 0;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id      The id to use. Should be unique within the same data provider and the same namespace.
-             * @param input   The input ingredient to use.
-             * @param display The {@link DisplayState} to use.
-             */
             public Builder(ResourceLocation id, Ingredient input, DisplayState display) {
                 super(id);
                 this.input = input;

@@ -25,7 +25,7 @@ public abstract class BotaniaDataProvider<T extends AbstractRecipeBuilder<?>> ex
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param mana   The amount of mana this recipe requires.
          * @param input  The input ingredient of this recipe.
          * @param output The id of the output item of this recipe.
@@ -39,7 +39,7 @@ public abstract class BotaniaDataProvider<T extends AbstractRecipeBuilder<?>> ex
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param mana   The amount of mana this recipe requires.
          * @param input  The input ingredient of this recipe.
          * @param output The id of the output item of this recipe.
@@ -52,7 +52,7 @@ public abstract class BotaniaDataProvider<T extends AbstractRecipeBuilder<?>> ex
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param mana   The amount of mana this recipe requires.
          * @param input  The input ingredient of this recipe.
          * @param output The id of the output item of this recipe.
@@ -64,7 +64,7 @@ public abstract class BotaniaDataProvider<T extends AbstractRecipeBuilder<?>> ex
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param mana   The amount of mana this recipe requires.
          * @param input  The input ingredient of this recipe.
          * @param output The output item of this recipe.
@@ -78,7 +78,7 @@ public abstract class BotaniaDataProvider<T extends AbstractRecipeBuilder<?>> ex
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param mana   The amount of mana this recipe requires.
          * @param input  The input ingredient of this recipe.
          * @param output The output item of this recipe.
@@ -91,7 +91,7 @@ public abstract class BotaniaDataProvider<T extends AbstractRecipeBuilder<?>> ex
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param mana   The amount of mana this recipe requires.
          * @param input  The input ingredient of this recipe.
          * @param output The output item of this recipe.
@@ -107,16 +107,6 @@ public abstract class BotaniaDataProvider<T extends AbstractRecipeBuilder<?>> ex
             private String group;
             private ResourceLocation catalyst;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param mana   The amount of mana this recipe requires.
-             * @param input  The input ingredient of this recipe.
-             * @param output The id of the output item of this recipe.
-             * @param count  The output count of this recipe.
-             * @param tag    The output tag of this recipe.
-             */
             public Builder(ResourceLocation id, int mana, Ingredient input, ResourceLocation output, int count, CompoundTag tag) {
                 super(id);
                 this.mana = mana;
@@ -124,66 +114,22 @@ public abstract class BotaniaDataProvider<T extends AbstractRecipeBuilder<?>> ex
                 this.output = new PotentiallyAbsentItemStack(output, count, tag);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param mana   The amount of mana this recipe requires.
-             * @param input  The input ingredient of this recipe.
-             * @param output The id of the output item of this recipe.
-             * @param count  The output count of this recipe.
-             */
             public Builder(ResourceLocation id, int mana, Ingredient input, ResourceLocation output, int count) {
                 this(id, mana, input, output, count, new CompoundTag());
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param mana   The amount of mana this recipe requires.
-             * @param input  The input ingredient of this recipe.
-             * @param output The id of the output item of this recipe.
-             */
             public Builder(ResourceLocation id, int mana, Ingredient input, ResourceLocation output) {
                 this(id, mana, input, output, 1);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param mana   The amount of mana this recipe requires.
-             * @param input  The input ingredient of this recipe.
-             * @param output The output item of this recipe.
-             * @param count  The output count of this recipe.
-             * @param tag    The output tag of this recipe.
-             */
             public Builder(ResourceLocation id, int mana, Ingredient input, Item output, int count, CompoundTag tag) {
                 this(id, mana, input, itemId(output), count, tag);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param mana   The amount of mana this recipe requires.
-             * @param input  The input ingredient of this recipe.
-             * @param output The output item of this recipe.
-             * @param count  The output count of this recipe.
-             */
             public Builder(ResourceLocation id, int mana, Ingredient input, Item output, int count) {
                 this(id, mana, input, output, count, new CompoundTag());
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param mana   The amount of mana this recipe requires.
-             * @param input  The input ingredient of this recipe.
-             * @param output The output item of this recipe.
-             */
             public Builder(ResourceLocation id, int mana, Ingredient input, Item output) {
                 this(id, mana, input, output, 1);
             }

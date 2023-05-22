@@ -24,7 +24,7 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
         /**
          * Creates a new builder with the given id.
          *
-         * @param id   The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id   The id to use.
          * @param from The id of the base block to use.
          * @param to   The id of the result block to use.
          */
@@ -35,7 +35,7 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
         /**
          * Creates a new builder with the given id.
          *
-         * @param id   The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id   The id to use.
          * @param from The id of the base block to use.
          * @param to   The result block to use.
          */
@@ -46,7 +46,7 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
         /**
          * Creates a new builder with the given id.
          *
-         * @param id   The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id   The id to use.
          * @param from The base block to use.
          * @param to   The id of the result block to use.
          */
@@ -57,7 +57,7 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
         /**
          * Creates a new builder with the given id.
          *
-         * @param id   The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id   The id to use.
          * @param from The base block to use.
          * @param to   The result block to use.
          */
@@ -69,48 +69,20 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
             private final ResourceLocation from;
             private final ResourceLocation to;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id   The id to use. Should be unique within the same data provider and the same namespace.
-             * @param from The id of the base block to use.
-             * @param to   The id of the result block to use.
-             */
             public Builder(ResourceLocation id, ResourceLocation from, ResourceLocation to) {
                 super(id);
                 this.from = from;
                 this.to = to;
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id   The id to use. Should be unique within the same data provider and the same namespace.
-             * @param from The id of the base block to use.
-             * @param to   The result block to use.
-             */
             public Builder(ResourceLocation id, ResourceLocation from, Block to) {
                 this(id, from, blockId(to));
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id   The id to use. Should be unique within the same data provider and the same namespace.
-             * @param from The base block to use.
-             * @param to   The id of the result block to use.
-             */
             public Builder(ResourceLocation id, Block from, ResourceLocation to) {
                 this(id, blockId(from), to);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id   The id to use. Should be unique within the same data provider and the same namespace.
-             * @param from The base block to use.
-             * @param to   The result block to use.
-             */
             public Builder(ResourceLocation id, Block from, Block to) {
                 this(id, blockId(from), blockId(to));
             }
@@ -131,7 +103,7 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
         /**
          * Creates a new builder with the given id.
          *
-         * @param id   The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id   The id to use.
          * @param from The id of the base block to use.
          * @param to   The id of the result block to use.
          */
@@ -142,7 +114,7 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
         /**
          * Creates a new builder with the given id.
          *
-         * @param id   The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id   The id to use.
          * @param from The id of the base block to use.
          * @param to   The result block to use.
          */
@@ -153,7 +125,7 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
         /**
          * Creates a new builder with the given id.
          *
-         * @param id   The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id   The id to use.
          * @param from The base block to use.
          * @param to   The id of the result block to use.
          */
@@ -164,7 +136,7 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
         /**
          * Creates a new builder with the given id.
          *
-         * @param id   The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id   The id to use.
          * @param from The base block to use.
          * @param to   The result block to use.
          */
@@ -177,13 +149,6 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
             private final ResourceLocation to;
             private final boolean reversible;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id   The id to use. Should be unique within the same data provider and the same namespace.
-             * @param from The id of the base block to use.
-             * @param to   The id of the result block to use.
-             */
             public Builder(ResourceLocation id, ResourceLocation from, ResourceLocation to, boolean reversible) {
                 super(id);
                 this.from = from;
@@ -191,35 +156,14 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
                 this.reversible = reversible;
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id   The id to use. Should be unique within the same data provider and the same namespace.
-             * @param from The id of the base block to use.
-             * @param to   The result block to use.
-             */
             public Builder(ResourceLocation id, ResourceLocation from, EntityType<?> to, boolean reversible) {
                 this(id, from, Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(to)), reversible);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id   The id to use. Should be unique within the same data provider and the same namespace.
-             * @param from The base block to use.
-             * @param to   The id of the result block to use.
-             */
             public Builder(ResourceLocation id, EntityType<?> from, ResourceLocation to, boolean reversible) {
                 this(id, Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(from)), to, reversible);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id   The id to use. Should be unique within the same data provider and the same namespace.
-             * @param from The base block to use.
-             * @param to   The result block to use.
-             */
             public Builder(ResourceLocation id, EntityType<?> from, EntityType<?> to, boolean reversible) {
                 this(id, Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(from)), Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(to)), reversible);
             }

@@ -36,7 +36,7 @@ public abstract class ElementalcraftDataProvider<T extends AbstractRecipeBuilder
         /**
          * Creates a new builder with the given id.
          *
-         * @param id The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id The id to use.
          * @param input The input ingredient to use.
          * @param output The id of the result item to use.
          * @param count The result count to use.
@@ -51,7 +51,7 @@ public abstract class ElementalcraftDataProvider<T extends AbstractRecipeBuilder
         /**
          * Creates a new builder with the given id.
          *
-         * @param id The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id The id to use.
          * @param input The input ingredient to use.
          * @param output The id of the result item to use.
          * @param count The result count to use.
@@ -65,7 +65,7 @@ public abstract class ElementalcraftDataProvider<T extends AbstractRecipeBuilder
         /**
          * Creates a new builder with the given id.
          *
-         * @param id The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id The id to use.
          * @param input The input ingredient to use.
          * @param output The id of the result item to use.
          * @param elementAmount The element amount to use.
@@ -78,7 +78,7 @@ public abstract class ElementalcraftDataProvider<T extends AbstractRecipeBuilder
         /**
          * Creates a new builder with the given id.
          *
-         * @param id The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id The id to use.
          * @param input The input ingredient to use.
          * @param output The result item to use.
          * @param count The result count to use.
@@ -93,7 +93,7 @@ public abstract class ElementalcraftDataProvider<T extends AbstractRecipeBuilder
         /**
          * Creates a new builder with the given id.
          *
-         * @param id The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id The id to use.
          * @param input The input ingredient to use.
          * @param output The result item to use.
          * @param count The result count to use.
@@ -107,7 +107,7 @@ public abstract class ElementalcraftDataProvider<T extends AbstractRecipeBuilder
         /**
          * Creates a new builder with the given id.
          *
-         * @param id The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id The id to use.
          * @param input The input ingredient to use.
          * @param output The result item to use.
          * @param elementAmount The element amount to use.
@@ -123,17 +123,6 @@ public abstract class ElementalcraftDataProvider<T extends AbstractRecipeBuilder
             private final int elementAmount;
             private final int luckRatio;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id The id to use. Should be unique within the same data provider and the same namespace.
-             * @param input The input ingredient to use.
-             * @param output The id of the result item to use.
-             * @param count The result count to use.
-             * @param tag The result NBT to use.
-             * @param elementAmount The element amount to use.
-             * @param luckRatio The luck ratio to use.
-             */
             public Builder(ResourceLocation id, Ingredient input, ResourceLocation output, int count, CompoundTag tag, int elementAmount, int luckRatio) {
                 super(id);
                 this.input = input;
@@ -142,71 +131,22 @@ public abstract class ElementalcraftDataProvider<T extends AbstractRecipeBuilder
                 this.luckRatio = luckRatio;
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id The id to use. Should be unique within the same data provider and the same namespace.
-             * @param input The input ingredient to use.
-             * @param output The id of the result item to use.
-             * @param count The result count to use.
-             * @param elementAmount The element amount to use.
-             * @param luckRatio The luck ratio to use.
-             */
             public Builder(ResourceLocation id, Ingredient input, ResourceLocation output, int count, int elementAmount, int luckRatio) {
                 this(id, input, output, count, new CompoundTag(), elementAmount, luckRatio);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id The id to use. Should be unique within the same data provider and the same namespace.
-             * @param input The input ingredient to use.
-             * @param output The id of the result item to use.
-             * @param elementAmount The element amount to use.
-             * @param luckRatio The luck ratio to use.
-             */
             public Builder(ResourceLocation id, Ingredient input, ResourceLocation output, int elementAmount, int luckRatio) {
                 this(id, input, output, 1, elementAmount, luckRatio);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id The id to use. Should be unique within the same data provider and the same namespace.
-             * @param input The input ingredient to use.
-             * @param output The result item to use.
-             * @param count The result count to use.
-             * @param tag The result NBT to use.
-             * @param elementAmount The element amount to use.
-             * @param luckRatio The luck ratio to use.
-             */
             public Builder(ResourceLocation id, Ingredient input, Item output, int count, CompoundTag tag, int elementAmount, int luckRatio) {
                 this(id, input, itemId(output), count, tag, elementAmount, luckRatio);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id The id to use. Should be unique within the same data provider and the same namespace.
-             * @param input The input ingredient to use.
-             * @param output The result item to use.
-             * @param count The result count to use.
-             * @param elementAmount The element amount to use.
-             * @param luckRatio The luck ratio to use.
-             */
             public Builder(ResourceLocation id, Ingredient input, Item output, int count, int elementAmount, int luckRatio) {
                 this(id, input, output, count, new CompoundTag(), elementAmount, luckRatio);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id The id to use. Should be unique within the same data provider and the same namespace.
-             * @param input The input ingredient to use.
-             * @param output The result item to use.
-             * @param elementAmount The element amount to use.
-             * @param luckRatio The luck ratio to use.
-             */
             public Builder(ResourceLocation id, Ingredient input, Item output, int elementAmount, int luckRatio) {
                 this(id, input, output, 1, elementAmount, luckRatio);
             }

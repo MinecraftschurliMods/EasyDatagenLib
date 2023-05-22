@@ -32,7 +32,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param time   The time this recipe takes to complete.
          * @param energy The amount of energy this recipe requires.
          * @param input  The input ingredient of this recipe.
@@ -45,7 +45,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param time   The time this recipe takes to complete.
          * @param energy The amount of energy this recipe requires.
          * @param input  The input ingredient of this recipe.
@@ -63,15 +63,6 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
             private final IngredientWithCount input;
             private IngredientWithCount slag;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param time   The time this recipe takes to complete.
-             * @param energy The amount of energy this recipe requires.
-             * @param input  The input ingredient of this recipe.
-             * @param count  The amount of input ingredients required.
-             */
             public Builder(ResourceLocation id, int time, int energy, Ingredient input, int count) {
                 super(id);
                 this.time = time;
@@ -79,14 +70,6 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
                 this.input = new IngredientWithCount(input, count);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param time   The time this recipe takes to complete.
-             * @param energy The amount of energy this recipe requires.
-             * @param input  The input ingredient of this recipe.
-             */
             public Builder(ResourceLocation id, int time, int energy, Ingredient input) {
                 this(id, time, energy, input, 1);
             }
@@ -230,7 +213,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param time       The time this recipe requires.
          * @param input      The input ingredient of this recipe.
          * @param soil       The soil ingredient of this recipe.
@@ -244,7 +227,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
         /**
          * Creates a new builder with the given id.
          *
-         * @param id         The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id         The id to use.
          * @param time       The time this recipe requires.
          * @param input      The input ingredient of this recipe.
          * @param soil       The soil ingredient of this recipe.
@@ -263,16 +246,6 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
             private final ClocheRenderType renderType;
             private final ResourceLocation block;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param time       The time this recipe requires.
-             * @param input      The input ingredient of this recipe.
-             * @param soil       The soil ingredient of this recipe.
-             * @param renderType The render mode to use in the recipe renderer.
-             * @param block      The id of the block to use in the recipe renderer.
-             */
             public Builder(ResourceLocation id, int time, Ingredient input, Ingredient soil, ClocheRenderType renderType, ResourceLocation block) {
                 super(id);
                 this.time = time;
@@ -282,16 +255,6 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
                 this.block = block;
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use. Should be unique within the same data provider and the same namespace.
-             * @param time       The time this recipe requires.
-             * @param input      The input ingredient of this recipe.
-             * @param soil       The soil ingredient of this recipe.
-             * @param renderType The render mode to use in the recipe renderer.
-             * @param block      The block to use in the recipe renderer.
-             */
             public Builder(ResourceLocation id, int time, Ingredient input, Ingredient soil, ClocheRenderType renderType, Block block) {
                 this(id, time, input, soil, renderType, blockId(block));
             }
@@ -340,7 +303,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param energy The amount of energy this recipe requires.
          * @param input  The input ingredient of this recipe.
          * @param result The result ingredient of this recipe.
@@ -353,7 +316,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param energy The amount of energy this recipe requires.
          * @param input  The input ingredient of this recipe.
          * @param result The result ingredient of this recipe.
@@ -368,15 +331,6 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
             private final Ingredient input;
             private final IngredientWithCount result;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param energy The amount of energy this recipe requires.
-             * @param input  The input ingredient of this recipe.
-             * @param result The result ingredient of this recipe.
-             * @param count  The result count of this recipe.
-             */
             public Builder(ResourceLocation id, int energy, Ingredient input, Ingredient result, int count) {
                 super(id);
                 this.energy = energy;
@@ -384,14 +338,6 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
                 this.result = new IngredientWithCount(result, count);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param energy The amount of energy this recipe requires.
-             * @param input  The input ingredient of this recipe.
-             * @param result The result ingredient of this recipe.
-             */
             public Builder(ResourceLocation id, int energy, Ingredient input, Ingredient result) {
                 this(id, energy, input, result, 1);
             }
@@ -459,7 +405,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param energy The amount of energy this recipe requires.
          * @param input  The input ingredient of this recipe.
          * @param result The id of the result item of this recipe.
@@ -472,7 +418,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param energy The amount of energy this recipe requires.
          * @param input  The input ingredient of this recipe.
          * @param result The id of the result item of this recipe.
@@ -484,7 +430,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param energy The amount of energy this recipe requires.
          * @param input  The input ingredient of this recipe.
          * @param result The result item of this recipe.
@@ -497,7 +443,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use. Should be unique within the same data provider and the same namespace.
+         * @param id     The id to use.
          * @param energy The amount of energy this recipe requires.
          * @param input  The input ingredient of this recipe.
          * @param result The result item of this recipe.
@@ -513,55 +459,21 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
             private final PotentiallyAbsentItemStack result;
             private IngredientWithCount stripped;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param energy The amount of energy this recipe requires.
-             * @param input  The input ingredient of this recipe.
-             * @param result The id of the result item of this recipe.
-             * @param count  The result count of this recipe.
-             */
             public Builder(ResourceLocation id, int energy, Ingredient input, ResourceLocation result, int count) {
                 super(id);
                 this.energy = energy;
                 this.input = input;
-                this.result = new PotentiallyAbsentItemStack(result, count);
+                this.result = new PotentiallyAbsentItemStack(result, count); // doesn't support NBT
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param energy The amount of energy this recipe requires.
-             * @param input  The input ingredient of this recipe.
-             * @param result The id of the result item of this recipe.
-             */
             public Builder(ResourceLocation id, int energy, Ingredient input, ResourceLocation result) {
                 this(id, energy, input, result, 1);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param energy The amount of energy this recipe requires.
-             * @param input  The input ingredient of this recipe.
-             * @param result The result item of this recipe.
-             * @param count  The result count of this recipe.
-             */
             public Builder(ResourceLocation id, int energy, Ingredient input, Item result, int count) {
                 this(id, energy, input, itemId(result), count);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id     The id to use. Should be unique within the same data provider and the same namespace.
-             * @param energy The amount of energy this recipe requires.
-             * @param input  The input ingredient of this recipe.
-             * @param result The result item of this recipe.
-             */
             public Builder(ResourceLocation id, int energy, Ingredient input, Item result) {
                 this(id, energy, input, result, 1);
             }
