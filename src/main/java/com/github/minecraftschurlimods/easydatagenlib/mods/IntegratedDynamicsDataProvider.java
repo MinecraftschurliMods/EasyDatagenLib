@@ -104,17 +104,6 @@ public abstract class IntegratedDynamicsDataProvider<T extends AbstractRecipeBui
             /**
              * Sets the result fluid to use.
              *
-             * @param fluid The id of the fluid to use.
-             * @param tag   The NBT tag to use.
-             * @return This builder, for chaining.
-             */
-            public Builder setFluid(ResourceLocation fluid, CompoundTag tag) {
-                return setFluid(fluid, 1, tag);
-            }
-
-            /**
-             * Sets the result fluid to use.
-             *
              * @param fluid  The fluid to use.
              * @param amount The amount to use.
              * @param tag    The NBT tag to use.
@@ -170,18 +159,6 @@ public abstract class IntegratedDynamicsDataProvider<T extends AbstractRecipeBui
              */
             public Builder addItem(ResourceLocation item, int amount, float chance) {
                 return addItem(item, amount, new CompoundTag(), chance);
-            }
-
-            /**
-             * Adds a result item to the recipe.
-             *
-             * @param item   The id of the item to use.
-             * @param tag    The NBT tag to use.
-             * @param chance The chance for this item to be used.
-             * @return This builder, for chaining.
-             */
-            public Builder addItem(ResourceLocation item, CompoundTag tag, float chance) {
-                return addItem(item, 1, tag, chance);
             }
 
             /**
@@ -264,17 +241,6 @@ public abstract class IntegratedDynamicsDataProvider<T extends AbstractRecipeBui
              */
             public Builder addItem(ResourceLocation item, int amount) {
                 return addItem(item, amount, new CompoundTag());
-            }
-
-            /**
-             * Adds a result item to the recipe.
-             *
-             * @param item The id of the item to use.
-             * @param tag  The NBT tag to use.
-             * @return This builder, for chaining.
-             */
-            public Builder addItem(ResourceLocation item, CompoundTag tag) {
-                return addItem(item, 1, tag);
             }
 
             /**
@@ -404,17 +370,6 @@ public abstract class IntegratedDynamicsDataProvider<T extends AbstractRecipeBui
              * Sets the result fluid to use.
              *
              * @param fluid The id of the fluid to use.
-             * @param tag   The NBT tag to use.
-             * @return This builder, for chaining.
-             */
-            public Builder setFluid(ResourceLocation fluid, CompoundTag tag) {
-                return setFluid(fluid, 1, tag);
-            }
-
-            /**
-             * Sets the result fluid to use.
-             *
-             * @param fluid The id of the fluid to use.
              * @return This builder, for chaining.
              */
             public Builder setFluid(ResourceLocation fluid) {
@@ -489,18 +444,6 @@ public abstract class IntegratedDynamicsDataProvider<T extends AbstractRecipeBui
              */
             public Builder addItem(ResourceLocation item, int amount, float chance) {
                 return addItem(item, amount, new CompoundTag(), chance);
-            }
-
-            /**
-             * Adds a result item to the recipe.
-             *
-             * @param item   The id of the item to use.
-             * @param tag    The NBT tag to use.
-             * @param chance The chance for this item to be used.
-             * @return This builder, for chaining.
-             */
-            public Builder addItem(ResourceLocation item, CompoundTag tag, float chance) {
-                return addItem(item, 1, tag, chance);
             }
 
             /**
@@ -583,17 +526,6 @@ public abstract class IntegratedDynamicsDataProvider<T extends AbstractRecipeBui
              */
             public Builder addItem(ResourceLocation item, int amount) {
                 return addItem(item, amount, new CompoundTag());
-            }
-
-            /**
-             * Adds a result item to the recipe.
-             *
-             * @param item The id of the item to use.
-             * @param tag  The NBT tag to use.
-             * @return This builder, for chaining.
-             */
-            public Builder addItem(ResourceLocation item, CompoundTag tag) {
-                return addItem(item, 1, tag);
             }
 
             /**
