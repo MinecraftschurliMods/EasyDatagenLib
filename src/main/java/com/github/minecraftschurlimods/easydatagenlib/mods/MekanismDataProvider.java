@@ -40,690 +40,402 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param amount          The amount of ingredients to use.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param extraAmount     The amount of extra ingredients to use.
-         * @param output          The id of the output item of this recipe.
-         * @param count           The output count of this recipe.
-         * @param tag             The output tag of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param inputCount  The input ingredient count to use.
+         * @param extraInput  The extra input ingredient to use.
+         * @param extraCount  The extra input ingredient count to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
+         * @param tag         The output NBT tag to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, Ingredient extraIngredient, int extraAmount, ResourceLocation output, int count, CompoundTag tag) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, extraIngredient, extraAmount, output, count, tag);
+        public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, int extraCount, ResourceLocation output, int outputCount, CompoundTag tag) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, extraInput, extraCount, output, outputCount, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param amount          The amount of ingredients to use.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param extraAmount     The amount of extra ingredients to use.
-         * @param output          The id of the output item of this recipe.
-         * @param count           The output count of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param inputCount  The input ingredient count to use.
+         * @param extraInput  The extra input ingredient to use.
+         * @param extraCount  The extra input ingredient count to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, Ingredient extraIngredient, int extraAmount, ResourceLocation output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, extraIngredient, extraAmount, output, count);
+        public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, int extraCount, ResourceLocation output, int outputCount) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, extraInput, extraCount, output, outputCount);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param amount          The amount of ingredients to use.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param extraAmount     The amount of extra ingredients to use.
-         * @param output          The id of the output item of this recipe.
+         * @param id         The recipe id to use.
+         * @param input      The input ingredient to use.
+         * @param inputCount The input ingredient count to use.
+         * @param extraInput The extra input ingredient to use.
+         * @param extraCount The extra input ingredient count to use.
+         * @param output     The id of the output item to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, Ingredient extraIngredient, int extraAmount, ResourceLocation output) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, extraIngredient, extraAmount, output);
+        public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, int extraCount, ResourceLocation output) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, extraInput, extraCount, output);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param amount          The amount of ingredients to use.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param extraAmount     The amount of extra ingredients to use.
-         * @param output          The id of the output item of this recipe.
-         * @param count           The output count of this recipe.
-         * @param tag             The output tag of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param inputCount  The input ingredient count to use.
+         * @param extraInput  The extra input ingredient to use.
+         * @param extraCount  The extra input ingredient count to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
+         * @param tag         The output NBT tag to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, Ingredient extraIngredient, int extraAmount, Item output, int count, CompoundTag tag) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, extraIngredient, extraAmount, output, count, tag);
+        public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, int extraCount, Item output, int outputCount, CompoundTag tag) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, extraInput, extraCount, output, outputCount, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param amount          The amount of ingredients to use.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param extraAmount     The amount of extra ingredients to use.
-         * @param output          The id of the output item of this recipe.
-         * @param count           The output count of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param inputCount  The input ingredient count to use.
+         * @param extraInput  The extra input ingredient to use.
+         * @param extraCount  The extra input ingredient count to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, Ingredient extraIngredient, int extraAmount, Item output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, extraIngredient, extraAmount, output, count);
+        public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, int extraCount, Item output, int outputCount) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, extraInput, extraCount, output, outputCount);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param amount          The amount of ingredients to use.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param extraAmount     The amount of extra ingredients to use.
-         * @param output          The id of the output item of this recipe.
+         * @param id         The recipe id to use.
+         * @param input      The input ingredient to use.
+         * @param inputCount The input ingredient count to use.
+         * @param extraInput The extra input ingredient to use.
+         * @param extraCount The extra input ingredient count to use.
+         * @param output     The id of the output item to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, Ingredient extraIngredient, int extraAmount, Item output) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, extraIngredient, extraAmount, output);
+        public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, int extraCount, Item output) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, extraInput, extraCount, output);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param extraAmount     The amount of extra ingredients to use.
-         * @param output          The id of the output item of this recipe.
-         * @param count           The output count of this recipe.
-         * @param tag             The output tag of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param extraInput  The extra input ingredient to use.
+         * @param extraCount  The extra input ingredient count to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
+         * @param tag         The output NBT tag to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Ingredient extraIngredient, int extraAmount, ResourceLocation output, int count, CompoundTag tag) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, extraIngredient, extraAmount, output, count, tag);
+        public Builder builder(String id, Ingredient input, Ingredient extraInput, int extraCount, ResourceLocation output, int outputCount, CompoundTag tag) {
+            return new Builder(new ResourceLocation(namespace, id), input, extraInput, extraCount, output, outputCount, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param extraAmount     The amount of extra ingredients to use.
-         * @param output          The id of the output item of this recipe.
-         * @param count           The output count of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param extraInput  The extra input ingredient to use.
+         * @param extraCount  The extra input ingredient count to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Ingredient extraIngredient, int extraAmount, ResourceLocation output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, extraIngredient, extraAmount, output, count);
+        public Builder builder(String id, Ingredient input, Ingredient extraInput, int extraCount, ResourceLocation output, int outputCount) {
+            return new Builder(new ResourceLocation(namespace, id), input, extraInput, extraCount, output, outputCount);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param extraAmount     The amount of extra ingredients to use.
-         * @param output          The id of the output item of this recipe.
+         * @param id         The recipe id to use.
+         * @param input      The input ingredient to use.
+         * @param extraInput The extra input ingredient to use.
+         * @param extraCount The extra input ingredient count to use.
+         * @param output     The id of the output item to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Ingredient extraIngredient, int extraAmount, ResourceLocation output) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, extraIngredient, extraAmount, output);
+        public Builder builder(String id, Ingredient input, Ingredient extraInput, int extraCount, ResourceLocation output) {
+            return new Builder(new ResourceLocation(namespace, id), input, extraInput, extraCount, output);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param extraAmount     The amount of extra ingredients to use.
-         * @param output          The output item of this recipe.
-         * @param count           The output count of this recipe.
-         * @param tag             The output tag of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param extraInput  The extra input ingredient to use.
+         * @param extraCount  The extra input ingredient count to use.
+         * @param output      The output item to use.
+         * @param outputCount The output count to use.
+         * @param tag         The output NBT tag to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Ingredient extraIngredient, int extraAmount, Item output, int count, CompoundTag tag) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, extraIngredient, extraAmount, output, count, tag);
+        public Builder builder(String id, Ingredient input, Ingredient extraInput, int extraCount, Item output, int outputCount, CompoundTag tag) {
+            return new Builder(new ResourceLocation(namespace, id), input, extraInput, extraCount, output, outputCount, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param extraAmount     The amount of extra ingredients to use.
-         * @param output          The output item of this recipe.
-         * @param count           The output count of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param extraInput  The extra input ingredient to use.
+         * @param extraCount  The extra input ingredient count to use.
+         * @param output      The output item to use.
+         * @param outputCount The output count to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Ingredient extraIngredient, int extraAmount, Item output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, extraIngredient, extraAmount, output, count);
+        public Builder builder(String id, Ingredient input, Ingredient extraInput, int extraCount, Item output, int outputCount) {
+            return new Builder(new ResourceLocation(namespace, id), input, extraInput, extraCount, output, outputCount);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param extraAmount     The amount of extra ingredients to use.
-         * @param output          The output item of this recipe.
+         * @param id         The recipe id to use.
+         * @param input      The input ingredient to use.
+         * @param extraInput The extra input ingredient to use.
+         * @param extraCount The extra input ingredient count to use.
+         * @param output     The output item to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Ingredient extraIngredient, int extraAmount, Item output) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, extraIngredient, extraAmount, output);
+        public Builder builder(String id, Ingredient input, Ingredient extraInput, int extraCount, Item output) {
+            return new Builder(new ResourceLocation(namespace, id), input, extraInput, extraCount, output);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param amount          The amount of ingredients to use.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param output          The id of the output item of this recipe.
-         * @param count           The output count of this recipe.
-         * @param tag             The output tag of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param inputCount  The input ingredient count to use.
+         * @param extraInput  The extra input ingredient to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
+         * @param tag         The output NBT tag to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, Ingredient extraIngredient, ResourceLocation output, int count, CompoundTag tag) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, extraIngredient, output, count, tag);
+        public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, ResourceLocation output, int outputCount, CompoundTag tag) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, extraInput, output, outputCount, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param amount          The amount of ingredients to use.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param output          The id of the output item of this recipe.
-         * @param count           The output count of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param inputCount  The input ingredient count to use.
+         * @param extraInput  The extra input ingredient to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, Ingredient extraIngredient, ResourceLocation output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, extraIngredient, output, count);
+        public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, ResourceLocation output, int outputCount) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, extraInput, output, outputCount);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param amount          The amount of ingredients to use.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param output          The id of the output item of this recipe.
+         * @param id         The recipe id to use.
+         * @param input      The input ingredient to use.
+         * @param inputCount The input ingredient count to use.
+         * @param extraInput The extra input ingredient to use.
+         * @param output     The id of the output item to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, Ingredient extraIngredient, ResourceLocation output) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, extraIngredient, output);
+        public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, ResourceLocation output) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, extraInput, output);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param amount          The amount of ingredients to use.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param output          The id of the output item of this recipe.
-         * @param count           The output count of this recipe.
-         * @param tag             The output tag of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param inputCount  The input ingredient count to use.
+         * @param extraInput  The extra input ingredient to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
+         * @param tag         The output NBT tag to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, Ingredient extraIngredient, Item output, int count, CompoundTag tag) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, extraIngredient, output, count, tag);
+        public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, Item output, int outputCount, CompoundTag tag) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, extraInput, output, outputCount, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param amount          The amount of ingredients to use.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param output          The id of the output item of this recipe.
-         * @param count           The output count of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param inputCount  The input ingredient count to use.
+         * @param extraInput  The extra input ingredient to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, Ingredient extraIngredient, Item output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, extraIngredient, output, count);
+        public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, Item output, int outputCount) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, extraInput, output, outputCount);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param amount          The amount of ingredients to use.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param output          The id of the output item of this recipe.
+         * @param id         The recipe id to use.
+         * @param input      The input ingredient to use.
+         * @param inputCount The input ingredient count to use.
+         * @param extraInput The extra input ingredient to use.
+         * @param output     The id of the output item to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, Ingredient extraIngredient, Item output) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, extraIngredient, output);
+        public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, Item output) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, extraInput, output);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param output          The id of the output item of this recipe.
-         * @param count           The output count of this recipe.
-         * @param tag             The output tag of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param extraInput  The extra input ingredient to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
+         * @param tag         The output NBT tag to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Ingredient extraIngredient, ResourceLocation output, int count, CompoundTag tag) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, extraIngredient, output, count, tag);
+        public Builder builder(String id, Ingredient input, Ingredient extraInput, ResourceLocation output, int outputCount, CompoundTag tag) {
+            return new Builder(new ResourceLocation(namespace, id), input, extraInput, output, outputCount, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param output          The id of the output item of this recipe.
-         * @param count           The output count of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param extraInput  The extra input ingredient to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Ingredient extraIngredient, ResourceLocation output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, extraIngredient, output, count);
+        public Builder builder(String id, Ingredient input, Ingredient extraInput, ResourceLocation output, int outputCount) {
+            return new Builder(new ResourceLocation(namespace, id), input, extraInput, output, outputCount);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param output          The id of the output item of this recipe.
+         * @param id         The recipe id to use.
+         * @param input      The input ingredient to use.
+         * @param extraInput The extra input ingredient to use.
+         * @param output     The id of the output item to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Ingredient extraIngredient, ResourceLocation output) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, extraIngredient, output);
+        public Builder builder(String id, Ingredient input, Ingredient extraInput, ResourceLocation output) {
+            return new Builder(new ResourceLocation(namespace, id), input, extraInput, output);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param output          The output item of this recipe.
-         * @param count           The output count of this recipe.
-         * @param tag             The output tag of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param extraInput  The extra input ingredient to use.
+         * @param output      The output item to use.
+         * @param outputCount The output count to use.
+         * @param tag         The output NBT tag to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Ingredient extraIngredient, Item output, int count, CompoundTag tag) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, extraIngredient, output, count, tag);
+        public Builder builder(String id, Ingredient input, Ingredient extraInput, Item output, int outputCount, CompoundTag tag) {
+            return new Builder(new ResourceLocation(namespace, id), input, extraInput, output, outputCount, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param output          The output item of this recipe.
-         * @param count           The output count of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param extraInput  The extra input ingredient to use.
+         * @param output      The output item to use.
+         * @param outputCount The output count to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Ingredient extraIngredient, Item output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, extraIngredient, output, count);
+        public Builder builder(String id, Ingredient input, Ingredient extraInput, Item output, int outputCount) {
+            return new Builder(new ResourceLocation(namespace, id), input, extraInput, output, outputCount);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id              The id to use.
-         * @param ingredient      The input ingredient of this recipe.
-         * @param extraIngredient The extra ingredient of this recipe.
-         * @param output          The output item of this recipe.
+         * @param id         The recipe id to use.
+         * @param input      The input ingredient to use.
+         * @param extraInput The extra input ingredient to use.
+         * @param output     The output item to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Ingredient extraIngredient, Item output) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, extraIngredient, output);
+        public Builder builder(String id, Ingredient input, Ingredient extraInput, Item output) {
+            return new Builder(new ResourceLocation(namespace, id), input, extraInput, output);
         }
 
         public static class Builder extends IngredientToItemRecipe.Builder {
             private final IngredientWithAmount extraInput;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param amount          The amount of ingredients to use.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param extraAmount     The amount of extra ingredients to use.
-             * @param output          The id of the output item of this recipe.
-             * @param count           The output count of this recipe.
-             * @param tag             The output tag of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, Ingredient extraIngredient, int extraAmount, ResourceLocation output, int count, CompoundTag tag) {
-                super(id, ingredient, amount, output, count, tag);
-                this.extraInput = new IngredientWithAmount(extraIngredient, extraAmount);
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, Ingredient extraInput, int extraCount, ResourceLocation output, int outputCount, CompoundTag tag) {
+                super(id, input, inputCount, output, outputCount, tag);
+                this.extraInput = new IngredientWithAmount(extraInput, extraCount);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param amount          The amount of ingredients to use.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param extraAmount     The amount of extra ingredients to use.
-             * @param output          The id of the output item of this recipe.
-             * @param count           The output count of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, Ingredient extraIngredient, int extraAmount, ResourceLocation output, int count) {
-                super(id, ingredient, amount, output, count);
-                this.extraInput = new IngredientWithAmount(extraIngredient, extraAmount);
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, Ingredient extraInput, int extraCount, ResourceLocation output, int outputCount) {
+                super(id, input, inputCount, output, outputCount);
+                this.extraInput = new IngredientWithAmount(extraInput, extraCount);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param amount          The amount of ingredients to use.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param extraAmount     The amount of extra ingredients to use.
-             * @param output          The id of the output item of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, Ingredient extraIngredient, int extraAmount, ResourceLocation output) {
-                super(id, ingredient, amount, output);
-                this.extraInput = new IngredientWithAmount(extraIngredient, extraAmount);
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, Ingredient extraInput, int extraCount, ResourceLocation output) {
+                super(id, input, inputCount, output);
+                this.extraInput = new IngredientWithAmount(extraInput, extraCount);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param amount          The amount of ingredients to use.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param extraAmount     The amount of extra ingredients to use.
-             * @param output          The id of the output item of this recipe.
-             * @param count           The output count of this recipe.
-             * @param tag             The output tag of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, Ingredient extraIngredient, int extraAmount, Item output, int count, CompoundTag tag) {
-                super(id, ingredient, amount, output, count, tag);
-                this.extraInput = new IngredientWithAmount(extraIngredient, extraAmount);
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, Ingredient extraInput, int extraCount, Item output, int outputCount, CompoundTag tag) {
+                super(id, input, inputCount, output, outputCount, tag);
+                this.extraInput = new IngredientWithAmount(extraInput, extraCount);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param amount          The amount of ingredients to use.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param extraAmount     The amount of extra ingredients to use.
-             * @param output          The id of the output item of this recipe.
-             * @param count           The output count of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, Ingredient extraIngredient, int extraAmount, Item output, int count) {
-                super(id, ingredient, amount, output, count);
-                this.extraInput = new IngredientWithAmount(extraIngredient, extraAmount);
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, Ingredient extraInput, int extraCount, Item output, int outputCount) {
+                super(id, input, inputCount, output, outputCount);
+                this.extraInput = new IngredientWithAmount(extraInput, extraCount);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param amount          The amount of ingredients to use.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param extraAmount     The amount of extra ingredients to use.
-             * @param output          The id of the output item of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, Ingredient extraIngredient, int extraAmount, Item output) {
-                super(id, ingredient, amount, output);
-                this.extraInput = new IngredientWithAmount(extraIngredient, extraAmount);
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, Ingredient extraInput, int extraCount, Item output) {
+                super(id, input, inputCount, output);
+                this.extraInput = new IngredientWithAmount(extraInput, extraCount);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param extraAmount     The amount of extra ingredients to use.
-             * @param output          The id of the output item of this recipe.
-             * @param count           The output count of this recipe.
-             * @param tag             The output tag of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, Ingredient extraIngredient, int extraAmount, ResourceLocation output, int count, CompoundTag tag) {
-                super(id, ingredient, output, count, tag);
-                this.extraInput = new IngredientWithAmount(extraIngredient, extraAmount);
+            public Builder(ResourceLocation id, Ingredient input, Ingredient extraInput, int extraCount, ResourceLocation output, int outputCount, CompoundTag tag) {
+                super(id, input, output, outputCount, tag);
+                this.extraInput = new IngredientWithAmount(extraInput, extraCount);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param extraAmount     The amount of extra ingredients to use.
-             * @param output          The id of the output item of this recipe.
-             * @param count           The output count of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, Ingredient extraIngredient, int extraAmount, ResourceLocation output, int count) {
-                super(id, ingredient, output, count);
-                this.extraInput = new IngredientWithAmount(extraIngredient, extraAmount);
+            public Builder(ResourceLocation id, Ingredient input, Ingredient extraInput, int extraCount, ResourceLocation output, int outputCount) {
+                super(id, input, output, outputCount);
+                this.extraInput = new IngredientWithAmount(extraInput, extraCount);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param extraAmount     The amount of extra ingredients to use.
-             * @param output          The id of the output item of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, Ingredient extraIngredient, int extraAmount, ResourceLocation output) {
-                super(id, ingredient, output);
-                this.extraInput = new IngredientWithAmount(extraIngredient, extraAmount);
+            public Builder(ResourceLocation id, Ingredient input, Ingredient extraInput, int extraCount, ResourceLocation output) {
+                super(id, input, output);
+                this.extraInput = new IngredientWithAmount(extraInput, extraCount);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param extraAmount     The amount of extra ingredients to use.
-             * @param output          The output item of this recipe.
-             * @param count           The output count of this recipe.
-             * @param tag             The output tag of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, Ingredient extraIngredient, int extraAmount, Item output, int count, CompoundTag tag) {
-                super(id, ingredient, output, count, tag);
-                this.extraInput = new IngredientWithAmount(extraIngredient, extraAmount);
+            public Builder(ResourceLocation id, Ingredient input, Ingredient extraInput, int extraCount, Item output, int outputCount, CompoundTag tag) {
+                super(id, input, output, outputCount, tag);
+                this.extraInput = new IngredientWithAmount(extraInput, extraCount);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param extraAmount     The amount of extra ingredients to use.
-             * @param output          The output item of this recipe.
-             * @param count           The output count of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, Ingredient extraIngredient, int extraAmount, Item output, int count) {
-                super(id, ingredient, output, count);
-                this.extraInput = new IngredientWithAmount(extraIngredient, extraAmount);
+            public Builder(ResourceLocation id, Ingredient input, Ingredient extraInput, int extraCount, Item output, int outputCount) {
+                super(id, input, output, outputCount);
+                this.extraInput = new IngredientWithAmount(extraInput, extraCount);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param extraAmount     The amount of extra ingredients to use.
-             * @param output          The output item of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, Ingredient extraIngredient, int extraAmount, Item output) {
-                super(id, ingredient, output);
-                this.extraInput = new IngredientWithAmount(extraIngredient, extraAmount);
+            public Builder(ResourceLocation id, Ingredient input, Ingredient extraInput, int extraCount, Item output) {
+                super(id, input, output);
+                this.extraInput = new IngredientWithAmount(extraInput, extraCount);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param amount          The amount of ingredients to use.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param output          The id of the output item of this recipe.
-             * @param count           The output count of this recipe.
-             * @param tag             The output tag of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, Ingredient extraIngredient, ResourceLocation output, int count, CompoundTag tag) {
-                this(id, ingredient, amount, extraIngredient, 1, output, count, tag);
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, Ingredient extraInput, ResourceLocation output, int outputCount, CompoundTag tag) {
+                this(id, input, inputCount, extraInput, 1, output, outputCount, tag);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param amount          The amount of ingredients to use.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param output          The id of the output item of this recipe.
-             * @param count           The output count of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, Ingredient extraIngredient, ResourceLocation output, int count) {
-                this(id, ingredient, amount, extraIngredient, 1, output, count);
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, Ingredient extraInput, ResourceLocation output, int outputCount) {
+                this(id, input, inputCount, extraInput, 1, output, outputCount);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param amount          The amount of ingredients to use.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param output          The id of the output item of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, Ingredient extraIngredient, ResourceLocation output) {
-                this(id, ingredient, amount, extraIngredient, 1, output);
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, Ingredient extraInput, ResourceLocation output) {
+                this(id, input, inputCount, extraInput, 1, output);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param amount          The amount of ingredients to use.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param output          The id of the output item of this recipe.
-             * @param count           The output count of this recipe.
-             * @param tag             The output tag of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, Ingredient extraIngredient, Item output, int count, CompoundTag tag) {
-                this(id, ingredient, amount, extraIngredient, 1, output, count, tag);
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, Ingredient extraInput, Item output, int outputCount, CompoundTag tag) {
+                this(id, input, inputCount, extraInput, 1, output, outputCount, tag);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param amount          The amount of ingredients to use.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param output          The id of the output item of this recipe.
-             * @param count           The output count of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, Ingredient extraIngredient, Item output, int count) {
-                this(id, ingredient, amount, extraIngredient, 1, output, count);
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, Ingredient extraInput, Item output, int outputCount) {
+                this(id, input, inputCount, extraInput, 1, output, outputCount);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param amount          The amount of ingredients to use.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param output          The id of the output item of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, Ingredient extraIngredient, Item output) {
-                this(id, ingredient, amount, extraIngredient, 1, output);
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, Ingredient extraInput, Item output) {
+                this(id, input, inputCount, extraInput, 1, output);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param output          The id of the output item of this recipe.
-             * @param count           The output count of this recipe.
-             * @param tag             The output tag of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, Ingredient extraIngredient, ResourceLocation output, int count, CompoundTag tag) {
-                this(id, ingredient, extraIngredient, 1, output, count, tag);
+            public Builder(ResourceLocation id, Ingredient input, Ingredient extraInput, ResourceLocation output, int outputCount, CompoundTag tag) {
+                this(id, input, extraInput, 1, output, outputCount, tag);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param output          The id of the output item of this recipe.
-             * @param count           The output count of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, Ingredient extraIngredient, ResourceLocation output, int count) {
-                this(id, ingredient, extraIngredient, 1, output, count);
+            public Builder(ResourceLocation id, Ingredient input, Ingredient extraInput, ResourceLocation output, int outputCount) {
+                this(id, input, extraInput, 1, output, outputCount);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param output          The id of the output item of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, Ingredient extraIngredient, ResourceLocation output) {
-                this(id, ingredient, extraIngredient, 1, output);
+            public Builder(ResourceLocation id, Ingredient input, Ingredient extraInput, ResourceLocation output) {
+                this(id, input, extraInput, 1, output);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param output          The output item of this recipe.
-             * @param count           The output count of this recipe.
-             * @param tag             The output tag of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, Ingredient extraIngredient, Item output, int count, CompoundTag tag) {
-                this(id, ingredient, extraIngredient, 1, output, count, tag);
+            public Builder(ResourceLocation id, Ingredient input, Ingredient extraInput, Item output, int outputCount, CompoundTag tag) {
+                this(id, input, extraInput, 1, output, outputCount, tag);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param output          The output item of this recipe.
-             * @param count           The output count of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, Ingredient extraIngredient, Item output, int count) {
-                this(id, ingredient, extraIngredient, 1, output, count);
+            public Builder(ResourceLocation id, Ingredient input, Ingredient extraInput, Item output, int outputCount) {
+                this(id, input, extraInput, 1, output, outputCount);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id              The id to use.
-             * @param ingredient      The input ingredient of this recipe.
-             * @param extraIngredient The extra ingredient of this recipe.
-             * @param output          The output item of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, Ingredient extraIngredient, Item output) {
-                this(id, ingredient, extraIngredient, 1, output);
+            public Builder(ResourceLocation id, Ingredient input, Ingredient extraInput, Item output) {
+                this(id, input, extraInput, 1, output);
             }
 
             @Override
@@ -777,470 +489,309 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The ingredient to use.
-         * @param amount     The amount of ingredients to use.
-         * @param output     The id of the output item to use.
-         * @param count      The output count to use.
-         * @param tag        The output NBT tag to use.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param inputCount  The input ingredient count to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
+         * @param tag         The output NBT tag to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, ResourceLocation output, int count, CompoundTag tag) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, output, count, tag);
+        public Builder builder(String id, Ingredient input, int inputCount, ResourceLocation output, int outputCount, CompoundTag tag) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, output, outputCount, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The ingredient to use.
-         * @param amount     The amount of ingredients to use.
-         * @param output     The id of the output item to use.
-         * @param count      The output count to use.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param inputCount  The input ingredient count to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, ResourceLocation output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, output, count);
+        public Builder builder(String id, Ingredient input, int inputCount, ResourceLocation output, int outputCount) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, output, outputCount);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The ingredient to use.
-         * @param amount     The amount of ingredients to use.
+         * @param id         The recipe id to use.
+         * @param input      The input ingredient to use.
+         * @param inputCount The input ingredient count to use.
          * @param output     The id of the output item to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, ResourceLocation output) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, output);
+        public Builder builder(String id, Ingredient input, int inputCount, ResourceLocation output) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, output);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The ingredient to use.
-         * @param amount     The amount of ingredients to use.
-         * @param output     The output item to use.
-         * @param count      The output count to use.
-         * @param tag        The output NBT tag to use.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param inputCount  The input ingredient count to use.
+         * @param output      The output item to use.
+         * @param outputCount The output count to use.
+         * @param tag         The output NBT tag to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, Item output, int count, CompoundTag tag) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, output, count, tag);
+        public Builder builder(String id, Ingredient input, int inputCount, Item output, int outputCount, CompoundTag tag) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, output, outputCount, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The ingredient to use.
-         * @param amount     The amount of ingredients to use.
-         * @param output     The output item to use.
-         * @param count      The output count to use.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param inputCount  The input ingredient count to use.
+         * @param output      The output item to use.
+         * @param outputCount The output count to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, Item output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, output, count);
+        public Builder builder(String id, Ingredient input, int inputCount, Item output, int outputCount) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, output, outputCount);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The ingredient to use.
-         * @param amount     The amount of ingredients to use.
+         * @param id         The recipe id to use.
+         * @param input      The input ingredient to use.
+         * @param inputCount The input ingredient count to use.
          * @param output     The output item to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, Item output) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, output);
+        public Builder builder(String id, Ingredient input, int inputCount, Item output) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, output);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The ingredient to use.
-         * @param output     The id of the output item to use.
-         * @param count      The output count to use.
-         * @param tag        The output NBT tag to use.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
+         * @param tag         The output NBT tag to use.
          */
-        public Builder builder(String id, Ingredient ingredient, ResourceLocation output, int count, CompoundTag tag) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, output, count, tag);
+        public Builder builder(String id, Ingredient input, ResourceLocation output, int outputCount, CompoundTag tag) {
+            return new Builder(new ResourceLocation(namespace, id), input, output, outputCount, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The ingredient to use.
-         * @param output     The id of the output item to use.
-         * @param count      The output count to use.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
          */
-        public Builder builder(String id, Ingredient ingredient, ResourceLocation output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, output, count);
+        public Builder builder(String id, Ingredient input, ResourceLocation output, int outputCount) {
+            return new Builder(new ResourceLocation(namespace, id), input, output, outputCount);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The ingredient to use.
-         * @param output     The id of the output item to use.
+         * @param id     The recipe id to use.
+         * @param input  The input ingredient to use.
+         * @param output The id of the output item to use.
          */
-        public Builder builder(String id, Ingredient ingredient, ResourceLocation output) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, output);
+        public Builder builder(String id, Ingredient input, ResourceLocation output) {
+            return new Builder(new ResourceLocation(namespace, id), input, output);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The ingredient to use.
-         * @param output     The output item to use.
-         * @param count      The output count to use.
-         * @param tag        The output NBT tag to use.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param output      The output item to use.
+         * @param outputCount The output count to use.
+         * @param tag         The output NBT tag to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Item output, int count, CompoundTag tag) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, output, count, tag);
+        public Builder builder(String id, Ingredient input, Item output, int outputCount, CompoundTag tag) {
+            return new Builder(new ResourceLocation(namespace, id), input, output, outputCount, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The ingredient to use.
-         * @param output     The output item to use.
-         * @param count      The output count to use.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param output      The output item to use.
+         * @param outputCount The output count to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Item output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, output, count);
+        public Builder builder(String id, Ingredient input, Item output, int outputCount) {
+            return new Builder(new ResourceLocation(namespace, id), input, output, outputCount);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The ingredient to use.
-         * @param output     The output item to use.
+         * @param id     The recipe id to use.
+         * @param input  The input ingredient to use.
+         * @param output The output item to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Item output) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, output);
+        public Builder builder(String id, Ingredient input, Item output) {
+            return new Builder(new ResourceLocation(namespace, id), input, output);
         }
 
         public static class Builder extends IngredientToItemRecipe.Builder {
             private PotentiallyAbsentItemStack secondaryOutput = null;
             private float chance = 1;
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use.
-             * @param ingredient The input ingredient of this recipe.
-             * @param amount     The amount of ingredients to use.
-             * @param output     The id of the output item of this recipe.
-             * @param count      The output count of this recipe.
-             * @param tag        The output tag of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, ResourceLocation output, int count, CompoundTag tag) {
-                super(id, ingredient, amount, output, count, tag);
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, ResourceLocation output, int outputCount, CompoundTag tag) {
+                super(id, input, inputCount, output, outputCount, tag);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use.
-             * @param ingredient The input ingredient of this recipe.
-             * @param amount     The amount of ingredients to use.
-             * @param output     The id of the output item of this recipe.
-             * @param count      The output count of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, ResourceLocation output, int count) {
-                this(id, ingredient, amount, output, count, new CompoundTag());
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, ResourceLocation output, int outputCount) {
+                this(id, input, inputCount, output, outputCount, new CompoundTag());
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use.
-             * @param ingredient The input ingredient of this recipe.
-             * @param amount     The amount of ingredients to use.
-             * @param output     The id of the output item of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, ResourceLocation output) {
-                this(id, ingredient, amount, output, 1);
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, ResourceLocation output) {
+                this(id, input, inputCount, output, 1);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use.
-             * @param ingredient The input ingredient of this recipe.
-             * @param amount     The amount of ingredients to use.
-             * @param output     The id of the output item of this recipe.
-             * @param count      The output count of this recipe.
-             * @param tag        The output tag of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, Item output, int count, CompoundTag tag) {
-                this(id, ingredient, amount, itemId(output), count, tag);
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, Item output, int outputCount, CompoundTag tag) {
+                this(id, input, inputCount, itemId(output), outputCount, tag);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use.
-             * @param ingredient The input ingredient of this recipe.
-             * @param amount     The amount of ingredients to use.
-             * @param output     The id of the output item of this recipe.
-             * @param count      The output count of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, Item output, int count) {
-                this(id, ingredient, amount, output, count, new CompoundTag());
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, Item output, int outputCount) {
+                this(id, input, inputCount, output, outputCount, new CompoundTag());
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use.
-             * @param ingredient The input ingredient of this recipe.
-             * @param amount     The amount of ingredients to use.
-             * @param output     The id of the output item of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, Item output) {
-                this(id, ingredient, amount, output, 1);
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, Item output) {
+                this(id, input, inputCount, output, 1);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use.
-             * @param ingredient The input ingredient of this recipe.
-             * @param output     The id of the output item of this recipe.
-             * @param count      The output count of this recipe.
-             * @param tag        The output tag of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, ResourceLocation output, int count, CompoundTag tag) {
-                this(id, ingredient, 1, output, count, tag);
+            public Builder(ResourceLocation id, Ingredient input, ResourceLocation output, int outputCount, CompoundTag tag) {
+                this(id, input, 1, output, outputCount, tag);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use.
-             * @param ingredient The input ingredient of this recipe.
-             * @param output     The id of the output item of this recipe.
-             * @param count      The output count of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, ResourceLocation output, int count) {
-                this(id, ingredient, output, count, new CompoundTag());
+            public Builder(ResourceLocation id, Ingredient input, ResourceLocation output, int outputCount) {
+                this(id, input, output, outputCount, new CompoundTag());
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use.
-             * @param ingredient The input ingredient of this recipe.
-             * @param output     The id of the output item of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, ResourceLocation output) {
-                this(id, ingredient, output, 1);
+            public Builder(ResourceLocation id, Ingredient input, ResourceLocation output) {
+                this(id, input, output, 1);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use.
-             * @param ingredient The input ingredient of this recipe.
-             * @param output     The output item of this recipe.
-             * @param count      The output count of this recipe.
-             * @param tag        The output tag of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, Item output, int count, CompoundTag tag) {
-                this(id, ingredient, itemId(output), count, tag);
+            public Builder(ResourceLocation id, Ingredient input, Item output, int outputCount, CompoundTag tag) {
+                this(id, input, itemId(output), outputCount, tag);
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use.
-             * @param ingredient The input ingredient of this recipe.
-             * @param output     The output item of this recipe.
-             * @param count      The output count of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, Item output, int count) {
-                this(id, ingredient, output, count, new CompoundTag());
+            public Builder(ResourceLocation id, Ingredient input, Item output, int outputCount) {
+                this(id, input, output, outputCount, new CompoundTag());
             }
 
-            /**
-             * Creates a new builder with the given id.
-             *
-             * @param id         The id to use.
-             * @param ingredient The input ingredient of this recipe.
-             * @param output     The output item of this recipe.
-             */
-            public Builder(ResourceLocation id, Ingredient ingredient, Item output) {
-                this(id, ingredient, output, 1);
+            public Builder(ResourceLocation id, Ingredient input, Item output) {
+                this(id, input, output, 1);
             }
 
             /**
              * Sets the secondary output of this recipe.
              *
              * @param output The id of the output item to use.
-             * @return This builder, for chaining.
              */
             public Builder setSecondaryOutput(ResourceLocation output) {
-                return setSecondaryOutput(output, 1, new CompoundTag());
+                return setSecondaryOutput(output, 1);
             }
 
             /**
              * Sets the secondary output of this recipe.
              *
              * @param output The output item to use.
-             * @return This builder, for chaining.
              */
             public Builder setSecondaryOutput(Item output) {
-                return setSecondaryOutput(output, 1, new CompoundTag());
+                return setSecondaryOutput(output, 1);
             }
 
             /**
              * Sets the secondary output of this recipe.
              *
-             * @param output The id of the output item to use.
-             * @param count  The output count to use.
-             * @param tag    The output NBT tag to use.
-             * @param chance The chance that this output will be used.
-             * @return This builder, for chaining.
+             * @param output      The id of the output item to use.
+             * @param outputCount The output count to use.
+             * @param tag         The output NBT tag to use.
+             * @param chance      The chance that this output will be used.
              */
-            public Builder setSecondaryOutput(ResourceLocation output, int count, CompoundTag tag, float chance) {
-                this.secondaryOutput = new PotentiallyAbsentItemStack(output, count, tag);
+            public Builder setSecondaryOutput(ResourceLocation output, int outputCount, CompoundTag tag, float chance) {
+                this.secondaryOutput = new PotentiallyAbsentItemStack(output, outputCount, tag);
                 this.chance = chance;
                 return this;
             }
 
             /**
-             * Sets the secondary output of this recipe.
+             * Sets the secondary output to use.
              *
-             * @param output The id of the output item to use.
-             * @param count  The output count to use.
-             * @param chance The chance that this output will be used.
-             * @return This builder, for chaining.
+             * @param output      The id of the output item to use.
+             * @param outputCount The output count to use.
+             * @param chance      The chance that this output will be used.
              */
-            public Builder setSecondaryOutput(ResourceLocation output, int count, float chance) {
-                return setSecondaryOutput(output, count, new CompoundTag(), chance);
+            public Builder setSecondaryOutput(ResourceLocation output, int outputCount, float chance) {
+                return setSecondaryOutput(output, outputCount, new CompoundTag(), chance);
             }
 
             /**
-             * Sets the secondary output of this recipe.
+             * Sets the secondary output to use.
              *
              * @param output The id of the output item to use.
              * @param chance The chance that this output will be used.
-             * @return This builder, for chaining.
              */
             public Builder setSecondaryOutput(ResourceLocation output, float chance) {
-                return setSecondaryOutput(output, 1, new CompoundTag(), chance);
+                return setSecondaryOutput(output, 1, chance);
             }
 
             /**
-             * Sets the secondary output of this recipe.
+             * Sets the secondary output to use.
              *
-             * @param output The output item to use.
-             * @param count  The output count to use.
-             * @param tag    The output NBT tag to use.
-             * @param chance The chance that this output will be used.
-             * @return This builder, for chaining.
+             * @param output      The id of the output item to use.
+             * @param outputCount The output count to use.
+             * @param tag         The output NBT tag to use.
              */
-            public Builder setSecondaryOutput(Item output, int count, CompoundTag tag, float chance) {
-                return setSecondaryOutput(itemId(output), count, tag, chance);
+            public Builder setSecondaryOutput(ResourceLocation output, int outputCount, CompoundTag tag) {
+                return setSecondaryOutput(output, outputCount, tag, 1);
             }
 
             /**
-             * Sets the secondary output of this recipe.
+             * Sets the secondary output to use.
              *
-             * @param output The output item to use.
-             * @param count  The output count to use.
-             * @param chance The chance that this output will be used.
-             * @return This builder, for chaining.
+             * @param output      The id of the output item to use.
+             * @param outputCount The output count to use.
              */
-            public Builder setSecondaryOutput(Item output, int count, float chance) {
-                return setSecondaryOutput(output, count, new CompoundTag(), chance);
+            public Builder setSecondaryOutput(ResourceLocation output, int outputCount) {
+                return setSecondaryOutput(output, outputCount, new CompoundTag());
             }
 
             /**
-             * Sets the secondary output of this recipe.
+             * Sets the secondary output to use.
              *
-             * @param output The output item to use.
-             * @param tag    The output NBT tag to use.
-             * @param chance The chance that this output will be used.
-             * @return This builder, for chaining.
+             * @param output      The output item to use.
+             * @param outputCount The output count to use.
+             * @param tag         The output NBT tag to use.
+             * @param chance      The chance that this output will be used.
              */
-            public Builder setSecondaryOutput(Item output, CompoundTag tag, float chance) {
-                return setSecondaryOutput(output, 1, tag, chance);
+            public Builder setSecondaryOutput(Item output, int outputCount, CompoundTag tag, float chance) {
+                return setSecondaryOutput(itemId(output), outputCount, tag, chance);
             }
 
             /**
-             * Sets the secondary output of this recipe.
+             * Sets the secondary output to use.
+             *
+             * @param output      The output item to use.
+             * @param outputCount The output count to use.
+             * @param chance      The chance that this output will be used.
+             */
+            public Builder setSecondaryOutput(Item output, int outputCount, float chance) {
+                return setSecondaryOutput(output, outputCount, new CompoundTag(), chance);
+            }
+
+            /**
+             * Sets the secondary output to use.
              *
              * @param output The output item to use.
              * @param chance The chance that this output will be used.
-             * @return This builder, for chaining.
              */
             public Builder setSecondaryOutput(Item output, float chance) {
-                return setSecondaryOutput(output, 1, new CompoundTag(), chance);
+                return setSecondaryOutput(output, 1, chance);
             }
 
             /**
-             * Sets the secondary output of this recipe.
+             * Sets the secondary output to use.
              *
-             * @param output The id of the output item to use.
-             * @param count  The output count to use.
-             * @param tag    The output NBT tag to use.
-             * @return This builder, for chaining.
+             * @param output      The output item to use.
+             * @param outputCount The output count to use.
+             * @param tag         The output NBT tag to use.
              */
-            public Builder setSecondaryOutput(ResourceLocation output, int count, CompoundTag tag) {
-                return setSecondaryOutput(output, count, tag, 1);
+            public Builder setSecondaryOutput(Item output, int outputCount, CompoundTag tag) {
+                return setSecondaryOutput(itemId(output), outputCount, tag);
             }
 
             /**
-             * Sets the secondary output of this recipe.
+             * Sets the secondary output to use.
              *
-             * @param output The id of the output item to use.
-             * @param count  The output count to use.
-             * @return This builder, for chaining.
+             * @param output      The output item to use.
+             * @param outputCount The output count to use.
              */
-            public Builder setSecondaryOutput(ResourceLocation output, int count) {
-                return setSecondaryOutput(output, count, new CompoundTag());
-            }
-
-            /**
-             * Sets the secondary output of this recipe.
-             *
-             * @param output The output item to use.
-             * @param count  The output count to use.
-             * @param tag    The output NBT tag to use.
-             * @return This builder, for chaining.
-             */
-            public Builder setSecondaryOutput(Item output, int count, CompoundTag tag) {
-                return setSecondaryOutput(itemId(output), count, tag);
-            }
-
-            /**
-             * Sets the secondary output of this recipe.
-             *
-             * @param output The output item to use.
-             * @param count  The output count to use.
-             * @return This builder, for chaining.
-             */
-            public Builder setSecondaryOutput(Item output, int count) {
-                return setSecondaryOutput(output, count, new CompoundTag());
-            }
-
-            /**
-             * Sets the secondary output of this recipe.
-             *
-             * @param output The output item to use.
-             * @param tag    The output NBT tag to use.
-             * @return This builder, for chaining.
-             */
-            public Builder setSecondaryOutput(Item output, CompoundTag tag) {
-                return setSecondaryOutput(output, 1, tag);
+            public Builder setSecondaryOutput(Item output, int outputCount) {
+                return setSecondaryOutput(output, outputCount, new CompoundTag());
             }
 
             @Override
@@ -1261,7 +812,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         }
     }
 
-    protected abstract static class Abstract1To1Recipe<I extends JsonSerializable, O extends JsonSerializable, B extends Abstract1To1Recipe.Builder<I, O>> extends MekanismDataProvider<B> {
+    protected static abstract class Abstract1To1Recipe<I extends JsonSerializable, O extends JsonSerializable, B extends Abstract1To1Recipe.Builder<I, O>> extends MekanismDataProvider<B> {
         protected Abstract1To1Recipe(String folder, String namespace, DataGenerator generator) {
             super(folder, namespace, generator);
         }
@@ -1284,141 +835,125 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         }
     }
 
-    protected abstract static class IngredientToTRecipe<T extends JsonSerializable> extends Abstract1To1Recipe<IngredientWithAmount, T, IngredientToTRecipe.Builder<T>> {
+    protected static abstract class IngredientToTRecipe<T extends JsonSerializable> extends Abstract1To1Recipe<IngredientWithAmount, T, IngredientToTRecipe.Builder<T>> {
         protected IngredientToTRecipe(String folder, String namespace, DataGenerator generator) {
             super(folder, namespace, generator);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param input  The input ingredient of this recipe.
-         * @param amount The output amount of this recipe.
-         * @param output The output chemical of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param outputCount The input ingredient count to use.
+         * @param output      The output chemical to use.
          */
-        public Builder<T> builder(String id, Ingredient input, int amount, T output) {
-            return new Builder<>(new ResourceLocation(namespace, id), input, amount, output);
+        public Builder<T> builder(String id, Ingredient input, int outputCount, T output) {
+            return new Builder<>(new ResourceLocation(namespace, id), input, outputCount, output);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param input  The input ingredient of this recipe.
-         * @param output The output chemical of this recipe.
+         * @param id     The recipe id to use.
+         * @param input  The input ingredient to use.
+         * @param output The output chemical to use.
          */
         public Builder<T> builder(String id, Ingredient input, T output) {
             return new Builder<>(new ResourceLocation(namespace, id), input, output);
         }
 
         public static class Builder<T extends JsonSerializable> extends Abstract1To1Recipe.Builder<IngredientWithAmount, T> {
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, T output) {
-                super(id, new IngredientWithAmount(ingredient, amount), output);
+            public Builder(ResourceLocation id, Ingredient input, int outputCount, T output) {
+                super(id, new IngredientWithAmount(input, outputCount), output);
             }
 
-            public Builder(ResourceLocation id, Ingredient ingredient, T output) {
-                this(id, ingredient, 1, output);
+            public Builder(ResourceLocation id, Ingredient input, T output) {
+                this(id, input, 1, output);
             }
         }
     }
 
-    protected abstract static class TToItemRecipe<T extends JsonSerializable> extends Abstract1To1Recipe<T, PotentiallyAbsentItemStack, TToItemRecipe.Builder<T>> {
+    protected static abstract class TToItemRecipe<T extends JsonSerializable> extends Abstract1To1Recipe<T, PotentiallyAbsentItemStack, TToItemRecipe.Builder<T>> {
         protected TToItemRecipe(String folder, String namespace, DataGenerator generator) {
             super(folder, namespace, generator);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param input  The input of this recipe.
-         * @param output The id of the output item of this recipe.
-         * @param count  The output count of this recipe.
-         * @param tag    The output tag of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
+         * @param tag         The output NBT tag to use.
          */
-        public Builder<T> builder(String id, T input, ResourceLocation output, int count, CompoundTag tag) {
-            return new Builder<>(new ResourceLocation(namespace, id), input, output, count, tag);
+        public Builder<T> builder(String id, T input, ResourceLocation output, int outputCount, CompoundTag tag) {
+            return new Builder<>(new ResourceLocation(namespace, id), input, output, outputCount, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param input  The input of this recipe.
-         * @param output The id of the output item of this recipe.
-         * @param count  The output count of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
          */
-        public Builder<T> builder(String id, T input, ResourceLocation output, int count) {
-            return new Builder<>(new ResourceLocation(namespace, id), input, output, count);
+        public Builder<T> builder(String id, T input, ResourceLocation output, int outputCount) {
+            return new Builder<>(new ResourceLocation(namespace, id), input, output, outputCount);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param input  The input of this recipe.
-         * @param output The id of the output item of this recipe.
+         * @param id     The recipe id to use.
+         * @param input  The input ingredient to use.
+         * @param output The id of the output item to use.
          */
         public Builder<T> builder(String id, T input, ResourceLocation output) {
             return new Builder<>(new ResourceLocation(namespace, id), input, output);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param input  The input of this recipe.
-         * @param output The output item of this recipe.
-         * @param count  The output count of this recipe.
-         * @param tag    The output tag of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param output      The output item to use.
+         * @param outputCount The output count to use.
+         * @param tag         The output NBT tag to use.
          */
-        public Builder<T> builder(String id, T input, Item output, int count, CompoundTag tag) {
-            return new Builder<>(new ResourceLocation(namespace, id), input, output, count, tag);
+        public Builder<T> builder(String id, T input, Item output, int outputCount, CompoundTag tag) {
+            return new Builder<>(new ResourceLocation(namespace, id), input, output, outputCount, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param input  The input of this recipe.
-         * @param output The output item of this recipe.
-         * @param count  The output count of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param output      The output item to use.
+         * @param outputCount The output count to use.
          */
-        public Builder<T> builder(String id, T input, Item output, int count) {
-            return new Builder<>(new ResourceLocation(namespace, id), input, output, count);
+        public Builder<T> builder(String id, T input, Item output, int outputCount) {
+            return new Builder<>(new ResourceLocation(namespace, id), input, output, outputCount);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param input  The input of this recipe.
-         * @param output The output item of this recipe.
+         * @param id     The recipe id to use.
+         * @param input  The input ingredient to use.
+         * @param output The output item to use.
          */
         public Builder<T> builder(String id, T input, Item output) {
             return new Builder<>(new ResourceLocation(namespace, id), input, output);
         }
 
         public static class Builder<T extends JsonSerializable> extends Abstract1To1Recipe.Builder<T, PotentiallyAbsentItemStack> {
-            public Builder(ResourceLocation id, T input, ResourceLocation output, int count, CompoundTag tag) {
-                super(id, input, new PotentiallyAbsentItemStack(output, count, tag));
+            public Builder(ResourceLocation id, T input, ResourceLocation output, int outputCount, CompoundTag tag) {
+                super(id, input, new PotentiallyAbsentItemStack(output, outputCount, tag));
             }
 
-            public Builder(ResourceLocation id, T input, ResourceLocation output, int count) {
-                this(id, input, output, count, new CompoundTag());
+            public Builder(ResourceLocation id, T input, ResourceLocation output, int outputCount) {
+                this(id, input, output, outputCount, new CompoundTag());
             }
 
             public Builder(ResourceLocation id, T input, ResourceLocation output) {
                 this(id, input, output, 1);
             }
 
-            public Builder(ResourceLocation id, T input, Item output, int count, CompoundTag tag) {
-                this(id, input, itemId(output), count, tag);
+            public Builder(ResourceLocation id, T input, Item output, int outputCount, CompoundTag tag) {
+                this(id, input, itemId(output), outputCount, tag);
             }
 
-            public Builder(ResourceLocation id, T input, Item output, int count) {
-                this(id, input, output, count, new CompoundTag());
+            public Builder(ResourceLocation id, T input, Item output, int outputCount) {
+                this(id, input, output, outputCount, new CompoundTag());
             }
 
             public Builder(ResourceLocation id, T input, Item output) {
@@ -1427,221 +962,195 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         }
     }
 
-    protected abstract static class IngredientToItemRecipe extends Abstract1To1Recipe<IngredientWithAmount, PotentiallyAbsentItemStack, IngredientToItemRecipe.Builder> {
+    protected static abstract class IngredientToItemRecipe extends Abstract1To1Recipe<IngredientWithAmount, PotentiallyAbsentItemStack, IngredientToItemRecipe.Builder> {
         protected IngredientToItemRecipe(String folder, String namespace, DataGenerator generator) {
             super(folder, namespace, generator);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The input ingredient of this recipe.
-         * @param amount     The amount of ingredients to use.
-         * @param output     The id of the output item of this recipe.
-         * @param count      The output count of this recipe.
-         * @param tag        The output tag of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param inputCount  The input ingredient count to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
+         * @param tag         The output NBT tag to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, ResourceLocation output, int count, CompoundTag tag) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, output, count, tag);
+        public Builder builder(String id, Ingredient input, int inputCount, ResourceLocation output, int outputCount, CompoundTag tag) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, output, outputCount, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The input ingredient of this recipe.
-         * @param amount     The amount of ingredients to use.
-         * @param output     The id of the output item of this recipe.
-         * @param count      The output count of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param inputCount  The input ingredient count to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, ResourceLocation output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, output, count);
+        public Builder builder(String id, Ingredient input, int inputCount, ResourceLocation output, int outputCount) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, output, outputCount);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The input ingredient of this recipe.
-         * @param amount     The amount of ingredients to use.
-         * @param output     The id of the output item of this recipe.
+         * @param id         The recipe id to use.
+         * @param input      The input ingredient to use.
+         * @param inputCount The input ingredient count to use.
+         * @param output     The id of the output item to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, ResourceLocation output) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, output);
+        public Builder builder(String id, Ingredient input, int inputCount, ResourceLocation output) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, output);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The input ingredient of this recipe.
-         * @param amount     The amount of ingredients to use.
-         * @param output     The id of the output item of this recipe.
-         * @param count      The output count of this recipe.
-         * @param tag        The output tag of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param inputCount  The input ingredient count to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
+         * @param tag         The output NBT tag to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, Item output, int count, CompoundTag tag) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, output, count, tag);
+        public Builder builder(String id, Ingredient input, int inputCount, Item output, int outputCount, CompoundTag tag) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, output, outputCount, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The input ingredient of this recipe.
-         * @param amount     The amount of ingredients to use.
-         * @param output     The id of the output item of this recipe.
-         * @param count      The output count of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param inputCount  The input ingredient count to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, Item output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, output, count);
+        public Builder builder(String id, Ingredient input, int inputCount, Item output, int outputCount) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, output, outputCount);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The input ingredient of this recipe.
-         * @param amount     The amount of ingredients to use.
-         * @param output     The id of the output item of this recipe.
+         * @param id         The recipe id to use.
+         * @param input      The input ingredient to use.
+         * @param inputCount The input ingredient count to use.
+         * @param output     The id of the output item to use.
          */
-        public Builder builder(String id, Ingredient ingredient, int amount, Item output) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, amount, output);
+        public Builder builder(String id, Ingredient input, int inputCount, Item output) {
+            return new Builder(new ResourceLocation(namespace, id), input, inputCount, output);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The input ingredient of this recipe.
-         * @param output     The id of the output item of this recipe.
-         * @param count      The output count of this recipe.
-         * @param tag        The output tag of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
+         * @param tag         The output NBT tag to use.
          */
-        public Builder builder(String id, Ingredient ingredient, ResourceLocation output, int count, CompoundTag tag) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, output, count, tag);
+        public Builder builder(String id, Ingredient input, ResourceLocation output, int outputCount, CompoundTag tag) {
+            return new Builder(new ResourceLocation(namespace, id), input, output, outputCount, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The input ingredient of this recipe.
-         * @param output     The id of the output item of this recipe.
-         * @param count      The output count of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param output      The id of the output item to use.
+         * @param outputCount The output count to use.
          */
-        public Builder builder(String id, Ingredient ingredient, ResourceLocation output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, output, count);
+        public Builder builder(String id, Ingredient input, ResourceLocation output, int outputCount) {
+            return new Builder(new ResourceLocation(namespace, id), input, output, outputCount);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The input ingredient of this recipe.
-         * @param output     The id of the output item of this recipe.
+         * @param id     The recipe id to use.
+         * @param input  The input ingredient to use.
+         * @param output The id of the output item to use.
          */
-        public Builder builder(String id, Ingredient ingredient, ResourceLocation output) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, output);
+        public Builder builder(String id, Ingredient input, ResourceLocation output) {
+            return new Builder(new ResourceLocation(namespace, id), input, output);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The input ingredient of this recipe.
-         * @param output     The output item of this recipe.
-         * @param count      The output count of this recipe.
-         * @param tag        The output tag of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param output      The output item to use.
+         * @param outputCount The output count to use.
+         * @param tag         The output NBT tag to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Item output, int count, CompoundTag tag) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, output, count, tag);
+        public Builder builder(String id, Ingredient input, Item output, int outputCount, CompoundTag tag) {
+            return new Builder(new ResourceLocation(namespace, id), input, output, outputCount, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The input ingredient of this recipe.
-         * @param output     The output item of this recipe.
-         * @param count      The output count of this recipe.
+         * @param id          The recipe id to use.
+         * @param input       The input ingredient to use.
+         * @param output      The output item to use.
+         * @param outputCount The output count to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Item output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, output, count);
+        public Builder builder(String id, Ingredient input, Item output, int outputCount) {
+            return new Builder(new ResourceLocation(namespace, id), input, output, outputCount);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The input ingredient of this recipe.
-         * @param output     The output item of this recipe.
+         * @param id     The recipe id to use.
+         * @param input  The input ingredient to use.
+         * @param output The output item to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Item output) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, output);
+        public Builder builder(String id, Ingredient input, Item output) {
+            return new Builder(new ResourceLocation(namespace, id), input, output);
         }
 
         public static class Builder extends Abstract1To1Recipe.Builder<IngredientWithAmount, PotentiallyAbsentItemStack> {
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, ResourceLocation output, int count, CompoundTag tag) {
-                super(id, new IngredientWithAmount(ingredient, amount), new PotentiallyAbsentItemStack(output, count, tag));
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, ResourceLocation output, int outputCount, CompoundTag tag) {
+                super(id, new IngredientWithAmount(input, inputCount), new PotentiallyAbsentItemStack(output, outputCount, tag));
             }
 
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, ResourceLocation output, int count) {
-                this(id, ingredient, amount, output, count, new CompoundTag());
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, ResourceLocation output, int outputCount) {
+                this(id, input, inputCount, output, outputCount, new CompoundTag());
             }
 
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, ResourceLocation output) {
-                this(id, ingredient, amount, output, 1);
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, ResourceLocation output) {
+                this(id, input, inputCount, output, 1);
             }
 
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, Item output, int count, CompoundTag tag) {
-                this(id, ingredient, amount, itemId(output), count, tag);
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, Item output, int outputCount, CompoundTag tag) {
+                this(id, input, inputCount, itemId(output), outputCount, tag);
             }
 
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, Item output, int count) {
-                this(id, ingredient, amount, output, count, new CompoundTag());
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, Item output, int outputCount) {
+                this(id, input, inputCount, output, outputCount, new CompoundTag());
             }
 
-            public Builder(ResourceLocation id, Ingredient ingredient, int amount, Item output) {
-                this(id, ingredient, amount, output, 1);
+            public Builder(ResourceLocation id, Ingredient input, int inputCount, Item output) {
+                this(id, input, inputCount, output, 1);
             }
 
-            public Builder(ResourceLocation id, Ingredient ingredient, ResourceLocation output, int count, CompoundTag tag) {
-                this(id, ingredient, 1, output, count, tag);
+            public Builder(ResourceLocation id, Ingredient input, ResourceLocation output, int outputCount, CompoundTag tag) {
+                this(id, input, 1, output, outputCount, tag);
             }
 
-            public Builder(ResourceLocation id, Ingredient ingredient, ResourceLocation output, int count) {
-                this(id, ingredient, output, count, new CompoundTag());
+            public Builder(ResourceLocation id, Ingredient input, ResourceLocation output, int outputCount) {
+                this(id, input, output, outputCount, new CompoundTag());
             }
 
-            public Builder(ResourceLocation id, Ingredient ingredient, ResourceLocation output) {
-                this(id, ingredient, output, 1);
+            public Builder(ResourceLocation id, Ingredient input, ResourceLocation output) {
+                this(id, input, output, 1);
             }
 
-            public Builder(ResourceLocation id, Ingredient ingredient, Item output, int count, CompoundTag tag) {
-                this(id, ingredient, itemId(output), count, tag);
+            public Builder(ResourceLocation id, Ingredient input, Item output, int outputCount, CompoundTag tag) {
+                this(id, input, itemId(output), outputCount, tag);
             }
 
-            public Builder(ResourceLocation id, Ingredient ingredient, Item output, int count) {
-                this(id, ingredient, output, count, new CompoundTag());
+            public Builder(ResourceLocation id, Ingredient input, Item output, int outputCount) {
+                this(id, input, output, outputCount, new CompoundTag());
             }
 
-            public Builder(ResourceLocation id, Ingredient ingredient, Item output) {
-                this(id, ingredient, output, 1);
+            public Builder(ResourceLocation id, Ingredient input, Item output) {
+                this(id, input, output, 1);
             }
         }
     }
 
-    protected abstract static class GasToGasRecipe extends Abstract1To1Recipe<Chemical.Stack<Gas>, Chemical.Stack<Gas>, GasToGasRecipe.Builder> {
+    protected static abstract class GasToGasRecipe extends Abstract1To1Recipe<Chemical.Stack<Gas>, Chemical.Stack<Gas>, GasToGasRecipe.Builder> {
         protected GasToGasRecipe(String folder, String namespace, DataGenerator generator) {
             super(folder, namespace, generator);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
+         * @param id     The recipe id to use.
          * @param input  The input gas stack to use.
          * @param output The output gas stack to use.
          */

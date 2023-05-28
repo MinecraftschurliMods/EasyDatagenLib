@@ -28,244 +28,224 @@ public abstract class IntegratedDynamicsDataProvider<T extends AbstractRecipeBui
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id       The id to use.
-         * @param item     The ingredient to use.
+         * @param id       The recipe id to use.
+         * @param input    The input ingredient to use.
          * @param duration The duration to use.
          */
-        public Builder builder(String id, Ingredient item, int duration) {
-            return new Builder(new ResourceLocation(namespace, id), item, duration);
+        public Builder builder(String id, Ingredient input, int duration) {
+            return new Builder(new ResourceLocation(namespace, id), input, duration);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
-            private final List<PotentiallyAbsentItemStack> items = new ArrayList<>();
-            private final Ingredient item;
+            private final List<PotentiallyAbsentItemStack> outputs = new ArrayList<>();
+            private final Ingredient input;
             private final int duration;
-            private PotentiallyAbsentFluidStack fluid = null;
+            private PotentiallyAbsentFluidStack outputFluid = null;
 
-            public Builder(ResourceLocation id, Ingredient item, int duration) {
+            public Builder(ResourceLocation id, Ingredient input, int duration) {
                 super(id);
-                this.item = item;
+                this.input = input;
                 this.duration = duration;
             }
 
             /**
-             * Sets the result fluid to use.
+             * Sets the output fluid of this recipe.
              *
-             * @param fluid  The id of the fluid to use.
-             * @param amount The amount to use.
-             * @param tag    The NBT tag to use.
-             * @return This builder, for chaining.
+             * @param fluid  The id of the output fluid to use.
+             * @param amount The output amount to use.
+             * @param tag    The output NBT tag to use.
              */
-            public Builder setFluid(ResourceLocation fluid, int amount, CompoundTag tag) {
-                this.fluid = new PotentiallyAbsentFluidStack(fluid, amount, tag);
+            public Builder setOutputFluid(ResourceLocation fluid, int amount, CompoundTag tag) {
+                this.outputFluid = new PotentiallyAbsentFluidStack(fluid, amount, tag);
                 return this;
             }
 
             /**
-             * Sets the result fluid to use.
+             * Sets the output fluid of this recipe.
              *
-             * @param fluid  The id of the fluid to use.
-             * @param amount The amount to use.
-             * @return This builder, for chaining.
+             * @param fluid  The id of the output fluid to use.
+             * @param amount The output amount to use.
              */
-            public Builder setFluid(ResourceLocation fluid, int amount) {
-                return setFluid(fluid, amount, new CompoundTag());
+            public Builder setOutputFluid(ResourceLocation fluid, int amount) {
+                return setOutputFluid(fluid, amount, new CompoundTag());
             }
 
             /**
-             * Sets the result fluid to use.
+             * Sets the output fluid of this recipe.
              *
-             * @param fluid The id of the fluid to use.
-             * @return This builder, for chaining.
+             * @param fluid The id of the output fluid to use.
              */
-            public Builder setFluid(ResourceLocation fluid) {
-                return setFluid(fluid, 1, new CompoundTag());
+            public Builder setOutputFluid(ResourceLocation fluid) {
+                return setOutputFluid(fluid, 1);
             }
 
             /**
-             * Sets the result fluid to use.
+             * Sets the output fluid of this recipe.
              *
-             * @param fluid  The fluid to use.
-             * @param amount The amount to use.
-             * @param tag    The NBT tag to use.
-             * @return This builder, for chaining.
+             * @param fluid  The output fluid to use.
+             * @param amount The output amount to use.
+             * @param tag    The output NBT tag to use.
              */
-            public Builder setFluid(Fluid fluid, int amount, CompoundTag tag) {
-                return setFluid(fluidId(fluid), amount, tag);
+            public Builder setOutputFluid(Fluid fluid, int amount, CompoundTag tag) {
+                return setOutputFluid(fluidId(fluid), amount, tag);
             }
 
             /**
-             * Sets the result fluid to use.
+             * Sets the output fluid of this recipe.
              *
-             * @param fluid  The fluid to use.
-             * @param amount The amount to use.
-             * @return This builder, for chaining.
+             * @param fluid  The output fluid to use.
+             * @param amount The output amount to use.
              */
-            public Builder setFluid(Fluid fluid, int amount) {
-                return setFluid(fluid, amount, new CompoundTag());
+            public Builder setOutputFluid(Fluid fluid, int amount) {
+                return setOutputFluid(fluid, amount, new CompoundTag());
             }
 
             /**
-             * Sets the result fluid to use.
+             * Sets the output fluid of this recipe.
              *
-             * @param fluid The fluid to use.
-             * @return This builder, for chaining.
+             * @param fluid The output fluid to use.
              */
-            public Builder setFluid(Fluid fluid) {
-                return setFluid(fluid, 1, new CompoundTag());
+            public Builder setOutputFluid(Fluid fluid) {
+                return setOutputFluid(fluid, 1);
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item   The id of the item to use.
-             * @param amount The amount to use.
-             * @param tag    The NBT tag to use.
-             * @param chance The chance for this item to be used.
-             * @return This builder, for chaining.
+             * @param item   The id of the output item to use.
+             * @param amount The output amount to use.
+             * @param tag    The output NBT tag to use.
+             * @param chance The chance that this output will be used.
              */
             public Builder addItem(ResourceLocation item, int amount, CompoundTag tag, float chance) {
-                items.add(new PotentiallyAbsentItemStack.WithChance(item, amount, tag, chance));
+                outputs.add(new PotentiallyAbsentItemStack.WithChance(item, amount, tag, chance));
                 return this;
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item   The id of the item to use.
-             * @param amount The amount to use.
-             * @param chance The chance for this item to be used.
-             * @return This builder, for chaining.
+             * @param item   The id of the output item to use.
+             * @param amount The output amount to use.
+             * @param chance The chance that this output will be used.
              */
             public Builder addItem(ResourceLocation item, int amount, float chance) {
                 return addItem(item, amount, new CompoundTag(), chance);
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item   The id of the item to use.
-             * @param chance The chance for this item to be used.
-             * @return This builder, for chaining.
+             * @param item   The id of the output item to use.
+             * @param chance The chance that this output will be used.
              */
             public Builder addItem(ResourceLocation item, float chance) {
-                return addItem(item, 1, new CompoundTag(), chance);
+                return addItem(item, 1, chance);
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item   The item to use.
-             * @param amount The amount to use.
-             * @param tag    The NBT tag to use.
-             * @param chance The chance for this item to be used.
-             * @return This builder, for chaining.
+             * @param item   The output item to use.
+             * @param amount The output amount to use.
+             * @param tag    The output NBT tag to use.
+             * @param chance The chance that this output will be used.
              */
             public Builder addItem(Item item, int amount, CompoundTag tag, float chance) {
                 return addItem(itemId(item), amount, tag, chance);
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item   The item to use.
-             * @param amount The amount to use.
-             * @param chance The chance for this item to be used.
-             * @return This builder, for chaining.
+             * @param item   The output item to use.
+             * @param amount The output amount to use.
+             * @param chance The chance that this output will be used.
              */
             public Builder addItem(Item item, int amount, float chance) {
                 return addItem(item, amount, new CompoundTag(), chance);
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item   The item to use.
-             * @param chance The chance for this item to be used.
-             * @return This builder, for chaining.
+             * @param item   The output item to use.
+             * @param chance The chance that this output will be used.
              */
             public Builder addItem(Item item, float chance) {
-                return addItem(item, 1, new CompoundTag(), chance);
+                return addItem(item, 1, chance);
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item   The id of the item to use.
-             * @param amount The amount to use.
-             * @param tag    The NBT tag to use.
-             * @return This builder, for chaining.
+             * @param item   The id of the output item to use.
+             * @param amount The output amount to use.
+             * @param tag    The output NBT tag to use.
              */
             public Builder addItem(ResourceLocation item, int amount, CompoundTag tag) {
                 return addItem(item, amount, tag, 1);
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item   The id of the item to use.
-             * @param amount The amount to use.
-             * @return This builder, for chaining.
+             * @param item   The id of the output item to use.
+             * @param amount The output amount to use.
              */
             public Builder addItem(ResourceLocation item, int amount) {
                 return addItem(item, amount, new CompoundTag());
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item The id of the item to use.
-             * @return This builder, for chaining.
+             * @param item The id of the output item to use.
              */
             public Builder addItem(ResourceLocation item) {
-                return addItem(item, 1, new CompoundTag());
+                return addItem(item, 1);
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item   The item to use.
-             * @param amount The amount to use.
-             * @param tag    The NBT tag to use.
-             * @return This builder, for chaining.
+             * @param item   The output item to use.
+             * @param amount The output amount to use.
+             * @param tag    The output NBT tag to use.
              */
             public Builder addItem(Item item, int amount, CompoundTag tag) {
                 return addItem(itemId(item), amount, tag);
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item   The item to use.
-             * @param amount The amount to use.
-             * @return This builder, for chaining.
+             * @param item   The output item to use.
+             * @param amount The output amount to use.
              */
             public Builder addItem(Item item, int amount) {
                 return addItem(item, amount, new CompoundTag());
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item The item to use.
-             * @return This builder, for chaining.
+             * @param item The output item to use.
              */
             public Builder addItem(Item item) {
-                return addItem(item, 1, new CompoundTag());
+                return addItem(item, 1);
             }
 
             @Override
             protected void toJson(JsonObject json) {
-                json.add("item", item.toJson());
+                json.add("item", input.toJson());
                 json.addProperty("duration", duration);
-                JsonObject result = new JsonObject();
-                result.add("items", JsonUtil.toList(items));
-                if (fluid != null) {
-                    result.add("fluid", fluid.toJson());
+                JsonObject output = new JsonObject();
+                output.add("items", JsonUtil.toList(outputs));
+                if (outputFluid != null) {
+                    output.add("fluid", outputFluid.toJson());
                 }
-                json.add("result", result);
+                json.add("result", output);
             }
         }
     }
@@ -276,263 +256,220 @@ public abstract class IntegratedDynamicsDataProvider<T extends AbstractRecipeBui
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id   The id to use.
-         * @param item The ingredient to use.
+         * @param id    The recipe id to use.
+         * @param input The input ingredient to use.
          */
-        public Builder builder(String id, Ingredient item) {
-            return new Builder(new ResourceLocation(namespace, id), item);
+        public Builder builder(String id, Ingredient input) {
+            return new Builder(new ResourceLocation(namespace, id), input);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
-            private final List<PotentiallyAbsentItemStack> items = new ArrayList<>();
-            private final Ingredient item;
-            private PotentiallyAbsentFluidStack fluid = null;
+            private final List<PotentiallyAbsentItemStack> outputs = new ArrayList<>();
+            private final Ingredient input;
+            private PotentiallyAbsentFluidStack outputFluid = null;
 
-            public Builder(ResourceLocation id, Ingredient item) {
+            public Builder(ResourceLocation id, Ingredient input) {
                 super(id);
-                this.item = item;
+                this.input = input;
             }
 
             /**
-             * Sets the result fluid to use.
+             * Sets the output fluid of this recipe.
              *
-             * @param fluid  The id of the fluid to use.
-             * @param amount The amount to use.
-             * @param tag    The NBT tag to use.
-             * @return This builder, for chaining.
+             * @param fluid  The id of the output fluid to use.
+             * @param amount The output amount to use.
+             * @param tag    The output NBT tag to use.
              */
-            public Builder setFluid(ResourceLocation fluid, int amount, CompoundTag tag) {
-                this.fluid = new PotentiallyAbsentFluidStack(fluid, amount, tag);
+            public Builder setOutputFluid(ResourceLocation fluid, int amount, CompoundTag tag) {
+                this.outputFluid = new PotentiallyAbsentFluidStack(fluid, amount, tag);
                 return this;
             }
 
             /**
-             * Sets the result fluid to use.
+             * Sets the output fluid of this recipe.
              *
-             * @param fluid  The id of the fluid to use.
-             * @param amount The amount to use.
-             * @return This builder, for chaining.
+             * @param fluid  The id of the output fluid to use.
+             * @param amount The output amount to use.
              */
-            public Builder setFluid(ResourceLocation fluid, int amount) {
-                return setFluid(fluid, amount, new CompoundTag());
+            public Builder setOutputFluid(ResourceLocation fluid, int amount) {
+                return setOutputFluid(fluid, amount, new CompoundTag());
             }
 
             /**
-             * Sets the result fluid to use.
+             * Sets the output fluid of this recipe.
              *
-             * @param fluid The id of the fluid to use.
-             * @return This builder, for chaining.
+             * @param fluid The id of the output fluid to use.
              */
-            public Builder setFluid(ResourceLocation fluid) {
-                return setFluid(fluid, 1, new CompoundTag());
+            public Builder setOutputFluid(ResourceLocation fluid) {
+                return setOutputFluid(fluid, 1);
             }
 
             /**
-             * Sets the result fluid to use.
+             * Sets the output fluid of this recipe.
              *
-             * @param fluid  The fluid to use.
-             * @param amount The amount to use.
-             * @param tag    The NBT tag to use.
-             * @return This builder, for chaining.
+             * @param fluid  The output fluid to use.
+             * @param amount The output amount to use.
+             * @param tag    The output NBT tag to use.
              */
-            public Builder setFluid(Fluid fluid, int amount, CompoundTag tag) {
-                return setFluid(fluidId(fluid), amount, tag);
+            public Builder setOutputFluid(Fluid fluid, int amount, CompoundTag tag) {
+                return setOutputFluid(fluidId(fluid), amount, tag);
             }
 
             /**
-             * Sets the result fluid to use.
+             * Sets the output fluid of this recipe.
              *
-             * @param fluid  The fluid to use.
-             * @param amount The amount to use.
-             * @return This builder, for chaining.
+             * @param fluid  The output fluid to use.
+             * @param amount The output amount to use.
              */
-            public Builder setFluid(Fluid fluid, int amount) {
-                return setFluid(fluid, amount, new CompoundTag());
+            public Builder setOutputFluid(Fluid fluid, int amount) {
+                return setOutputFluid(fluid, amount, new CompoundTag());
             }
 
             /**
-             * Sets the result fluid to use.
+             * Sets the output fluid of this recipe.
              *
-             * @param fluid The fluid to use.
-             * @return This builder, for chaining.
+             * @param fluid The output fluid to use.
              */
-            public Builder setFluid(Fluid fluid) {
-                return setFluid(fluid, 1, new CompoundTag());
+            public Builder setOutputFluid(Fluid fluid) {
+                return setOutputFluid(fluid, 1);
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item   The id of the item to use.
-             * @param amount The amount to use.
-             * @param tag    The NBT tag to use.
-             * @param chance The chance for this item to be used.
-             * @return This builder, for chaining.
+             * @param item   The id of the output item to use.
+             * @param amount The output amount to use.
+             * @param tag    The output NBT tag to use.
+             * @param chance The chance that this output will be used.
              */
             public Builder addItem(ResourceLocation item, int amount, CompoundTag tag, float chance) {
-                items.add(new PotentiallyAbsentItemStack.WithChance(item, amount, tag, chance));
+                outputs.add(new PotentiallyAbsentItemStack.WithChance(item, amount, tag, chance));
                 return this;
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item   The id of the item to use.
-             * @param amount The amount to use.
-             * @param chance The chance for this item to be used.
-             * @return This builder, for chaining.
+             * @param item   The id of the output item to use.
+             * @param amount The output amount to use.
+             * @param chance The chance that this output will be used.
              */
             public Builder addItem(ResourceLocation item, int amount, float chance) {
                 return addItem(item, amount, new CompoundTag(), chance);
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item   The id of the item to use.
-             * @param chance The chance for this item to be used.
-             * @return This builder, for chaining.
+             * @param item   The id of the output item to use.
+             * @param chance The chance that this output will be used.
              */
             public Builder addItem(ResourceLocation item, float chance) {
-                return addItem(item, 1, new CompoundTag(), chance);
+                return addItem(item, 1, chance);
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item   The item to use.
-             * @param amount The amount to use.
-             * @param tag    The NBT tag to use.
-             * @param chance The chance for this item to be used.
-             * @return This builder, for chaining.
+             * @param item   The output item to use.
+             * @param amount The output amount to use.
+             * @param tag    The output NBT tag to use.
+             * @param chance The chance that this output will be used.
              */
             public Builder addItem(Item item, int amount, CompoundTag tag, float chance) {
                 return addItem(itemId(item), amount, tag, chance);
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item   The item to use.
-             * @param amount The amount to use.
-             * @param chance The chance for this item to be used.
-             * @return This builder, for chaining.
+             * @param item   The output item to use.
+             * @param amount The output amount to use.
+             * @param chance The chance that this output will be used.
              */
             public Builder addItem(Item item, int amount, float chance) {
                 return addItem(item, amount, new CompoundTag(), chance);
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item   The item to use.
-             * @param tag    The NBT tag to use.
-             * @param chance The chance for this item to be used.
-             * @return This builder, for chaining.
-             */
-            public Builder addItem(Item item, CompoundTag tag, float chance) {
-                return addItem(item, 1, tag, chance);
-            }
-
-            /**
-             * Adds a result item to the recipe.
-             *
-             * @param item   The item to use.
-             * @param chance The chance for this item to be used.
-             * @return This builder, for chaining.
+             * @param item   The output item to use.
+             * @param chance The chance that this output will be used.
              */
             public Builder addItem(Item item, float chance) {
-                return addItem(item, 1, new CompoundTag(), chance);
+                return addItem(item, 1, chance);
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item   The id of the item to use.
-             * @param amount The amount to use.
-             * @param tag    The NBT tag to use.
-             * @return This builder, for chaining.
+             * @param item   The id of the output item to use.
+             * @param amount The output amount to use.
+             * @param tag    The output NBT tag to use.
              */
             public Builder addItem(ResourceLocation item, int amount, CompoundTag tag) {
                 return addItem(item, amount, tag, 1);
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item   The id of the item to use.
-             * @param amount The amount to use.
-             * @return This builder, for chaining.
+             * @param item   The id of the output item to use.
+             * @param amount The output amount to use.
              */
             public Builder addItem(ResourceLocation item, int amount) {
                 return addItem(item, amount, new CompoundTag());
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item The id of the item to use.
-             * @return This builder, for chaining.
+             * @param item The id of the output item to use.
              */
             public Builder addItem(ResourceLocation item) {
-                return addItem(item, 1, new CompoundTag());
+                return addItem(item, 1);
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item   The item to use.
-             * @param amount The amount to use.
-             * @param tag    The NBT tag to use.
-             * @return This builder, for chaining.
+             * @param item   The output item to use.
+             * @param amount The output amount to use.
+             * @param tag    The output NBT tag to use.
              */
             public Builder addItem(Item item, int amount, CompoundTag tag) {
                 return addItem(itemId(item), amount, tag);
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item   The item to use.
-             * @param amount The amount to use.
-             * @return This builder, for chaining.
+             * @param item   The output item to use.
+             * @param amount The output amount to use.
              */
             public Builder addItem(Item item, int amount) {
                 return addItem(item, amount, new CompoundTag());
             }
 
             /**
-             * Adds a result item to the recipe.
+             * Adds an output item to this recipe.
              *
-             * @param item The item to use.
-             * @param tag  The NBT tag to use.
-             * @return This builder, for chaining.
-             */
-            public Builder addItem(Item item, CompoundTag tag) {
-                return addItem(item, 1, tag);
-            }
-
-            /**
-             * Adds a result item to the recipe.
-             *
-             * @param item The item to use.
-             * @return This builder, for chaining.
+             * @param item The output item to use.
              */
             public Builder addItem(Item item) {
-                return addItem(item, 1, new CompoundTag());
+                return addItem(item, 1);
             }
 
             @Override
             protected void toJson(JsonObject json) {
-                json.add("item", item.toJson());
-                JsonObject result = new JsonObject();
-                result.add("items", JsonUtil.toList(items));
-                if (fluid != null) {
-                    result.add("fluid", fluid.toJson());
+                json.add("item", input.toJson());
+                JsonObject output = new JsonObject();
+                output.add("items", JsonUtil.toList(outputs));
+                if (outputFluid != null) {
+                    output.add("fluid", outputFluid.toJson());
                 }
-                json.add("result", result);
+                json.add("result", output);
             }
         }
     }

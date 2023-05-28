@@ -25,87 +25,78 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id          The id to use.
-         * @param cookingTime The amount of time this recipe takes.
-         * @param experience  The amount of experience to award when the recipe is completed.
-         * @param result      The id of the result item to use.
-         * @param count       The result count to use.
+         * @param id         The recipe id to use.
+         * @param duration   The duration to use.
+         * @param experience The amount of experience this recipe awards.
+         * @param output     The id of the output item to use.
+         * @param count      The output count to use.
          */
-        public Builder builder(String id, int cookingTime, float experience, ResourceLocation result, int count) {
-            return new Builder(new ResourceLocation(namespace, id), cookingTime, experience, result, count);
+        public Builder builder(String id, int duration, float experience, ResourceLocation output, int count) {
+            return new Builder(new ResourceLocation(namespace, id), duration, experience, output, count);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id          The id to use.
-         * @param cookingTime The amount of time this recipe takes.
-         * @param experience  The amount of experience to award when the recipe is completed.
-         * @param result      The id of the result item to use.
+         * @param id         The recipe id to use.
+         * @param duration   The duration to use.
+         * @param experience The amount of experience this recipe awards.
+         * @param output     The id of the output item to use.
          */
-        public Builder builder(String id, int cookingTime, float experience, ResourceLocation result) {
-            return new Builder(new ResourceLocation(namespace, id), cookingTime, experience, result);
+        public Builder builder(String id, int duration, float experience, ResourceLocation output) {
+            return new Builder(new ResourceLocation(namespace, id), duration, experience, output);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id          The id to use.
-         * @param cookingTime The amount of time this recipe takes.
-         * @param experience  The amount of experience to award when the recipe is completed.
-         * @param result      The result item to use.
-         * @param count       The result count to use.
+         * @param id         The recipe id to use.
+         * @param duration   The duration to use.
+         * @param experience The amount of experience this recipe awards.
+         * @param output     The output item to use.
+         * @param count      The output count to use.
          */
-        public Builder builder(String id, int cookingTime, float experience, Item result, int count) {
-            return new Builder(new ResourceLocation(namespace, id), cookingTime, experience, result, count);
+        public Builder builder(String id, int duration, float experience, Item output, int count) {
+            return new Builder(new ResourceLocation(namespace, id), duration, experience, output, count);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id          The id to use.
-         * @param cookingTime The amount of time this recipe takes.
-         * @param experience  The amount of experience to award when the recipe is completed.
-         * @param result      The result item to use.
+         * @param id         The recipe id to use.
+         * @param duration   The duration to use.
+         * @param experience The amount of experience this recipe awards.
+         * @param output     The output item to use.
          */
-        public Builder builder(String id, int cookingTime, float experience, Item result) {
-            return new Builder(new ResourceLocation(namespace, id), cookingTime, experience, result);
+        public Builder builder(String id, int duration, float experience, Item output) {
+            return new Builder(new ResourceLocation(namespace, id), duration, experience, output);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
             private final List<Ingredient> ingredients = new ArrayList<>();
-            private final int cookingTime;
+            private final int duration;
             private final float experience;
-            private final PotentiallyAbsentItemStack result;
+            private final PotentiallyAbsentItemStack output;
             private PotentiallyAbsentItemStack container = null;
             private String recipeBookTab = null;
 
-            public Builder(ResourceLocation id, int cookingTime, float experience, ResourceLocation result, int count) {
+            public Builder(ResourceLocation id, int duration, float experience, ResourceLocation output, int count) {
                 super(id);
-                this.cookingTime = cookingTime;
+                this.duration = duration;
                 this.experience = experience;
-                this.result = new PotentiallyAbsentItemStack(result, count); // doesn't support NBT
+                this.output = new PotentiallyAbsentItemStack(output, count); // doesn't support NBT
             }
 
-            public Builder(ResourceLocation id, int cookingTime, float experience, ResourceLocation result) {
-                this(id, cookingTime, experience, result, 1);
+            public Builder(ResourceLocation id, int duration, float experience, ResourceLocation output) {
+                this(id, duration, experience, output, 1);
             }
 
-            public Builder(ResourceLocation id, int cookingTime, float experience, Item result, int count) {
-                this(id, cookingTime, experience, itemId(result), count);
+            public Builder(ResourceLocation id, int duration, float experience, Item output, int count) {
+                this(id, duration, experience, itemId(output), count);
             }
 
-            public Builder(ResourceLocation id, int cookingTime, float experience, Item result) {
-                this(id, cookingTime, experience, result, 1);
+            public Builder(ResourceLocation id, int duration, float experience, Item output) {
+                this(id, duration, experience, output, 1);
             }
 
             /**
              * Sets the container item of this recipe.
              *
              * @param container The id of the container item to use.
-             * @return This builder, for chaining.
              */
             public Builder setContainer(ResourceLocation container) {
                 this.container = new PotentiallyAbsentItemStack(container);
@@ -116,7 +107,6 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
              * Sets the container item of this recipe.
              *
              * @param container The container item to use.
-             * @return This builder, for chaining.
              */
             public Builder setContainer(Item container) {
                 return setContainer(itemId(container));
@@ -126,7 +116,6 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
              * Sets the recipe book tab of this recipe.
              *
              * @param recipeBookTab The recipe book tab to use.
-             * @return This builder, for chaining.
              */
             public Builder setRecipeBookTab(String recipeBookTab) {
                 this.recipeBookTab = recipeBookTab;
@@ -134,21 +123,20 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
             }
 
             /**
-             * Adds an ingredient to this recipe.
+             * Adds an input ingredient to this recipe.
              *
-             * @param ingredient The ingredient to add.
-             * @return This builder, for chaining.
+             * @param input The input ingredient to add.
              */
-            public Builder addIngredient(Ingredient ingredient) {
-                ingredients.add(ingredient);
+            public Builder addInput(Ingredient input) {
+                ingredients.add(input);
                 return this;
             }
 
             @Override
             protected void toJson(JsonObject json) {
-                json.addProperty("cookingtime", cookingTime);
+                json.addProperty("cookingtime", duration);
                 json.addProperty("experience", experience);
-                json.add("result", result.toJson());
+                json.add("result", output.toJson());
                 if (recipeBookTab != null) {
                     json.addProperty("recipe_book_tab", recipeBookTab);
                 }
@@ -166,33 +154,30 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id The id to use.
-         * @param ingredient The ingredient to use.
-         * @param tool The tool to use.
+         * @param id    The recipe id to use.
+         * @param input The input ingredient to use.
+         * @param tool  The tool to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Ingredient tool) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, tool);
+        public Builder builder(String id, Ingredient input, Ingredient tool) {
+            return new Builder(new ResourceLocation(namespace, id), input, tool);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
-            private final List<PotentiallyAbsentItemStack> result = new ArrayList<>();
-            private final Ingredient ingredient;
+            private final List<PotentiallyAbsentItemStack> outputs = new ArrayList<>();
+            private final Ingredient input;
             private final Ingredient tool;
             private String sound;
 
-            public Builder(ResourceLocation id, Ingredient ingredient, Ingredient tool) {
+            public Builder(ResourceLocation id, Ingredient input, Ingredient tool) {
                 super(id);
-                this.ingredient = ingredient;
+                this.input = input;
                 this.tool = tool;
             }
 
             /**
-             * Sets the cutting sound.
+             * Sets the sound of this recipe.
              *
-             * @param sound The sound to set.
-             * @return This builder, for chaining.
+             * @param sound The sound to use.
              */
             public Builder setSound(String sound) {
                 this.sound = sound;
@@ -200,106 +185,98 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
             }
 
             /**
-             * Adds a result to this recipe.
+             * Adds an output to this recipe.
              *
-             * @param item   The id of the item to use.
-             * @param count  The count to use.
-             * @param tag    The NBT tag to use.
-             * @param chance The chance that this result is used.
-             * @return This builder, for chaining.
+             * @param item   The id of the output item to use.
+             * @param count  The output count to use.
+             * @param tag    The output NBT tag to use.
+             * @param chance The chance that this output will be used.
              */
-            public Builder addResult(ResourceLocation item, int count, CompoundTag tag, float chance) {
-                result.add(new PotentiallyAbsentItemStack.WithChance(item, count, tag, chance));
+            public Builder addOutput(ResourceLocation item, int count, CompoundTag tag, float chance) {
+                outputs.add(new PotentiallyAbsentItemStack.WithChance(item, count, tag, chance));
                 return this;
             }
 
             /**
-             * Adds a result to this recipe.
+             * Adds an output to this recipe.
              *
-             * @param item  The id of the item to use.
-             * @param count The count to use.
-             * @param tag   The NBT tag to use.
-             * @return This builder, for chaining.
+             * @param item  The id of the output item to use.
+             * @param count The output count to use.
+             * @param tag   The output NBT tag to use.
              */
-            public Builder addResult(ResourceLocation item, int count, CompoundTag tag) {
-                return addResult(item, count, tag, 1);
+            public Builder addOutput(ResourceLocation item, int count, CompoundTag tag) {
+                return addOutput(item, count, tag, 1);
             }
 
             /**
-             * Adds a result to this recipe.
+             * Adds an output to this recipe.
              *
-             * @param item  The id of the item to use.
-             * @param count The count to use.
-             * @return This builder, for chaining.
+             * @param item  The id of the output item to use.
+             * @param count The output count to use.
              */
-            public Builder addResult(ResourceLocation item, int count) {
-                return addResult(item, count, new CompoundTag());
+            public Builder addOutput(ResourceLocation item, int count) {
+                return addOutput(item, count, new CompoundTag());
             }
 
             /**
-             * Adds a result to this recipe.
+             * Adds an output to this recipe.
              *
-             * @param item The id of the item to use.
-             * @return This builder, for chaining.
+             * @param item The id of the output item to use.
              */
-            public Builder addResult(ResourceLocation item) {
-                return addResult(item, 1);
+            public Builder addOutput(ResourceLocation item) {
+                return addOutput(item, 1);
             }
 
             /**
-             * Adds a result to this recipe.
+             * Adds an output to this recipe.
              *
              * @param item   The item to use.
-             * @param count  The count to use.
-             * @param tag    The NBT tag to use.
-             * @param chance The chance that this result is used.
-             * @return This builder, for chaining.
+             * @param count  The output count to use.
+             * @param tag    The output NBT tag to use.
+             * @param chance The chance that this output will be used.
              */
-            public Builder addResult(Item item, int count, CompoundTag tag, float chance) {
-                return addResult(itemId(item), count, tag, chance);
+            public Builder addOutput(Item item, int count, CompoundTag tag, float chance) {
+                return addOutput(itemId(item), count, tag, chance);
             }
 
             /**
-             * Adds a result to this recipe.
+             * Adds an output to this recipe.
              *
              * @param item  The item to use.
-             * @param count The count to use.
-             * @param tag   The NBT tag to use.
-             * @return This builder, for chaining.
+             * @param count The output count to use.
+             * @param tag   The output NBT tag to use.
              */
-            public Builder addResult(Item item, int count, CompoundTag tag) {
-                return addResult(item, count, tag, 1);
+            public Builder addOutput(Item item, int count, CompoundTag tag) {
+                return addOutput(item, count, tag, 1);
             }
 
             /**
-             * Adds a result to this recipe.
+             * Adds an output to this recipe.
              *
              * @param item  The item to use.
-             * @param count The count to use.
-             * @return This builder, for chaining.
+             * @param count The output count to use.
              */
-            public Builder addResult(Item item, int count) {
-                return addResult(item, count, new CompoundTag());
+            public Builder addOutput(Item item, int count) {
+                return addOutput(item, count, new CompoundTag());
             }
 
             /**
-             * Adds a result to this recipe.
+             * Adds an output to this recipe.
              *
              * @param item The item to use.
-             * @return This builder, for chaining.
              */
-            public Builder addResult(Item item) {
-                return addResult(item, 1);
+            public Builder addOutput(Item item) {
+                return addOutput(item, 1);
             }
 
             @Override
             protected void toJson(JsonObject json) {
-                json.add("ingredients", JsonUtil.toIngredientList(List.of(ingredient)));
+                json.add("ingredients", JsonUtil.toIngredientList(List.of(input)));
                 json.add("tool", tool.toJson());
                 if (sound != null) {
                     json.addProperty("sound", sound);
                 }
-                json.add("result", JsonUtil.toList(result));
+                json.add("result", JsonUtil.toList(outputs));
             }
         }
     }

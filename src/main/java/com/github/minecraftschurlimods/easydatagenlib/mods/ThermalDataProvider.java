@@ -73,9 +73,7 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
+         * @param id         The recipe id to use.
          * @param experience The amount of experience this recipe awards.
          */
         public Builder builder(String id, float experience) {
@@ -83,9 +81,7 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id The id to use.
+         * @param id The recipe id to use.
          */
         public Builder builder(String id) {
             return new Builder(new ResourceLocation(namespace, id));
@@ -103,10 +99,9 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
             }
 
             /**
-             * Sets the water modifier of this recipe.
+             * Sets the water modifier to use.
              *
              * @param waterModifier The water modifier to use.
-             * @return This builder, for chaining.
              */
             public Builder setWaterModifier(float waterModifier) {
                 this.waterModifier = waterModifier;
@@ -175,15 +170,13 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
      * Note: Not all recipes can actually handle all information. However, Thermal's recipe specification allows everything to be specified for all recipes.
      * {@see https://github.com/CoFH/ThermalCore/blob/1.19.x/src/main/java/cofh/thermal/lib/util/recipes/MachineRecipeSerializer.java}
      */
-    protected abstract static class Processing extends ThermalDataProvider<Processing.Builder> {
+    protected static abstract class Processing extends ThermalDataProvider<Processing.Builder> {
         protected Processing(String folder, String namespace, DataGenerator generator) {
             super(folder, namespace, generator);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
+         * @param id         The recipe id to use.
          * @param experience The amount of experience this recipe awards.
          */
         public Builder builder(String id, float experience) {
@@ -191,9 +184,7 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id The id to use.
+         * @param id The recipe id to use.
          */
         public Builder builder(String id) {
             return new Builder(new ResourceLocation(namespace, id));
@@ -221,7 +212,6 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
              * Sets the energy of this recipe.
              *
              * @param energy The amount of energy to use.
-             * @return This builder, for chaining.
              */
             public Builder setEnergy(int energy) {
                 this.energy = energy;
@@ -232,7 +222,6 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
              * Sets the energy modifier of this recipe.
              *
              * @param energyModifier The energy modifier to use.
-             * @return This builder, for chaining.
              */
             public Builder setEnergyModifier(float energyModifier) {
                 this.energyModifier = energyModifier;
@@ -240,45 +229,41 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
             }
 
             /**
-             * Adds an input item ingredient.
+             * Adds an input ingredient to this recipe.
              *
-             * @param input The input item ingredient to use.
-             * @return This builder, for chaining.
+             * @param input The input ingredient to add.
              */
-            public Builder addInputItem(Ingredient input, int count) {
+            public Builder addInput(Ingredient input, int count) {
                 inputItems.add(new IngredientWithCount(input, count));
                 return this;
             }
 
             /**
-             * Adds an input item ingredient.
+             * Adds an input ingredient to this recipe.
              *
-             * @param input The input item ingredient to use.
-             * @return This builder, for chaining.
+             * @param input The input ingredient to add.
              */
-            public Builder addInputItem(Ingredient input) {
-                return addInputItem(input, 1);
+            public Builder addInput(Ingredient input) {
+                return addInput(input, 1);
             }
 
             /**
-             * Adds an input item ingredient.
+             * Adds an input ingredient to this recipe.
              *
-             * @param input The input item ingredient to use.
-             * @return This builder, for chaining.
+             * @param input The input ingredient to add.
              */
-            public Builder addInputFluid(FluidIngredient input) {
+            public Builder addInput(FluidIngredient input) {
                 inputFluids.add(input);
                 return this;
             }
 
             /**
-             * Adds an input item ingredient.
+             * Adds an output item to this recipe.
              *
              * @param output The id of the output item to use.
              * @param count  The output count to use.
              * @param tag    The output NBT tag to use.
              * @param chance The chance that this output will be used.
-             * @return This builder, for chaining.
              */
             public Builder addOutputItem(ResourceLocation output, int count, CompoundTag tag, float chance) {
                 outputItems.add(new PotentiallyAbsentItemStack.WithChance(output, count, tag, chance));
@@ -286,137 +271,125 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
             }
 
             /**
-             * Adds an input item ingredient.
+             * Adds an output item to this recipe.
              *
              * @param output The id of the output item to use.
              * @param count  The output count to use.
              * @param chance The chance that this output will be used.
-             * @return This builder, for chaining.
              */
             public Builder addOutputItem(ResourceLocation output, int count, float chance) {
                 return addOutputItem(output, count, new CompoundTag(), chance);
             }
 
             /**
-             * Adds an input item ingredient.
+             * Adds an output item to this recipe.
              *
              * @param output The id of the output item to use.
              * @param chance The chance that this output will be used.
-             * @return This builder, for chaining.
              */
             public Builder addOutputItem(ResourceLocation output, float chance) {
                 return addOutputItem(output, 1, chance);
             }
 
             /**
-             * Adds an input item ingredient.
+             * Adds an output item to this recipe.
              *
              * @param output The output item to use.
              * @param count  The output count to use.
              * @param tag    The output NBT tag to use.
              * @param chance The chance that this output will be used.
-             * @return This builder, for chaining.
              */
             public Builder addOutputItem(Item output, int count, CompoundTag tag, float chance) {
                 return addOutputItem(itemId(output), count, tag, chance);
             }
 
             /**
-             * Adds an input item ingredient.
+             * Adds an output item to this recipe.
              *
              * @param output The output item to use.
              * @param count  The output count to use.
              * @param chance The chance that this output will be used.
-             * @return This builder, for chaining.
              */
             public Builder addOutputItem(Item output, int count, float chance) {
                 return addOutputItem(output, count, new CompoundTag(), chance);
             }
 
             /**
-             * Adds an input item ingredient.
+             * Adds an output item to this recipe.
              *
              * @param output The output item to use.
              * @param chance The chance that this output will be used.
-             * @return This builder, for chaining.
              */
             public Builder addOutputItem(Item output, float chance) {
                 return addOutputItem(output, 1, chance);
             }
 
             /**
-             * Adds an input item ingredient.
+             * Adds an output item to this recipe.
              *
              * @param output The id of the output item to use.
              * @param count  The output count to use.
              * @param tag    The output NBT tag to use.
-             * @return This builder, for chaining.
              */
             public Builder addOutputItem(ResourceLocation output, int count, CompoundTag tag) {
                 return addOutputItem(output, count, tag, 1f);
             }
 
             /**
-             * Adds an input item ingredient.
+             * Adds an output item to this recipe.
              *
              * @param output The id of the output item to use.
              * @param count  The output count to use.
-             * @return This builder, for chaining.
              */
             public Builder addOutputItem(ResourceLocation output, int count) {
                 return addOutputItem(output, count, 1f);
             }
 
             /**
-             * Adds an input item ingredient.
+             * Adds an output item to this recipe.
              *
              * @param output The id of the output item to use.
-             * @return This builder, for chaining.
              */
             public Builder addOutputItem(ResourceLocation output) {
                 return addOutputItem(output, 1f);
             }
 
             /**
-             * Adds an input item ingredient.
+             * Adds an output item to this recipe.
              *
              * @param output The output item to use.
              * @param count  The output count to use.
              * @param tag    The output NBT tag to use.
-             * @return This builder, for chaining.
              */
             public Builder addOutputItem(Item output, int count, CompoundTag tag) {
                 return addOutputItem(itemId(output), count, tag, 1f);
             }
 
             /**
-             * Adds an input item ingredient.
+             * Adds an output item to this recipe.
              *
              * @param output The output item to use.
              * @param count  The output count to use.
-             * @return This builder, for chaining.
              */
             public Builder addOutputItem(Item output, int count) {
                 return addOutputItem(output, count, 1f);
             }
 
             /**
-             * Adds an input item ingredient.
+             * Adds an output item to this recipe.
              *
              * @param output The output item to use.
-             * @return This builder, for chaining.
              */
             public Builder addOutputItem(Item output) {
                 return addOutputItem(output, 1f);
             }
 
             /**
-             * Adds an input fluid ingredient.
+             * Adds an output fluid to this recipe.
              *
              * @param output The id of the output fluid to use.
              * @param amount The output amount to use.
              * @param tag    The output NBT tag to use.
-             * @return This builder, for chaining.
              */
             public Builder addOutputFluid(ResourceLocation output, int amount, CompoundTag tag) {
                 outputFluids.add(new PotentiallyAbsentFluidStack(output, amount, tag));
@@ -424,54 +397,49 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
             }
 
             /**
-             * Adds an input fluid ingredient.
+             * Adds an output fluid to this recipe.
              *
              * @param output The id of the output fluid to use.
              * @param amount The output amount to use.
-             * @return This builder, for chaining.
              */
             public Builder addOutputFluid(ResourceLocation output, int amount) {
                 return addOutputFluid(output, amount, new CompoundTag());
             }
 
             /**
-             * Adds an input fluid ingredient.
+             * Adds an output fluid to this recipe.
              *
              * @param output The id of the output fluid to use.
-             * @return This builder, for chaining.
              */
             public Builder addOutputFluid(ResourceLocation output) {
                 return addOutputFluid(output, 1);
             }
 
             /**
-             * Adds an input fluid ingredient.
+             * Adds an output fluid to this recipe.
              *
              * @param output The output fluid to use.
              * @param amount The output amount to use.
              * @param tag    The output NBT tag to use.
-             * @return This builder, for chaining.
              */
             public Builder addOutputFluid(Fluid output, int amount, CompoundTag tag) {
                 return addOutputFluid(fluidId(output), amount, tag);
             }
 
             /**
-             * Adds an input fluid ingredient.
+             * Adds an output fluid to this recipe.
              *
              * @param output The output fluid to use.
              * @param amount The output amount to use.
-             * @return This builder, for chaining.
              */
             public Builder addOutputFluid(Fluid output, int amount) {
                 return addOutputFluid(output, amount, new CompoundTag());
             }
 
             /**
-             * Adds an input fluid ingredient.
+             * Adds an output fluid to this recipe.
              *
              * @param output The output fluid to use.
-             * @return This builder, for chaining.
              */
             public Builder addOutputFluid(Fluid output) {
                 return addOutputFluid(output, 1);

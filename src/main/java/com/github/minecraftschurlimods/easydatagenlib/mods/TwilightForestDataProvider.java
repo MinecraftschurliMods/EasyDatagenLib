@@ -22,9 +22,7 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id   The id to use.
+         * @param id   The recipe id to use.
          * @param from The id of the base block to use.
          * @param to   The id of the result block to use.
          */
@@ -33,9 +31,7 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id   The id to use.
+         * @param id   The recipe id to use.
          * @param from The id of the base block to use.
          * @param to   The result block to use.
          */
@@ -44,9 +40,7 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id   The id to use.
+         * @param id   The recipe id to use.
          * @param from The base block to use.
          * @param to   The id of the result block to use.
          */
@@ -55,9 +49,7 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id   The id to use.
+         * @param id   The recipe id to use.
          * @param from The base block to use.
          * @param to   The result block to use.
          */
@@ -101,44 +93,40 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id   The id to use.
-         * @param from The id of the base block to use.
-         * @param to   The id of the result block to use.
+         * @param id         The recipe id to use.
+         * @param from       The id of the base entity type to use.
+         * @param to         The id of the result entity type to use.
+         * @param reversible Whether the transformation is reversible or not.
          */
         public Builder builder(String id, ResourceLocation from, ResourceLocation to, boolean reversible) {
             return new Builder(new ResourceLocation(namespace, id), from, to, reversible);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id   The id to use.
-         * @param from The id of the base block to use.
-         * @param to   The result block to use.
+         * @param id         The recipe id to use.
+         * @param from       The id of the base entity type to use.
+         * @param to         The result entity type to use.
+         * @param reversible Whether the transformation is reversible or not.
          */
         public Builder builder(String id, ResourceLocation from, EntityType<?> to, boolean reversible) {
             return new Builder(new ResourceLocation(namespace, id), from, to, reversible);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id   The id to use.
-         * @param from The base block to use.
-         * @param to   The id of the result block to use.
+         * @param id         The recipe id to use.
+         * @param from       The base entity type to use.
+         * @param to         The id of the result entity type to use.
+         * @param reversible Whether the transformation is reversible or not.
          */
         public Builder builder(String id, EntityType<?> from, ResourceLocation to, boolean reversible) {
             return new Builder(new ResourceLocation(namespace, id), from, to, reversible);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id   The id to use.
-         * @param from The base block to use.
-         * @param to   The result block to use.
+         * @param id         The recipe id to use.
+         * @param from       The base entity type to use.
+         * @param to         The result entity type to use.
+         * @param reversible Whether the transformation is reversible or not.
          */
         public Builder builder(String id, EntityType<?> from, EntityType<?> to, boolean reversible) {
             return new Builder(new ResourceLocation(namespace, id), from, to, reversible);

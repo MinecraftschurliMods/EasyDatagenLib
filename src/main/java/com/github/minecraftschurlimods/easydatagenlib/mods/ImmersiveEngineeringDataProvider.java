@@ -2,11 +2,10 @@ package com.github.minecraftschurlimods.easydatagenlib.mods;
 
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeBuilder;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeProvider;
-import com.github.minecraftschurlimods.easydatagenlib.util.immersiveengineering.IngredientWithCount;
 import com.github.minecraftschurlimods.easydatagenlib.util.JsonUtil;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentItemStack;
 import com.github.minecraftschurlimods.easydatagenlib.util.immersiveengineering.ClocheRenderType;
-import com.google.gson.JsonArray;
+import com.github.minecraftschurlimods.easydatagenlib.util.immersiveengineering.IngredientWithCount;
 import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.data.DataGenerator;
@@ -30,66 +29,60 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param time   The time this recipe takes to complete.
-         * @param energy The amount of energy this recipe requires.
-         * @param input  The input ingredient of this recipe.
-         * @param count  The amount of input ingredients required.
+         * @param id       The recipe id to use.
+         * @param duration The duration to use.
+         * @param energy   The amount of energy to use.
+         * @param input    The input ingredient to use.
+         * @param count    The input count to use.
          */
-        public Builder builder(String id, int time, int energy, Ingredient input, int count) {
-            return new Builder(new ResourceLocation(namespace, id), time, energy, input, count);
+        public Builder builder(String id, int duration, int energy, Ingredient input, int count) {
+            return new Builder(new ResourceLocation(namespace, id), duration, energy, input, count);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param time   The time this recipe takes to complete.
-         * @param energy The amount of energy this recipe requires.
-         * @param input  The input ingredient of this recipe.
+         * @param id       The recipe id to use.
+         * @param duration The duration to use.
+         * @param energy   The amount of energy to use.
+         * @param input    The input ingredient to use.
          */
-        public Builder builder(String id, int time, int energy, Ingredient input) {
-            return new Builder(new ResourceLocation(namespace, id), time, energy, input);
+        public Builder builder(String id, int duration, int energy, Ingredient input) {
+            return new Builder(new ResourceLocation(namespace, id), duration, energy, input);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
-            private final List<IngredientWithCount> additives = new ArrayList<>();
-            private final List<IngredientWithCount> results = new ArrayList<>();
-            private final List<IngredientWithCount> secondaries = new ArrayList<>();
-            private final int time;
+            private final List<IngredientWithCount> secondaryInputs = new ArrayList<>();
+            private final List<IngredientWithCount> outputs = new ArrayList<>();
+            private final List<IngredientWithCount> secondaryOutputs = new ArrayList<>();
+            private final int duration;
             private final int energy;
             private final IngredientWithCount input;
             private IngredientWithCount slag;
 
-            public Builder(ResourceLocation id, int time, int energy, Ingredient input, int count) {
+            public Builder(ResourceLocation id, int duration, int energy, Ingredient input, int count) {
                 super(id);
-                this.time = time;
+                this.duration = duration;
                 this.energy = energy;
                 this.input = new IngredientWithCount(input, count);
             }
 
-            public Builder(ResourceLocation id, int time, int energy, Ingredient input) {
-                this(id, time, energy, input, 1);
+            public Builder(ResourceLocation id, int duration, int energy, Ingredient input) {
+                this(id, duration, energy, input, 1);
             }
 
             /**
-             * Sets the slag output for this recipe.
+             * Sets the slag output of this recipe.
              *
-             * @param slag The slag ingredient for this recipe.
-             * @return This builder, for chaining.
+             * @param slag The slag output to use.
              */
             public Builder setSlag(Ingredient slag) {
                 return setSlag(slag, 1);
             }
 
             /**
-             * Sets the slag output for this recipe.
+             * Sets the slag output of this recipe.
              *
-             * @param slag  The slag ingredient for this recipe.
-             * @param count The amount of slag for this recipe.
-             * @return This builder, for chaining.
+             * @param slag  The slag output to use.
+             * @param count The slag output count to use.
              */
             public Builder setSlag(Ingredient slag, int count) {
                 this.slag = new IngredientWithCount(slag, count);
@@ -97,109 +90,101 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
             }
 
             /**
-             * Adds an additive to this recipe.
+             * Adds a secondary input to this recipe.
              *
-             * @param additive The additive ingredient to add.
-             * @param count    The amount of additives required.
-             * @return This builder, for chaining.
+             * @param input The secondary input to add.
+             * @param count The secondary input count to use.
              */
-            public Builder addAdditive(Ingredient additive, int count) {
-                additives.add(new IngredientWithCount(additive, count));
+            public Builder addSecondaryInput(Ingredient input, int count) {
+                secondaryInputs.add(new IngredientWithCount(input, count));
                 return this;
             }
 
             /**
-             * Adds an additive to this recipe.
+             * Adds a secondary input to this recipe.
              *
-             * @param additive The additive ingredient to add.
-             * @return This builder, for chaining.
+             * @param input The secondary input ingredient to add.
              */
-            public Builder addAdditive(Ingredient additive) {
-                return addAdditive(additive, 1);
+            public Builder addSecondaryInput(Ingredient input) {
+                return addSecondaryInput(input, 1);
             }
 
             /**
-             * Adds a result to this recipe.
+             * Adds an output to this recipe.
              *
-             * @param result The result ingredient to add.
-             * @param count  The amount of results required.
-             * @return This builder, for chaining.
+             * @param output The output ingredient to add.
+             * @param count  The output count to use.
              */
-            public Builder addResult(Ingredient result, int count) {
-                results.add(new IngredientWithCount(result, count));
+            public Builder addOutput(Ingredient output, int count) {
+                outputs.add(new IngredientWithCount(output, count));
                 return this;
             }
 
             /**
-             * Adds a result to this recipe.
+             * Adds an output to this recipe.
              *
-             * @param result The result ingredient to add.
-             * @return This builder, for chaining.
+             * @param output The output ingredient to add.
              */
-            public Builder addResult(Ingredient result) {
-                return addResult(result, 1);
+            public Builder addOutput(Ingredient output) {
+                return addOutput(output, 1);
             }
 
             /**
-             * Adds a secondary result to this recipe.
+             * Adds a secondary output to this recipe.
              *
-             * @param secondary The secondary ingredient to add.
-             * @param count     The amount of secondaries required.
-             * @param chance    The chance of this secondary ingredient to be used.
-             * @return This builder, for chaining.
+             * @param secondary The secondary output to add.
+             * @param count     The secondary output count to use.
+             * @param chance    The chance that this output will be used.
              */
-            public Builder addSecondary(Ingredient secondary, int count, float chance) {
-                secondaries.add(new IngredientWithCount.WithChance(secondary, count, chance));
+            public Builder addSecondaryOutput(Ingredient secondary, int count, float chance) {
+                secondaryOutputs.add(new IngredientWithCount.WithChance(secondary, count, chance));
                 return this;
             }
 
             /**
-             * Adds a secondary result to this recipe.
+             * Adds a secondary output to this recipe.
              *
-             * @param secondary The secondary ingredient to add.
-             * @param chance    The chance of this secondary ingredient to be used.
-             * @return This builder, for chaining.
+             * @param secondary The secondary output to add.
+             * @param chance    The chance that this output will be used.
              */
-            public Builder addSecondary(Ingredient secondary, float chance) {
-                return addSecondary(secondary, 1, chance);
+            public Builder addSecondaryOutput(Ingredient secondary, float chance) {
+                return addSecondaryOutput(secondary, 1, chance);
             }
 
             /**
-             * Adds a secondary result to this recipe.
+             * Adds a secondary output to this recipe.
              *
              * @param secondary The secondary ingredient to add.
-             * @param count     The amount of secondaries required.
-             * @return This builder, for chaining.
+             * @param count     The secondary output count to use.
              */
-            public Builder addSecondary(Ingredient secondary, int count) {
-                return addSecondary(secondary, count, 1);
+            public Builder addSecondaryOutput(Ingredient secondary, int count) {
+                return addSecondaryOutput(secondary, count, 1);
             }
 
             /**
-             * Adds a secondary result to this recipe.
+             * Adds a secondary output to this recipe.
              *
              * @param secondary The secondary ingredient to add.
-             * @return This builder, for chaining.
              */
-            public Builder addSecondary(Ingredient secondary) {
-                return addSecondary(secondary, 1);
+            public Builder addSecondaryOutput(Ingredient secondary) {
+                return addSecondaryOutput(secondary, 1);
             }
 
             @Override
             protected void toJson(JsonObject json) {
-                json.addProperty("time", time);
+                json.addProperty("time", duration);
                 json.addProperty("energy", energy);
                 json.add("input", input.toJson());
                 if (slag != null) {
                     json.add("slag", slag.toJson());
                 }
-                if (results.isEmpty()) throw new IllegalStateException("Results cannot be empty for recipe" + id + "!");
-                json.add("results", JsonUtil.toList(results));
-                if (!additives.isEmpty()) {
-                    json.add("additives", JsonUtil.toList(additives));
+                if (outputs.isEmpty()) throw new IllegalStateException("Results cannot be empty for recipe" + id + "!");
+                json.add("results", JsonUtil.toList(outputs));
+                if (!secondaryInputs.isEmpty()) {
+                    json.add("additives", JsonUtil.toList(secondaryInputs));
                 }
-                if (!secondaries.isEmpty()) {
-                    json.add("secondaries", JsonUtil.toList(secondaries));
+                if (!secondaryOutputs.isEmpty()) {
+                    json.add("secondaries", JsonUtil.toList(secondaryOutputs));
                 }
             }
         }
@@ -211,13 +196,11 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
+         * @param id         The recipe id to use.
          * @param time       The time this recipe requires.
-         * @param input      The input ingredient of this recipe.
-         * @param soil       The soil ingredient of this recipe.
-         * @param renderType The render mode to use in the recipe renderer.
+         * @param input      The input ingredient to use.
+         * @param soil       The soil ingredient to use.
+         * @param renderType The render type to use in the recipe renderer.
          * @param block      The id of the block to use in the recipe renderer.
          */
         public Builder builder(String id, int time, Ingredient input, Ingredient soil, ClocheRenderType renderType, ResourceLocation block) {
@@ -225,13 +208,11 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
+         * @param id         The recipe id to use.
          * @param time       The time this recipe requires.
-         * @param input      The input ingredient of this recipe.
-         * @param soil       The soil ingredient of this recipe.
-         * @param renderType The render mode to use in the recipe renderer.
+         * @param input      The input ingredient to use.
+         * @param soil       The soil ingredient to use.
+         * @param renderType The render type to use in the recipe renderer.
          * @param block      The block to use in the recipe renderer.
          */
         public Builder builder(String id, int time, Ingredient input, Ingredient soil, ClocheRenderType renderType, Block block) {
@@ -239,7 +220,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
-            private final List<IngredientWithCount> results = new ArrayList<>();
+            private final List<IngredientWithCount> outputs = new ArrayList<>();
             private final int time;
             private final Ingredient input;
             private final Ingredient soil;
@@ -260,25 +241,23 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
             }
 
             /**
-             * Adds a result to this recipe.
+             * Adds an output to this recipe.
              *
-             * @param result The result ingredient to add.
-             * @param count  The amount of results required.
-             * @return This builder, for chaining.
+             * @param output The output ingredient to add.
+             * @param count  The output ingredient count to use.
              */
-            public Builder addResult(Ingredient result, int count) {
-                results.add(new IngredientWithCount(result, count));
+            public Builder addOutput(Ingredient output, int count) {
+                outputs.add(new IngredientWithCount(output, count));
                 return this;
             }
 
             /**
-             * Adds a result to this recipe.
+             * Adds an output to this recipe.
              *
-             * @param result The result ingredient to add.
-             * @return This builder, for chaining.
+             * @param output The output ingredient to add.
              */
-            public Builder addResult(Ingredient result) {
-                return addResult(result, 1);
+            public Builder addOutput(Ingredient output) {
+                return addOutput(output, 1);
             }
 
             @Override
@@ -286,7 +265,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
                 json.addProperty("time", time);
                 json.add("input", input.toJson());
                 json.add("soil", soil.toJson());
-                json.add("results", JsonUtil.toList(results));
+                json.add("results", JsonUtil.toList(outputs));
                 JsonObject render = new JsonObject();
                 render.addProperty("type", renderType.toString());
                 render.addProperty("block", block.toString());
@@ -301,87 +280,79 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param energy The amount of energy this recipe requires.
-         * @param input  The input ingredient of this recipe.
-         * @param result The result ingredient of this recipe.
-         * @param count  The result count of this recipe.
+         * @param id     The recipe id to use.
+         * @param energy The amount of energy to use.
+         * @param input  The input ingredient to use.
+         * @param output The output ingredient to use.
+         * @param count  The output count to use.
          */
-        public Builder builder(String id, int energy, Ingredient input, Ingredient result, int count) {
-            return new Builder(new ResourceLocation(namespace, id), energy, input, result, count);
+        public Builder builder(String id, int energy, Ingredient input, Ingredient output, int count) {
+            return new Builder(new ResourceLocation(namespace, id), energy, input, output, count);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param energy The amount of energy this recipe requires.
-         * @param input  The input ingredient of this recipe.
-         * @param result The result ingredient of this recipe.
+         * @param id     The recipe id to use.
+         * @param energy The amount of energy to use.
+         * @param input  The input ingredient to use.
+         * @param output The output ingredient to use.
          */
-        public Builder builder(String id, int energy, Ingredient input, Ingredient result) {
-            return new Builder(new ResourceLocation(namespace, id), energy, input, result);
+        public Builder builder(String id, int energy, Ingredient input, Ingredient output) {
+            return new Builder(new ResourceLocation(namespace, id), energy, input, output);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
-            private final List<IngredientWithCount> secondaries = new ArrayList<>();
+            private final List<IngredientWithCount> secondaryOutputs = new ArrayList<>();
             private final int energy;
             private final Ingredient input;
-            private final IngredientWithCount result;
+            private final IngredientWithCount output;
 
-            public Builder(ResourceLocation id, int energy, Ingredient input, Ingredient result, int count) {
+            public Builder(ResourceLocation id, int energy, Ingredient input, Ingredient output, int count) {
                 super(id);
                 this.energy = energy;
                 this.input = input;
-                this.result = new IngredientWithCount(result, count);
+                this.output = new IngredientWithCount(output, count);
             }
 
-            public Builder(ResourceLocation id, int energy, Ingredient input, Ingredient result) {
-                this(id, energy, input, result, 1);
+            public Builder(ResourceLocation id, int energy, Ingredient input, Ingredient output) {
+                this(id, energy, input, output, 1);
             }
 
             /**
-             * Adds a secondary result to this recipe.
+             * Adds a secondary output to this recipe.
              *
-             * @param secondary The secondary ingredient to add.
-             * @param count     The amount of secondaries required.
-             * @param chance    The chance of this secondary ingredient to be used.
-             * @return This builder, for chaining.
+             * @param secondary The secondary output to add.
+             * @param count     The secondary output count to use.
+             * @param chance    The chance that this output will be used.
              */
             public Builder addSecondary(Ingredient secondary, int count, float chance) {
-                secondaries.add(new IngredientWithCount.WithChance(secondary, count, chance));
+                secondaryOutputs.add(new IngredientWithCount.WithChance(secondary, count, chance));
                 return this;
             }
 
             /**
-             * Adds a secondary result to this recipe.
+             * Adds a secondary output to this recipe.
              *
-             * @param secondary The secondary ingredient to add.
-             * @param chance    The chance of this secondary ingredient to be used.
-             * @return This builder, for chaining.
+             * @param secondary The secondary output to add.
+             * @param chance    The chance that this output will be used.
              */
             public Builder addSecondary(Ingredient secondary, float chance) {
                 return addSecondary(secondary, 1, chance);
             }
 
             /**
-             * Adds a secondary result to this recipe.
+             * Adds a secondary output to this recipe.
              *
-             * @param secondary The secondary ingredient to add.
-             * @param count     The amount of secondaries required.
-             * @return This builder, for chaining.
+             * @param secondary The secondary output to add.
+             * @param count     The secondary output count to use.
              */
             public Builder addSecondary(Ingredient secondary, int count) {
                 return addSecondary(secondary, count, 1);
             }
 
             /**
-             * Adds a secondary result to this recipe.
+             * Adds a secondary output to this recipe.
              *
-             * @param secondary The secondary ingredient to add.
-             * @return This builder, for chaining.
+             * @param secondary The secondary output to add.
              */
             public Builder addSecondary(Ingredient secondary) {
                 return addSecondary(secondary, 1);
@@ -391,8 +362,8 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
             protected void toJson(JsonObject json) {
                 json.addProperty("energy", energy);
                 json.add("input", input.toJson());
-                json.add("result", result.toJson());
-                json.add("secondaries", JsonUtil.toList(secondaries));
+                json.add("result", output.toJson());
+                json.add("secondaries", JsonUtil.toList(secondaryOutputs));
             }
         }
     }
@@ -403,134 +374,124 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param energy The amount of energy this recipe requires.
-         * @param input  The input ingredient of this recipe.
-         * @param result The id of the result item of this recipe.
-         * @param count  The result count of this recipe.
+         * @param id     The recipe id to use.
+         * @param energy The amount of energy to use.
+         * @param input  The input ingredient to use.
+         * @param output The id of the output item to use.
+         * @param count  The output count to use.
          */
-        public Builder builder(String id, int energy, Ingredient input, ResourceLocation result, int count) {
-            return new Builder(new ResourceLocation(namespace, id), energy, input, result, count);
+        public Builder builder(String id, int energy, Ingredient input, ResourceLocation output, int count) {
+            return new Builder(new ResourceLocation(namespace, id), energy, input, output, count);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param energy The amount of energy this recipe requires.
-         * @param input  The input ingredient of this recipe.
-         * @param result The id of the result item of this recipe.
+         * @param id     The recipe id to use.
+         * @param energy The amount of energy to use.
+         * @param input  The input ingredient to use.
+         * @param output The id of the output item to use.
          */
-        public Builder builder(String id, int energy, Ingredient input, ResourceLocation result) {
-            return new Builder(new ResourceLocation(namespace, id), energy, input, result);
+        public Builder builder(String id, int energy, Ingredient input, ResourceLocation output) {
+            return new Builder(new ResourceLocation(namespace, id), energy, input, output);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param energy The amount of energy this recipe requires.
-         * @param input  The input ingredient of this recipe.
-         * @param result The result item of this recipe.
-         * @param count  The result count of this recipe.
+         * @param id     The recipe id to use.
+         * @param energy The amount of energy to use.
+         * @param input  The input ingredient to use.
+         * @param output The output item to use.
+         * @param count  The output count to use.
          */
-        public Builder builder(String id, int energy, Ingredient input, Item result, int count) {
-            return new Builder(new ResourceLocation(namespace, id), energy, input, result, count);
+        public Builder builder(String id, int energy, Ingredient input, Item output, int count) {
+            return new Builder(new ResourceLocation(namespace, id), energy, input, output, count);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param energy The amount of energy this recipe requires.
-         * @param input  The input ingredient of this recipe.
-         * @param result The result item of this recipe.
+         * @param id     The recipe id to use.
+         * @param energy The amount of energy to use.
+         * @param input  The input ingredient to use.
+         * @param output The output item to use.
          */
-        public Builder builder(String id, int energy, Ingredient input, Item result) {
-            return new Builder(new ResourceLocation(namespace, id), energy, input, result);
+        public Builder builder(String id, int energy, Ingredient input, Item output) {
+            return new Builder(new ResourceLocation(namespace, id), energy, input, output);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
-            private final List<Pair<IngredientWithCount, Boolean>> secondaries = new ArrayList<>();
+            private final List<Pair<IngredientWithCount, Boolean>> secondaryOutputs = new ArrayList<>();
             private final int energy;
             private final Ingredient input;
-            private final PotentiallyAbsentItemStack result;
+            private final PotentiallyAbsentItemStack output;
             private IngredientWithCount stripped;
 
-            public Builder(ResourceLocation id, int energy, Ingredient input, ResourceLocation result, int count) {
+            public Builder(ResourceLocation id, int energy, Ingredient input, ResourceLocation output, int count) {
                 super(id);
                 this.energy = energy;
                 this.input = input;
-                this.result = new PotentiallyAbsentItemStack(result, count); // doesn't support NBT
+                this.output = new PotentiallyAbsentItemStack(output, count); // doesn't support NBT
             }
 
-            public Builder(ResourceLocation id, int energy, Ingredient input, ResourceLocation result) {
-                this(id, energy, input, result, 1);
+            public Builder(ResourceLocation id, int energy, Ingredient input, ResourceLocation output) {
+                this(id, energy, input, output, 1);
             }
 
-            public Builder(ResourceLocation id, int energy, Ingredient input, Item result, int count) {
-                this(id, energy, input, itemId(result), count);
+            public Builder(ResourceLocation id, int energy, Ingredient input, Item output, int count) {
+                this(id, energy, input, itemId(output), count);
             }
 
-            public Builder(ResourceLocation id, int energy, Ingredient input, Item result) {
-                this(id, energy, input, result, 1);
+            public Builder(ResourceLocation id, int energy, Ingredient input, Item output) {
+                this(id, energy, input, output, 1);
             }
 
             /**
-             * Sets the stripping result for this recipe.
+             * Sets the stripped output of this recipe.
              *
-             * @param stripped The stripping result to use.
-             * @param count The stripping result amount to use.
+             * @param stripped The stripped output to use.
              */
-            public Builder setStripped(Ingredient stripped, int count) {
+            public Builder setStrippedOutput(Ingredient stripped) {
+                return setStrippedOutput(stripped, 1);
+            }
+
+            /**
+             * Sets the stripped output of this recipe.
+             *
+             * @param stripped The stripped output to use.
+             * @param count    The stripped output count to use.
+             */
+            public Builder setStrippedOutput(Ingredient stripped, int count) {
                 this.stripped = new IngredientWithCount(stripped, count);
                 return this;
             }
 
             /**
-             * Sets the stripping result for this recipe.
+             * Adds a secondary output to this recipe.
              *
-             * @param stripped The stripping result to use.
-             */
-            public Builder setStripped(Ingredient stripped) {
-                return setStripped(stripped, 1);
-            }
-
-            /**
-             * Adds a secondary result to this recipe.
-             *
-             * @param secondary The secondary ingredient to add.
-             * @param count     The amount of secondaries required.
+             * @param secondary The secondary output to add.
+             * @param count     The secondary output count to use.
              * @param stripping Whether this should apply during a stripping or during a non-stripping operation.
-             * @return This builder, for chaining.
              */
-            public Builder addSecondary(Ingredient secondary, int count, boolean stripping) {
-                secondaries.add(Pair.of(new IngredientWithCount(secondary, count), stripping));
+            public Builder addSecondaryOutput(Ingredient secondary, int count, boolean stripping) {
+                secondaryOutputs.add(Pair.of(new IngredientWithCount(secondary, count), stripping));
                 return this;
             }
 
             /**
-             * Adds a secondary result to this recipe.
+             * Adds a secondary output to this recipe.
              *
-             * @param secondary The secondary ingredient to add.
+             * @param secondary The secondary output to add.
              * @param stripping Whether this should apply during a stripping or during a non-stripping operation.
-             * @return This builder, for chaining.
              */
-            public Builder addSecondary(Ingredient secondary, boolean stripping) {
-                return addSecondary(secondary, 1, stripping);
+            public Builder addSecondaryOutput(Ingredient secondary, boolean stripping) {
+                return addSecondaryOutput(secondary, 1, stripping);
             }
 
             @Override
             protected void toJson(JsonObject json) {
                 json.addProperty("energy", energy);
                 json.add("input", input.toJson());
-                json.add("result", result.toJson());
+                json.add("result", output.toJson());
                 if (stripped != null) {
                     json.add("stripped", stripped.toJson());
                 }
-                json.add("secondaries", JsonUtil.toList(secondaries, e -> {
+                json.add("secondaries", JsonUtil.toList(secondaryOutputs, e -> {
                     JsonObject o = new JsonObject();
                     o.add("output", e.getFirst().toJson());
                     o.addProperty("stripping", e.getSecond());

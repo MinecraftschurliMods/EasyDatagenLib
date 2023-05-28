@@ -25,9 +25,7 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id    The id to use.
+         * @param id    The recipe id to use.
          * @param input The input item to use.
          */
         public Builder builder(String id, Ingredient input) {
@@ -45,9 +43,7 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
             }
 
             /**
-             * Sets this recipe to skip block placing.
-             *
-             * @return This builder, for chaining.
+             * Sets this recipe's skipBlockPlace property to true.
              */
             public Builder skipBlockPlace() {
                 skipBlockPlace = true;
@@ -57,44 +53,10 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
             /**
              * Adds an output to this recipe.
              *
-             * @param item The result item to use.
-             * @return This builder, for chaining.
-             */
-            public Builder addOutput(Item item) {
-                return addOutput(item, 1);
-            }
-
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item  The result item to use.
-             * @param count The result count to use.
-             * @return This builder, for chaining.
-             */
-            public Builder addOutput(Item item, int count) {
-                return addOutput(item, count, 1);
-            }
-
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item   The result item to use.
-             * @param count  The result count to use.
-             * @param chance The chance that the result stack is returned.
-             * @return This builder, for chaining.
-             */
-            public Builder addOutput(Item item, int count, float chance) {
-                return addOutput(item, count, chance, 1);
-            }
-
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item     The result item to use.
-             * @param count    The result count to use.
-             * @param chance   The chance that the result stack is returned.
+             * @param item     The output item to use.
+             * @param count    The output count to use.
+             * @param chance   The chance that this output will be used.
              * @param maxRange The max range to use.
-             * @return This builder, for chaining.
              */
             public Builder addOutput(Item item, int count, float chance, int maxRange) {
                 return addOutput(itemId(item), count, chance, maxRange);
@@ -103,31 +65,52 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
             /**
              * Adds an output to this recipe.
              *
-             * @param item The result item to use.
-             * @return This builder, for chaining.
+             * @param item   The output item to use.
+             * @param count  The output count to use.
+             * @param chance The chance that this output will be used.
              */
-            public Builder addOutput(ResourceLocation item) {
-                return addOutput(item, 1);
+            public Builder addOutput(Item item, int count, float chance) {
+                return addOutput(item, count, chance, 1);
             }
 
             /**
              * Adds an output to this recipe.
              *
-             * @param item  The result item to use.
-             * @param count The result count to use.
-             * @return This builder, for chaining.
+             * @param item  The output item to use.
+             * @param count The output count to use.
              */
-            public Builder addOutput(ResourceLocation item, int count) {
+            public Builder addOutput(Item item, int count) {
                 return addOutput(item, count, 1);
             }
 
             /**
              * Adds an output to this recipe.
              *
-             * @param item   The result item to use.
-             * @param count  The result count to use.
-             * @param chance The chance that the result stack is returned.
-             * @return This builder, for chaining.
+             * @param item The output item to use.
+             */
+            public Builder addOutput(Item item) {
+                return addOutput(item, 1);
+            }
+
+            /**
+             * Adds an output to this recipe.
+             *
+             * @param item     The output item to use.
+             * @param count    The output count to use.
+             * @param chance   The chance that this output will be used.
+             * @param maxRange The max range to use.
+             */
+            public Builder addOutput(ResourceLocation item, int count, float chance, int maxRange) {
+                output.add(Pair.of(new PotentiallyAbsentItemStack.WithChance(item, count, chance), maxRange)); // doesn't support NBT
+                return this;
+            }
+
+            /**
+             * Adds an output to this recipe.
+             *
+             * @param item   The output item to use.
+             * @param count  The output count to use.
+             * @param chance The chance that this output will be used.
              */
             public Builder addOutput(ResourceLocation item, int count, float chance) {
                 return addOutput(item, count, chance, 1);
@@ -136,15 +119,20 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
             /**
              * Adds an output to this recipe.
              *
-             * @param item     The result item to use.
-             * @param count    The result count to use.
-             * @param chance   The chance that the result stack is returned.
-             * @param maxRange The max range to use.
-             * @return This builder, for chaining.
+             * @param item  The output item to use.
+             * @param count The output count to use.
              */
-            public Builder addOutput(ResourceLocation item, int count, float chance, int maxRange) {
-                output.add(Pair.of(new PotentiallyAbsentItemStack.WithChance(item, count, chance), maxRange)); // doesn't support NBT
-                return this;
+            public Builder addOutput(ResourceLocation item, int count) {
+                return addOutput(item, count, 1);
+            }
+
+            /**
+             * Adds an output to this recipe.
+             *
+             * @param item The output item to use.
+             */
+            public Builder addOutput(ResourceLocation item) {
+                return addOutput(item, 1);
             }
 
             @Override
@@ -166,45 +154,37 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id    The id to use.
-         * @param item  The id of the result item to use.
-         * @param count The result count to use.
+         * @param id    The recipe id to use.
+         * @param item  The id of the output item to use.
+         * @param count The output count to use.
          */
-        public Glyph.Builder builder(String id, ResourceLocation item, int count) {
-            return new Glyph.Builder(new ResourceLocation(namespace, id), item, count);
+        public Builder builder(String id, ResourceLocation item, int count) {
+            return new Builder(new ResourceLocation(namespace, id), item, count);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id   The id to use.
-         * @param item The id of the result item to use.
+         * @param id   The recipe id to use.
+         * @param item The id of the output item to use.
          */
-        public Glyph.Builder builder(String id, ResourceLocation item) {
-            return new Glyph.Builder(new ResourceLocation(namespace, id), item);
+        public Builder builder(String id, ResourceLocation item) {
+            return new Builder(new ResourceLocation(namespace, id), item);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id    The id to use.
-         * @param item  The result item to use.
-         * @param count The result count to use.
+         * @param id    The recipe id to use.
+         * @param item  The output item to use.
+         * @param count The output count to use.
          */
-        public Glyph.Builder builder(String id, Item item, int count) {
-            return new Glyph.Builder(new ResourceLocation(namespace, id), item, count);
+        public Builder builder(String id, Item item, int count) {
+            return new Builder(new ResourceLocation(namespace, id), item, count);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id   The id to use.
-         * @param item The result item to use.
+         * @param id   The recipe id to use.
+         * @param item The output item to use.
          */
-        public Glyph.Builder builder(String id, Item item) {
-            return new Glyph.Builder(new ResourceLocation(namespace, id), item);
+        public Builder builder(String id, Item item) {
+            return new Builder(new ResourceLocation(namespace, id), item);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -230,10 +210,9 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
             }
 
             /**
-             * Sets the experience to use in the recipe.
+             * Sets the amount of experience this recipe awards.
              *
-             * @param experience The experience to use.
-             * @return This builder, for chaining.
+             * @param experience The amount of experience this recipe awards.
              */
             public Builder setExperience(int experience) {
                 this.experience = experience;
@@ -241,13 +220,12 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
             }
 
             /**
-             * Adds an input item to the recipe.
+             * Adds an input ingredient to this recipe.
              *
-             * @param inputItem The input item to add.
-             * @return This builder, for chaining.
+             * @param input The input ingredient to add.
              */
-            public Builder addInputItem(Ingredient inputItem) {
-                inputItems.add(inputItem);
+            public Builder addInput(Ingredient input) {
+                inputItems.add(input);
                 return this;
             }
 
@@ -263,94 +241,85 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
         }
     }
 
-    public static class Imbuement extends ArsNouveauDataProvider<Imbuement.Builder> {
-        public Imbuement(String namespace, DataGenerator generator) {
+    public static class Imbueing extends ArsNouveauDataProvider<Imbueing.Builder> {
+        public Imbueing(String namespace, DataGenerator generator) {
             super("imbuement", namespace, generator);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
+         * @param id     The recipe id to use.
          * @param input  The input item to use.
          * @param output The id of the output item to use.
          * @param count  The output count to use.
-         * @param source The amount of source to use.
+         * @param mana   The amount of mana to use.
          */
-        public Builder builder(String id, Ingredient input, ResourceLocation output, int count, int source) {
-            return new Builder(new ResourceLocation(namespace, id), input, output, count, source);
+        public Builder builder(String id, Ingredient input, ResourceLocation output, int count, int mana) {
+            return new Builder(new ResourceLocation(namespace, id), input, output, count, mana);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
+         * @param id     The recipe id to use.
          * @param input  The input item to use.
          * @param output The id of the output item to use.
-         * @param source The amount of source to use.
+         * @param mana   The amount of mana to use.
          */
-        public Builder builder(String id, Ingredient input, ResourceLocation output, int source) {
-            return new Builder(new ResourceLocation(namespace, id), input, output, source);
+        public Builder builder(String id, Ingredient input, ResourceLocation output, int mana) {
+            return new Builder(new ResourceLocation(namespace, id), input, output, mana);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
+         * @param id     The recipe id to use.
          * @param input  The input item to use.
          * @param output The id of the output item to use.
          * @param count  The output count to use.
-         * @param source The amount of source to use.
+         * @param mana   The amount of mana to use.
          */
-        public Builder builder(String id, Ingredient input, Item output, int count, int source) {
-            return new Builder(new ResourceLocation(namespace, id), input, output, count, source);
+        public Builder builder(String id, Ingredient input, Item output, int count, int mana) {
+            return new Builder(new ResourceLocation(namespace, id), input, output, count, mana);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
+         * @param id     The recipe id to use.
          * @param input  The input item to use.
          * @param output The id of the output item to use.
-         * @param source The amount of source to use.
+         * @param mana   The amount of mana to use.
          */
-        public Builder builder(String id, Ingredient input, Item output, int source) {
-            return new Builder(new ResourceLocation(namespace, id), input, output, source);
+        public Builder builder(String id, Ingredient input, Item output, int mana) {
+            return new Builder(new ResourceLocation(namespace, id), input, output, mana);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
-            private final List<Ingredient> pedestalItems = new ArrayList<>();
+            private final List<Ingredient> secondaryInputs = new ArrayList<>();
             private final Ingredient input;
             private final PotentiallyAbsentItemStack output;
-            private final int source;
+            private final int mana;
 
-            public Builder(ResourceLocation id, Ingredient input, ResourceLocation output, int count, int source) {
+            public Builder(ResourceLocation id, Ingredient input, ResourceLocation output, int count, int mana) {
                 super(id);
                 this.input = input;
                 this.output = new PotentiallyAbsentItemStack(output, count); // doesn't support NBT
-                this.source = source;
+                this.mana = mana;
             }
 
-            public Builder(ResourceLocation id, Ingredient input, ResourceLocation output, int source) {
-                this(id, input, output, 1, source);
+            public Builder(ResourceLocation id, Ingredient input, ResourceLocation output, int mana) {
+                this(id, input, output, 1, mana);
             }
 
-            public Builder(ResourceLocation id, Ingredient input, Item output, int count, int source) {
-                this(id, input, itemId(output), count, source);
+            public Builder(ResourceLocation id, Ingredient input, Item output, int count, int mana) {
+                this(id, input, itemId(output), count, mana);
             }
 
-            public Builder(ResourceLocation id, Ingredient input, Item output, int source) {
-                this(id, input, output, 1, source);
+            public Builder(ResourceLocation id, Ingredient input, Item output, int mana) {
+                this(id, input, output, 1, mana);
             }
 
             /**
-             * Adds a pedestal item to the recipe.
+             * Adds a secondary input to this recipe.
              *
-             * @param pedestalItem The pedestal item to add.
-             * @return This builder, for chaining.
+             * @param secondaryInput The secondary input to add.
              */
-            public Builder addPedestalItem(Ingredient pedestalItem) {
-                pedestalItems.add(pedestalItem);
+            public Builder addSecondaryIngredient(Ingredient secondaryInput) {
+                secondaryInputs.add(secondaryInput);
                 return this;
             }
 
@@ -359,8 +328,8 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
                 json.add("input", input.toJson());
                 json.addProperty("output", output.item.toString());
                 json.addProperty("count", output.count);
-                json.addProperty("source", source);
-                json.add("pedestalItems", JsonUtil.toIngredientList(pedestalItems));
+                json.addProperty("source", mana);
+                json.add("pedestalItems", JsonUtil.toIngredientList(secondaryInputs));
             }
         }
     }

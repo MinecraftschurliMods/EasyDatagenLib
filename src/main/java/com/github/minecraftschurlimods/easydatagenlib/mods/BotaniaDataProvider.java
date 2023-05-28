@@ -17,84 +17,72 @@ public abstract class BotaniaDataProvider<T extends AbstractRecipeBuilder<?>> ex
     }
     //TODO Brew, Elven Trade, Orechid, Orechid Ignem, Petal Apothecary, Pure Daisy, Runic Altar, Terra Plate
 
-    public static class ManaInfusion extends BotaniaDataProvider<ManaInfusion.Builder> {
-        public ManaInfusion(String namespace, DataGenerator generator) {
+    public static class Infusing extends BotaniaDataProvider<Infusing.Builder> {
+        public Infusing(String namespace, DataGenerator generator) {
             super("mana_infusion", namespace, generator);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param mana   The amount of mana this recipe requires.
-         * @param input  The input ingredient of this recipe.
-         * @param output The id of the output item of this recipe.
-         * @param count  The output count of this recipe.
-         * @param tag    The output tag of this recipe.
+         * @param id     The recipe id to use.
+         * @param mana   The amount of mana to use.
+         * @param input  The input ingredient to use.
+         * @param output The id of the output item to use.
+         * @param count  The output count to use.
+         * @param tag    The output tag to use.
          */
         public Builder builder(String id, int mana, Ingredient input, ResourceLocation output, int count, CompoundTag tag) {
             return new Builder(new ResourceLocation(namespace, id), mana, input, output, count, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param mana   The amount of mana this recipe requires.
-         * @param input  The input ingredient of this recipe.
-         * @param output The id of the output item of this recipe.
-         * @param count  The output count of this recipe.
+         * @param id     The recipe id to use.
+         * @param mana   The amount of mana to use.
+         * @param input  The input ingredient to use.
+         * @param output The id of the output item to use.
+         * @param count  The output count to use.
          */
         public Builder builder(String id, int mana, Ingredient input, ResourceLocation output, int count) {
             return new Builder(new ResourceLocation(namespace, id), mana, input, output, count);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param mana   The amount of mana this recipe requires.
-         * @param input  The input ingredient of this recipe.
-         * @param output The id of the output item of this recipe.
+         * @param id     The recipe id to use.
+         * @param mana   The amount of mana to use.
+         * @param input  The input ingredient to use.
+         * @param output The id of the output item to use.
          */
         public Builder builder(String id, int mana, Ingredient input, ResourceLocation output) {
             return new Builder(new ResourceLocation(namespace, id), mana, input, output);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param mana   The amount of mana this recipe requires.
-         * @param input  The input ingredient of this recipe.
-         * @param output The output item of this recipe.
-         * @param count  The output count of this recipe.
-         * @param tag    The output tag of this recipe.
+         * @param id     The recipe id to use.
+         * @param mana   The amount of mana to use.
+         * @param input  The input ingredient to use.
+         * @param output The output item to use.
+         * @param count  The output count to use.
+         * @param tag    The output tag to use.
          */
         public Builder builder(String id, int mana, Ingredient input, Item output, int count, CompoundTag tag) {
             return new Builder(new ResourceLocation(namespace, id), mana, input, output, count, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param mana   The amount of mana this recipe requires.
-         * @param input  The input ingredient of this recipe.
-         * @param output The output item of this recipe.
-         * @param count  The output count of this recipe.
+         * @param id     The recipe id to use.
+         * @param mana   The amount of mana to use.
+         * @param input  The input ingredient to use.
+         * @param output The output item to use.
+         * @param count  The output count to use.
          */
         public Builder builder(String id, int mana, Ingredient input, Item output, int count) {
             return new Builder(new ResourceLocation(namespace, id), mana, input, output, count);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id     The id to use.
-         * @param mana   The amount of mana this recipe requires.
-         * @param input  The input ingredient of this recipe.
-         * @param output The output item of this recipe.
+         * @param id     The recipe id to use.
+         * @param mana   The amount of mana to use.
+         * @param input  The input ingredient to use.
+         * @param output The output item to use.
          */
         public Builder builder(String id, int mana, Ingredient input, Item output) {
             return new Builder(new ResourceLocation(namespace, id), mana, input, output);
@@ -137,8 +125,7 @@ public abstract class BotaniaDataProvider<T extends AbstractRecipeBuilder<?>> ex
             /**
              * Sets the group of this recipe.
              *
-             * @param group The group to set.
-             * @return This builder, for chaining.
+             * @param group The group to use.
              */
             public Builder setGroup(String group) {
                 this.group = group;
@@ -148,8 +135,7 @@ public abstract class BotaniaDataProvider<T extends AbstractRecipeBuilder<?>> ex
             /**
              * Sets the catalyst of this recipe.
              *
-             * @param catalyst The catalyst to set.
-             * @return This builder, for chaining.
+             * @param catalyst The catalyst to use.
              */
             public Builder setCatalyst(ResourceLocation catalyst) {
                 this.catalyst = catalyst;
@@ -159,8 +145,7 @@ public abstract class BotaniaDataProvider<T extends AbstractRecipeBuilder<?>> ex
             /**
              * Sets the catalyst of this recipe.
              *
-             * @param catalyst The catalyst to set.
-             * @return This builder, for chaining.
+             * @param catalyst The catalyst to use.
              */
             public Builder setCatalyst(Block catalyst) {
                 return setCatalyst(blockId(catalyst));

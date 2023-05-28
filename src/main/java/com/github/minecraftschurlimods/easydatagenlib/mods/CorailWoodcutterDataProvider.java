@@ -14,84 +14,76 @@ public abstract class CorailWoodcutterDataProvider<T extends AbstractRecipeBuild
         super(new ResourceLocation("corail_woodcutter", folder), namespace, generator);
     }
 
-    public static class Woodcutting extends CorailWoodcutterDataProvider<Woodcutting.Builder> {
-        public Woodcutting(String namespace, DataGenerator generator) {
+    public static class Sawing extends CorailWoodcutterDataProvider<Sawing.Builder> {
+        public Sawing(String namespace, DataGenerator generator) {
             super("woodcutting", namespace, generator);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The ingredient to use.
-         * @param result     The id of the result item to use.
-         * @param count      The result count to use.
+         * @param id     The recipe id to use.
+         * @param input  The input ingredient to use.
+         * @param output The id of the output item to use.
+         * @param count  The output count to use.
          */
-        public Builder builder(String id, Ingredient ingredient, ResourceLocation result, int count) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, result, count);
+        public Builder builder(String id, Ingredient input, ResourceLocation output, int count) {
+            return new Builder(new ResourceLocation(namespace, id), input, output, count);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The ingredient to use.
-         * @param result     The id of the result item to use.
+         * @param id     The recipe id to use.
+         * @param input  The input ingredient to use.
+         * @param output The id of the output item to use.
          */
-        public Builder builder(String id, Ingredient ingredient, ResourceLocation result) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, result);
+        public Builder builder(String id, Ingredient input, ResourceLocation output) {
+            return new Builder(new ResourceLocation(namespace, id), input, output);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The ingredient to use.
-         * @param result     The result item to use.
-         * @param count      The result count to use.
+         * @param id     The recipe id to use.
+         * @param input  The input ingredient to use.
+         * @param output The output item to use.
+         * @param count  The output count to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Item result, int count) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, result, count);
+        public Builder builder(String id, Ingredient input, Item output, int count) {
+            return new Builder(new ResourceLocation(namespace, id), input, output, count);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The ingredient to use.
-         * @param result     The result item to use.
+         * @param id     The recipe id to use.
+         * @param input  The input ingredient to use.
+         * @param output The output item to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Item result) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, result);
+        public Builder builder(String id, Ingredient input, Item output) {
+            return new Builder(new ResourceLocation(namespace, id), input, output);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
-            private final Ingredient ingredient;
-            private final PotentiallyAbsentItemStack result;
+            private final Ingredient input;
+            private final PotentiallyAbsentItemStack output;
 
-            public Builder(ResourceLocation id, Ingredient ingredient, ResourceLocation result, int count) {
+            public Builder(ResourceLocation id, Ingredient input, ResourceLocation output, int count) {
                 super(id);
-                this.ingredient = ingredient;
-                this.result = new PotentiallyAbsentItemStack(result, count); // doesn't support NBT
+                this.input = input;
+                this.output = new PotentiallyAbsentItemStack(output, count); // doesn't support NBT
             }
 
-            public Builder(ResourceLocation id, Ingredient ingredient, ResourceLocation result) {
-                this(id, ingredient, result, 1);
+            public Builder(ResourceLocation id, Ingredient input, ResourceLocation output) {
+                this(id, input, output, 1);
             }
 
-            public Builder(ResourceLocation id, Ingredient ingredient, Item result, int count) {
-                this(id, ingredient, itemId(result), count);
+            public Builder(ResourceLocation id, Ingredient input, Item output, int count) {
+                this(id, input, itemId(output), count);
             }
 
-            public Builder(ResourceLocation id, Ingredient ingredient, Item result) {
-                this(id, ingredient, result, 1);
+            public Builder(ResourceLocation id, Ingredient input, Item output) {
+                this(id, input, output, 1);
             }
 
             @Override
             protected void toJson(JsonObject json) {
-                json.add("ingredient", ingredient.toJson());
-                json.addProperty("result", result.item.toString());
-                json.addProperty("count", result.count);
+                json.add("ingredient", input.toJson());
+                json.addProperty("result", output.item.toString());
+                json.addProperty("count", output.count);
             }
         }
     }

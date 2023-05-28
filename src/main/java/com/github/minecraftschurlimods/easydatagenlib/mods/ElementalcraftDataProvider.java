@@ -34,84 +34,72 @@ public abstract class ElementalcraftDataProvider<T extends AbstractRecipeBuilder
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id The id to use.
-         * @param input The input ingredient to use.
-         * @param output The id of the result item to use.
-         * @param count The result count to use.
-         * @param tag The result NBT to use.
+         * @param id            The recipe id to use.
+         * @param input         The input ingredient to use.
+         * @param output        The id of the output item to use.
+         * @param count         The output count to use.
+         * @param tag           The output NBT tag to use.
          * @param elementAmount The element amount to use.
-         * @param luckRatio The luck ratio to use.
+         * @param luckRatio     The luck ratio to use.
          */
         public Builder builder(String id, Ingredient input, ResourceLocation output, int count, CompoundTag tag, int elementAmount, int luckRatio) {
             return new Builder(new ResourceLocation(namespace, id), input, output, count, tag, elementAmount, luckRatio);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id The id to use.
-         * @param input The input ingredient to use.
-         * @param output The id of the result item to use.
-         * @param count The result count to use.
+         * @param id            The recipe id to use.
+         * @param input         The input ingredient to use.
+         * @param output        The id of the output item to use.
+         * @param count         The output count to use.
          * @param elementAmount The element amount to use.
-         * @param luckRatio The luck ratio to use.
+         * @param luckRatio     The luck ratio to use.
          */
         public Builder builder(String id, Ingredient input, ResourceLocation output, int count, int elementAmount, int luckRatio) {
             return new Builder(new ResourceLocation(namespace, id), input, output, count, new CompoundTag(), elementAmount, luckRatio);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id The id to use.
-         * @param input The input ingredient to use.
-         * @param output The id of the result item to use.
+         * @param id            The recipe id to use.
+         * @param input         The input ingredient to use.
+         * @param output        The id of the output item to use.
          * @param elementAmount The element amount to use.
-         * @param luckRatio The luck ratio to use.
+         * @param luckRatio     The luck ratio to use.
          */
         public Builder builder(String id, Ingredient input, ResourceLocation output, int elementAmount, int luckRatio) {
             return new Builder(new ResourceLocation(namespace, id), input, output, 1, elementAmount, luckRatio);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id The id to use.
-         * @param input The input ingredient to use.
-         * @param output The result item to use.
-         * @param count The result count to use.
-         * @param tag The result NBT to use.
+         * @param id            The recipe id to use.
+         * @param input         The input ingredient to use.
+         * @param output        The output item to use.
+         * @param count         The output count to use.
+         * @param tag           The output NBT tag to use.
          * @param elementAmount The element amount to use.
-         * @param luckRatio The luck ratio to use.
+         * @param luckRatio     The luck ratio to use.
          */
         public Builder builder(String id, Ingredient input, Item output, int count, CompoundTag tag, int elementAmount, int luckRatio) {
             return new Builder(new ResourceLocation(namespace, id), input, itemId(output), count, tag, elementAmount, luckRatio);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id The id to use.
-         * @param input The input ingredient to use.
-         * @param output The result item to use.
-         * @param count The result count to use.
+         * @param id            The recipe id to use.
+         * @param input         The input ingredient to use.
+         * @param output        The output item to use.
+         * @param count         The output count to use.
          * @param elementAmount The element amount to use.
-         * @param luckRatio The luck ratio to use.
+         * @param luckRatio     The luck ratio to use.
          */
         public Builder builder(String id, Ingredient input, Item output, int count, int elementAmount, int luckRatio) {
             return new Builder(new ResourceLocation(namespace, id), input, output, count, new CompoundTag(), elementAmount, luckRatio);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id The id to use.
-         * @param input The input ingredient to use.
-         * @param output The result item to use.
+         * @param id            The recipe id to use.
+         * @param input         The input ingredient to use.
+         * @param output        The output item to use.
          * @param elementAmount The element amount to use.
-         * @param luckRatio The luck ratio to use.
+         * @param luckRatio     The luck ratio to use.
          */
         public Builder builder(String id, Ingredient input, Item output, int elementAmount, int luckRatio) {
             return new Builder(new ResourceLocation(namespace, id), input, output, 1, elementAmount, luckRatio);

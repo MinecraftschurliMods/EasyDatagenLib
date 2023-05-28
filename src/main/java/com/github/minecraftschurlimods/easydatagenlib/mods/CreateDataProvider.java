@@ -83,66 +83,54 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id    The id to use.
-         * @param item  The id of the result item to use.
-         * @param count The result count to use.
-         * @param tag   The result NBT to use.
+         * @param id    The recipe id to use.
+         * @param item  The id of the output item to use.
+         * @param count The output count to use.
+         * @param tag   The output NBT tag to use.
          */
         public Builder builder(String id, ResourceLocation item, int count, CompoundTag tag) {
             return new Builder(new ResourceLocation(namespace, id), item, count, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id    The id to use.
-         * @param item  The id of the result item to use.
-         * @param count The result count to use.
+         * @param id    The recipe id to use.
+         * @param item  The id of the output item to use.
+         * @param count The output count to use.
          */
         public Builder builder(String id, ResourceLocation item, int count) {
             return new Builder(new ResourceLocation(namespace, id), item, count);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id   The id to use.
-         * @param item The id of the result item to use.
+         * @param id   The recipe id to use.
+         * @param item The id of the output item to use.
          */
         public Builder builder(String id, ResourceLocation item) {
             return new Builder(new ResourceLocation(namespace, id), item);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id    The id to use.
-         * @param item  The result item to use.
-         * @param count The result count to use.
-         * @param tag   The result NBT to use.
+         * @param id    The recipe id to use.
+         * @param item  The output item to use.
+         * @param count The output count to use.
+         * @param tag   The output NBT tag to use.
          */
         public Builder builder(String id, Item item, int count, CompoundTag tag) {
             return new Builder(new ResourceLocation(namespace, id), item, count, tag);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id    The id to use.
-         * @param item  The result item to use.
-         * @param count The result count to use.
+         * @param id    The recipe id to use.
+         * @param item  The output item to use.
+         * @param count The output count to use.
          */
         public Builder builder(String id, Item item, int count) {
             return new Builder(new ResourceLocation(namespace, id), item, count);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id   The id to use.
-         * @param item The result item to use.
+         * @param id   The recipe id to use.
+         * @param item The output item to use.
          */
         public Builder builder(String id, Item item) {
             return new Builder(new ResourceLocation(namespace, id), item);
@@ -151,12 +139,12 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
         public static class Builder extends AbstractRecipeBuilder<Builder> {
             private final List<String> pattern = new ArrayList<>();
             private final Map<Character, Ingredient> key = new HashMap<>();
-            private final PotentiallyAbsentItemStack result;
+            private final PotentiallyAbsentItemStack output;
             private boolean acceptMirrored = true;
 
             public Builder(ResourceLocation id, ResourceLocation item, int count, CompoundTag tag) {
                 super(id);
-                result = new PotentiallyAbsentItemStack(item, count, tag);
+                output = new PotentiallyAbsentItemStack(item, count, tag);
             }
 
             public Builder(ResourceLocation id, ResourceLocation item, int count) {
@@ -180,9 +168,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             }
 
             /**
-             * Sets this recipe to not accept mirrored inputs.
-             *
-             * @return This builder, for chaining.
+             * Sets this recipe's acceptMirrored property to false.
              */
             public Builder dontAcceptMirrored() {
                 acceptMirrored = false;
@@ -193,7 +179,6 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
              * Adds a pattern line to this recipe.
              *
              * @param pattern The pattern line to add.
-             * @return This builder, for chaining.
              */
             public Builder pattern(String pattern) {
                 this.pattern.add(pattern);
@@ -204,8 +189,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
              * Adds a key to this recipe.
              *
              * @param key   The key to add.
-             * @param value The value associated with the key.
-             * @return This builder, for chaining.
+             * @param value The value to associate with the key.
              */
             public Builder key(char key, Ingredient value) {
                 this.key.put(key, value);
@@ -221,7 +205,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
                     json.add(String.valueOf(s.getKey()), s.getValue().toJson());
                 }
                 json.add("key", key);
-                json.add("result", result.toJson());
+                json.add("result", output.toJson());
                 json.addProperty("acceptMirrored", acceptMirrored);
             }
 
@@ -273,49 +257,44 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id               The id to use.
-         * @param ingredient       The ingredient to use.
+         * @param id               The recipe id to use.
+         * @param input            The input ingredient to use.
          * @param transitionalItem The id of the transitional item to use.
          */
-        public Builder builder(String id, Ingredient ingredient, ResourceLocation transitionalItem) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, transitionalItem);
+        public Builder builder(String id, Ingredient input, ResourceLocation transitionalItem) {
+            return new Builder(new ResourceLocation(namespace, id), input, transitionalItem);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id               The id to use.
-         * @param ingredient       The ingredient to use.
+         * @param id               The recipe id to use.
+         * @param input            The input ingredient to use.
          * @param transitionalItem The transitional item to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Item transitionalItem) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, transitionalItem);
+        public Builder builder(String id, Ingredient input, Item transitionalItem) {
+            return new Builder(new ResourceLocation(namespace, id), input, transitionalItem);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
             private final List<Processing.Builder> sequence = new ArrayList<>();
-            private final List<Pair<PotentiallyAbsentItemStack, Float>> results = new ArrayList<>();
-            private final Ingredient ingredient;
+            private final List<Pair<PotentiallyAbsentItemStack, Float>> outputs = new ArrayList<>();
+            private final Ingredient input;
             private final PotentiallyAbsentItemStack transitionalItem;
             private int loops = 1;
 
-            public Builder(ResourceLocation id, Ingredient ingredient, ResourceLocation transitionalItem) {
+            public Builder(ResourceLocation id, Ingredient input, ResourceLocation transitionalItem) {
                 super(id);
-                this.ingredient = ingredient;
+                this.input = input;
                 this.transitionalItem = new PotentiallyAbsentItemStack(transitionalItem);
             }
 
-            public Builder(ResourceLocation id, Ingredient ingredient, Item transitionalItem) {
-                this(id, ingredient, itemId(transitionalItem));
+            public Builder(ResourceLocation id, Ingredient input, Item transitionalItem) {
+                this(id, input, itemId(transitionalItem));
             }
 
             /**
-             * Sets the amount of loops this recipe will take. Must not be less than 1.
+             * Sets the amount of loops of this recipe.
              *
              * @param loops The amount of loops to use.
-             * @return This builder, for chaining.
              */
             public Builder setLoops(int loops) {
                 if (loops < 1)
@@ -328,7 +307,6 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
              * Adds a processing step to this recipe.
              *
              * @param processing The processing step to add.
-             * @return This builder, for chaining.
              */
             public Builder addProcessing(Processing.Builder processing) {
                 sequence.add(processing);
@@ -336,31 +314,29 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             }
 
             /**
-             * Adds a result to this recipe.
+             * Adds an output to this recipe.
              *
-             * @param result The result item to use.
-             * @param weight The weight of this output. Only one result item will be the actual output, the weight determines the chance of this happening, compared to other results.
-             * @return This builder, for chaining.
+             * @param output The output item to use.
+             * @param weight The weight of this output.
              */
-            public Builder addResult(Item result, float weight) {
-                return addResult(itemId(result), weight);
+            public Builder addOutput(Item output, float weight) {
+                return addOutput(itemId(output), weight);
             }
 
             /**
-             * Adds a result to this recipe.
+             * Adds an output to this recipe.
              *
-             * @param result The id of the result item to use.
-             * @param weight The weight of this output. Only one result item will be the actual output, the weight determines the chance of this happening, compared to other results.
-             * @return This builder, for chaining.
+             * @param output The id of the output item to use.
+             * @param weight The weight of this output.
              */
-            public Builder addResult(ResourceLocation result, float weight) {
-                results.add(new Pair<>(new PotentiallyAbsentItemStack(result), weight));
+            public Builder addOutput(ResourceLocation output, float weight) {
+                outputs.add(new Pair<>(new PotentiallyAbsentItemStack(output), weight));
                 return this;
             }
 
             @Override
             protected void toJson(JsonObject json) {
-                json.add("ingredient", ingredient.toJson());
+                json.add("ingredient", input.toJson());
                 json.add("transitionalItem", transitionalItem.toJson());
                 json.addProperty("loops", loops);
                 json.add("sequence", JsonUtil.toList(sequence, e -> {
@@ -368,7 +344,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
                     e.toJson(o);
                     return o;
                 }));
-                json.add("results", JsonUtil.toList(results, e -> {
+                json.add("results", JsonUtil.toList(outputs, e -> {
                     JsonObject o = new JsonObject();
                     o.addProperty("item", e.getFirst().item.toString());
                     o.addProperty("chance", e.getSecond());
@@ -384,47 +360,35 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
         }
     }
 
+    /**
+     * Note: Not all recipes can actually handle all information. However, Create's recipe specification allows everything to be specified for all recipes.
+     * {@see https://github.com/Creators-of-Create/Create/blob/mc1.18/dev/src/main/java/com/simibubi/create/content/contraptions/processing/ProcessingRecipeBuilder.java}
+     */
     protected static abstract class Processing extends CreateDataProvider<Processing.Builder> {
         protected Processing(String folder, String namespace, DataGenerator generator) {
             super(folder, namespace, generator);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id             The id of the recipe.
-         * @param processingTime The processing time of the recipe.
+         * @param id       The id of this recipe.
+         * @param duration The duration of this recipe.
          */
-        public Builder builder(String id, int processingTime) {
-            return new Builder(new ResourceLocation(namespace, id), processingTime);
+        public Builder builder(String id, int duration) {
+            return new Builder(new ResourceLocation(namespace, id), duration);
         }
 
-        /**
-         * Note: Not all recipes can actually handle all the information. For example, crushing recipes will simply ignore anything fluid-related.
-         * However, Create's recipe specification allows everything to be specified for all recipes. Depending on the point of view, this is for the better or worse.
-         * {@see https://github.com/Creators-of-Create/Create/blob/mc1.18/dev/src/main/java/com/simibubi/create/content/contraptions/processing/ProcessingRecipeBuilder.java}
-         */
         public static class Builder extends AbstractRecipeBuilder<Builder> {
-            private final List<Ingredient> ingredients = new ArrayList<>();
-            private final List<FluidIngredient> fluidIngredients = new ArrayList<>();
-            private final List<PotentiallyAbsentItemStack> results = new ArrayList<>();
-            private final List<PotentiallyAbsentFluidStack> fluidResults = new ArrayList<>();
-            private final int processingTime;
-            private boolean keepHeldItem;
+            private final List<Ingredient> inputs = new ArrayList<>();
+            private final List<FluidIngredient> fluidInputs = new ArrayList<>();
+            private final List<PotentiallyAbsentItemStack> outputs = new ArrayList<>();
+            private final List<PotentiallyAbsentFluidStack> fluidOutputs = new ArrayList<>();
+            private final int duration;
+            private boolean keepHeldItem = false;
             private HeatRequirement heatRequirement = HeatRequirement.NONE;
 
-            public Builder(ResourceLocation id, int processingTime) {
+            public Builder(ResourceLocation id, int duration) {
                 super(id);
-                this.processingTime = processingTime;
-            }
-
-            /**
-             * Sets the heat requirement of the recipe.
-             *
-             * @param heatRequirement The heat requirement to set.
-             */
-            public void setHeatRequirement(HeatRequirement heatRequirement) {
-                this.heatRequirement = heatRequirement;
+                this.duration = duration;
             }
 
             /**
@@ -435,218 +399,209 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             }
 
             /**
-             * Adds an ingredient to the recipe.
+             * Sets the heat requirement of this recipe.
              *
-             * @param ingredient The ingredient to set.
-             * @return This builder, for chaining.
+             * @param heatRequirement The heat requirement to use.
              */
-            public Builder addIngredient(Ingredient ingredient) {
-                ingredients.add(ingredient);
+            public void setHeatRequirement(HeatRequirement heatRequirement) {
+                this.heatRequirement = heatRequirement;
+            }
+
+            /**
+             * Adds an input ingredient to this recipe.
+             *
+             * @param input The input ingredient to add.
+             */
+            public Builder addInput(Ingredient input) {
+                inputs.add(input);
                 return this;
             }
 
             /**
-             * Adds an ingredient to the recipe.
+             * Adds an input fluid ingredient to this recipe.
              *
-             * @param ingredient The ingredient to set.
-             * @return This builder, for chaining.
+             * @param input The input fluid ingredient to add.
              */
-            public Builder addIngredient(FluidIngredient ingredient) {
-                fluidIngredients.add(ingredient);
+            public Builder addInput(FluidIngredient input) {
+                fluidInputs.add(input);
                 return this;
             }
 
             /**
-             * Adds a result to the recipe.
+             * Adds an output to this recipe.
              *
-             * @param item   The result item to use.
-             * @param count  The result count to use.
-             * @param chance The chance that the result stack is returned.
-             * @return This builder, for chaining.
+             * @param item   The output item to use.
+             * @param count  The output count to use.
+             * @param chance The chance that this output will be used.
              */
-            public Builder addResult(ResourceLocation item, int count, float chance) {
-                results.add(new PotentiallyAbsentItemStack.WithChance(item, count, chance));
+            public Builder addOutput(ResourceLocation item, int count, float chance) {
+                outputs.add(new PotentiallyAbsentItemStack.WithChance(item, count, chance));
                 return this;
             }
 
             /**
-             * Adds a result to the recipe.
+             * Adds an output to this recipe.
              *
-             * @param item  The result item to use.
-             * @param count The result count to use.
-             * @return This builder, for chaining.
+             * @param item  The output item to use.
+             * @param count The output count to use.
              */
-            public Builder addResult(ResourceLocation item, int count) {
-                return addResult(item, count, 1);
+            public Builder addOutput(ResourceLocation item, int count) {
+                return addOutput(item, count, 1);
             }
 
             /**
-             * Adds a result to the recipe.
+             * Adds an output to this recipe.
              *
-             * @param item   The result item to use.
-             * @param chance The chance that the result stack is returned.
-             * @return This builder, for chaining.
+             * @param item   The output item to use.
+             * @param chance The chance that this output will be used.
              */
-            public Builder addResult(ResourceLocation item, float chance) {
-                return addResult(item, 1, chance);
+            public Builder addOutput(ResourceLocation item, float chance) {
+                return addOutput(item, 1, chance);
             }
 
             /**
-             * Adds a result to the recipe.
+             * Adds an output to this recipe.
              *
-             * @param item The result item to use.
-             * @return This builder, for chaining.
+             * @param item The output item to use.
              */
-            public Builder addResult(ResourceLocation item) {
-                return addResult(item, 1, 1);
+            public Builder addOutput(ResourceLocation item) {
+                return addOutput(item, 1, 1);
             }
 
             /**
-             * Adds a result to the recipe.
+             * Adds an output to this recipe.
              *
-             * @param item   The result item to use.
-             * @param count  The result count to use.
-             * @param chance The chance that the result stack is returned.
-             * @return This builder, for chaining.
+             * @param item   The output item to use.
+             * @param count  The output count to use.
+             * @param chance The chance that this output will be used.
              */
-            public Builder addResult(Item item, int count, float chance) {
-                return addResult(itemId(item), count, chance);
+            public Builder addOutput(Item item, int count, float chance) {
+                return addOutput(itemId(item), count, chance);
             }
 
             /**
-             * Adds a result to the recipe.
+             * Adds an output to this recipe.
              *
-             * @param item  The result item to use.
-             * @param count The result count to use.
-             * @return This builder, for chaining.
+             * @param item  The output item to use.
+             * @param count The output count to use.
              */
-            public Builder addResult(Item item, int count) {
-                return addResult(item, count, 1);
+            public Builder addOutput(Item item, int count) {
+                return addOutput(item, count, 1);
             }
 
             /**
-             * Adds a result to the recipe.
+             * Adds an output to this recipe.
              *
-             * @param item   The result item to use.
-             * @param chance The chance that the result stack is returned.
-             * @return This builder, for chaining.
+             * @param item   The output item to use.
+             * @param chance The chance that this output will be used.
              */
-            public Builder addResult(Item item, float chance) {
-                return addResult(item, 1, chance);
+            public Builder addOutput(Item item, float chance) {
+                return addOutput(item, 1, chance);
             }
 
             /**
-             * Adds a result to the recipe.
+             * Adds an output to this recipe.
              *
-             * @param item The result item to use.
-             * @return This builder, for chaining.
+             * @param item The output item to use.
              */
-            public Builder addResult(Item item) {
-                return addResult(item, 1, 1);
+            public Builder addOutput(Item item) {
+                return addOutput(item, 1, 1);
             }
 
             /**
-             * Adds a result to the recipe.
+             * Adds an output to this recipe.
              *
-             * @param fluid  The result fluid.
-             * @param count  The result count.
-             * @param chance The chance that the result stack is returned.
-             * @return This builder, for chaining.
+             * @param fluid  The output fluid.
+             * @param count  The output count.
+             * @param chance The chance that this output will be used.
              */
-            public Builder addFluidResult(ResourceLocation fluid, int count, float chance) {
-                fluidResults.add(new PotentiallyAbsentFluidStack.WithChance(fluid, count, chance));
+            public Builder addOutputFluid(ResourceLocation fluid, int count, float chance) {
+                fluidOutputs.add(new PotentiallyAbsentFluidStack.WithChance(fluid, count, chance));
                 return this;
             }
 
             /**
-             * Adds a result to the recipe.
+             * Adds an output to this recipe.
              *
-             * @param fluid The result fluid.
-             * @param count The result count.
-             * @return This builder, for chaining.
+             * @param fluid The output fluid.
+             * @param count The output count.
              */
-            public Builder addFluidResult(ResourceLocation fluid, int count) {
-                return addFluidResult(fluid, count, 1);
+            public Builder addOutputFluid(ResourceLocation fluid, int count) {
+                return addOutputFluid(fluid, count, 1);
             }
 
             /**
-             * Adds a result to the recipe.
+             * Adds an output to this recipe.
              *
-             * @param fluid  The result fluid.
-             * @param chance The chance that the result stack is returned.
-             * @return This builder, for chaining.
+             * @param fluid  The output fluid.
+             * @param chance The chance that this output will be used.
              */
-            public Builder addFluidResult(ResourceLocation fluid, float chance) {
-                return addFluidResult(fluid, 1, chance);
+            public Builder addOutputFluid(ResourceLocation fluid, float chance) {
+                return addOutputFluid(fluid, 1, chance);
             }
 
             /**
-             * Adds a result to the recipe.
+             * Adds an output to this recipe.
              *
-             * @param fluid The result fluid.
-             * @return This builder, for chaining.
+             * @param fluid The output fluid.
              */
-            public Builder addFluidResult(ResourceLocation fluid) {
-                return addFluidResult(fluid, 1, 1);
+            public Builder addOutputFluid(ResourceLocation fluid) {
+                return addOutputFluid(fluid, 1, 1);
             }
 
             /**
-             * Adds a result to the recipe.
+             * Adds an output to this recipe.
              *
-             * @param fluid  The result fluid.
-             * @param count  The result count.
-             * @param chance The chance that the result stack is returned.
-             * @return This builder, for chaining.
+             * @param fluid  The output fluid.
+             * @param count  The output count.
+             * @param chance The chance that this output will be used.
              */
-            public Builder addFluidResult(Fluid fluid, int count, float chance) {
-                return addFluidResult(fluidId(fluid), count, chance);
+            public Builder addOutputFluid(Fluid fluid, int count, float chance) {
+                return addOutputFluid(fluidId(fluid), count, chance);
             }
 
             /**
-             * Adds a result to the recipe.
+             * Adds an output to this recipe.
              *
-             * @param fluid The result fluid.
-             * @param count The result count.
-             * @return This builder, for chaining.
+             * @param fluid The output fluid.
+             * @param count The output count.
              */
-            public Builder addFluidResult(Fluid fluid, int count) {
-                return addFluidResult(fluid, count, 1);
+            public Builder addOutputFluid(Fluid fluid, int count) {
+                return addOutputFluid(fluid, count, 1);
             }
 
             /**
-             * Adds a result to the recipe.
+             * Adds an output to this recipe.
              *
-             * @param fluid  The result fluid.
-             * @param chance The chance that the result stack is returned.
-             * @return This builder, for chaining.
+             * @param fluid  The output fluid.
+             * @param chance The chance that this output will be used.
              */
-            public Builder addFluidResult(Fluid fluid, float chance) {
-                return addFluidResult(fluid, 1, chance);
+            public Builder addOutputFluid(Fluid fluid, float chance) {
+                return addOutputFluid(fluid, 1, chance);
             }
 
             /**
-             * Adds a result to the recipe.
+             * Adds an output to this recipe.
              *
-             * @param fluid The result fluid.
-             * @return This builder, for chaining.
+             * @param fluid The output fluid.
              */
-            public Builder addFluidResult(Fluid fluid) {
-                return addFluidResult(fluid, 1, 1);
+            public Builder addOutputFluid(Fluid fluid) {
+                return addOutputFluid(fluid, 1, 1);
             }
 
             @Override
             protected void toJson(JsonObject json) {
-                if (processingTime <= 0)
+                if (duration <= 0)
                     throw new SerializationException("This recipe needs a duration of at least 1!");
-                json.addProperty("processingTime", processingTime);
+                json.addProperty("processingTime", duration);
                 if (keepHeldItem) {
                     json.addProperty("keepHeldItem", true);
                 }
                 if (heatRequirement != HeatRequirement.NONE) {
                     json.addProperty("heatRequirement", heatRequirement.toString());
                 }
-                json.add("ingredients", JsonUtil.mergeArrays(JsonUtil.toIngredientList(ingredients), JsonUtil.toList(fluidIngredients)));
-                json.add("results", JsonUtil.mergeArrays(JsonUtil.toList(results), JsonUtil.toList(fluidResults)));
+                json.add("ingredients", JsonUtil.mergeArrays(JsonUtil.toIngredientList(inputs), JsonUtil.toList(fluidInputs)));
+                json.add("results", JsonUtil.mergeArrays(JsonUtil.toList(outputs), JsonUtil.toList(fluidOutputs)));
             }
         }
     }

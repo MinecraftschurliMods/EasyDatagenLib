@@ -27,35 +27,32 @@ public abstract class BotanyPotsDataProvider<T extends AbstractRecipeBuilder<?>>
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id          The id to use.
-         * @param seed        The seed ingredient to use.
-         * @param growthTicks The time this recipe takes to complete.
+         * @param id       The recipe id to use.
+         * @param input    The input ingredient to use.
+         * @param duration The duration to use.
          */
-        public Builder builder(String id, Ingredient seed, int growthTicks) {
-            return new Builder(new ResourceLocation(namespace, id), seed, growthTicks);
+        public Builder builder(String id, Ingredient input, int duration) {
+            return new Builder(new ResourceLocation(namespace, id), input, duration);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
             private final List<String> categories = new ArrayList<>();
-            private final List<HarvestEntry> drops = new ArrayList<>();
             private final List<DisplayState> display = new ArrayList<>();
-            private final Ingredient seed;
-            private final int growthTicks;
+            private final List<HarvestEntry> outputs = new ArrayList<>();
+            private final Ingredient input;
+            private final int duration;
             private int lightLevel = 0;
 
-            public Builder(ResourceLocation id, Ingredient seed, int growthTicks) {
+            public Builder(ResourceLocation id, Ingredient input, int duration) {
                 super(id);
-                this.seed = seed;
-                this.growthTicks = growthTicks;
+                this.input = input;
+                this.duration = duration;
             }
 
             /**
-             * Sets the crop's light level.
+             * Sets the light level of this recipe.
              *
-             * @param lightLevel The light level to set.
-             * @return This builder, for chaining.
+             * @param lightLevel The light level to use.
              */
             public Builder setLightLevel(int lightLevel) {
                 this.lightLevel = Mth.clamp(lightLevel, 0, 15);
@@ -63,10 +60,9 @@ public abstract class BotanyPotsDataProvider<T extends AbstractRecipeBuilder<?>>
             }
 
             /**
-             * Adds a soil category to the recipe.
+             * Adds a category to this recipe.
              *
-             * @param category The soil category to add.
-             * @return This builder, for chaining.
+             * @param category The category to add.
              */
             public Builder addCategory(String category) {
                 categories.add(category);
@@ -74,119 +70,110 @@ public abstract class BotanyPotsDataProvider<T extends AbstractRecipeBuilder<?>>
             }
 
             /**
-             * Adds a drop to the recipe.
+             * Adds a display state to this recipe.
              *
-             * @param drop     The id of the drop item to add.
-             * @param chance   The chance of this drop to occur.
-             * @param minRolls The min rolls of this drop.
-             * @param maxRolls The max rolls of this drop.
-             * @return This builder, for chaining.
-             */
-            public Builder addDrop(ResourceLocation drop, float chance, int minRolls, int maxRolls) {
-                drops.add(new HarvestEntry(drop, chance, minRolls, maxRolls));
-                return this;
-            }
-
-            /**
-             * Adds a drop to the recipe.
-             *
-             * @param drop     The drop item to add.
-             * @param chance   The chance of this drop to occur.
-             * @param minRolls The min rolls of this drop.
-             * @param maxRolls The max rolls of this drop.
-             * @return This builder, for chaining.
-             */
-            public Builder addDrop(Item drop, float chance, int minRolls, int maxRolls) {
-                return addDrop(itemId(drop), chance, minRolls, maxRolls);
-            }
-
-            /**
-             * Adds a drop to the recipe.
-             *
-             * @param drop     The id of the drop item to add.
-             * @param minRolls The min rolls of this drop.
-             * @param maxRolls The max rolls of this drop.
-             * @return This builder, for chaining.
-             */
-            public Builder addDrop(ResourceLocation drop, int minRolls, int maxRolls) {
-                return addDrop(drop, 1, minRolls, maxRolls);
-            }
-
-            /**
-             * Adds a drop to the recipe.
-             *
-             * @param drop     The drop item to add.
-             * @param minRolls The min rolls of this drop.
-             * @param maxRolls The max rolls of this drop.
-             * @return This builder, for chaining.
-             */
-            public Builder addDrop(Item drop, int minRolls, int maxRolls) {
-                return addDrop(drop, 1, minRolls, maxRolls);
-            }
-
-            /**
-             * Adds a drop to the recipe.
-             *
-             * @param drop The id of the drop item to add.
-             * @param chance   The chance of this drop to occur.
-             * @return This builder, for chaining.
-             */
-            public Builder addDrop(ResourceLocation drop, float chance) {
-                return addDrop(drop, chance, 1, 1);
-            }
-
-            /**
-             * Adds a drop to the recipe.
-             *
-             * @param drop The drop item to add.
-             * @param chance   The chance of this drop to occur.
-             * @return This builder, for chaining.
-             */
-            public Builder addDrop(Item drop, float chance) {
-                return addDrop(drop, chance, 1, 1);
-            }
-
-            /**
-             * Adds a drop to the recipe.
-             *
-             * @param drop The id of the drop item to add.
-             * @return This builder, for chaining.
-             */
-            public Builder addDrop(ResourceLocation drop) {
-                return addDrop(drop, 1);
-            }
-
-            /**
-             * Adds a drop to the recipe.
-             *
-             * @param drop The drop item to add.
-             * @return This builder, for chaining.
-             */
-            public Builder addDrop(Item drop) {
-                return addDrop(drop, 1);
-            }
-
-            /**
-             * Adds a {@link DisplayState} to the recipe.
-             *
-             * @param display The {@link DisplayState} to add.
-             * @return This builder, for chaining.
+             * @param display The display state to add.
              */
             public Builder addDisplay(DisplayState display) {
                 this.display.add(display);
                 return this;
             }
 
+            /**
+             * Adds an output to this recipe.
+             *
+             * @param output   The id of the output item to add.
+             * @param chance The chance that this output will be used.
+             * @param minRolls The min rolls of this output.
+             * @param maxRolls The max rolls of this output.
+             */
+            public Builder addOutput(ResourceLocation output, float chance, int minRolls, int maxRolls) {
+                outputs.add(new HarvestEntry(output, chance, minRolls, maxRolls));
+                return this;
+            }
+
+            /**
+             * Adds an output to this recipe.
+             *
+             * @param output   The id of the output item to add.
+             * @param minRolls The min rolls of this output.
+             * @param maxRolls The max rolls of this output.
+             */
+            public Builder addOutput(ResourceLocation output, int minRolls, int maxRolls) {
+                return addOutput(output, 1, minRolls, maxRolls);
+            }
+
+            /**
+             * Adds an output to this recipe.
+             *
+             * @param output The id of the output item to add.
+             * @param chance The chance of this output to occur.
+             */
+            public Builder addOutput(ResourceLocation output, float chance) {
+                return addOutput(output, chance, 1, 1);
+            }
+
+            /**
+             * Adds an output to this recipe.
+             *
+             * @param output The id of the output item to add.
+             */
+            public Builder addOutput(ResourceLocation output) {
+                return addOutput(output, 1);
+            }
+
+            /**
+             * Adds an output to this recipe.
+             *
+             * @param output   The output item to add.
+             * @param chance The chance that this output will be used.
+             * @param minRolls The min rolls of this output.
+             * @param maxRolls The max rolls of this output.
+             */
+            public Builder addOutput(Item output, float chance, int minRolls, int maxRolls) {
+                return addOutput(itemId(output), chance, minRolls, maxRolls);
+            }
+
+            /**
+             * Adds an output to this recipe.
+             *
+             * @param output   The output item to add.
+             * @param minRolls The min rolls of this output.
+             * @param maxRolls The max rolls of this output.
+             */
+            public Builder addOutput(Item output, int minRolls, int maxRolls) {
+                return addOutput(output, 1, minRolls, maxRolls);
+            }
+
+            /**
+             * Adds an output to this recipe.
+             *
+             * @param output The output item to add.
+             * @param chance The chance of this output to occur.
+             */
+            public Builder addOutput(Item output, float chance) {
+                return addOutput(output, chance, 1, 1);
+            }
+
+            /**
+             * Adds an output to this recipe.
+             *
+             * @param output The output item to add.
+             */
+            public Builder addOutput(Item output) {
+                return addOutput(output, 1);
+            }
+
             @Override
             protected void toJson(JsonObject json) {
-                json.add("seed", seed.toJson());
-                json.addProperty("growthTicks", growthTicks);
+                json.add("seed", input.toJson());
+                json.addProperty("growthTicks", duration);
                 json.add("display", JsonUtil.singleOrArray(JsonUtil.toList(display)));
                 if (lightLevel != 0) {
                     json.addProperty("lightLevel", lightLevel);
                 }
                 json.add("categories", JsonUtil.toStringList(categories));
-                json.add("drops", JsonUtil.toList(drops));
+                json.add("drops", JsonUtil.toList(outputs));
             }
         }
     }
@@ -197,9 +184,7 @@ public abstract class BotanyPotsDataProvider<T extends AbstractRecipeBuilder<?>>
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id      The id to use.
+         * @param id      The recipe id to use.
          * @param input   The input ingredient to use.
          * @param display The {@link DisplayState} to use.
          */
@@ -221,10 +206,9 @@ public abstract class BotanyPotsDataProvider<T extends AbstractRecipeBuilder<?>>
             }
 
             /**
-             * Sets the soil's growth modifier.
+             * Sets the growth modifier of this recipe.
              *
-             * @param growthModifier The growth modifier to set.
-             * @return This builder, for chaining.
+             * @param growthModifier The growth modifier to use.
              */
             public Builder setGrowthModifier(float growthModifier) {
                 this.growthModifier = growthModifier;
@@ -232,10 +216,9 @@ public abstract class BotanyPotsDataProvider<T extends AbstractRecipeBuilder<?>>
             }
 
             /**
-             * Sets the soil's light level.
+             * Sets the light level of this recipe.
              *
-             * @param lightLevel The light level to set.
-             * @return This builder, for chaining.
+             * @param lightLevel The light level to use.
              */
             public Builder setLightLevel(int lightLevel) {
                 this.lightLevel = Mth.clamp(lightLevel, 0, 15);
@@ -243,10 +226,9 @@ public abstract class BotanyPotsDataProvider<T extends AbstractRecipeBuilder<?>>
             }
 
             /**
-             * Adds a soil category to the soil.
+             * Adds a category to this recipe.
              *
-             * @param category The soil category to add.
-             * @return This builder, for chaining.
+             * @param category The category to add.
              */
             public Builder addCategory(String category) {
                 categories.add(category);

@@ -19,63 +19,57 @@ public abstract class OccultismDataProvider<T extends AbstractRecipeBuilder<?>> 
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The input ingredient to use.
-         * @param result     The result ingredient to use.
-         * @param count      The result count to use.
+         * @param id     The recipe id to use.
+         * @param input  The input ingredient to use.
+         * @param output The output ingredient to use.
+         * @param count  The output count to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Ingredient result, int count) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, result, count);
+        public Builder builder(String id, Ingredient input, Ingredient output, int count) {
+            return new Builder(new ResourceLocation(namespace, id), input, output, count);
         }
 
         /**
-         * Creates a new builder with the given id.
-         *
-         * @param id         The id to use.
-         * @param ingredient The input ingredient to use.
-         * @param result     The result ingredient to use.
+         * @param id     The recipe id to use.
+         * @param input  The input ingredient to use.
+         * @param output The output ingredient to use.
          */
-        public Builder builder(String id, Ingredient ingredient, Ingredient result) {
-            return new Builder(new ResourceLocation(namespace, id), ingredient, result);
+        public Builder builder(String id, Ingredient input, Ingredient output) {
+            return new Builder(new ResourceLocation(namespace, id), input, output);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
-            private final Ingredient ingredient;
-            private final Ingredient result;
+            private final Ingredient input;
+            private final Ingredient output;
             private final int count;
-            private int crushingTime = 200;
+            private int duration = 200;
             private int minTier = -1;
             private boolean ignoreCrushingMultiplier = false;
 
-            public Builder(ResourceLocation id, Ingredient ingredient, Ingredient result, int count) {
+            public Builder(ResourceLocation id, Ingredient input, Ingredient output, int count) {
                 super(id);
-                this.ingredient = ingredient;
-                this.result = result;
+                this.input = input;
+                this.output = output;
                 this.count = count;
             }
 
-            public Builder(ResourceLocation id, Ingredient ingredient, Ingredient result) {
-                this(id, ingredient, result, 1);
+            public Builder(ResourceLocation id, Ingredient input, Ingredient output) {
+                this(id, input, output, 1);
             }
 
             /**
-             * Sets the crushing time for this recipe.
+             * Sets the duration of this recipe.
              *
-             * @param crushingTime The crushing time to use.
-             * @return This builder, for chaining.
+             * @param duration The duration to use.
              */
-            public Builder setCrushingTime(int crushingTime) {
-                this.crushingTime = crushingTime;
+            public Builder setDuration(int duration) {
+                this.duration = duration;
                 return this;
             }
 
             /**
-             * Sets the min tier for this recipe.
+             * Sets the min tier of this recipe.
              *
              * @param minTier The min tier to use.
-             * @return This builder, for chaining.
              */
             public Builder setMinTier(int minTier) {
                 this.minTier = minTier;
@@ -83,9 +77,7 @@ public abstract class OccultismDataProvider<T extends AbstractRecipeBuilder<?>> 
             }
 
             /**
-             * Sets this recipe to ignore the crushing multiplier.
-             *
-             * @return This builder, for chaining.
+             * Sets this recipe's ignoreCrushingMultiplier property to true.
              */
             public Builder ignoreCrushingMultiplier() {
                 ignoreCrushingMultiplier = true;
@@ -94,17 +86,17 @@ public abstract class OccultismDataProvider<T extends AbstractRecipeBuilder<?>> 
 
             @Override
             protected void toJson(JsonObject json) {
-                json.addProperty("crushing_time", crushingTime);
+                json.addProperty("crushing_time", duration);
                 if (minTier > -1) {
                     json.addProperty("min_tier", minTier);
                 }
                 if (ignoreCrushingMultiplier) {
                     json.addProperty("ignore_crushing_multiplier", true);
                 }
-                json.add("ingredient", ingredient.toJson());
-                JsonObject result = this.result.toJson().getAsJsonObject();
-                result.addProperty("count", count);
-                json.add("result", result);
+                json.add("ingredient", input.toJson());
+                JsonObject output = this.output.toJson().getAsJsonObject();
+                output.addProperty("count", count);
+                json.add("result", output);
             }
         }
     }
