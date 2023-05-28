@@ -12,6 +12,7 @@ import com.github.minecraftschurlimods.easydatagenlib.mods.ImmersiveEngineeringD
 import com.github.minecraftschurlimods.easydatagenlib.mods.IntegratedDynamicsDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.MekanismDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.OccultismDataProvider;
+import com.github.minecraftschurlimods.easydatagenlib.mods.ThermalDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.TwilightForestDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.util.botanypots.DisplayState;
 import com.github.minecraftschurlimods.easydatagenlib.util.farmersdelight.ToolActionIngredient;
@@ -93,6 +94,22 @@ public abstract class CompatDataProvider {
     public final MekanismDataProvider.Sawing MEKANISM_SAWING;
     public final MekanismDataProvider.Smelting MEKANISM_SMELTING;
     public final OccultismDataProvider.Crushing OCCULTISM_CRUSHING;
+    public final ThermalDataProvider.Bottling THERMAL_BOTTLING;
+    public final ThermalDataProvider.Brewing THERMAL_BREWING;
+    public final ThermalDataProvider.Centrifuging THERMAL_CENTRIFUGING;
+    public final ThermalDataProvider.Chilling THERMAL_CHILLING;
+    public final ThermalDataProvider.Crucible THERMAL_CRUCIBLE;
+    public final ThermalDataProvider.Crystallizing THERMAL_CRYSTALLIZING;
+    public final ThermalDataProvider.Furnace THERMAL_FURNACE;
+    public final ThermalDataProvider.Insolating THERMAL_INSOLATING;
+    public final ThermalDataProvider.Pressing THERMAL_PRESSING;
+    public final ThermalDataProvider.PulverizerRecycling THERMAL_PULVERIZER_RECYCLING;
+    public final ThermalDataProvider.Pulverizing THERMAL_PULVERIZING;
+    public final ThermalDataProvider.Pyrolyzing THERMAL_PYROLYZING;
+    public final ThermalDataProvider.Refining THERMAL_REFINING;
+    public final ThermalDataProvider.Sawing THERMAL_SAWING;
+    public final ThermalDataProvider.SmelterRecycling THERMAL_SMELTER_RECYCLING;
+    public final ThermalDataProvider.Smelting THERMAL_SMELTING;
     public final TwilightForestDataProvider.Crumbling TWILIGHT_FOREST_CRUMBLING;
     public final TwilightForestDataProvider.Transforming TWILIGHT_FOREST_TRANSFORMING;
 
@@ -149,6 +166,22 @@ public abstract class CompatDataProvider {
         MEKANISM_SAWING = addServer(new MekanismDataProvider.Sawing(namespace, generator));
         MEKANISM_SMELTING = addServer(new MekanismDataProvider.Smelting(namespace, generator));
         OCCULTISM_CRUSHING = addServer(new OccultismDataProvider.Crushing(namespace, generator));
+        THERMAL_BOTTLING = addServer(new ThermalDataProvider.Bottling(namespace, generator));
+        THERMAL_BREWING = addServer(new ThermalDataProvider.Brewing(namespace, generator));
+        THERMAL_CENTRIFUGING = addServer(new ThermalDataProvider.Centrifuging(namespace, generator));
+        THERMAL_CHILLING = addServer(new ThermalDataProvider.Chilling(namespace, generator));
+        THERMAL_CRUCIBLE = addServer(new ThermalDataProvider.Crucible(namespace, generator));
+        THERMAL_CRYSTALLIZING = addServer(new ThermalDataProvider.Crystallizing(namespace, generator));
+        THERMAL_FURNACE = addServer(new ThermalDataProvider.Furnace(namespace, generator));
+        THERMAL_INSOLATING = addServer(new ThermalDataProvider.Insolating(namespace, generator));
+        THERMAL_PRESSING = addServer(new ThermalDataProvider.Pressing(namespace, generator));
+        THERMAL_PULVERIZER_RECYCLING = addServer(new ThermalDataProvider.PulverizerRecycling(namespace, generator));
+        THERMAL_PULVERIZING = addServer(new ThermalDataProvider.Pulverizing(namespace, generator));
+        THERMAL_PYROLYZING = addServer(new ThermalDataProvider.Pyrolyzing(namespace, generator));
+        THERMAL_REFINING = addServer(new ThermalDataProvider.Refining(namespace, generator));
+        THERMAL_SAWING = addServer(new ThermalDataProvider.Sawing(namespace, generator));
+        THERMAL_SMELTER_RECYCLING = addServer(new ThermalDataProvider.SmelterRecycling(namespace, generator));
+        THERMAL_SMELTING = addServer(new ThermalDataProvider.Smelting(namespace, generator));
         TWILIGHT_FOREST_CRUMBLING = addServer(new TwilightForestDataProvider.Crumbling(namespace, generator));
         TWILIGHT_FOREST_TRANSFORMING = addServer(new TwilightForestDataProvider.Transforming(namespace, generator));
         for (AbstractDataProvider<?> provider : SERVER_PROVIDERS) {
@@ -197,24 +230,24 @@ public abstract class CompatDataProvider {
     //endregion
 
     //region HELPER
-    protected static final ResourceLocation AIR = new ResourceLocation("minecraft", "air");
-    protected static final ResourceLocation ALCHEMY_CATALYST = new ResourceLocation("botania", "alchemy_catalyst");
-    protected static final ResourceLocation BIO_FUEL = new ResourceLocation("mekanism", "bio_fuel");
-    protected static final ResourceLocation CHEST = new ResourceLocation("minecraft", "chest");
+    protected static final ResourceLocation AIR                  = new ResourceLocation("minecraft", "air");
+    protected static final ResourceLocation ALCHEMY_CATALYST     = new ResourceLocation("botania", "alchemy_catalyst");
+    protected static final ResourceLocation BIO_FUEL             = new ResourceLocation("mekanism", "bio_fuel");
+    protected static final ResourceLocation CHEST                = new ResourceLocation("minecraft", "chest");
     protected static final ResourceLocation CONJURATION_CATALYST = new ResourceLocation("botania", "conjuration_catalyst");
-    protected static final ResourceLocation EXPERIENCE_NUGGET = new ResourceLocation("create", "experience_nugget");
-    protected static final ResourceLocation SAWDUST = new ResourceLocation("mekanism", "sawdust");
-    protected static final ResourceLocation SHROOMLIGHT = new ResourceLocation("minecraft", "shroomlight");
-    protected static final ResourceLocation STICK = new ResourceLocation("minecraft", "stick");
-    protected static final ResourceLocation TREE_BARK = new ResourceLocation("farmersdelight", "tree_bark");
-    protected static final Ingredient AXE_DIG = new ToolActionIngredient(ToolActions.AXE_DIG);
-    protected static final Ingredient AXE_STRIP = new ToolActionIngredient(ToolActions.AXE_STRIP);
-    protected static final Ingredient COBBLESTONE = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "cobblestone/normal")));
+    protected static final ResourceLocation EXPERIENCE_NUGGET    = new ResourceLocation("create", "experience_nugget");
+    protected static final ResourceLocation SAWDUST              = new ResourceLocation("mekanism", "sawdust");
+    protected static final ResourceLocation SHROOMLIGHT          = new ResourceLocation("minecraft", "shroomlight");
+    protected static final ResourceLocation STICK                = new ResourceLocation("minecraft", "stick");
+    protected static final ResourceLocation TREE_BARK            = new ResourceLocation("farmersdelight", "tree_bark");
+    protected static final Ingredient AXE_DIG               = new ToolActionIngredient(ToolActions.AXE_DIG);
+    protected static final Ingredient AXE_STRIP             = new ToolActionIngredient(ToolActions.AXE_STRIP);
+    protected static final Ingredient COBBLESTONE           = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "cobblestone/normal")));
     protected static final Ingredient DEEPSLATE_COBBLESTONE = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "cobblestone/deepslate")));
-    protected static final Ingredient KNIVES = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "tools/knives")));
-    protected static final Ingredient MUSHROOM_SOIL = Ingredient.of(Items.MYCELIUM, Items.PODZOL);
-    protected static final Ingredient SLAG = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "slag")));
-    protected static final Ingredient WOOD_DUST = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "dusts/wood")));
+    protected static final Ingredient KNIVES                = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "tools/knives")));
+    protected static final Ingredient MUSHROOM_SOIL         = Ingredient.of(Items.MYCELIUM, Items.PODZOL);
+    protected static final Ingredient SLAG                  = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "slag")));
+    protected static final Ingredient WOOD_DUST             = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "dusts/wood")));
 
     /**
      * Shortcut to get a block's registry name.
