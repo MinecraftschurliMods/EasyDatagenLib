@@ -51,13 +51,13 @@ public abstract class AbstractRecipeProvider<T extends AbstractRecipeBuilder<?>>
     }
 
     private String makeName(ResourceLocation recipeType) {
-        String s = recipeType.toString().replace(':', ' ').replace('_', ' ');
+        String s = recipeType.toString().replace(':', ' ').replace('_', ' ').strip();
         StringBuilder builder = new StringBuilder(s.substring(0, 1).toUpperCase());
         for (int i = 1; i < s.length(); i++) {
             char c = s.charAt(i);
             builder.append(c);
             if (c == ' ') {
-                builder.append((char) (s.charAt(i + 1) + 32));
+                builder.append(String.valueOf(s.charAt(i + 1)).toUpperCase());
                 i++;
             }
         }

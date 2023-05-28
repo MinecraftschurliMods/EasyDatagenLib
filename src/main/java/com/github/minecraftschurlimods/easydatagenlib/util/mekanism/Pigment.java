@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Pigment extends Chemical {
+    private static final Map<DyeColor, Pigment> LOOKUP = new HashMap<>();
     // Mekanism Pigments
     public static final Pigment BLACK = new Pigment(new ResourceLocation("mekanism", "black"), DyeColor.BLACK);
     public static final Pigment BLUE = new Pigment(new ResourceLocation("mekanism", "blue"), DyeColor.BLUE);
@@ -24,7 +25,6 @@ public class Pigment extends Chemical {
     public static final Pigment RED = new Pigment(new ResourceLocation("mekanism", "red"), DyeColor.RED);
     public static final Pigment WHITE = new Pigment(new ResourceLocation("mekanism", "white"), DyeColor.WHITE);
     public static final Pigment YELLOW = new Pigment(new ResourceLocation("mekanism", "yellow"), DyeColor.YELLOW);
-    private static final Map<DyeColor, Pigment> LOOKUP = new HashMap<>();
 
     public Pigment(ResourceLocation id, DyeColor color) {
         super(id);
