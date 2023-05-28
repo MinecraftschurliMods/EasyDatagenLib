@@ -380,7 +380,7 @@ public abstract class CompatDataProvider {
                 .addOutput(Items.COBBLED_DEEPSLATE, 0.125f));
         if (dust != null) {
             MEKANISM_COMBINING.add(MEKANISM_COMBINING.builder(toName(gem) + "_to_deepslate_ore", Ingredient.of(dust), 5, DEEPSLATE_COBBLESTONE, deepslateOre));
-            MEKANISM_COMBINING.add(MEKANISM_COMBINING.builder(toName(gem) + "_to_ore", Ingredient.of(dust), 5, COBBLESTONE, deepslateOre));
+            MEKANISM_COMBINING.add(MEKANISM_COMBINING.builder(toName(gem) + "_to_ore", Ingredient.of(dust), 5, COBBLESTONE, ore));
             MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(gem) + "_to_dust", Ingredient.of(gem), dust));
             MEKANISM_ENRICHING.add(MEKANISM_ENRICHING.builder(toName(gem) + "_from_dust", Ingredient.of(dust), gem));
         }
