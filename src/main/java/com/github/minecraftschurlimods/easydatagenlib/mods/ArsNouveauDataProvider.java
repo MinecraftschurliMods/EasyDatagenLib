@@ -6,7 +6,7 @@ import com.github.minecraftschurlimods.easydatagenlib.util.JsonUtil;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentItemStack;
 import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -15,13 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>> extends AbstractRecipeProvider<T> {
-    protected ArsNouveauDataProvider(String folder, String namespace, DataGenerator generator) {
-        super(new ResourceLocation("ars_nouveau", folder), namespace, generator);
+    protected ArsNouveauDataProvider(String folder, String namespace, PackOutput output) {
+        super(new ResourceLocation("ars_nouveau", folder), namespace, output);
     }
 
     public static class Crushing extends ArsNouveauDataProvider<Crushing.Builder> {
-        public Crushing(String namespace, DataGenerator generator) {
-            super("crush", namespace, generator);
+        public Crushing(String namespace, PackOutput output) {
+            super("crush", namespace, output);
         }
 
         /**
@@ -149,8 +149,8 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
     }
 
     public static class Glyph extends ArsNouveauDataProvider<Glyph.Builder> {
-        public Glyph(String namespace, DataGenerator generator) {
-            super("glyph", namespace, generator);
+        public Glyph(String namespace, PackOutput output) {
+            super("glyph", namespace, output);
         }
 
         /**
@@ -242,8 +242,8 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
     }
 
     public static class Imbueing extends ArsNouveauDataProvider<Imbueing.Builder> {
-        public Imbueing(String namespace, DataGenerator generator) {
-            super("imbuement", namespace, generator);
+        public Imbueing(String namespace, PackOutput output) {
+            super("imbuement", namespace, output);
         }
 
         /**

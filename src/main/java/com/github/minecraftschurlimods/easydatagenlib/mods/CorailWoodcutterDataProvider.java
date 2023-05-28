@@ -4,19 +4,19 @@ import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeBuilder;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeProvider;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentItemStack;
 import com.google.gson.JsonObject;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 
 public abstract class CorailWoodcutterDataProvider<T extends AbstractRecipeBuilder<?>> extends AbstractRecipeProvider<T> {
-    protected CorailWoodcutterDataProvider(String folder, String namespace, DataGenerator generator) {
-        super(new ResourceLocation("corail_woodcutter", folder), namespace, generator);
+    protected CorailWoodcutterDataProvider(String folder, String namespace, PackOutput output) {
+        super(new ResourceLocation("corail_woodcutter", folder), namespace, output);
     }
 
     public static class Sawing extends CorailWoodcutterDataProvider<Sawing.Builder> {
-        public Sawing(String namespace, DataGenerator generator) {
-            super("woodcutting", namespace, generator);
+        public Sawing(String namespace, PackOutput output) {
+            super("woodcutting", namespace, output);
         }
 
         /**

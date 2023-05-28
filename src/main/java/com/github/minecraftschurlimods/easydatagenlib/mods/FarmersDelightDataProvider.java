@@ -5,7 +5,7 @@ import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeProvider
 import com.github.minecraftschurlimods.easydatagenlib.util.JsonUtil;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentItemStack;
 import com.google.gson.JsonObject;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -15,13 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder<?>> extends AbstractRecipeProvider<T> {
-    protected FarmersDelightDataProvider(String folder, String namespace, DataGenerator generator) {
-        super(new ResourceLocation("farmersdelight", folder), namespace, generator);
+    protected FarmersDelightDataProvider(String folder, String namespace, PackOutput output) {
+        super(new ResourceLocation("farmersdelight", folder), namespace, output);
     }
 
     public static class Cooking extends FarmersDelightDataProvider<Cooking.Builder> {
-        public Cooking(String namespace, DataGenerator generator) {
-            super("cooking", namespace, generator);
+        public Cooking(String namespace, PackOutput output) {
+            super("cooking", namespace, output);
         }
 
         /**
@@ -149,8 +149,8 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
     }
 
     public static class Cutting extends FarmersDelightDataProvider<Cutting.Builder> {
-        public Cutting(String namespace, DataGenerator generator) {
-            super("cutting", namespace, generator);
+        public Cutting(String namespace, PackOutput output) {
+            super("cutting", namespace, output);
         }
 
         /**

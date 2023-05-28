@@ -2,8 +2,8 @@ package com.github.minecraftschurlimods.easydatagenlib.api;
 
 import com.google.gson.JsonObject;
 import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -20,22 +20,29 @@ import java.util.concurrent.CompletableFuture;
  * The abstract class all other data provider classes extend from. Contains some common functionality, such as saving to disk.
  *
  * @param <T> The builder class associated with this provider.
+ * @see <a href="https://github.com/MinecraftschurliMods/EasyDatagenLib/wiki/Custom-Datagen-Base-Classes">Custom Datagen Base Classes documentation</a>
  */
 public abstract class AbstractDataProvider<T extends AbstractDataBuilder<?>> implements DataProvider {
-    protected final String folder;
     protected final String namespace;
-    protected final DataGenerator generator;
+    protected final PackOutput.PathProvider pathProvider;
     protected final List<T> values = new ArrayList<>();
 
     /**
-     * @param generator The data generator to use.
+     * @param output    The pack output to use.
      * @param namespace The namespace to use.
      * @param folder    The folder to output to.
      */
-    protected AbstractDataProvider(String folder, String namespace, DataGenerator generator) {
-        this.folder = folder;
+    protected AbstractDataProvider(String namespace, String folder, PackOutput.Target target, PackOutput output) {
+        this(namespace, output.createPathProvider(target, folder));
+    }
+
+    /**
+     * @param namespace    The namespace to use.
+     * @param pathProvider The provider for the output file paths.
+     */
+    protected AbstractDataProvider(String namespace, PackOutput.PathProvider pathProvider) {
         this.namespace = namespace;
-        this.generator = generator;
+        this.pathProvider = pathProvider;
     }
 
     @Override
@@ -44,7 +51,7 @@ public abstract class AbstractDataProvider<T extends AbstractDataBuilder<?>> imp
         List<CompletableFuture<?>> list = new ArrayList<>();
         values.forEach(o -> {
             if (!ids.add(o.id)) throw new IllegalStateException("Duplicate datagenned object " + o.id);
-            list.add(DataProvider.saveStable(output, toJson(o), generator.getPackOutput().getOutputFolder().resolve("data/" + o.id.getNamespace() + "/" + folder + "/" + o.id.getPath() + ".json")));
+            list.add(DataProvider.saveStable(output, toJson(o), pathProvider.json(o.id)));
         });
         return CompletableFuture.allOf(list.toArray(CompletableFuture[]::new));
     }

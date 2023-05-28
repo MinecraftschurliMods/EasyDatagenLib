@@ -9,7 +9,7 @@ import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentItem
 import com.github.minecraftschurlimods.easydatagenlib.util.thermal.IngredientWithCount;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -20,56 +20,56 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> extends AbstractRecipeProvider<T> {
-    protected ThermalDataProvider(String folder, String namespace, DataGenerator generator) {
-        super(new ResourceLocation("thermal", folder), namespace, generator);
+    protected ThermalDataProvider(String folder, String namespace, PackOutput output) {
+        super(new ResourceLocation("thermal", folder), namespace, output);
     }
     //TODO Fuels, Fisher Boost, Hive Extractor, Potion Diffuser Boost, Rock Gen Mapping, Tree Extractor Boost, Tree Extractor Mapping
 
     public static class Bottling extends Processing {
-        public Bottling(String namespace, DataGenerator generator) {
-            super("bottler", namespace, generator);
+        public Bottling(String namespace, PackOutput output) {
+            super("bottler", namespace, output);
         }
     }
 
     public static class Brewing extends Processing {
-        public Brewing(String namespace, DataGenerator generator) {
-            super("brewer", namespace, generator);
+        public Brewing(String namespace, PackOutput output) {
+            super("brewer", namespace, output);
         }
     }
 
     public static class Centrifuging extends Processing {
-        public Centrifuging(String namespace, DataGenerator generator) {
-            super("centrifuge", namespace, generator);
+        public Centrifuging(String namespace, PackOutput output) {
+            super("centrifuge", namespace, output);
         }
     }
 
     public static class Chilling extends Processing {
-        public Chilling(String namespace, DataGenerator generator) {
-            super("chiller", namespace, generator);
+        public Chilling(String namespace, PackOutput output) {
+            super("chiller", namespace, output);
         }
     }
 
     public static class Crucible extends Processing {
-        public Crucible(String namespace, DataGenerator generator) {
-            super("crucible", namespace, generator);
+        public Crucible(String namespace, PackOutput output) {
+            super("crucible", namespace, output);
         }
     }
 
     public static class Crystallizing extends Processing {
-        public Crystallizing(String namespace, DataGenerator generator) {
-            super("crystallizer", namespace, generator);
+        public Crystallizing(String namespace, PackOutput output) {
+            super("crystallizer", namespace, output);
         }
     }
 
     public static class Furnace extends Processing {
-        public Furnace(String namespace, DataGenerator generator) {
-            super("furnace", namespace, generator);
+        public Furnace(String namespace, PackOutput output) {
+            super("furnace", namespace, output);
         }
     }
 
     public static class Insolating extends Processing {
-        public Insolating(String namespace, DataGenerator generator) {
-            super("insolator", namespace, generator);
+        public Insolating(String namespace, PackOutput output) {
+            super("insolator", namespace, output);
         }
 
         /**
@@ -119,50 +119,50 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
     }
 
     public static class Pressing extends Processing {
-        public Pressing(String namespace, DataGenerator generator) {
-            super("press", namespace, generator);
+        public Pressing(String namespace, PackOutput output) {
+            super("press", namespace, output);
         }
     }
 
     public static class PulverizerRecycling extends Processing {
-        public PulverizerRecycling(String namespace, DataGenerator generator) {
-            super("pulverizer_recycle", namespace, generator);
+        public PulverizerRecycling(String namespace, PackOutput output) {
+            super("pulverizer_recycle", namespace, output);
         }
     }
 
     public static class Pulverizing extends Processing {
-        public Pulverizing(String namespace, DataGenerator generator) {
-            super("pulverizer", namespace, generator);
+        public Pulverizing(String namespace, PackOutput output) {
+            super("pulverizer", namespace, output);
         }
     }
 
     public static class Pyrolyzing extends Processing {
-        public Pyrolyzing(String namespace, DataGenerator generator) {
-            super("pyrolyzer", namespace, generator);
+        public Pyrolyzing(String namespace, PackOutput output) {
+            super("pyrolyzer", namespace, output);
         }
     }
 
     public static class Refining extends Processing {
-        public Refining(String namespace, DataGenerator generator) {
-            super("refinery", namespace, generator);
+        public Refining(String namespace, PackOutput output) {
+            super("refinery", namespace, output);
         }
     }
 
     public static class Sawing extends Processing {
-        public Sawing(String namespace, DataGenerator generator) {
-            super("sawmill", namespace, generator);
+        public Sawing(String namespace, PackOutput output) {
+            super("sawmill", namespace, output);
         }
     }
 
     public static class SmelterRecycling extends Processing {
-        public SmelterRecycling(String namespace, DataGenerator generator) {
-            super("smelter_recycle", namespace, generator);
+        public SmelterRecycling(String namespace, PackOutput output) {
+            super("smelter_recycle", namespace, output);
         }
     }
 
     public static class Smelting extends Processing {
-        public Smelting(String namespace, DataGenerator generator) {
-            super("smelter", namespace, generator);
+        public Smelting(String namespace, PackOutput output) {
+            super("smelter", namespace, output);
         }
     }
 
@@ -171,8 +171,8 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
      * {@see https://github.com/CoFH/ThermalCore/blob/1.19.x/src/main/java/cofh/thermal/lib/util/recipes/MachineRecipeSerializer.java}
      */
     public static abstract class Processing extends ThermalDataProvider<Processing.Builder> {
-        protected Processing(String folder, String namespace, DataGenerator generator) {
-            super(folder, namespace, generator);
+        protected Processing(String folder, String namespace, PackOutput output) {
+            super(folder, namespace, output);
         }
 
         /**
