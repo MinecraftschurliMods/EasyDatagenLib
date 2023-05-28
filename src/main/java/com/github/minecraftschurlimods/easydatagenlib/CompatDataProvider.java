@@ -46,6 +46,7 @@ import java.util.List;
 /**
  * Extend this class and override {@link CompatDataProvider#generate()} to add your own datagen entries.
  */
+@SuppressWarnings({"unused", "DuplicatedCode", "SameParameterValue"})
 public abstract class CompatDataProvider {
     //region CORE
     private final List<AbstractDataProvider<?>> SERVER_PROVIDERS = new ArrayList<>();
@@ -413,6 +414,31 @@ public abstract class CompatDataProvider {
     }
 
     /**
+     * Adds processing for a gem ore, such as diamonds or emeralds. This assumes that the ores drop one item by default, and thus does not support ores that drop multiple items, such as lapis.
+     *
+     * @param ore          The ore to be processed.
+     * @param deepslateOre The deepslate ore to be processed.
+     * @param oreTag       The ore tag to be processed.
+     * @param gem          The gem item.
+     * @param block        The gem block item. Can be null. If null, no recipes involving this item will be generated.
+     */
+    protected void addGemOreProcessing(Item ore, Item deepslateOre, TagKey<Item> oreTag, Item gem, @Nullable Item block) {
+        addGemOreProcessing(ore, deepslateOre, oreTag, gem, block, null);
+    }
+
+    /**
+     * Adds processing for a gem ore, such as diamonds or emeralds. This assumes that the ores drop one item by default, and thus does not support ores that drop multiple items, such as lapis.
+     *
+     * @param ore          The ore to be processed.
+     * @param deepslateOre The deepslate ore to be processed.
+     * @param oreTag       The ore tag to be processed.
+     * @param gem          The gem item.
+     */
+    protected void addGemOreProcessing(Item ore, Item deepslateOre, TagKey<Item> oreTag, Item gem) {
+        addGemOreProcessing(ore, deepslateOre, oreTag, gem, null);
+    }
+
+    /**
      * Adds processing for a metal ore, such as iron or gold. This assumes that the ores drop one item by default, and thus does not support ores that drop multiple items, such as copper.
      *
      * @param ore              The ore to be processed.
@@ -435,7 +461,7 @@ public abstract class CompatDataProvider {
      * @param secondaryDust    The secondary dust item. Used in Thermal pulverizing. Can be null. If null, no recipes involving this item will be generated.
      * @param secondaryDustTag The secondary dust tag. Used in Immersive Engineering crushing. Can be null. If null, no recipes involving this item will be generated.
      */
-    protected void addMetalOreProcessing(Item ore, Item deepslateOre, TagKey<Item> oreTag, Item rawOre, TagKey<Item> rawOreTag, @Nullable Item rawOreBlock, TagKey<Item> rawOreBlockTag, Item ingot, TagKey<Item> ingotTag, @Nullable Item ingotBlock, TagKey<Item> ingotBlockTag, @Nullable Item nugget, TagKey<Item> nuggetTag, @Nullable Item dust, TagKey<Item> dustTag, @Nullable ResourceLocation crushedOre, @Nullable ResourceLocation secondaryIngot, @Nullable ResourceLocation secondaryDust, @Nullable TagKey<Item> secondaryDustTag) {
+    protected void addMetalOreProcessing(Item ore, Item deepslateOre, TagKey<Item> oreTag, Item rawOre, TagKey<Item> rawOreTag, @Nullable Item rawOreBlock, @Nullable TagKey<Item> rawOreBlockTag, Item ingot, TagKey<Item> ingotTag, @Nullable Item ingotBlock, @Nullable TagKey<Item> ingotBlockTag, @Nullable Item nugget, @Nullable TagKey<Item> nuggetTag, @Nullable Item dust, @Nullable TagKey<Item> dustTag, @Nullable ResourceLocation crushedOre, @Nullable ResourceLocation secondaryIngot, @Nullable ResourceLocation secondaryDust, @Nullable TagKey<Item> secondaryDustTag) {
         if (ore instanceof BlockItem bi) {
             BOTANY_POTS_SOIL.add(BOTANY_POTS_SOIL.builder(toName(ore), Ingredient.of(ore), new DisplayState.Simple(bi.getBlock().defaultBlockState()))
                     .addCategory("stone")
@@ -471,50 +497,56 @@ public abstract class CompatDataProvider {
                     .addOutput(EXPERIENCE_NUGGET, 0.75f)
                     .addCondition(new NotCondition(new TagEmptyCondition(rawOreTag.location()))));
         }
-        IMMERSIVE_ENGINEERING_ARC_FURNACE.add(IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(dustTag), 100, 51200, Ingredient.of(dustTag))
-                .addOutput(Ingredient.of(ingotTag))
-                .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location())))
-                .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location()))));
         IMMERSIVE_ENGINEERING_ARC_FURNACE.add(IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(oreTag), 200, 102400, Ingredient.of(oreTag))
                 .addOutput(Ingredient.of(ingotTag), 2)
                 .setSlag(SLAG)
                 .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location())))
-                .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location()))));
-        IMMERSIVE_ENGINEERING_ARC_FURNACE.add(IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(rawOreBlockTag), 900, 230400, Ingredient.of(rawOreBlockTag))
-                .addOutput(Ingredient.of(ingotTag), 13)
-                .addSecondaryOutput(Ingredient.of(ingotTag), 0.5f)
-                .addCondition(new NotCondition(new TagEmptyCondition(rawOreBlockTag.location())))
                 .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location()))));
         IMMERSIVE_ENGINEERING_ARC_FURNACE.add(IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(rawOreTag), 100, 25600, Ingredient.of(rawOreTag))
                 .addOutput(Ingredient.of(ingotTag))
                 .addSecondaryOutput(Ingredient.of(ingotTag), 0.5f)
                 .addCondition(new NotCondition(new TagEmptyCondition(rawOreTag.location())))
                 .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location()))));
-        IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(ingotTag), 3000, Ingredient.of(ingotTag), Ingredient.of(dustTag))
-                .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location())))
-                .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
-        if (secondaryDustTag == null) {
-            IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(oreTag), 6000, Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
-                    .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location())))
-                    .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
-        } else {
-            IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(oreTag), 6000, Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
-                    .addSecondary(Ingredient.of(secondaryDustTag), 0.1f)
-                    .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location())))
+        if (dustTag != null) {
+            IMMERSIVE_ENGINEERING_ARC_FURNACE.add(IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(dustTag), 100, 51200, Ingredient.of(dustTag))
+                    .addOutput(Ingredient.of(ingotTag))
                     .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location())))
-                    .addCondition(new NotCondition(new TagEmptyCondition(secondaryDustTag.location()))));
-            IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(oreTag) + "_without_secondary", 6000, Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
-                    .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location())))
-                    .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location())))
-                    .addCondition(new TagEmptyCondition(secondaryDustTag.location())));
+                    .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location()))));
         }
-        IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(rawOreBlockTag), 54000, Ingredient.of(rawOreBlockTag), Ingredient.of(rawOreTag), 12)
-                .addCondition(new NotCondition(new TagEmptyCondition(rawOreBlockTag.location())))
-                .addCondition(new NotCondition(new TagEmptyCondition(rawOreTag.location()))));
-        IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(rawOreTag), 6000, Ingredient.of(rawOreTag), Ingredient.of(dustTag))
-                .addSecondary(Ingredient.of(dustTag), 0.33333334f)
-                .addCondition(new NotCondition(new TagEmptyCondition(rawOreTag.location())))
-                .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
+        if (rawOreBlockTag != null) {
+            IMMERSIVE_ENGINEERING_ARC_FURNACE.add(IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(rawOreBlockTag), 900, 230400, Ingredient.of(rawOreBlockTag))
+                    .addOutput(Ingredient.of(ingotTag), 13)
+                    .addSecondaryOutput(Ingredient.of(ingotTag), 0.5f)
+                    .addCondition(new NotCondition(new TagEmptyCondition(rawOreBlockTag.location())))
+                    .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location()))));
+            IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(rawOreBlockTag), 54000, Ingredient.of(rawOreBlockTag), Ingredient.of(rawOreTag), 12)
+                    .addCondition(new NotCondition(new TagEmptyCondition(rawOreBlockTag.location())))
+                    .addCondition(new NotCondition(new TagEmptyCondition(rawOreTag.location()))));
+        }
+        if (dustTag != null) {
+            IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(ingotTag), 3000, Ingredient.of(ingotTag), Ingredient.of(dustTag))
+                    .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location())))
+                    .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
+            if (secondaryDustTag == null) {
+                IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(oreTag), 6000, Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
+                        .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location())))
+                        .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
+            } else {
+                IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(oreTag), 6000, Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
+                        .addSecondary(Ingredient.of(secondaryDustTag), 0.1f)
+                        .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location())))
+                        .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location())))
+                        .addCondition(new NotCondition(new TagEmptyCondition(secondaryDustTag.location()))));
+                IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(oreTag) + "_without_secondary", 6000, Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
+                        .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location())))
+                        .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location())))
+                        .addCondition(new TagEmptyCondition(secondaryDustTag.location())));
+            }
+            IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(rawOreTag), 6000, Ingredient.of(rawOreTag), Ingredient.of(dustTag))
+                    .addSecondary(Ingredient.of(dustTag), 0.33333334f)
+                    .addCondition(new NotCondition(new TagEmptyCondition(rawOreTag.location())))
+                    .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
+        }
         INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.add(INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.builder(toName(oreTag), Ingredient.of(oreTag), 40)
                 .addItem(rawOre, 3)
                 .addItem(rawOre, 0.5f)
@@ -529,13 +561,16 @@ public abstract class CompatDataProvider {
             MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(dust) + "_from_ingot", Ingredient.of(ingot), dust));
             MEKANISM_ENRICHING.add(MEKANISM_ENRICHING.builder(toName(dust) + "_from_ore", Ingredient.of(oreTag), dust));
             MEKANISM_ENRICHING.add(MEKANISM_ENRICHING.builder(toName(dust) + "_from_raw", Ingredient.of(rawOre), 3, dust, 4));
-            MEKANISM_ENRICHING.add(MEKANISM_ENRICHING.builder(toName(dust) + "_from_raw_block", Ingredient.of(rawOreBlockTag), dust, 12));
+            if (rawOreBlockTag != null) {
+                MEKANISM_ENRICHING.add(MEKANISM_ENRICHING.builder(toName(dust) + "_from_raw_block", Ingredient.of(rawOreBlockTag), dust, 12));
+            }
         }
         MEKANISM_COMBINING.add(MEKANISM_COMBINING.builder(toName(deepslateOre) + "_from_raw", Ingredient.of(rawOre), 8, DEEPSLATE_COBBLESTONE, deepslateOre));
         MEKANISM_COMBINING.add(MEKANISM_COMBINING.builder(toName(ore) + "_from_raw", Ingredient.of(rawOre), 8, COBBLESTONE, ore));
-        OCCULTISM_CRUSHING.add(OCCULTISM_CRUSHING.builder(toName(dustTag), Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
-                .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location())))
-                .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
+        if (dustTag != null) {
+            OCCULTISM_CRUSHING.add(OCCULTISM_CRUSHING.builder(toName(dustTag), Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
+                    .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location())))
+                    .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
         OCCULTISM_CRUSHING.add(OCCULTISM_CRUSHING.builder(toName(dustTag) + "_from_ingot", Ingredient.of(oreTag), Ingredient.of(ingotTag))
                 .ignoreCrushingMultiplier()
                 .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location())))
@@ -543,17 +578,20 @@ public abstract class CompatDataProvider {
         OCCULTISM_CRUSHING.add(OCCULTISM_CRUSHING.builder(toName(dustTag) + "_from_raw", Ingredient.of(rawOreTag), Ingredient.of(dustTag), 2)
                 .addCondition(new NotCondition(new TagEmptyCondition(rawOreTag.location())))
                 .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
+        }
         if (ingotBlock != null) {
             THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(ingot) + "_packing")
                     .setEnergy(400)
                     .addInput(Ingredient.of(ingotTag), 9)
                     .addInput(PRESS_PACKING_3x3_DIE)
                     .addOutputItem(ingotBlock));
-            THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(ingot) + "_unpacking")
-                    .setEnergy(400)
-                    .addInput(Ingredient.of(ingotBlockTag))
-                    .addInput(PRESS_UNPACKING_DIE)
-                    .addOutputItem(ingot, 9));
+            if (ingotBlockTag != null) {
+                THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(ingot) + "_unpacking")
+                        .setEnergy(400)
+                        .addInput(Ingredient.of(ingotBlockTag))
+                        .addInput(PRESS_UNPACKING_DIE)
+                        .addOutputItem(ingot, 9));
+            }
         }
         if (rawOreBlock != null) {
             THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(rawOre) + "_packing")
@@ -561,13 +599,15 @@ public abstract class CompatDataProvider {
                     .addInput(Ingredient.of(rawOreTag), 9)
                     .addInput(PRESS_PACKING_3x3_DIE)
                     .addOutputItem(rawOreBlock));
-            THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(rawOre) + "_unpacking")
-                    .setEnergy(400)
-                    .addInput(Ingredient.of(rawOreBlockTag))
-                    .addInput(PRESS_UNPACKING_DIE)
-                    .addOutputItem(rawOre, 9));
+            if (rawOreBlockTag != null) {
+                THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(rawOre) + "_unpacking")
+                        .setEnergy(400)
+                        .addInput(Ingredient.of(rawOreBlockTag))
+                        .addInput(PRESS_UNPACKING_DIE)
+                        .addOutputItem(rawOre, 9));
+            }
         }
-        if (nugget != null) {
+        if (nugget != null && nuggetTag != null) {
             THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(nugget) + "_packing")
                     .setEnergy(400)
                     .addInput(Ingredient.of(nuggetTag), 9)
@@ -613,6 +653,108 @@ public abstract class CompatDataProvider {
                     .addOutputItem(secondaryIngot, 0.2f)
                     .addOutputItem(RICH_SLAG, 0.2f));
         }
+    }
+
+    /**
+     * Adds processing for a metal ore, such as iron or gold. This assumes that the ores drop one item by default, and thus does not support ores that drop multiple items, such as copper.
+     *
+     * @param ore            The ore to be processed.
+     * @param deepslateOre   The deepslate ore to be processed.
+     * @param oreTag         The ore tag to be processed.
+     * @param rawOre         The raw ore item.
+     * @param rawOreTag      The raw ore tag.
+     * @param rawOreBlock    The raw ore block item. Can be null. If null, no recipes involving this item will be generated.
+     * @param rawOreBlockTag The raw ore block tag.
+     * @param ingot          The ingot item.
+     * @param ingotTag       The ingot tag.
+     * @param ingotBlock     The ingot block item. Can be null. If null, no recipes involving this item will be generated.
+     * @param ingotBlockTag  The ingot block tag.
+     * @param nugget         The nugget item. Can be null. If null, no recipes involving this item will be generated.
+     * @param nuggetTag      The nugget tag.
+     * @param dust           The dust item. Used in various mods for ore duplication. Can be null. If null, no recipes involving this item will be generated.
+     * @param dustTag        The dust tag.
+     * @param crushedOre     The id of the crushed ore item. Used in Create crushing. Can be null. If null, no recipes involving this item will be generated.
+     */
+    protected void addMetalOreProcessing(Item ore, Item deepslateOre, TagKey<Item> oreTag, Item rawOre, TagKey<Item> rawOreTag, @Nullable Item rawOreBlock, @Nullable TagKey<Item> rawOreBlockTag, Item ingot, TagKey<Item> ingotTag, @Nullable Item ingotBlock, @Nullable TagKey<Item> ingotBlockTag, @Nullable Item nugget, @Nullable TagKey<Item> nuggetTag, @Nullable Item dust, @Nullable TagKey<Item> dustTag, @Nullable ResourceLocation crushedOre) {
+        addMetalOreProcessing(ore, deepslateOre, oreTag, rawOre, rawOreTag, rawOreBlock, rawOreBlockTag, ingot, ingotTag, ingotBlock, ingotBlockTag, nugget, nuggetTag, dust, dustTag, crushedOre, null, null, null);
+    }
+
+    /**
+     * Adds processing for a metal ore, such as iron or gold. This assumes that the ores drop one item by default, and thus does not support ores that drop multiple items, such as copper.
+     *
+     * @param ore            The ore to be processed.
+     * @param deepslateOre   The deepslate ore to be processed.
+     * @param oreTag         The ore tag to be processed.
+     * @param rawOre         The raw ore item.
+     * @param rawOreTag      The raw ore tag.
+     * @param rawOreBlock    The raw ore block item. Can be null. If null, no recipes involving this item will be generated.
+     * @param rawOreBlockTag The raw ore block tag.
+     * @param ingot          The ingot item.
+     * @param ingotTag       The ingot tag.
+     * @param ingotBlock     The ingot block item. Can be null. If null, no recipes involving this item will be generated.
+     * @param ingotBlockTag  The ingot block tag.
+     * @param nugget         The nugget item. Can be null. If null, no recipes involving this item will be generated.
+     * @param nuggetTag      The nugget tag.
+     * @param dust           The dust item. Used in various mods for ore duplication. Can be null. If null, no recipes involving this item will be generated.
+     * @param dustTag        The dust tag.
+     */
+    protected void addMetalOreProcessing(Item ore, Item deepslateOre, TagKey<Item> oreTag, Item rawOre, TagKey<Item> rawOreTag, @Nullable Item rawOreBlock, @Nullable TagKey<Item> rawOreBlockTag, Item ingot, TagKey<Item> ingotTag, @Nullable Item ingotBlock, @Nullable TagKey<Item> ingotBlockTag, @Nullable Item nugget, @Nullable TagKey<Item> nuggetTag, @Nullable Item dust, @Nullable TagKey<Item> dustTag) {
+        addMetalOreProcessing(ore, deepslateOre, oreTag, rawOre, rawOreTag, rawOreBlock, rawOreBlockTag, ingot, ingotTag, ingotBlock, ingotBlockTag, nugget, nuggetTag, dust, dustTag, null);
+    }
+
+    /**
+     * Adds processing for a metal ore, such as iron or gold. This assumes that the ores drop one item by default, and thus does not support ores that drop multiple items, such as copper.
+     *
+     * @param ore            The ore to be processed.
+     * @param deepslateOre   The deepslate ore to be processed.
+     * @param oreTag         The ore tag to be processed.
+     * @param rawOre         The raw ore item.
+     * @param rawOreTag      The raw ore tag.
+     * @param rawOreBlock    The raw ore block item. Can be null. If null, no recipes involving this item will be generated.
+     * @param rawOreBlockTag The raw ore block tag.
+     * @param ingot          The ingot item.
+     * @param ingotTag       The ingot tag.
+     * @param ingotBlock     The ingot block item. Can be null. If null, no recipes involving this item will be generated.
+     * @param ingotBlockTag  The ingot block tag.
+     * @param nugget         The nugget item. Can be null. If null, no recipes involving this item will be generated.
+     * @param nuggetTag      The nugget tag.
+     */
+    protected void addMetalOreProcessing(Item ore, Item deepslateOre, TagKey<Item> oreTag, Item rawOre, TagKey<Item> rawOreTag, @Nullable Item rawOreBlock, @Nullable TagKey<Item> rawOreBlockTag, Item ingot, TagKey<Item> ingotTag, @Nullable Item ingotBlock, @Nullable TagKey<Item> ingotBlockTag, @Nullable Item nugget, @Nullable TagKey<Item> nuggetTag) {
+        addMetalOreProcessing(ore, deepslateOre, oreTag, rawOre, rawOreTag, rawOreBlock, rawOreBlockTag, ingot, ingotTag, ingotBlock, ingotBlockTag, nugget, nuggetTag, null, null);
+    }
+
+    /**
+     * Adds processing for a metal ore, such as iron or gold. This assumes that the ores drop one item by default, and thus does not support ores that drop multiple items, such as copper.
+     *
+     * @param ore            The ore to be processed.
+     * @param deepslateOre   The deepslate ore to be processed.
+     * @param oreTag         The ore tag to be processed.
+     * @param rawOre         The raw ore item.
+     * @param rawOreTag      The raw ore tag.
+     * @param rawOreBlock    The raw ore block item. Can be null. If null, no recipes involving this item will be generated.
+     * @param rawOreBlockTag The raw ore block tag.
+     * @param ingot          The ingot item.
+     * @param ingotTag       The ingot tag.
+     * @param ingotBlock     The ingot block item. Can be null. If null, no recipes involving this item will be generated.
+     * @param ingotBlockTag  The ingot block tag.
+     */
+    protected void addMetalOreProcessing(Item ore, Item deepslateOre, TagKey<Item> oreTag, Item rawOre, TagKey<Item> rawOreTag, @Nullable Item rawOreBlock, @Nullable TagKey<Item> rawOreBlockTag, Item ingot, TagKey<Item> ingotTag, @Nullable Item ingotBlock, @Nullable TagKey<Item> ingotBlockTag) {
+        addMetalOreProcessing(ore, deepslateOre, oreTag, rawOre, rawOreTag, rawOreBlock, rawOreBlockTag, ingot, ingotTag, ingotBlock, ingotBlockTag, null, null);
+    }
+
+    /**
+     * Adds processing for a metal ore, such as iron or gold. This assumes that the ores drop one item by default, and thus does not support ores that drop multiple items, such as copper.
+     *
+     * @param ore          The ore to be processed.
+     * @param deepslateOre The deepslate ore to be processed.
+     * @param oreTag       The ore tag to be processed.
+     * @param rawOre       The raw ore item.
+     * @param rawOreTag    The raw ore tag.
+     * @param ingot        The ingot item.
+     * @param ingotTag     The ingot tag.
+     */
+    protected void addMetalOreProcessing(Item ore, Item deepslateOre, TagKey<Item> oreTag, Item rawOre, TagKey<Item> rawOreTag, Item ingot, TagKey<Item> ingotTag) {
+        addMetalOreProcessing(ore, deepslateOre, oreTag, rawOre, rawOreTag, null, null, ingot, ingotTag, null, null);
     }
 
     /**
@@ -675,11 +817,39 @@ public abstract class CompatDataProvider {
      * @param output1 The primary output. Should ideally be a {@link DyeItem}.
      * @param count1  The count of the primary output. Used in Create milling. Some mods may use different, fixed amounts.
      * @param output2 The id of the secondary output. Used in Create milling. Can be null. If null, no recipes involving this item will be generated.
+     * @param chance2 The chance that the secondary output will actually appear. Used in Create milling.
+     * @param output3 The id of the tertiary output. Used in Create milling. Can be null. If null, no recipes involving this item will be generated.
+     * @param chance3 The chance that the tertiary output will actually appear. Used in Create milling.
+     */
+    protected void addFlowerProcessing(Item flower, Item output1, int count1, @Nullable ResourceLocation output2, float chance2, @Nullable ResourceLocation output3, float chance3) {
+        addFlowerProcessing(flower, output1, count1, output2, 1, chance2, output3, 1, chance3);
+    }
+
+    /**
+     * Adds processing for a small flower.
+     *
+     * @param flower  The flower to be processed.
+     * @param output1 The primary output. Should ideally be a {@link DyeItem}.
+     * @param count1  The count of the primary output. Used in Create milling. Some mods may use different, fixed amounts.
+     * @param output2 The id of the secondary output. Used in Create milling. Can be null. If null, no recipes involving this item will be generated.
      * @param count2  The count of the secondary output. Used in Create milling.
      * @param chance2 The chance that the secondary output will actually appear. Used in Create milling.
      */
     protected void addFlowerProcessing(Item flower, Item output1, int count1, @Nullable ResourceLocation output2, int count2, float chance2) {
         addFlowerProcessing(flower, output1, count1, output2, count2, chance2, null, 0, 0);
+    }
+
+    /**
+     * Adds processing for a small flower.
+     *
+     * @param flower  The flower to be processed.
+     * @param output1 The primary output. Should ideally be a {@link DyeItem}.
+     * @param count1  The count of the primary output. Used in Create milling. Some mods may use different, fixed amounts.
+     * @param output2 The id of the secondary output. Used in Create milling. Can be null. If null, no recipes involving this item will be generated.
+     * @param chance2 The chance that the secondary output will actually appear. Used in Create milling.
+     */
+    protected void addFlowerProcessing(Item flower, Item output1, int count1, @Nullable ResourceLocation output2, float chance2) {
+        addFlowerProcessing(flower, output1, count1, output2, 1, chance2);
     }
 
     /**
@@ -753,11 +923,39 @@ public abstract class CompatDataProvider {
      * @param output1 The primary output. Should ideally be a {@link DyeItem}.
      * @param count1  The count of the primary output. Used in Create milling. Some mods may use different, fixed amounts.
      * @param output2 The id of the secondary output. Used in Create milling. Can be null. If null, no recipes involving this item will be generated.
+     * @param chance2 The chance that the secondary output will actually appear. Used in Create milling.
+     * @param output3 The id of the tertiary output. Used in Create milling. Can be null. If null, no recipes involving this item will be generated.
+     * @param chance3 The chance that the tertiary output will actually appear. Used in Create milling.
+     */
+    protected void addTallFlowerProcessing(Item flower, Item output1, int count1, @Nullable ResourceLocation output2, float chance2, @Nullable ResourceLocation output3, float chance3) {
+        addTallFlowerProcessing(flower, output1, count1, output2, 1, chance2, output3, 1, chance3);
+    }
+
+    /**
+     * Adds processing for a tall flower.
+     *
+     * @param flower  The flower to be processed.
+     * @param output1 The primary output. Should ideally be a {@link DyeItem}.
+     * @param count1  The count of the primary output. Used in Create milling. Some mods may use different, fixed amounts.
+     * @param output2 The id of the secondary output. Used in Create milling. Can be null. If null, no recipes involving this item will be generated.
      * @param count2  The count of the secondary output. Used in Create milling.
      * @param chance2 The chance that the secondary output will actually appear. Used in Create milling.
      */
     protected void addTallFlowerProcessing(Item flower, Item output1, int count1, @Nullable ResourceLocation output2, int count2, float chance2) {
         addTallFlowerProcessing(flower, output1, count1, output2, count2, chance2, null, 0, 0);
+    }
+
+    /**
+     * Adds processing for a tall flower.
+     *
+     * @param flower  The flower to be processed.
+     * @param output1 The primary output. Should ideally be a {@link DyeItem}.
+     * @param count1  The count of the primary output. Used in Create milling. Some mods may use different, fixed amounts.
+     * @param output2 The id of the secondary output. Used in Create milling. Can be null. If null, no recipes involving this item will be generated.
+     * @param chance2 The chance that the secondary output will actually appear. Used in Create milling.
+     */
+    protected void addTallFlowerProcessing(Item flower, Item output1, int count1, @Nullable ResourceLocation output2, float chance2) {
+        addTallFlowerProcessing(flower, output1, count1, output2, 1, chance2);
     }
 
     /**
@@ -797,6 +995,15 @@ public abstract class CompatDataProvider {
                 .setEnergyModifier(0.5f)
                 .addInput(Ingredient.of(mushroom))
                 .addOutputItem(mushroom, 1, 2));
+    }
+
+    /**
+     * Adds processing for a mushroom.
+     *
+     * @param mushroom The mushroom to be processed.
+     */
+    protected void addMushroomProcessing(Item mushroom) {
+        addMushroomProcessing(mushroom, null);
     }
 
     /**
@@ -940,6 +1147,25 @@ public abstract class CompatDataProvider {
     }
 
     /**
+     * Adds processing for a wooden block family.
+     *
+     * @param family The wooden block family to be processed.
+     * @param logs   The logs tag associated with the wooden block family.
+     */
+    protected void addWoodenProcessing(BlockFamily family, @Nullable TagKey<Item> logs) {
+        addWoodenProcessing(family, null, null, logs);
+    }
+
+    /**
+     * Adds processing for a wooden block family.
+     *
+     * @param family The wooden block family to be processed.
+     */
+    protected void addWoodenProcessing(BlockFamily family) {
+        addWoodenProcessing(family, null);
+    }
+
+    /**
      * Adds processing for wooden logs.
      *
      * @param log          The log item to process.
@@ -1002,6 +1228,19 @@ public abstract class CompatDataProvider {
                     .addOutputItem(log, 1, 6)
                     .addOutputItem(sapling, 1, 1.1f));
         }
+    }
+
+    /**
+     * Adds processing for wooden logs.
+     *
+     * @param log          The log item to process.
+     * @param wood         The wood item to process.
+     * @param strippedLog  The stripped log item to process.
+     * @param strippedWood The stripped wood item to process.
+     * @param planks       The id of the planks item associated with the wooden logs.
+     */
+    protected void addLogsProcessing(Item log, Item wood, Item strippedLog, Item strippedWood, ResourceLocation planks) {
+        addLogsProcessing(log, wood, strippedLog, strippedWood, planks, null, null);
     }
     //endregion
 }
