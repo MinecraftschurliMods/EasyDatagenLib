@@ -123,7 +123,7 @@ public class PotentiallyAbsentFluidStack implements JsonSerializable {
         @Override
         public JsonObject toJson() {
             JsonObject json = super.toJson();
-            if (chance > 0 && chance < 1) {
+            if (chance > 0 && chance != 1) {
                 json.addProperty("chance", chance);
             }
             return json;

@@ -6,6 +6,7 @@ import com.github.minecraftschurlimods.easydatagenlib.util.FluidIngredient;
 import com.github.minecraftschurlimods.easydatagenlib.util.JsonUtil;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentFluidStack;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentItemStack;
+import com.github.minecraftschurlimods.easydatagenlib.util.thermal.IngredientWithCount;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.data.DataGenerator;
@@ -70,6 +71,56 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
         public Insolating(String namespace, DataGenerator generator) {
             super("insolator", namespace, generator);
         }
+
+        /**
+         * Creates a new builder with the given id.
+         *
+         * @param id         The id to use.
+         * @param experience The amount of experience this recipe awards.
+         */
+        public Builder builder(String id, float experience) {
+            return new Builder(new ResourceLocation(namespace, id), experience);
+        }
+
+        /**
+         * Creates a new builder with the given id.
+         *
+         * @param id The id to use.
+         */
+        public Builder builder(String id) {
+            return new Builder(new ResourceLocation(namespace, id));
+        }
+
+        public static class Builder extends Processing.Builder {
+            private Float waterModifier;
+
+            public Builder(ResourceLocation id, float experience) {
+                super(id, experience);
+            }
+
+            public Builder(ResourceLocation id) {
+                super(id);
+            }
+
+            /**
+             * Sets the water modifier of this recipe.
+             *
+             * @param waterModifier The water modifier to use.
+             * @return This builder, for chaining.
+             */
+            public Builder setWaterModifier(float waterModifier) {
+                this.waterModifier = waterModifier;
+                return this;
+            }
+
+            @Override
+            protected void toJson(JsonObject json) {
+                super.toJson(json);
+                if (waterModifier != null) {
+                    json.addProperty("water_mod", waterModifier);
+                }
+            }
+        }
     }
 
     public static class Pressing extends Processing {
@@ -133,39 +184,70 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
          * Creates a new builder with the given id.
          *
          * @param id         The id to use.
-         * @param energy     The amount of energy this recipe requires.
          * @param experience The amount of experience this recipe awards.
          */
-        public Builder builder(String id, int energy, float experience) {
-            return new Builder(new ResourceLocation(namespace, id), energy, experience);
+        public Builder builder(String id, float experience) {
+            return new Builder(new ResourceLocation(namespace, id), experience);
         }
 
         /**
          * Creates a new builder with the given id.
          *
-         * @param id     The id to use.
-         * @param energy The amount of energy this recipe requires.
+         * @param id The id to use.
          */
-        public Builder builder(String id, int energy) {
-            return new Builder(new ResourceLocation(namespace, id), energy);
+        public Builder builder(String id) {
+            return new Builder(new ResourceLocation(namespace, id));
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
-            private final List<Ingredient> inputItems = new ArrayList<>();
+            private final List<IngredientWithCount> inputItems = new ArrayList<>();
             private final List<FluidIngredient> inputFluids = new ArrayList<>();
             private final List<PotentiallyAbsentItemStack> outputItems = new ArrayList<>();
             private final List<PotentiallyAbsentFluidStack> outputFluids = new ArrayList<>();
-            private final int energy;
             private final float experience;
+            private Integer energy;
+            private Float energyModifier;
 
-            public Builder(ResourceLocation id, int energy, float experience) {
+            public Builder(ResourceLocation id, float experience) {
                 super(id);
-                this.energy = energy;
                 this.experience = experience;
             }
 
-            public Builder(ResourceLocation id, int energy) {
-                this(id, energy, 0);
+            public Builder(ResourceLocation id) {
+                this(id, 0);
+            }
+
+            /**
+             * Sets the energy of this recipe.
+             *
+             * @param energy The amount of energy to use.
+             * @return This builder, for chaining.
+             */
+            public Builder setEnergy(int energy) {
+                this.energy = energy;
+                return this;
+            }
+
+            /**
+             * Sets the energy modifier of this recipe.
+             *
+             * @param energyModifier The energy modifier to use.
+             * @return This builder, for chaining.
+             */
+            public Builder setEnergyModifier(float energyModifier) {
+                this.energyModifier = energyModifier;
+                return this;
+            }
+
+            /**
+             * Adds an input item ingredient.
+             *
+             * @param input The input item ingredient to use.
+             * @return This builder, for chaining.
+             */
+            public Builder addInputItem(Ingredient input, int count) {
+                inputItems.add(new IngredientWithCount(input, count));
+                return this;
             }
 
             /**
@@ -175,8 +257,7 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
              * @return This builder, for chaining.
              */
             public Builder addInputItem(Ingredient input) {
-                inputItems.add(input);
-                return this;
+                return addInputItem(input, 1);
             }
 
             /**
@@ -398,9 +479,16 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
 
             @Override
             protected void toJson(JsonObject json) {
-                json.addProperty("energy", energy);
-                json.addProperty("experience", experience);
-                JsonArray input = JsonUtil.toIngredientList(inputItems);
+                if (experience != 0) {
+                    json.addProperty("experience", experience);
+                }
+                if (energy != null) {
+                    json.addProperty("energy", energy);
+                }
+                if (energyModifier != null) {
+                    json.addProperty("energy_mod", energyModifier);
+                }
+                JsonArray input = JsonUtil.toList(inputItems);
                 for (FluidIngredient ingredient : inputFluids) {
                     JsonObject fluid = ingredient.toJson();
                     if (fluid.has("tag")) {

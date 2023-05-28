@@ -14,6 +14,7 @@ import com.github.minecraftschurlimods.easydatagenlib.mods.MekanismDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.OccultismDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.ThermalDataProvider;
 import com.github.minecraftschurlimods.easydatagenlib.mods.TwilightForestDataProvider;
+import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentIngredient;
 import com.github.minecraftschurlimods.easydatagenlib.util.botanypots.DisplayState;
 import com.github.minecraftschurlimods.easydatagenlib.util.farmersdelight.ToolActionIngredient;
 import com.github.minecraftschurlimods.easydatagenlib.util.immersiveengineering.ClocheRenderType;
@@ -230,15 +231,18 @@ public abstract class CompatDataProvider {
     //endregion
 
     //region HELPER
-    protected static final ResourceLocation AIR                  = new ResourceLocation("minecraft", "air");
-    protected static final ResourceLocation ALCHEMY_CATALYST     = new ResourceLocation("botania", "alchemy_catalyst");
-    protected static final ResourceLocation BIO_FUEL             = new ResourceLocation("mekanism", "bio_fuel");
-    protected static final ResourceLocation CHEST                = new ResourceLocation("minecraft", "chest");
-    protected static final ResourceLocation CONJURATION_CATALYST = new ResourceLocation("botania", "conjuration_catalyst");
-    protected static final ResourceLocation EXPERIENCE_NUGGET    = new ResourceLocation("create", "experience_nugget");
-    protected static final ResourceLocation SAWDUST              = new ResourceLocation("mekanism", "sawdust");
-    protected static final ResourceLocation SHROOMLIGHT          = new ResourceLocation("minecraft", "shroomlight");
-    protected static final ResourceLocation STICK                = new ResourceLocation("minecraft", "stick");
+    protected static final ResourceLocation AIR                  = new ResourceLocation("minecraft",      "air");
+    protected static final ResourceLocation ALCHEMY_CATALYST     = new ResourceLocation("botania",        "alchemy_catalyst");
+    protected static final ResourceLocation BIO_FUEL             = new ResourceLocation("mekanism",       "bio_fuel");
+    protected static final ResourceLocation CHEST                = new ResourceLocation("minecraft",      "chest");
+    protected static final ResourceLocation CONJURATION_CATALYST = new ResourceLocation("botania",        "conjuration_catalyst");
+    protected static final ResourceLocation EXPERIENCE_NUGGET    = new ResourceLocation("create",         "experience_nugget");
+    protected static final ResourceLocation GRAVEL               = new ResourceLocation("minecraft",      "gravel");
+    protected static final ResourceLocation RICH_SLAG            = new ResourceLocation("thermal",        "rich_slag");
+    protected static final ResourceLocation MEKANISM_SAWDUST     = new ResourceLocation("mekanism",       "sawdust");
+    protected static final ResourceLocation SHROOMLIGHT          = new ResourceLocation("minecraft",      "shroomlight");
+    protected static final ResourceLocation STICK                = new ResourceLocation("minecraft",      "stick");
+    protected static final ResourceLocation THERMAL_SAWDUST      = new ResourceLocation("thermal",        "sawdust");
     protected static final ResourceLocation TREE_BARK            = new ResourceLocation("farmersdelight", "tree_bark");
     protected static final Ingredient AXE_DIG               = new ToolActionIngredient(ToolActions.AXE_DIG);
     protected static final Ingredient AXE_STRIP             = new ToolActionIngredient(ToolActions.AXE_STRIP);
@@ -246,6 +250,8 @@ public abstract class CompatDataProvider {
     protected static final Ingredient DEEPSLATE_COBBLESTONE = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "cobblestone/deepslate")));
     protected static final Ingredient KNIVES                = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "tools/knives")));
     protected static final Ingredient MUSHROOM_SOIL         = Ingredient.of(Items.MYCELIUM, Items.PODZOL);
+    protected static final Ingredient PRESS_PACKING_3x3_DIE = PotentiallyAbsentIngredient.of(new ResourceLocation("thermal", "press_packing_3x3_die"));
+    protected static final Ingredient PRESS_UNPACKING_DIE   = PotentiallyAbsentIngredient.of(new ResourceLocation("thermal", "press_unpacking_die"));
     protected static final Ingredient SLAG                  = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "slag")));
     protected static final Ingredient WOOD_DUST             = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "dusts/wood")));
 
@@ -339,9 +345,10 @@ public abstract class CompatDataProvider {
      * @param deepslateOre The deepslate ore to be processed.
      * @param oreTag       The ore tag to be processed.
      * @param gem          The gem item.
-     * @param dust         The dust item. Can be null. If null, no recipes producing or using this item will be generated.
+     * @param block        The gem block item. Can be null. If null, no recipes involving this item will be generated.
+     * @param dust         The dust item. Can be null. If null, no recipes involving this item will be generated.
      */
-    protected void addGemOreProcessing(Item ore, Item deepslateOre, TagKey<Item> oreTag, Item gem, @Nullable Item dust) {
+    protected void addGemOreProcessing(Item ore, Item deepslateOre, TagKey<Item> oreTag, Item gem, @Nullable Item block, @Nullable Item dust) {
         if (ore instanceof BlockItem bi) {
             BOTANY_POTS_SOIL.add(BOTANY_POTS_SOIL.builder(toName(ore), Ingredient.of(ore), new DisplayState.Simple(bi.getBlock().defaultBlockState()))
                     .addCategory("stone")
@@ -377,6 +384,32 @@ public abstract class CompatDataProvider {
             MEKANISM_ENRICHING.add(MEKANISM_ENRICHING.builder(toName(gem) + "_from_dust", Ingredient.of(dust), gem));
         }
         MEKANISM_ENRICHING.add(MEKANISM_ENRICHING.builder(toName(gem) + "_from_ore", Ingredient.of(oreTag), gem, 2));
+        if (block != null) {
+            THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(gem) + "_packing")
+                    .setEnergy(400)
+                    .addInputItem(Ingredient.of(gem), 9)
+                    .addInputItem(PRESS_PACKING_3x3_DIE)
+                    .addOutputItem(block));
+            THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(gem) + "_unpacking")
+                    .setEnergy(400)
+                    .addInputItem(Ingredient.of(block))
+                    .addInputItem(PRESS_UNPACKING_DIE)
+                    .addOutputItem(gem, 9));
+        }
+        if (dust != null) {
+            THERMAL_PULVERIZING.add(THERMAL_PULVERIZING.builder(toName(gem))
+                    .setEnergyModifier(0.5f)
+                    .addInputItem(Ingredient.of(gem))
+                    .addOutputItem(dust));
+            THERMAL_PULVERIZING.add(THERMAL_PULVERIZING.builder(toName(oreTag), 0.2f)
+                    .addInputItem(Ingredient.of(oreTag))
+                    .addOutputItem(dust, 2.5f)
+                    .addOutputItem(GRAVEL, 0.2f));
+        }
+        THERMAL_SMELTING.add(THERMAL_SMELTING.builder(toName(oreTag), 0.2f)
+                .addInputItem(Ingredient.of(oreTag))
+                .addOutputItem(gem, 1.5f)
+                .addOutputItem(RICH_SLAG, 0.15f));
     }
 
     /**
@@ -387,18 +420,22 @@ public abstract class CompatDataProvider {
      * @param oreTag           The ore tag to be processed.
      * @param rawOre           The raw ore item.
      * @param rawOreTag        The raw ore tag.
-     * @param rawOreBlock      The raw ore block item. Can be null. If null, no recipes producing this item will be generated.
+     * @param rawOreBlock      The raw ore block item. Can be null. If null, no recipes involving this item will be generated.
      * @param rawOreBlockTag   The raw ore block tag.
      * @param ingot            The ingot item.
      * @param ingotTag         The ingot tag.
-     * @param ingotBlock       The ingot block item. Can be null. If null, no recipes producing this item will be generated.
+     * @param ingotBlock       The ingot block item. Can be null. If null, no recipes involving this item will be generated.
      * @param ingotBlockTag    The ingot block tag.
-     * @param dust             The dust item. Used in various mods for ore duplication. Can be null. If null, no recipes producing this item will be generated.
+     * @param nugget           The nugget item. Can be null. If null, no recipes involving this item will be generated.
+     * @param nuggetTag        The nugget tag.
+     * @param dust             The dust item. Used in various mods for ore duplication. Can be null. If null, no recipes involving this item will be generated.
      * @param dustTag          The dust tag.
-     * @param crushedOre       The id of the crushed ore item. Used in Create crushing. Can be null. If null, no recipes using or producing this item will be generated.
-     * @param secondaryDustTag The secondary dust tag. Used in Immersive Engineering crushing. Can be null. If null, no recipes using or producing this item will be generated.
+     * @param crushedOre       The id of the crushed ore item. Used in Create crushing. Can be null. If null, no recipes involving this item will be generated.
+     * @param secondaryIngot   The secondary ingot item. Used in Thermal smelting. Can be null. If null, no recipes involving this item will be generated.
+     * @param secondaryDust    The secondary dust item. Used in Thermal pulverizing. Can be null. If null, no recipes involving this item will be generated.
+     * @param secondaryDustTag The secondary dust tag. Used in Immersive Engineering crushing. Can be null. If null, no recipes involving this item will be generated.
      */
-    protected void addMetalOreProcessing(Item ore, Item deepslateOre, TagKey<Item> oreTag, Item rawOre, TagKey<Item> rawOreTag, @Nullable Item rawOreBlock, TagKey<Item> rawOreBlockTag, Item ingot, TagKey<Item> ingotTag, @Nullable Item ingotBlock, TagKey<Item> ingotBlockTag, @Nullable Item dust, TagKey<Item> dustTag, @Nullable ResourceLocation crushedOre, @Nullable TagKey<Item> secondaryDustTag) {
+    protected void addMetalOreProcessing(Item ore, Item deepslateOre, TagKey<Item> oreTag, Item rawOre, TagKey<Item> rawOreTag, @Nullable Item rawOreBlock, TagKey<Item> rawOreBlockTag, Item ingot, TagKey<Item> ingotTag, @Nullable Item ingotBlock, TagKey<Item> ingotBlockTag, @Nullable Item nugget, TagKey<Item> nuggetTag, @Nullable Item dust, TagKey<Item> dustTag, @Nullable ResourceLocation crushedOre, @Nullable ResourceLocation secondaryIngot, @Nullable ResourceLocation secondaryDust, @Nullable TagKey<Item> secondaryDustTag) {
         if (ore instanceof BlockItem bi) {
             BOTANY_POTS_SOIL.add(BOTANY_POTS_SOIL.builder(toName(ore), Ingredient.of(ore), new DisplayState.Simple(bi.getBlock().defaultBlockState()))
                     .addCategory("stone")
@@ -506,7 +543,76 @@ public abstract class CompatDataProvider {
         OCCULTISM_CRUSHING.add(OCCULTISM_CRUSHING.builder(toName(dustTag) + "_from_raw", Ingredient.of(rawOreTag), Ingredient.of(dustTag), 2)
                 .addCondition(new NotCondition(new TagEmptyCondition(rawOreTag.location())))
                 .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
-        //TODO Thermal Press, Pulverizer, Smelter
+        if (ingotBlock != null) {
+            THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(ingot) + "_packing")
+                    .setEnergy(400)
+                    .addInputItem(Ingredient.of(ingotTag), 9)
+                    .addInputItem(PRESS_PACKING_3x3_DIE)
+                    .addOutputItem(ingotBlock));
+            THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(ingot) + "_unpacking")
+                    .setEnergy(400)
+                    .addInputItem(Ingredient.of(ingotBlockTag))
+                    .addInputItem(PRESS_UNPACKING_DIE)
+                    .addOutputItem(ingot, 9));
+        }
+        if (rawOreBlock != null) {
+            THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(rawOre) + "_packing")
+                    .setEnergy(400)
+                    .addInputItem(Ingredient.of(rawOreTag), 9)
+                    .addInputItem(PRESS_PACKING_3x3_DIE)
+                    .addOutputItem(rawOreBlock));
+            THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(rawOre) + "_unpacking")
+                    .setEnergy(400)
+                    .addInputItem(Ingredient.of(rawOreBlockTag))
+                    .addInputItem(PRESS_UNPACKING_DIE)
+                    .addOutputItem(rawOre, 9));
+        }
+        if (nugget != null) {
+            THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(nugget) + "_packing")
+                    .setEnergy(400)
+                    .addInputItem(Ingredient.of(nuggetTag), 9)
+                    .addInputItem(PRESS_PACKING_3x3_DIE)
+                    .addOutputItem(ingot));
+            THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(nugget) + "_unpacking")
+                    .setEnergy(400)
+                    .addInputItem(Ingredient.of(ingotTag))
+                    .addInputItem(PRESS_UNPACKING_DIE)
+                    .addOutputItem(nugget, 9));
+        }
+        if (dust != null) {
+            THERMAL_PULVERIZING.add(THERMAL_PULVERIZING.builder(toName(ingot))
+                    .setEnergyModifier(0.5f)
+                    .addInputItem(Ingredient.of(ingot))
+                    .addOutputItem(dust));
+            if (secondaryDust == null) {
+                THERMAL_PULVERIZING.add(THERMAL_PULVERIZING.builder(toName(oreTag), 0.2f)
+                        .addInputItem(Ingredient.of(oreTag))
+                        .addOutputItem(dust, 2.5f)
+                        .addOutputItem(GRAVEL, 0.2f));
+            } else {
+                THERMAL_PULVERIZING.add(THERMAL_PULVERIZING.builder(toName(oreTag), 0.2f)
+                        .addInputItem(Ingredient.of(oreTag))
+                        .addOutputItem(dust, 2)
+                        .addOutputItem(secondaryDust, 0.1f)
+                        .addOutputItem(GRAVEL, 0.2f));
+            }
+            THERMAL_SMELTING.add(THERMAL_SMELTING.builder(toName(dust))
+                    .setEnergyModifier(0.5f)
+                    .addInputItem(Ingredient.of(dust))
+                    .addOutputItem(ingot));
+        }
+        if (secondaryIngot == null) {
+            THERMAL_SMELTING.add(THERMAL_SMELTING.builder(toName(oreTag), 0.2f)
+                    .addInputItem(Ingredient.of(oreTag))
+                    .addOutputItem(ingot, 1.5f)
+                    .addOutputItem(RICH_SLAG, 0.15f));
+        } else {
+            THERMAL_PULVERIZING.add(THERMAL_PULVERIZING.builder(toName(oreTag), 0.2f)
+                    .addInputItem(Ingredient.of(oreTag))
+                    .addOutputItem(ingot, 1)
+                    .addOutputItem(secondaryIngot, 0.2f)
+                    .addOutputItem(RICH_SLAG, 0.2f));
+        }
     }
 
     /**
@@ -515,23 +621,24 @@ public abstract class CompatDataProvider {
      * @param flower  The flower to be processed.
      * @param output1 The primary output. Should ideally be a {@link DyeItem}.
      * @param count1  The count of the primary output. Used in Create milling. Some mods may use different, fixed amounts.
-     * @param output2 The id of the secondary output. Used in Create milling. Can be null. If null, no recipes using or producing this item will be generated.
+     * @param output2 The id of the secondary output. Used in Create milling. Can be null. If null, no recipes involving this item will be generated.
      * @param count2  The count of the secondary output. Used in Create milling.
      * @param chance2 The chance that the secondary output will actually appear. Used in Create milling.
-     * @param output3 The id of the tertiary output. Used in Create milling. Can be null. If null, no recipes using or producing this item will be generated.
+     * @param output3 The id of the tertiary output. Used in Create milling. Can be null. If null, no recipes involving this item will be generated.
      * @param count3  The count of the tertiary output. Used in Create milling.
      * @param chance3 The chance that the tertiary output will actually appear. Used in Create milling.
      */
     protected void addFlowerProcessing(Item flower, Item output1, int count1, @Nullable ResourceLocation output2, int count2, float chance2, @Nullable ResourceLocation output3, int count3, float chance3) {
-        ARS_NOUVEAU_CRUSHING.add(ARS_NOUVEAU_CRUSHING.builder(toName(flower), Ingredient.of(flower)).addOutput(output1, 2));
+        Ingredient ingredient = Ingredient.of(flower);
+        ARS_NOUVEAU_CRUSHING.add(ARS_NOUVEAU_CRUSHING.builder(toName(flower), ingredient).addOutput(output1, 2));
         if (flower instanceof BlockItem bi) {
-            BOTANY_POTS_CROP.add(BOTANY_POTS_CROP.builder(toName(flower), Ingredient.of(flower), 1200)
+            BOTANY_POTS_CROP.add(BOTANY_POTS_CROP.builder(toName(flower), ingredient, 1200)
                     .addCategory("dirt")
                     .addDisplay(new DisplayState.Simple(bi.getBlock().defaultBlockState()))
                     .addDrop(flower));
         }
         var milling = CREATE_MILLING.builder(toName(flower), 50)
-                .addIngredient(Ingredient.of(flower))
+                .addIngredient(ingredient)
                 .addResult(output1, count1);
         if (output2 != null) {
             milling.addResult(output2, count2, chance2);
@@ -540,19 +647,25 @@ public abstract class CompatDataProvider {
             milling.addResult(output3, count3, chance3);
         }
         CREATE_MILLING.add(milling);
-        FARMERS_DELIGHT_CUTTING.add(FARMERS_DELIGHT_CUTTING.builder(toName(flower), Ingredient.of(flower), KNIVES)
+        FARMERS_DELIGHT_CUTTING.add(FARMERS_DELIGHT_CUTTING.builder(toName(flower), ingredient, KNIVES)
                 .addResult(output1, 2));
-        INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.add(INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.builder(toName(flower), Ingredient.of(flower), 5)
+        INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.add(INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.builder(toName(flower), ingredient, 5)
                 .addItem(output1, 4)
                 .addItem(output1, 2, 0.5f));
-        INTEGRATED_DYNAMICS_SQUEEZING.add(INTEGRATED_DYNAMICS_SQUEEZING.builder(toName(flower), Ingredient.of(flower))
+        INTEGRATED_DYNAMICS_SQUEEZING.add(INTEGRATED_DYNAMICS_SQUEEZING.builder(toName(flower), ingredient)
                 .addItem(output1, 4));
-        MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(flower), Ingredient.of(flower), BIO_FUEL, 5));
-        MEKANISM_ENRICHING.add(MEKANISM_ENRICHING.builder(toName(flower), Ingredient.of(flower), output1, 2));
+        MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(flower), ingredient, BIO_FUEL, 5));
+        MEKANISM_ENRICHING.add(MEKANISM_ENRICHING.builder(toName(flower), ingredient, output1, 2));
         if (output1 instanceof DyeItem dye) {
-            MEKANISM_PIGMENT_EXTRACTING.add(MEKANISM_PIGMENT_EXTRACTING.builder(toName(flower), Ingredient.of(flower), new Chemical.Stack<>(Pigment.byDyeColor(dye.getDyeColor()), 768)));
+            MEKANISM_PIGMENT_EXTRACTING.add(MEKANISM_PIGMENT_EXTRACTING.builder(toName(flower), ingredient, new Chemical.Stack<>(Pigment.byDyeColor(dye.getDyeColor()), 768)));
         }
-        //TODO Thermal Centrifuging, Insolating
+        THERMAL_CENTRIFUGING.add(THERMAL_CENTRIFUGING.builder(toName(flower))
+                .setEnergy(1600)
+                .addInputItem(ingredient)
+                .addOutputItem(output1, 3));
+        THERMAL_INSOLATING.add(THERMAL_INSOLATING.builder(toName(flower))
+                .addInputItem(ingredient)
+                .addOutputItem(flower, 1, 2));
     }
 
     /**
@@ -561,7 +674,7 @@ public abstract class CompatDataProvider {
      * @param flower  The flower to be processed.
      * @param output1 The primary output. Should ideally be a {@link DyeItem}.
      * @param count1  The count of the primary output. Used in Create milling. Some mods may use different, fixed amounts.
-     * @param output2 The id of the secondary output. Used in Create milling. Can be null. If null, no recipes using or producing this item will be generated.
+     * @param output2 The id of the secondary output. Used in Create milling. Can be null. If null, no recipes involving this item will be generated.
      * @param count2  The count of the secondary output. Used in Create milling.
      * @param chance2 The chance that the secondary output will actually appear. Used in Create milling.
      */
@@ -586,18 +699,25 @@ public abstract class CompatDataProvider {
      * @param flower  The flower to be processed.
      * @param output1 The primary output. Should ideally be a {@link DyeItem}.
      * @param count1  The count of the primary output. Used in Create milling. Some mods may use different, fixed amounts.
+     * @param output2 The id of the secondary output. Used in Create milling. Can be null. If null, no recipes involving this item will be generated.
+     * @param count2  The count of the secondary output. Used in Create milling.
+     * @param chance2 The chance that the secondary output will actually appear. Used in Create milling.
+     * @param output3 The id of the tertiary output. Used in Create milling. Can be null. If null, no recipes involving this item will be generated.
+     * @param count3  The count of the tertiary output. Used in Create milling.
+     * @param chance3 The chance that the tertiary output will actually appear. Used in Create milling.
      */
     protected void addTallFlowerProcessing(Item flower, Item output1, int count1, @Nullable ResourceLocation output2, int count2, float chance2, @Nullable ResourceLocation output3, int count3, float chance3) {
-        ARS_NOUVEAU_CRUSHING.add(ARS_NOUVEAU_CRUSHING.builder(itemId(flower).getPath(), Ingredient.of(flower)).addOutput(output1, 4));
+        Ingredient ingredient = Ingredient.of(flower);
+        ARS_NOUVEAU_CRUSHING.add(ARS_NOUVEAU_CRUSHING.builder(itemId(flower).getPath(), ingredient).addOutput(output1, 4));
         if (flower instanceof BlockItem bi && bi.getBlock() instanceof TallFlowerBlock tfb) {
-            BOTANY_POTS_CROP.add(BOTANY_POTS_CROP.builder(toName(flower), Ingredient.of(flower), 1200)
+            BOTANY_POTS_CROP.add(BOTANY_POTS_CROP.builder(toName(flower), ingredient, 1200)
                     .addCategory("dirt")
                     .addDisplay(new DisplayState.Simple(tfb.defaultBlockState().setValue(TallFlowerBlock.HALF, DoubleBlockHalf.LOWER)))
                     .addDisplay(new DisplayState.Simple(tfb.defaultBlockState().setValue(TallFlowerBlock.HALF, DoubleBlockHalf.UPPER)))
                     .addDrop(flower));
         }
         var milling = CREATE_MILLING.builder(itemId(flower).getPath(), 100)
-                .addIngredient(Ingredient.of(flower))
+                .addIngredient(ingredient)
                 .addResult(output1, count1);
         if (output2 != null) {
             milling.addResult(output2, count2, chance2);
@@ -606,26 +726,33 @@ public abstract class CompatDataProvider {
             milling.addResult(output3, count3, chance3);
         }
         CREATE_MILLING.add(milling);
-        INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.add(INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.builder(toName(flower), Ingredient.of(flower), 5)
+        INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.add(INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.builder(toName(flower), ingredient, 5)
                 .addItem(output1, 8)
                 .addItem(output1, 2, 0.5f)
                 .addItem(output1, 2, 0.5f));
-        INTEGRATED_DYNAMICS_SQUEEZING.add(INTEGRATED_DYNAMICS_SQUEEZING.builder(toName(flower), Ingredient.of(flower))
+        INTEGRATED_DYNAMICS_SQUEEZING.add(INTEGRATED_DYNAMICS_SQUEEZING.builder(toName(flower), ingredient)
                 .addItem(output1, 8));
-        MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(flower), Ingredient.of(flower), BIO_FUEL, 5));
-        MEKANISM_ENRICHING.add(MEKANISM_ENRICHING.builder(toName(flower), Ingredient.of(flower), output1, 4));
+        MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(flower), ingredient, BIO_FUEL, 5));
+        MEKANISM_ENRICHING.add(MEKANISM_ENRICHING.builder(toName(flower), ingredient, output1, 4));
         if (output1 instanceof DyeItem dye) {
-            MEKANISM_PIGMENT_EXTRACTING.add(MEKANISM_PIGMENT_EXTRACTING.builder(toName(flower), Ingredient.of(flower), new Chemical.Stack<>(Pigment.byDyeColor(dye.getDyeColor()), 1536)));
+            MEKANISM_PIGMENT_EXTRACTING.add(MEKANISM_PIGMENT_EXTRACTING.builder(toName(flower), ingredient, new Chemical.Stack<>(Pigment.byDyeColor(dye.getDyeColor()), 1536)));
         }
-        //TODO Thermal Centrifuging, Insolating
+        THERMAL_CENTRIFUGING.add(THERMAL_CENTRIFUGING.builder(toName(flower))
+                .setEnergy(3200)
+                .addInputItem(ingredient)
+                .addOutputItem(output1, 6));
+        THERMAL_INSOLATING.add(THERMAL_INSOLATING.builder(toName(flower))
+                .addInputItem(ingredient)
+                .addOutputItem(flower, 1, 2));
     }
+
     /**
      * Adds processing for a tall flower.
      *
      * @param flower  The flower to be processed.
      * @param output1 The primary output. Should ideally be a {@link DyeItem}.
      * @param count1  The count of the primary output. Used in Create milling. Some mods may use different, fixed amounts.
-     * @param output2 The id of the secondary output. Used in Create milling. Can be null. If null, no recipes using or producing this item will be generated.
+     * @param output2 The id of the secondary output. Used in Create milling. Can be null. If null, no recipes involving this item will be generated.
      * @param count2  The count of the secondary output. Used in Create milling.
      * @param chance2 The chance that the secondary output will actually appear. Used in Create milling.
      */
@@ -665,7 +792,11 @@ public abstract class CompatDataProvider {
         if (mushroomBlock != null) {
             MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(mushroomBlock), Ingredient.of(mushroomBlock), BIO_FUEL, 7));
         }
-        //TODO Thermal Insolating
+        THERMAL_INSOLATING.add(THERMAL_INSOLATING.builder(toName(mushroom))
+                .setWaterModifier(1.5f)
+                .setEnergyModifier(0.5f)
+                .addInputItem(Ingredient.of(mushroom))
+                .addOutputItem(mushroom, 1, 2));
     }
 
     /**
@@ -701,13 +832,11 @@ public abstract class CompatDataProvider {
      * Adds processing for a wooden block family.
      *
      * @param family    The wooden block family to be processed.
-     * @param leaves    The leaves item associated with the wooden block family.
-     * @param sapling   The sapling item associated with the wooden block family.
      * @param boat      The boat item associated with the wooden block family.
      * @param chestBoat The chest boat item associated with the wooden block family.
      * @param logs      The logs tag associated with the wooden block family.
      */
-    protected void addWoodenProcessing(BlockFamily family, @Nullable Item leaves, @Nullable Item sapling, @Nullable Item boat, @Nullable Item chestBoat, @Nullable TagKey<Item> logs) {
+    protected void addWoodenProcessing(BlockFamily family, @Nullable Item boat, @Nullable Item chestBoat, @Nullable TagKey<Item> logs) {
         Item planks = family.getBaseBlock().asItem();
         Item slab = family.getVariants().containsKey(BlockFamily.Variant.SLAB) ? family.get(BlockFamily.Variant.SLAB).asItem() : null;
         Item stairs = family.getVariants().containsKey(BlockFamily.Variant.STAIRS) ? family.get(BlockFamily.Variant.STAIRS).asItem() : null;
@@ -761,14 +890,6 @@ public abstract class CompatDataProvider {
             FARMERS_DELIGHT_CUTTING.add(FARMERS_DELIGHT_CUTTING.builder(toName(sign), Ingredient.of(sign), AXE_DIG)
                     .addResult(planks));
         }
-        if (leaves != null) {
-            BOTANIA_MANA_INFUSION.add(BOTANIA_MANA_INFUSION.builder(toName(leaves) + "_dupe", 2000, Ingredient.of(leaves), leaves, 2)
-                    .setCatalyst(CONJURATION_CATALYST));
-            MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(leaves), Ingredient.of(leaves), BIO_FUEL, 2));
-        }
-        if (sapling != null) {
-            MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(sapling), Ingredient.of(sapling), BIO_FUEL, 2));
-        }
         if (boat != null) {
             MEKANISM_SAWING.add(MEKANISM_SAWING.builder(toName(boat), Ingredient.of(boat), planks, 5));
             if (chestBoat != null) {
@@ -779,7 +900,12 @@ public abstract class CompatDataProvider {
         if (logs != null) {
             CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(planks) + "_from_" + toName(logs), Ingredient.of(logs), planks, 4));
             MEKANISM_SAWING.add(MEKANISM_SAWING.builder(toName(logs), Ingredient.of(logs), planks, 6)
-                    .setSecondaryOutput(SAWDUST, 0.25f));
+                    .setSecondaryOutput(MEKANISM_SAWDUST, 0.25f));
+            THERMAL_SAWING.add(THERMAL_SAWING.builder(toName(logs))
+                    .setEnergy(1000)
+                    .addInputItem(Ingredient.of(logs))
+                    .addOutputItem(planks, 6)
+                    .addOutputItem(THERMAL_SAWDUST, 1.25f));
             if (slab != null) {
                 CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(slab) + "_from_" + toName(logs), Ingredient.of(planks), slab, 8));
             }
@@ -811,7 +937,6 @@ public abstract class CompatDataProvider {
                 CORAIL_WOODCUTTER_WOODCUTTING.add(CORAIL_WOODCUTTER_WOODCUTTING.builder(toName(boat) + "_from_" + toName(logs), Ingredient.of(planks), boat));
             }
         }
-        //TODO Thermal Insolating, Sawing
     }
 
     /**
@@ -822,8 +947,10 @@ public abstract class CompatDataProvider {
      * @param strippedLog  The stripped log item to process.
      * @param strippedWood The stripped wood item to process.
      * @param planks       The id of the planks item associated with the wooden logs.
+     * @param leaves       The leaves item associated with the wooden block family. Can be null. If null, no recipes involving this item will be generated.
+     * @param sapling      The sapling item associated with the wooden block family. Can be null. If null, no recipes involving this item will be generated.
      */
-    protected void addLogsProcessing(Item log, Item wood, Item strippedLog, Item strippedWood, ResourceLocation planks) {
+    protected void addLogsProcessing(Item log, Item wood, Item strippedLog, Item strippedWood, ResourceLocation planks, @Nullable Item leaves, @Nullable Item sapling) {
         if (wood instanceof BlockItem bi) {
             BOTANY_POTS_SOIL.add(BOTANY_POTS_SOIL.builder(toName(wood), Ingredient.of(log, wood), new DisplayState.Simple(bi.getBlock().defaultBlockState()))
                     .addCategory("wood")
@@ -861,6 +988,20 @@ public abstract class CompatDataProvider {
                 .addSecondary(WOOD_DUST, false));
         IMMERSIVE_ENGINEERING_SAWMILL.add(IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(strippedLog), 800, Ingredient.of(strippedLog), planks, 6)
                 .addSecondary(WOOD_DUST, false));
+        if (leaves != null) {
+            BOTANIA_MANA_INFUSION.add(BOTANIA_MANA_INFUSION.builder(toName(leaves) + "_dupe", 2000, Ingredient.of(leaves), leaves, 2)
+                    .setCatalyst(CONJURATION_CATALYST));
+            MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(leaves), Ingredient.of(leaves), BIO_FUEL, 2));
+        }
+        if (sapling != null) {
+            MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(sapling), Ingredient.of(sapling), BIO_FUEL, 2));
+            THERMAL_INSOLATING.add(THERMAL_INSOLATING.builder(toName(sapling))
+                    .setWaterModifier(3)
+                    .setEnergyModifier(3)
+                    .addInputItem(Ingredient.of(sapling))
+                    .addOutputItem(log, 1, 6)
+                    .addOutputItem(sapling, 1, 1.1f));
+        }
     }
     //endregion
 }
