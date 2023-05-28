@@ -4,39 +4,35 @@ import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeBuilder;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeProvider;
 import com.github.minecraftschurlimods.easydatagenlib.util.JsonSerializable;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentItemStack;
-import com.github.minecraftschurlimods.easydatagenlib.util.mekanism.Chemical;
-import com.github.minecraftschurlimods.easydatagenlib.util.mekanism.Gas;
-import com.github.minecraftschurlimods.easydatagenlib.util.mekanism.InfuseType;
-import com.github.minecraftschurlimods.easydatagenlib.util.mekanism.IngredientWithAmount;
-import com.github.minecraftschurlimods.easydatagenlib.util.mekanism.Pigment;
+import com.github.minecraftschurlimods.easydatagenlib.util.mekanism.*;
 import com.google.gson.JsonObject;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 
 public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> extends AbstractRecipeProvider<T> {
-    protected MekanismDataProvider(String folder, String namespace, DataGenerator generator) {
-        super(new ResourceLocation("mekanism", folder), namespace, generator);
+    protected MekanismDataProvider(String folder, String namespace, PackOutput output) {
+        super(new ResourceLocation("mekanism", folder), namespace, output);
     }
     //TODO Chemical Infusing, Compressing, Crystallizing, Dissolution, Energy Conversion, Evaporating, Injecting, Metallurgic Infusing, Nucleosynthesizing, Painting, Pigment Mixing, Purifying, Reaction, Rotary, Separating, Washing
 
     public static class Activating extends GasToGasRecipe {
-        public Activating(String namespace, DataGenerator generator) {
-            super("activating", namespace, generator);
+        public Activating(String namespace, PackOutput output) {
+            super("activating", namespace, output);
         }
     }
 
     public static class Centrifuging extends GasToGasRecipe {
-        public Centrifuging(String namespace, DataGenerator generator) {
-            super("centrifuging", namespace, generator);
+        public Centrifuging(String namespace, PackOutput output) {
+            super("centrifuging", namespace, output);
         }
     }
 
     public static class Combining extends IngredientToItemRecipe {
-        public Combining(String namespace, DataGenerator generator) {
-            super("combining", namespace, generator);
+        public Combining(String namespace, PackOutput output) {
+            super("combining", namespace, output);
         }
 
         /**
@@ -448,44 +444,44 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
     }
 
     public static class Crushing extends IngredientToItemRecipe {
-        public Crushing(String namespace, DataGenerator generator) {
-            super("crushing", namespace, generator);
+        public Crushing(String namespace, PackOutput output) {
+            super("crushing", namespace, output);
         }
     }
 
     public static class Enriching extends IngredientToItemRecipe {
-        public Enriching(String namespace, DataGenerator generator) {
-            super("enriching", namespace, generator);
+        public Enriching(String namespace, PackOutput output) {
+            super("enriching", namespace, output);
         }
     }
 
     public static class GasConversion extends IngredientToTRecipe<Chemical.Stack<Gas>> {
-        public GasConversion(String namespace, DataGenerator generator) {
-            super("gas_conversion", namespace, generator);
+        public GasConversion(String namespace, PackOutput output) {
+            super("gas_conversion", namespace, output);
         }
     }
 
     public static class InfusionConversion extends IngredientToTRecipe<Chemical.Stack<InfuseType>> {
-        public InfusionConversion(String namespace, DataGenerator generator) {
-            super("infusion_conversion", namespace, generator);
+        public InfusionConversion(String namespace, PackOutput output) {
+            super("infusion_conversion", namespace, output);
         }
     }
 
     public static class Oxidizing extends IngredientToTRecipe<Chemical.Stack<Gas>> {
-        public Oxidizing(String namespace, DataGenerator generator) {
-            super("oxidizing", namespace, generator);
+        public Oxidizing(String namespace, PackOutput output) {
+            super("oxidizing", namespace, output);
         }
     }
 
     public static class PigmentExtracting extends IngredientToTRecipe<Chemical.Stack<Pigment>> {
-        public PigmentExtracting(String namespace, DataGenerator generator) {
-            super("pigment_extracting", namespace, generator);
+        public PigmentExtracting(String namespace, PackOutput output) {
+            super("pigment_extracting", namespace, output);
         }
     }
 
     public static class Sawing extends IngredientToItemRecipe {
-        public Sawing(String namespace, DataGenerator generator) {
-            super("sawing", namespace, generator);
+        public Sawing(String namespace, PackOutput output) {
+            super("sawing", namespace, output);
         }
 
         /**
@@ -807,14 +803,14 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
     }
 
     public static class Smelting extends IngredientToItemRecipe {
-        public Smelting(String namespace, DataGenerator generator) {
-            super("smelting", namespace, generator);
+        public Smelting(String namespace, PackOutput output) {
+            super("smelting", namespace, output);
         }
     }
 
     public static abstract class Abstract1To1Recipe<I extends JsonSerializable, O extends JsonSerializable, B extends Abstract1To1Recipe.Builder<I, O>> extends MekanismDataProvider<B> {
-        protected Abstract1To1Recipe(String folder, String namespace, DataGenerator generator) {
-            super(folder, namespace, generator);
+        protected Abstract1To1Recipe(String folder, String namespace, PackOutput output) {
+            super(folder, namespace, output);
         }
 
         public static class Builder<I extends JsonSerializable, O extends JsonSerializable> extends AbstractRecipeBuilder<Builder<I, O>> {
@@ -836,8 +832,8 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
     }
 
     public static abstract class IngredientToTRecipe<T extends JsonSerializable> extends Abstract1To1Recipe<IngredientWithAmount, T, IngredientToTRecipe.Builder<T>> {
-        protected IngredientToTRecipe(String folder, String namespace, DataGenerator generator) {
-            super(folder, namespace, generator);
+        protected IngredientToTRecipe(String folder, String namespace, PackOutput output) {
+            super(folder, namespace, output);
         }
 
         /**
@@ -871,8 +867,8 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
     }
 
     public static abstract class TToItemRecipe<T extends JsonSerializable> extends Abstract1To1Recipe<T, PotentiallyAbsentItemStack, TToItemRecipe.Builder<T>> {
-        protected TToItemRecipe(String folder, String namespace, DataGenerator generator) {
-            super(folder, namespace, generator);
+        protected TToItemRecipe(String folder, String namespace, PackOutput output) {
+            super(folder, namespace, output);
         }
 
         /**
@@ -963,8 +959,8 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
     }
 
     public static abstract class IngredientToItemRecipe extends Abstract1To1Recipe<IngredientWithAmount, PotentiallyAbsentItemStack, IngredientToItemRecipe.Builder> {
-        protected IngredientToItemRecipe(String folder, String namespace, DataGenerator generator) {
-            super(folder, namespace, generator);
+        protected IngredientToItemRecipe(String folder, String namespace, PackOutput output) {
+            super(folder, namespace, output);
         }
 
         /**
@@ -1145,8 +1141,8 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
     }
 
     public static abstract class GasToGasRecipe extends Abstract1To1Recipe<Chemical.Stack<Gas>, Chemical.Stack<Gas>, GasToGasRecipe.Builder> {
-        protected GasToGasRecipe(String folder, String namespace, DataGenerator generator) {
-            super(folder, namespace, generator);
+        protected GasToGasRecipe(String folder, String namespace, PackOutput output) {
+            super(folder, namespace, output);
         }
 
         /**

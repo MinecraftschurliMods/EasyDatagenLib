@@ -20,8 +20,12 @@ import com.github.minecraftschurlimods.easydatagenlib.util.farmersdelight.ToolAc
 import com.github.minecraftschurlimods.easydatagenlib.util.immersiveengineering.ClocheRenderType;
 import com.github.minecraftschurlimods.easydatagenlib.util.mekanism.Chemical;
 import com.github.minecraftschurlimods.easydatagenlib.util.mekanism.Pigment;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.BlockFamily;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
@@ -43,16 +47,21 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Extend this class and override {@link CompatDataProvider#generate()} to add your own datagen entries.
  */
 @SuppressWarnings({"unused", "DuplicatedCode", "SameParameterValue"})
-public abstract class CompatDataProvider {
+public abstract class CompatDataProvider implements DataProvider {
     //region CORE
     private final List<AbstractDataProvider<?>> SERVER_PROVIDERS = new ArrayList<>();
     private final List<AbstractDataProvider<?>> CLIENT_PROVIDERS = new ArrayList<>();
     private final List<AbstractDataProvider<?>> COMMON_PROVIDERS = new ArrayList<>();
+
+    protected final boolean runServer;
+    protected final boolean runClient;
+
     protected final ArsNouveauDataProvider.Crushing ARS_NOUVEAU_CRUSHING;
     protected final ArsNouveauDataProvider.Glyph ARS_NOUVEAU_GLYPH;
     protected final ArsNouveauDataProvider.Imbueing ARS_NOUVEAU_IMBUEING;
@@ -120,101 +129,110 @@ public abstract class CompatDataProvider {
      * Constructs a new {@link CompatDataProvider}. Initializes the providers and calls {@link CompatDataProvider#generate()}.
      *
      * @param namespace The namespace to use. In most cases, this is your own mod id.
-     * @param generator The {@link DataGenerator} to use. Get this via {@link GatherDataEvent#getGenerator()}.
+     * @param output    The {@link DataGenerator} to use. Get this via {@link GatherDataEvent#getGenerator()}.
      * @param runServer Whether to generate data files. Get this via {@link GatherDataEvent#includeServer()}.
      * @param runClient Whether to generate asset files. Get this via {@link GatherDataEvent#includeClient()}.
      */
-    protected CompatDataProvider(String namespace, DataGenerator generator, boolean runServer, boolean runClient) {
-        ARS_NOUVEAU_CRUSHING = addServer(new ArsNouveauDataProvider.Crushing(namespace, generator));
-        ARS_NOUVEAU_GLYPH = addServer(new ArsNouveauDataProvider.Glyph(namespace, generator));
-        ARS_NOUVEAU_IMBUEING = addServer(new ArsNouveauDataProvider.Imbueing(namespace, generator));
-        BOTANIA_MANA_INFUSION = addServer(new BotaniaDataProvider.Infusing(namespace, generator));
-        BOTANY_POTS_CROP = addServer(new BotanyPotsDataProvider.Crop(namespace, generator));
-        BOTANY_POTS_SOIL = addServer(new BotanyPotsDataProvider.Soil(namespace, generator));
-        CORAIL_WOODCUTTER_SAWING = addServer(new CorailWoodcutterDataProvider.Sawing(namespace, generator));
-        CREATE_COMPACTING = addServer(new CreateDataProvider.Compacting(namespace, generator));
-        CREATE_CRUSHING = addServer(new CreateDataProvider.Crushing(namespace, generator));
-        CREATE_CUTTING = addServer(new CreateDataProvider.Cutting(namespace, generator));
-        CREATE_DEPLOYING = addServer(new CreateDataProvider.Deploying(namespace, generator));
-        CREATE_EMPTYING = addServer(new CreateDataProvider.Emptying(namespace, generator));
-        CREATE_FILLING = addServer(new CreateDataProvider.Filling(namespace, generator));
-        CREATE_HAUNTING = addServer(new CreateDataProvider.Haunting(namespace, generator));
-        CREATE_ITEM_APPLICATION = addServer(new CreateDataProvider.ItemApplication(namespace, generator));
-        CREATE_MECHANICAL_CRAFTING = addServer(new CreateDataProvider.MechanicalCrafting(namespace, generator));
-        CREATE_MILLING = addServer(new CreateDataProvider.Milling(namespace, generator));
-        CREATE_MIXING = addServer(new CreateDataProvider.Mixing(namespace, generator));
-        CREATE_PRESSING = addServer(new CreateDataProvider.Pressing(namespace, generator));
-        CREATE_SANDPAPER_POLISHING = addServer(new CreateDataProvider.SandpaperPolishing(namespace, generator));
-        CREATE_SEQUENCED_ASSEMBLY  = addServer(new CreateDataProvider.SequencedAssembly(namespace, generator));
-        CREATE_SPLASHING = addServer(new CreateDataProvider.Splashing(namespace, generator));
-        ELEMENTALCRAFT_GRINDING = addServer(new ElementalcraftDataProvider.Grinding(namespace, generator));
-        ELEMENTALCRAFT_SAWING = addServer(new ElementalcraftDataProvider.Sawing(namespace, generator));
-        FARMERS_DELIGHT_COOKING = addServer(new FarmersDelightDataProvider.Cooking(namespace, generator));
-        FARMERS_DELIGHT_CUTTING = addServer(new FarmersDelightDataProvider.Cutting(namespace, generator));
-        IMMERSIVE_ENGINEERING_ARC_FURNACE = addServer(new ImmersiveEngineeringDataProvider.ArcFurnace(namespace, generator));
-        IMMERSIVE_ENGINEERING_CLOCHE = addServer(new ImmersiveEngineeringDataProvider.Cloche(namespace, generator));
-        IMMERSIVE_ENGINEERING_CRUSHER = addServer(new ImmersiveEngineeringDataProvider.Crusher(namespace, generator));
-        IMMERSIVE_ENGINEERING_SAWMILL = addServer(new ImmersiveEngineeringDataProvider.Sawmill(namespace, generator));
-        INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING = addServer(new IntegratedDynamicsDataProvider.MechanicalSqueezing(namespace, generator));
-        INTEGRATED_DYNAMICS_SQUEEZING = addServer(new IntegratedDynamicsDataProvider.Squeezing(namespace, generator));
-        MEKANISM_ACTIVATING = addServer(new MekanismDataProvider.Activating(namespace, generator));
-        MEKANISM_CENTRIFUGING = addServer(new MekanismDataProvider.Centrifuging(namespace, generator));
-        MEKANISM_COMBINING = addServer(new MekanismDataProvider.Combining(namespace, generator));
-        MEKANISM_CRUSHING = addServer(new MekanismDataProvider.Crushing(namespace, generator));
-        MEKANISM_ENRICHING = addServer(new MekanismDataProvider.Enriching(namespace, generator));
-        MEKANISM_GAS_CONVERSION = addServer(new MekanismDataProvider.GasConversion(namespace, generator));
-        MEKANISM_INFUSION_CONVERSION = addServer(new MekanismDataProvider.InfusionConversion(namespace, generator));
-        MEKANISM_OXIDIZING = addServer(new MekanismDataProvider.Oxidizing(namespace, generator));
-        MEKANISM_PIGMENT_EXTRACTING = addServer(new MekanismDataProvider.PigmentExtracting(namespace, generator));
-        MEKANISM_SAWING = addServer(new MekanismDataProvider.Sawing(namespace, generator));
-        MEKANISM_SMELTING = addServer(new MekanismDataProvider.Smelting(namespace, generator));
-        OCCULTISM_CRUSHING = addServer(new OccultismDataProvider.Crushing(namespace, generator));
-        THERMAL_BOTTLING = addServer(new ThermalDataProvider.Bottling(namespace, generator));
-        THERMAL_BREWING = addServer(new ThermalDataProvider.Brewing(namespace, generator));
-        THERMAL_CENTRIFUGING = addServer(new ThermalDataProvider.Centrifuging(namespace, generator));
-        THERMAL_CHILLING = addServer(new ThermalDataProvider.Chilling(namespace, generator));
-        THERMAL_CRUCIBLE = addServer(new ThermalDataProvider.Crucible(namespace, generator));
-        THERMAL_CRYSTALLIZING = addServer(new ThermalDataProvider.Crystallizing(namespace, generator));
-        THERMAL_FURNACE = addServer(new ThermalDataProvider.Furnace(namespace, generator));
-        THERMAL_INSOLATING = addServer(new ThermalDataProvider.Insolating(namespace, generator));
-        THERMAL_PRESSING = addServer(new ThermalDataProvider.Pressing(namespace, generator));
-        THERMAL_PULVERIZER_RECYCLING = addServer(new ThermalDataProvider.PulverizerRecycling(namespace, generator));
-        THERMAL_PULVERIZING = addServer(new ThermalDataProvider.Pulverizing(namespace, generator));
-        THERMAL_PYROLYZING = addServer(new ThermalDataProvider.Pyrolyzing(namespace, generator));
-        THERMAL_REFINING = addServer(new ThermalDataProvider.Refining(namespace, generator));
-        THERMAL_SAWING = addServer(new ThermalDataProvider.Sawing(namespace, generator));
-        THERMAL_SMELTER_RECYCLING = addServer(new ThermalDataProvider.SmelterRecycling(namespace, generator));
-        THERMAL_SMELTING = addServer(new ThermalDataProvider.Smelting(namespace, generator));
-        TWILIGHT_FOREST_CRUMBLING = addServer(new TwilightForestDataProvider.Crumbling(namespace, generator));
-        TWILIGHT_FOREST_TRANSFORMING = addServer(new TwilightForestDataProvider.Transforming(namespace, generator));
-        for (AbstractDataProvider<?> provider : SERVER_PROVIDERS) {
-            generator.addProvider(runServer, provider);
-        }
-        for (AbstractDataProvider<?> provider : CLIENT_PROVIDERS) {
-            generator.addProvider(runClient, provider);
-        }
-        for (AbstractDataProvider<?> provider : COMMON_PROVIDERS) {
-            generator.addProvider(runServer || runClient, provider);
-        }
-        generate();
+    protected CompatDataProvider(String namespace, PackOutput output, boolean runServer, boolean runClient) {
+        this.runServer = runServer;
+        this.runClient = runClient;
+        ARS_NOUVEAU_CRUSHING = addServer(new ArsNouveauDataProvider.Crushing(namespace, output));
+        ARS_NOUVEAU_GLYPH = addServer(new ArsNouveauDataProvider.Glyph(namespace, output));
+        ARS_NOUVEAU_IMBUEING = addServer(new ArsNouveauDataProvider.Imbueing(namespace, output));
+        BOTANIA_MANA_INFUSION = addServer(new BotaniaDataProvider.Infusing(namespace, output));
+        BOTANY_POTS_CROP = addServer(new BotanyPotsDataProvider.Crop(namespace, output));
+        BOTANY_POTS_SOIL = addServer(new BotanyPotsDataProvider.Soil(namespace, output));
+        CORAIL_WOODCUTTER_SAWING = addServer(new CorailWoodcutterDataProvider.Sawing(namespace, output));
+        CREATE_COMPACTING = addServer(new CreateDataProvider.Compacting(namespace, output));
+        CREATE_CRUSHING = addServer(new CreateDataProvider.Crushing(namespace, output));
+        CREATE_CUTTING = addServer(new CreateDataProvider.Cutting(namespace, output));
+        CREATE_DEPLOYING = addServer(new CreateDataProvider.Deploying(namespace, output));
+        CREATE_EMPTYING = addServer(new CreateDataProvider.Emptying(namespace, output));
+        CREATE_FILLING = addServer(new CreateDataProvider.Filling(namespace, output));
+        CREATE_HAUNTING = addServer(new CreateDataProvider.Haunting(namespace, output));
+        CREATE_ITEM_APPLICATION = addServer(new CreateDataProvider.ItemApplication(namespace, output));
+        CREATE_MECHANICAL_CRAFTING = addServer(new CreateDataProvider.MechanicalCrafting(namespace, output));
+        CREATE_MILLING = addServer(new CreateDataProvider.Milling(namespace, output));
+        CREATE_MIXING = addServer(new CreateDataProvider.Mixing(namespace, output));
+        CREATE_PRESSING = addServer(new CreateDataProvider.Pressing(namespace, output));
+        CREATE_SANDPAPER_POLISHING = addServer(new CreateDataProvider.SandpaperPolishing(namespace, output));
+        CREATE_SEQUENCED_ASSEMBLY  = addServer(new CreateDataProvider.SequencedAssembly(namespace, output));
+        CREATE_SPLASHING = addServer(new CreateDataProvider.Splashing(namespace, output));
+        ELEMENTALCRAFT_GRINDING = addServer(new ElementalcraftDataProvider.Grinding(namespace, output));
+        ELEMENTALCRAFT_SAWING = addServer(new ElementalcraftDataProvider.Sawing(namespace, output));
+        FARMERS_DELIGHT_COOKING = addServer(new FarmersDelightDataProvider.Cooking(namespace, output));
+        FARMERS_DELIGHT_CUTTING = addServer(new FarmersDelightDataProvider.Cutting(namespace, output));
+        IMMERSIVE_ENGINEERING_ARC_FURNACE = addServer(new ImmersiveEngineeringDataProvider.ArcFurnace(namespace, output));
+        IMMERSIVE_ENGINEERING_CLOCHE = addServer(new ImmersiveEngineeringDataProvider.Cloche(namespace, output));
+        IMMERSIVE_ENGINEERING_CRUSHER = addServer(new ImmersiveEngineeringDataProvider.Crusher(namespace, output));
+        IMMERSIVE_ENGINEERING_SAWMILL = addServer(new ImmersiveEngineeringDataProvider.Sawmill(namespace, output));
+        INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING = addServer(new IntegratedDynamicsDataProvider.MechanicalSqueezing(namespace, output));
+        INTEGRATED_DYNAMICS_SQUEEZING = addServer(new IntegratedDynamicsDataProvider.Squeezing(namespace, output));
+        MEKANISM_ACTIVATING = addServer(new MekanismDataProvider.Activating(namespace, output));
+        MEKANISM_CENTRIFUGING = addServer(new MekanismDataProvider.Centrifuging(namespace, output));
+        MEKANISM_COMBINING = addServer(new MekanismDataProvider.Combining(namespace, output));
+        MEKANISM_CRUSHING = addServer(new MekanismDataProvider.Crushing(namespace, output));
+        MEKANISM_ENRICHING = addServer(new MekanismDataProvider.Enriching(namespace, output));
+        MEKANISM_GAS_CONVERSION = addServer(new MekanismDataProvider.GasConversion(namespace, output));
+        MEKANISM_INFUSION_CONVERSION = addServer(new MekanismDataProvider.InfusionConversion(namespace, output));
+        MEKANISM_OXIDIZING = addServer(new MekanismDataProvider.Oxidizing(namespace, output));
+        MEKANISM_PIGMENT_EXTRACTING = addServer(new MekanismDataProvider.PigmentExtracting(namespace, output));
+        MEKANISM_SAWING = addServer(new MekanismDataProvider.Sawing(namespace, output));
+        MEKANISM_SMELTING = addServer(new MekanismDataProvider.Smelting(namespace, output));
+        OCCULTISM_CRUSHING = addServer(new OccultismDataProvider.Crushing(namespace, output));
+        THERMAL_BOTTLING = addServer(new ThermalDataProvider.Bottling(namespace, output));
+        THERMAL_BREWING = addServer(new ThermalDataProvider.Brewing(namespace, output));
+        THERMAL_CENTRIFUGING = addServer(new ThermalDataProvider.Centrifuging(namespace, output));
+        THERMAL_CHILLING = addServer(new ThermalDataProvider.Chilling(namespace, output));
+        THERMAL_CRUCIBLE = addServer(new ThermalDataProvider.Crucible(namespace, output));
+        THERMAL_CRYSTALLIZING = addServer(new ThermalDataProvider.Crystallizing(namespace, output));
+        THERMAL_FURNACE = addServer(new ThermalDataProvider.Furnace(namespace, output));
+        THERMAL_INSOLATING = addServer(new ThermalDataProvider.Insolating(namespace, output));
+        THERMAL_PRESSING = addServer(new ThermalDataProvider.Pressing(namespace, output));
+        THERMAL_PULVERIZER_RECYCLING = addServer(new ThermalDataProvider.PulverizerRecycling(namespace, output));
+        THERMAL_PULVERIZING = addServer(new ThermalDataProvider.Pulverizing(namespace, output));
+        THERMAL_PYROLYZING = addServer(new ThermalDataProvider.Pyrolyzing(namespace, output));
+        THERMAL_REFINING = addServer(new ThermalDataProvider.Refining(namespace, output));
+        THERMAL_SAWING = addServer(new ThermalDataProvider.Sawing(namespace, output));
+        THERMAL_SMELTER_RECYCLING = addServer(new ThermalDataProvider.SmelterRecycling(namespace, output));
+        THERMAL_SMELTING = addServer(new ThermalDataProvider.Smelting(namespace, output));
+        TWILIGHT_FOREST_CRUMBLING = addServer(new TwilightForestDataProvider.Crumbling(namespace, output));
+        TWILIGHT_FOREST_TRANSFORMING = addServer(new TwilightForestDataProvider.Transforming(namespace, output));
     }
 
     /**
      * Constructs a new {@link CompatDataProvider}. Initializes the providers and calls {@link CompatDataProvider#generate()}.
      *
-     * <p>Unlike {@link CompatDataProvider#CompatDataProvider(String, DataGenerator, boolean, boolean)}, this variant extracts the necessary information from the given {@link GatherDataEvent}.</p>
+     * <p>Unlike {@link CompatDataProvider#CompatDataProvider(String, PackOutput, boolean, boolean)}, this variant extracts the necessary information from the given {@link GatherDataEvent}.</p>
      *
      * @param namespace The namespace to use. In most cases, this is your own mod id.
      * @param event The event object to get the values from.
      */
     protected CompatDataProvider(String namespace, GatherDataEvent event) {
-        this(namespace, event.getGenerator(), event.includeServer(), event.includeClient());
+        this(namespace, event.getGenerator().getPackOutput(), event.includeServer(), event.includeClient());
     }
 
     /**
      * Override this to add your recipes.
      */
-    protected abstract void generate();
+    protected abstract CompletableFuture<?> generate();
+
+    @Override
+    public final CompletableFuture<?> run(CachedOutput output) {
+        return generate().thenApply($ -> {
+            List<AbstractDataProvider<?>> toRun = new ArrayList<>();
+            if (runServer) {
+                toRun.addAll(SERVER_PROVIDERS);
+            }
+            if (runClient) {
+                toRun.addAll(CLIENT_PROVIDERS);
+            }
+            if (runServer || runClient) {
+                toRun.addAll(COMMON_PROVIDERS);
+            }
+            return CompletableFuture.allOf(toRun.stream().map(provider -> provider.run(output)).toArray(CompletableFuture<?>[]::new));
+        });
+    }
 
     protected <T extends AbstractDataProvider<?>> T addServer(T provider) {
         SERVER_PROVIDERS.add(provider);
@@ -249,13 +267,13 @@ public abstract class CompatDataProvider {
     protected static final Ingredient AXE_DIG               = new ToolActionIngredient(ToolActions.AXE_DIG);
     protected static final Ingredient AXE_STRIP             = new ToolActionIngredient(ToolActions.AXE_STRIP);
     protected static final Ingredient COBBLESTONE           = Ingredient.of(Tags.Items.COBBLESTONE_NORMAL);
-    protected static final Ingredient DEEPSLATE_COBBLESTONE = Ingredient.of(Tags.Items.COBBLESTONE_DEEPSLATE);
-    protected static final Ingredient KNIVES                = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "tools/knives")));
+    protected static final Ingredient COBBLESTONE_DEEPSLATE = Ingredient.of(Tags.Items.COBBLESTONE_DEEPSLATE);
+    protected static final Ingredient KNIVES                = Ingredient.of(TagKey.create(Registries.ITEM, new ResourceLocation("forge", "tools/knives")));
     protected static final Ingredient MUSHROOM_SOIL         = Ingredient.of(Items.MYCELIUM, Items.PODZOL);
     protected static final Ingredient PRESS_PACKING_3x3_DIE = PotentiallyAbsentIngredient.of(new ResourceLocation("thermal", "press_packing_3x3_die"));
     protected static final Ingredient PRESS_UNPACKING_DIE   = PotentiallyAbsentIngredient.of(new ResourceLocation("thermal", "press_unpacking_die"));
-    protected static final Ingredient SLAG                  = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "slag")));
-    protected static final Ingredient WOOD_DUST             = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "dusts/wood")));
+    protected static final Ingredient SLAG                  = Ingredient.of(TagKey.create(Registries.ITEM, new ResourceLocation("forge", "slag")));
+    protected static final Ingredient WOOD_DUST             = Ingredient.of(TagKey.create(Registries.ITEM, new ResourceLocation("forge", "dusts/wood")));
 
     /**
      * Shortcut to get a block's registry name.
@@ -380,7 +398,7 @@ public abstract class CompatDataProvider {
                 .addOutput(EXPERIENCE_NUGGET, 0.75f)
                 .addOutput(Items.COBBLED_DEEPSLATE, 0.125f));
         if (dust != null) {
-            MEKANISM_COMBINING.add(MEKANISM_COMBINING.builder(toName(gem) + "_to_deepslate_ore", Ingredient.of(dust), 5, DEEPSLATE_COBBLESTONE, deepslateOre));
+            MEKANISM_COMBINING.add(MEKANISM_COMBINING.builder(toName(gem) + "_to_deepslate_ore", Ingredient.of(dust), 5, COBBLESTONE_DEEPSLATE, deepslateOre));
             MEKANISM_COMBINING.add(MEKANISM_COMBINING.builder(toName(gem) + "_to_ore", Ingredient.of(dust), 5, COBBLESTONE, ore));
             MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(gem) + "_to_dust", Ingredient.of(gem), dust));
             MEKANISM_ENRICHING.add(MEKANISM_ENRICHING.builder(toName(gem) + "_from_dust", Ingredient.of(dust), gem));
@@ -566,7 +584,7 @@ public abstract class CompatDataProvider {
                 MEKANISM_ENRICHING.add(MEKANISM_ENRICHING.builder(toName(dust) + "_from_raw_block", Ingredient.of(rawOreBlockTag), dust, 12));
             }
         }
-        MEKANISM_COMBINING.add(MEKANISM_COMBINING.builder(toName(deepslateOre) + "_from_raw", Ingredient.of(rawOre), 8, DEEPSLATE_COBBLESTONE, deepslateOre));
+        MEKANISM_COMBINING.add(MEKANISM_COMBINING.builder(toName(deepslateOre) + "_from_raw", Ingredient.of(rawOre), 8, COBBLESTONE_DEEPSLATE, deepslateOre));
         MEKANISM_COMBINING.add(MEKANISM_COMBINING.builder(toName(ore) + "_from_raw", Ingredient.of(rawOre), 8, COBBLESTONE, ore));
         if (dustTag != null) {
             OCCULTISM_CRUSHING.add(OCCULTISM_CRUSHING.builder(toName(dustTag), Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
