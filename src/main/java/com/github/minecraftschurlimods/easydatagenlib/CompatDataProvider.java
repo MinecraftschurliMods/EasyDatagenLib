@@ -215,17 +215,17 @@ public abstract class CompatDataProvider {
      */
     protected abstract void generate();
 
-    private <T extends AbstractDataProvider<?>> T addServer(T provider) {
+    protected <T extends AbstractDataProvider<?>> T addServer(T provider) {
         SERVER_PROVIDERS.add(provider);
         return provider;
     }
 
-    private <T extends AbstractDataProvider<?>> T addClient(T provider) {
+    protected <T extends AbstractDataProvider<?>> T addClient(T provider) {
         CLIENT_PROVIDERS.add(provider);
         return provider;
     }
 
-    private <T extends AbstractDataProvider<?>> T addCommon(T provider) {
+    protected <T extends AbstractDataProvider<?>> T addCommon(T provider) {
         COMMON_PROVIDERS.add(provider);
         return provider;
     }
