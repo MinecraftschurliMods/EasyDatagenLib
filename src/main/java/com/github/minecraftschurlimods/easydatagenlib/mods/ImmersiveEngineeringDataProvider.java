@@ -8,7 +8,7 @@ import com.github.minecraftschurlimods.easydatagenlib.util.immersiveengineering.
 import com.github.minecraftschurlimods.easydatagenlib.util.immersiveengineering.IngredientWithCount;
 import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -18,14 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeBuilder<?>> extends AbstractRecipeProvider<T> {
-    protected ImmersiveEngineeringDataProvider(String folder, String namespace, DataGenerator generator) {
-        super(new ResourceLocation("immersiveengineering", folder), namespace, generator);
+    protected ImmersiveEngineeringDataProvider(String folder, String namespace, PackOutput output) {
+        super(new ResourceLocation("immersiveengineering", folder), namespace, output);
     }
     //TODO Alloy Furnace, Blast Furnace, Blast Furnace Fuel, Bottling Machine, Cloche Fertilizer, Coke Oven, Fermenter, Generator Fuel, Metal Press, Mineral Mix, Mixer, Refinery, Squeezer, Thermoelectric Source
 
     public static class ArcFurnace extends ImmersiveEngineeringDataProvider<ArcFurnace.Builder> {
-        public ArcFurnace(String namespace, DataGenerator generator) {
-            super("arc_furnace", namespace, generator);
+        public ArcFurnace(String namespace, PackOutput output) {
+            super("arc_furnace", namespace, output);
         }
 
         /**
@@ -191,8 +191,8 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
     }
 
     public static class Cloche extends ImmersiveEngineeringDataProvider<Cloche.Builder> {
-        public Cloche(String namespace, DataGenerator generator) {
-            super("cloche", namespace, generator);
+        public Cloche(String namespace, PackOutput output) {
+            super("cloche", namespace, output);
         }
 
         /**
@@ -275,8 +275,8 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
     }
 
     public static class Crusher extends ImmersiveEngineeringDataProvider<Crusher.Builder> {
-        public Crusher(String namespace, DataGenerator generator) {
-            super("crusher", namespace, generator);
+        public Crusher(String namespace, PackOutput output) {
+            super("crusher", namespace, output);
         }
 
         /**
@@ -369,8 +369,8 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
     }
 
     public static class Sawmill extends ImmersiveEngineeringDataProvider<Sawmill.Builder> {
-        public Sawmill(String namespace, DataGenerator generator) {
-            super("sawmill", namespace, generator);
+        public Sawmill(String namespace, PackOutput output) {
+            super("sawmill", namespace, output);
         }
 
         /**

@@ -9,74 +9,72 @@ import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentItem
 import com.github.minecraftschurlimods.easydatagenlib.util.create.HeatRequirement;
 import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.SerializationException;
 
 import java.util.*;
 
 public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> extends AbstractRecipeProvider<T> {
-    protected CreateDataProvider(String folder, String namespace, DataGenerator generator) {
-        super(new ResourceLocation("create", folder), namespace, generator);
+    protected CreateDataProvider(String folder, String namespace, PackOutput output) {
+        super(new ResourceLocation("create", folder), namespace, output);
     }
 
     public static class Compacting extends Processing {
-        public Compacting(String namespace, DataGenerator generator) {
-            super("compacting", namespace, generator);
+        public Compacting(String namespace, PackOutput output) {
+            super("compacting", namespace, output);
         }
     }
 
     public static class Crushing extends Processing {
-        public Crushing(String namespace, DataGenerator generator) {
-            super("crushing", namespace, generator);
+        public Crushing(String namespace, PackOutput output) {
+            super("crushing", namespace, output);
         }
     }
 
     public static class Cutting extends Processing {
-        public Cutting(String namespace, DataGenerator generator) {
-            super("cutting", namespace, generator);
+        public Cutting(String namespace, PackOutput output) {
+            super("cutting", namespace, output);
         }
     }
 
     public static class Deploying extends Processing {
-        public Deploying(String namespace, DataGenerator generator) {
-            super("deploying", namespace, generator);
+        public Deploying(String namespace, PackOutput output) {
+            super("deploying", namespace, output);
         }
     }
 
     public static class Emptying extends Processing {
-        public Emptying(String namespace, DataGenerator generator) {
-            super("emptying", namespace, generator);
+        public Emptying(String namespace, PackOutput output) {
+            super("emptying", namespace, output);
         }
     }
 
     public static class Filling extends Processing {
-        public Filling(String namespace, DataGenerator generator) {
-            super("filling", namespace, generator);
+        public Filling(String namespace, PackOutput output) {
+            super("filling", namespace, output);
         }
     }
 
     public static class Haunting extends Processing {
-        public Haunting(String namespace, DataGenerator generator) {
-            super("haunting", namespace, generator);
+        public Haunting(String namespace, PackOutput output) {
+            super("haunting", namespace, output);
         }
     }
 
     public static class ItemApplication extends Processing {
-        public ItemApplication(String namespace, DataGenerator generator) {
-            super("item_application", namespace, generator);
+        public ItemApplication(String namespace, PackOutput output) {
+            super("item_application", namespace, output);
         }
     }
 
     public static class MechanicalCrafting extends CreateDataProvider<MechanicalCrafting.Builder> {
-        public MechanicalCrafting(String namespace, DataGenerator generator) {
-            super("mechanical_crafting", namespace, generator);
+        public MechanicalCrafting(String namespace, PackOutput output) {
+            super("mechanical_crafting", namespace, output);
         }
 
         /**
@@ -225,32 +223,32 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
     }
 
     public static class Milling extends Processing {
-        public Milling(String namespace, DataGenerator generator) {
-            super("milling", namespace, generator);
+        public Milling(String namespace, PackOutput output) {
+            super("milling", namespace, output);
         }
     }
 
     public static class Mixing extends Processing {
-        public Mixing(String namespace, DataGenerator generator) {
-            super("mixing", namespace, generator);
+        public Mixing(String namespace, PackOutput output) {
+            super("mixing", namespace, output);
         }
     }
 
     public static class Pressing extends Processing {
-        public Pressing(String namespace, DataGenerator generator) {
-            super("pressing", namespace, generator);
+        public Pressing(String namespace, PackOutput output) {
+            super("pressing", namespace, output);
         }
     }
 
     public static class SandpaperPolishing extends Processing {
-        public SandpaperPolishing(String namespace, DataGenerator generator) {
-            super("sandpaper_polishing", namespace, generator);
+        public SandpaperPolishing(String namespace, PackOutput output) {
+            super("sandpaper_polishing", namespace, output);
         }
     }
 
     public static class SequencedAssembly extends CreateDataProvider<SequencedAssembly.Builder> {
-        public SequencedAssembly(String namespace, DataGenerator generator) {
-            super("sequenced_assembly", namespace, generator);
+        public SequencedAssembly(String namespace, PackOutput output) {
+            super("sequenced_assembly", namespace, output);
         }
 
         /**
@@ -352,8 +350,8 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
     }
 
     public static class Splashing extends Processing {
-        public Splashing(String namespace, DataGenerator generator) {
-            super("splashing", namespace, generator);
+        public Splashing(String namespace, PackOutput output) {
+            super("splashing", namespace, output);
         }
     }
 
@@ -362,8 +360,8 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
      * {@see https://github.com/Creators-of-Create/Create/blob/mc1.18/dev/src/main/java/com/simibubi/create/content/contraptions/processing/ProcessingRecipeBuilder.java}
      */
     public static abstract class Processing extends CreateDataProvider<Processing.Builder> {
-        protected Processing(String folder, String namespace, DataGenerator generator) {
-            super(folder, namespace, generator);
+        protected Processing(String folder, String namespace, PackOutput output) {
+            super(folder, namespace, output);
         }
 
         /**

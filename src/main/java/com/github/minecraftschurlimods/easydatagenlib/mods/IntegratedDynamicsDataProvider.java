@@ -6,7 +6,7 @@ import com.github.minecraftschurlimods.easydatagenlib.util.JsonUtil;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentFluidStack;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentItemStack;
 import com.google.gson.JsonObject;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -17,14 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class IntegratedDynamicsDataProvider<T extends AbstractRecipeBuilder<?>> extends AbstractRecipeProvider<T> {
-    protected IntegratedDynamicsDataProvider(String folder, String namespace, DataGenerator generator) {
-        super(new ResourceLocation("integrateddynamics", folder), namespace, generator);
+    protected IntegratedDynamicsDataProvider(String folder, String namespace, PackOutput output) {
+        super(new ResourceLocation("integrateddynamics", folder), namespace, output);
     }
     //TODO Drying Basin, Mechanical Drying Basin
 
     public static class MechanicalSqueezing extends IntegratedDynamicsDataProvider<MechanicalSqueezing.Builder> {
-        public MechanicalSqueezing(String namespace, DataGenerator generator) {
-            super("mechanical_squeezer", namespace, generator);
+        public MechanicalSqueezing(String namespace, PackOutput output) {
+            super("mechanical_squeezer", namespace, output);
         }
 
         /**
@@ -251,8 +251,8 @@ public abstract class IntegratedDynamicsDataProvider<T extends AbstractRecipeBui
     }
 
     public static class Squeezing extends IntegratedDynamicsDataProvider<Squeezing.Builder> {
-        public Squeezing(String namespace, DataGenerator generator) {
-            super("squeezer", namespace, generator);
+        public Squeezing(String namespace, PackOutput output) {
+            super("squeezer", namespace, output);
         }
 
         /**

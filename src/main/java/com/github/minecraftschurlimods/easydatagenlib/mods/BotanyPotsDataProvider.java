@@ -7,7 +7,7 @@ import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentItem
 import com.github.minecraftschurlimods.easydatagenlib.util.botanypots.DisplayState;
 import com.github.minecraftschurlimods.easydatagenlib.util.botanypots.HarvestEntry;
 import com.google.gson.JsonObject;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
@@ -17,14 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BotanyPotsDataProvider<T extends AbstractRecipeBuilder<?>> extends AbstractRecipeProvider<T> {
-    protected BotanyPotsDataProvider(String folder, String namespace, DataGenerator generator) {
-        super(new ResourceLocation("botanypots", folder), namespace, generator);
+    protected BotanyPotsDataProvider(String folder, String namespace, PackOutput output) {
+        super(new ResourceLocation("botanypots", folder), namespace, output);
     }
     //TODO Fertilizer, Pot Interaction
 
     public static class Crop extends BotanyPotsDataProvider<Crop.Builder> {
-        public Crop(String namespace, DataGenerator generator) {
-            super("crop", namespace, generator);
+        public Crop(String namespace, PackOutput output) {
+            super("crop", namespace, output);
         }
 
         /**
@@ -187,8 +187,8 @@ public abstract class BotanyPotsDataProvider<T extends AbstractRecipeBuilder<?>>
     }
 
     public static class Soil extends BotanyPotsDataProvider<Soil.Builder> {
-        public Soil(String namespace, DataGenerator generator) {
-            super("soil", namespace, generator);
+        public Soil(String namespace, PackOutput output) {
+            super("soil", namespace, output);
         }
 
         /**

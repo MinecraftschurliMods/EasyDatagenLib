@@ -4,7 +4,7 @@ import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeBuilder;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeProvider;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentItemStack;
 import com.google.gson.JsonObject;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -12,14 +12,14 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 
 public abstract class BotaniaDataProvider<T extends AbstractRecipeBuilder<?>> extends AbstractRecipeProvider<T> {
-    protected BotaniaDataProvider(String folder, String namespace, DataGenerator generator) {
-        super(new ResourceLocation("botania", folder), namespace, generator);
+    protected BotaniaDataProvider(String folder, String namespace, PackOutput output) {
+        super(new ResourceLocation("botania", folder), namespace, output);
     }
     //TODO Brew, Elven Trade, Orechid, Orechid Ignem, Petal Apothecary, Pure Daisy, Runic Altar, Terra Plate
 
     public static class Infusing extends BotaniaDataProvider<Infusing.Builder> {
-        public Infusing(String namespace, DataGenerator generator) {
-            super("mana_infusion", namespace, generator);
+        public Infusing(String namespace, PackOutput output) {
+            super("mana_infusion", namespace, output);
         }
 
         /**

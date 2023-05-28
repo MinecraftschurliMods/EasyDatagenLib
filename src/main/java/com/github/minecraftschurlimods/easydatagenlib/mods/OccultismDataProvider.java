@@ -3,19 +3,19 @@ package com.github.minecraftschurlimods.easydatagenlib.mods;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeBuilder;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeProvider;
 import com.google.gson.JsonObject;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 
 public abstract class OccultismDataProvider<T extends AbstractRecipeBuilder<?>> extends AbstractRecipeProvider<T> {
-    protected OccultismDataProvider(String folder, String namespace, DataGenerator generator) {
-        super(new ResourceLocation("occultism", folder), namespace, generator);
+    protected OccultismDataProvider(String folder, String namespace, PackOutput output) {
+        super(new ResourceLocation("occultism", folder), namespace, output);
     }
     //TODO Miner, Ritual, Spirit Fire, Spirit Trade
 
     public static class Crushing extends OccultismDataProvider<Crushing.Builder> {
-        public Crushing(String namespace, DataGenerator generator) {
-            super("crushing", namespace, generator);
+        public Crushing(String namespace, PackOutput output) {
+            super("crushing", namespace, output);
         }
 
         /**

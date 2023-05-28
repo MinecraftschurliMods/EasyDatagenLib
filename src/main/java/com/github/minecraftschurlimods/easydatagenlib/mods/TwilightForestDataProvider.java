@@ -3,7 +3,7 @@ package com.github.minecraftschurlimods.easydatagenlib.mods;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeBuilder;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeProvider;
 import com.google.gson.JsonObject;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
@@ -12,13 +12,13 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.Objects;
 
 public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder<?>> extends AbstractRecipeProvider<T> {
-    protected TwilightForestDataProvider(String folder, String namespace, DataGenerator generator) {
-        super(new ResourceLocation("twilightforest", folder), namespace, generator);
+    protected TwilightForestDataProvider(String folder, String namespace, PackOutput output) {
+        super(new ResourceLocation("twilightforest", folder), namespace, output);
     }
 
     public static class Crumbling extends TwilightForestDataProvider<Crumbling.Builder> {
-        public Crumbling(String namespace, DataGenerator generator) {
-            super("crumble_horn", namespace, generator);
+        public Crumbling(String namespace, PackOutput output) {
+            super("crumble_horn", namespace, output);
         }
 
         /**
@@ -88,8 +88,8 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
     }
 
     public static class Transforming extends TwilightForestDataProvider<Transforming.Builder> {
-        public Transforming(String namespace, DataGenerator generator) {
-            super("transformation_powder", namespace, generator);
+        public Transforming(String namespace, PackOutput output) {
+            super("transformation_powder", namespace, output);
         }
 
         /**

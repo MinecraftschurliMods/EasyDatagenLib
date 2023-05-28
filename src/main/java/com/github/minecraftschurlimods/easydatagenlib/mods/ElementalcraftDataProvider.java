@@ -4,33 +4,33 @@ import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeBuilder;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeProvider;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentItemStack;
 import com.google.gson.JsonObject;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 
 public abstract class ElementalcraftDataProvider<T extends AbstractRecipeBuilder<?>> extends AbstractRecipeProvider<T> {
-    protected ElementalcraftDataProvider(String folder, String namespace, DataGenerator generator) {
-        super(new ResourceLocation("elementalcraft", folder), namespace, generator);
+    protected ElementalcraftDataProvider(String folder, String namespace, PackOutput output) {
+        super(new ResourceLocation("elementalcraft", folder), namespace, output);
     }
     //TODO Binding, Crystallization, Infusion, Inscription, Pure Infusion, Spell Craft
 
     public static class Grinding extends IO {
-        public Grinding(String namespace, DataGenerator generator) {
-            super("grinding", namespace, generator);
+        public Grinding(String namespace, PackOutput output) {
+            super("grinding", namespace, output);
         }
     }
 
     public static class Sawing extends IO {
-        public Sawing(String namespace, DataGenerator generator) {
-            super("sawing", namespace, generator);
+        public Sawing(String namespace, PackOutput output) {
+            super("sawing", namespace, output);
         }
     }
 
     public static abstract class IO extends ElementalcraftDataProvider<IO.Builder> {
-        protected IO(String folder, String namespace, DataGenerator generator) {
-            super(folder, namespace, generator);
+        protected IO(String folder, String namespace, PackOutput output) {
+            super(folder, namespace, output);
         }
 
         /**

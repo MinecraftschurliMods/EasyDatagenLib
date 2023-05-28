@@ -2,14 +2,17 @@ package com.github.minecraftschurlimods.easydatagenlib.api;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
 
 /**
- * {@see <a href="https://github.com/MinecraftschurliMods/EasyDatagenLib/wiki/Custom-Datagen-Base-Classes">Custom Datagen Base Classes documentation</a>}
+ * The abstract parent class for anything that generates recipes.
+ *
+ * @param <T> The builder class associated with this provider.
+ * @see <a href="https://github.com/MinecraftschurliMods/EasyDatagenLib/wiki/Custom-Datagen-Base-Classes">Custom Datagen Base Classes documentation</a>
  */
 public abstract class AbstractRecipeProvider<T extends AbstractRecipeBuilder<?>> extends AbstractDataProvider<T> {
     private final ResourceLocation recipeType;
@@ -18,10 +21,10 @@ public abstract class AbstractRecipeProvider<T extends AbstractRecipeBuilder<?>>
     /**
      * @param recipeType The recipe type to use. Also determines the output folder.
      * @param namespace  The namespace to use.
-     * @param generator  The data generator to use.
+     * @param output     The data generator to use.
      */
-    protected AbstractRecipeProvider(ResourceLocation recipeType, String namespace, DataGenerator generator) {
-        super("recipes/" + (recipeType.getNamespace().equals(namespace) ? "" : "compat/" + recipeType.getNamespace() + "/") + recipeType.getPath(), namespace, generator);
+    protected AbstractRecipeProvider(ResourceLocation recipeType, String namespace, PackOutput output) {
+        super(namespace, "recipes/" + (recipeType.getNamespace().equals(namespace) ? "" : "compat/" + recipeType.getNamespace() + "/") + recipeType.getPath(), PackOutput.Target.DATA_PACK, output);
         this.recipeType = recipeType;
         this.name = makeName(recipeType);
     }
