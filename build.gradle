@@ -34,7 +34,7 @@ java {
     }
 }
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
@@ -87,12 +87,13 @@ jar {
     finalizedBy('reobfJar')
 }
 
-task deobfJar(type: Jar, dependsOn: classes) {
+tasks.register('deobfJar', Jar) {
+    dependsOn classes
     archiveClassifier.set('deobf')
     from sourceSets.main.output
 }
 
-tasks.withType(Jar) {
+tasks.withType(Jar).configureEach {
     from 'LICENSE'
     manifest {
         attributes([
@@ -119,7 +120,7 @@ artifacts {
     deobfJar(deobfJar)
 }
 
-tasks.withType(GenerateModuleMetadata) {
+tasks.withType(GenerateModuleMetadata).configureEach {
     enabled = false
 }
 
@@ -175,15 +176,12 @@ publishing {
     }
     repositories {
         maven {
-            if (
-            (System.getenv("MAVEN_USER") != null) &&
-                    (System.getenv("MAVEN_PASSWORD") != null) &&
-                    (System.getenv("MAVEN_URL") != null)
-            ) {
-                url System.getenv("MAVEN_URL")
+            var env = System.getenv()
+            if (env.containsKey("MAVEN_USER") && env.containsKey("MAVEN_PASSWORD") && env.containsKey("MAVEN_URL")) {
+                url env.get("MAVEN_URL")
                 credentials {
-                    username System.getenv("MAVEN_USER")
-                    password System.getenv("MAVEN_PASSWORD")
+                    username env.get("MAVEN_USER")
+                    password env.get("MAVEN_PASSWORD")
                 }
             } else {
                 url "$buildDir/repo"
