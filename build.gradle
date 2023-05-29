@@ -87,10 +87,34 @@ jar {
     finalizedBy('reobfJar')
 }
 
+sourcesJar {
+    from sourceSets.main.allSource
+    from sourceSets.api.allSource
+}
+
+tasks.register('apiJar', Jar) {
+    dependsOn(apiClasses)
+    archiveClassifier.set('api')
+    from sourceSets.api.allSource
+    from sourceSets.api.output
+    finalizedBy('reobfJar')
+}
+
+reobf {
+    apiJar { classpath.from(sourceSets.api.compileClasspath) }
+    jar { classpath.from(sourceSets.main.compileClasspath) }
+}
+
+tasks.register('reobf') {
+    dependsOn reobfJar
+    dependsOn reobfApiJar
+}
+
 tasks.register('deobfJar', Jar) {
-    dependsOn classes
+    dependsOn(classes)
     archiveClassifier.set('deobf')
     from sourceSets.main.output
+    from sourceSets.api.output
 }
 
 tasks.withType(Jar).configureEach {
@@ -114,6 +138,7 @@ tasks.withType(Jar).configureEach {
 
 artifacts {
     archives jar
+    archives apiJar
     archives deobfJar
     archives sourcesJar
     archives javadocJar
@@ -126,7 +151,7 @@ tasks.withType(GenerateModuleMetadata).configureEach {
 
 publishing {
     publications.create(project.archivesBaseName+'ToMaven', MavenPublication) {
-        artifacts = [deobfJar]
+        artifacts = [apiJar, deobfJar]
         groupId = project.group
         artifactId = project.archivesBaseName
         version = project.version
