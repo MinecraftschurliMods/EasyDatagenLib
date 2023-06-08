@@ -812,7 +812,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         }
     }
 
-    protected static abstract class Abstract1To1Recipe<I extends JsonSerializable, O extends JsonSerializable, B extends Abstract1To1Recipe.Builder<I, O>> extends MekanismDataProvider<B> {
+    public static abstract class Abstract1To1Recipe<I extends JsonSerializable, O extends JsonSerializable, B extends Abstract1To1Recipe.Builder<I, O>> extends MekanismDataProvider<B> {
         protected Abstract1To1Recipe(String folder, String namespace, DataGenerator generator) {
             super(folder, namespace, generator);
         }
@@ -835,7 +835,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         }
     }
 
-    protected static abstract class IngredientToTRecipe<T extends JsonSerializable> extends Abstract1To1Recipe<IngredientWithAmount, T, IngredientToTRecipe.Builder<T>> {
+    public static abstract class IngredientToTRecipe<T extends JsonSerializable> extends Abstract1To1Recipe<IngredientWithAmount, T, IngredientToTRecipe.Builder<T>> {
         protected IngredientToTRecipe(String folder, String namespace, DataGenerator generator) {
             super(folder, namespace, generator);
         }
@@ -870,7 +870,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         }
     }
 
-    protected static abstract class TToItemRecipe<T extends JsonSerializable> extends Abstract1To1Recipe<T, PotentiallyAbsentItemStack, TToItemRecipe.Builder<T>> {
+    public static abstract class TToItemRecipe<T extends JsonSerializable> extends Abstract1To1Recipe<T, PotentiallyAbsentItemStack, TToItemRecipe.Builder<T>> {
         protected TToItemRecipe(String folder, String namespace, DataGenerator generator) {
             super(folder, namespace, generator);
         }
@@ -962,7 +962,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         }
     }
 
-    protected static abstract class IngredientToItemRecipe extends Abstract1To1Recipe<IngredientWithAmount, PotentiallyAbsentItemStack, IngredientToItemRecipe.Builder> {
+    public static abstract class IngredientToItemRecipe extends Abstract1To1Recipe<IngredientWithAmount, PotentiallyAbsentItemStack, IngredientToItemRecipe.Builder> {
         protected IngredientToItemRecipe(String folder, String namespace, DataGenerator generator) {
             super(folder, namespace, generator);
         }
@@ -1144,7 +1144,7 @@ public abstract class MekanismDataProvider<T extends AbstractRecipeBuilder<?>> e
         }
     }
 
-    protected static abstract class GasToGasRecipe extends Abstract1To1Recipe<Chemical.Stack<Gas>, Chemical.Stack<Gas>, GasToGasRecipe.Builder> {
+    public static abstract class GasToGasRecipe extends Abstract1To1Recipe<Chemical.Stack<Gas>, Chemical.Stack<Gas>, GasToGasRecipe.Builder> {
         protected GasToGasRecipe(String folder, String namespace, DataGenerator generator) {
             super(folder, namespace, generator);
         }

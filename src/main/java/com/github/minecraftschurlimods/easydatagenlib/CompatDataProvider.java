@@ -33,6 +33,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.TallFlowerBlock;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.common.crafting.conditions.NotCondition;
 import net.minecraftforge.common.crafting.conditions.TagEmptyCondition;
@@ -247,8 +248,8 @@ public abstract class CompatDataProvider {
     protected static final ResourceLocation TREE_BARK            = new ResourceLocation("farmersdelight", "tree_bark");
     protected static final Ingredient AXE_DIG               = new ToolActionIngredient(ToolActions.AXE_DIG);
     protected static final Ingredient AXE_STRIP             = new ToolActionIngredient(ToolActions.AXE_STRIP);
-    protected static final Ingredient COBBLESTONE           = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "cobblestone/normal")));
-    protected static final Ingredient DEEPSLATE_COBBLESTONE = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "cobblestone/deepslate")));
+    protected static final Ingredient COBBLESTONE           = Ingredient.of(Tags.Items.COBBLESTONE_NORMAL);
+    protected static final Ingredient DEEPSLATE_COBBLESTONE = Ingredient.of(Tags.Items.COBBLESTONE_DEEPSLATE);
     protected static final Ingredient KNIVES                = Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation("forge", "tools/knives")));
     protected static final Ingredient MUSHROOM_SOIL         = Ingredient.of(Items.MYCELIUM, Items.PODZOL);
     protected static final Ingredient PRESS_PACKING_3x3_DIE = PotentiallyAbsentIngredient.of(new ResourceLocation("thermal", "press_packing_3x3_die"));
