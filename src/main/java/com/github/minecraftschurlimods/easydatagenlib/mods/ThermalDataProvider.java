@@ -170,7 +170,7 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
      * Note: Not all recipes can actually handle all information. However, Thermal's recipe specification allows everything to be specified for all recipes.
      * {@see https://github.com/CoFH/ThermalCore/blob/1.19.x/src/main/java/cofh/thermal/lib/util/recipes/MachineRecipeSerializer.java}
      */
-    protected static abstract class Processing extends ThermalDataProvider<Processing.Builder> {
+    public static abstract class Processing extends ThermalDataProvider<Processing.Builder> {
         protected Processing(String folder, String namespace, DataGenerator generator) {
             super(folder, namespace, generator);
         }

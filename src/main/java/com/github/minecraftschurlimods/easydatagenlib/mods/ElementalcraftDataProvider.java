@@ -28,7 +28,7 @@ public abstract class ElementalcraftDataProvider<T extends AbstractRecipeBuilder
         }
     }
 
-    protected static abstract class IO extends ElementalcraftDataProvider<IO.Builder> {
+    public static abstract class IO extends ElementalcraftDataProvider<IO.Builder> {
         protected IO(String folder, String namespace, DataGenerator generator) {
             super(folder, namespace, generator);
         }

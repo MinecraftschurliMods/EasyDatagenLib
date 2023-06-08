@@ -364,7 +364,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
      * Note: Not all recipes can actually handle all information. However, Create's recipe specification allows everything to be specified for all recipes.
      * {@see https://github.com/Creators-of-Create/Create/blob/mc1.18/dev/src/main/java/com/simibubi/create/content/contraptions/processing/ProcessingRecipeBuilder.java}
      */
-    protected static abstract class Processing extends CreateDataProvider<Processing.Builder> {
+    public static abstract class Processing extends CreateDataProvider<Processing.Builder> {
         protected Processing(String folder, String namespace, DataGenerator generator) {
             super(folder, namespace, generator);
         }
