@@ -140,6 +140,9 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
                 json.add("input", input.toJson());
                 json.add("output", JsonUtil.toList(output, e -> {
                     JsonObject o = e.getFirst().toJson();
+                    if (!o.has("chance")) {
+                        o.addProperty("chance", 1f);
+                    }
                     o.addProperty("maxRange", e.getSecond());
                     return o;
                 }));

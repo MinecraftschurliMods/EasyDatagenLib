@@ -1115,34 +1115,34 @@ public abstract class CompatDataProvider {
                     .addOutputItem(planks, 6)
                     .addOutputItem(THERMAL_SAWDUST, 1.25f));
             if (slab != null) {
-                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(slab) + "_from_" + toName(logs), Ingredient.of(planks), slab, 8));
+                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(slab) + "_from_" + toName(logs), Ingredient.of(logs), slab, 8));
             }
             if (stairs != null) {
-                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(stairs) + "_from_" + toName(logs), Ingredient.of(planks), stairs, 4));
+                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(stairs) + "_from_" + toName(logs), Ingredient.of(logs), stairs, 4));
             }
             if (fence != null) {
-                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(fence) + "_from_" + toName(logs), Ingredient.of(planks), fence, 4));
+                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(fence) + "_from_" + toName(logs), Ingredient.of(logs), fence, 4));
             }
             if (fenceGate != null) {
-                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(fenceGate) + "_from_" + toName(logs), Ingredient.of(planks), fenceGate));
+                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(fenceGate) + "_from_" + toName(logs), Ingredient.of(logs), fenceGate));
             }
             if (door != null) {
-                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(door) + "_from_" + toName(logs), Ingredient.of(planks), door, 4));
+                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(door) + "_from_" + toName(logs), Ingredient.of(logs), door, 4));
             }
             if (trapdoor != null) {
-                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(trapdoor) + "_from_" + toName(logs), Ingredient.of(planks), trapdoor, 4));
+                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(trapdoor) + "_from_" + toName(logs), Ingredient.of(logs), trapdoor, 4));
             }
             if (button != null) {
-                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(button) + "_from_" + toName(logs), Ingredient.of(planks), button, 4));
+                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(button) + "_from_" + toName(logs), Ingredient.of(logs), button, 4));
             }
             if (pressurePlate != null) {
-                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(pressurePlate) + "_from_" + toName(logs), Ingredient.of(planks), pressurePlate, 4));
+                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(pressurePlate) + "_from_" + toName(logs), Ingredient.of(logs), pressurePlate, 4));
             }
             if (sign != null) {
-                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(sign) + "_from_" + toName(logs), Ingredient.of(planks), sign, 4));
+                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(sign) + "_from_" + toName(logs), Ingredient.of(logs), sign, 4));
             }
             if (boat != null) {
-                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(boat) + "_from_" + toName(logs), Ingredient.of(planks), boat));
+                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(boat) + "_from_" + toName(logs), Ingredient.of(logs), boat));
             }
         }
     }

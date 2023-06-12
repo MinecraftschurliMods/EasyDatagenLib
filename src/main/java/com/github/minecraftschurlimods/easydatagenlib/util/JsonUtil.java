@@ -128,7 +128,10 @@ public class JsonUtil {
     public static JsonObject toJson(BlockState state) {
         JsonObject json = new JsonObject();
         json.addProperty("block", ForgeRegistries.BLOCKS.getKey(state.getBlock()).toString());
-        json.add("properties", propertiesToJson(state));
+        JsonObject properties = propertiesToJson(state);
+        if (properties.size() > 0) {
+            json.add("properties", propertiesToJson(state));
+        }
         return json;
     }
 
@@ -139,7 +142,7 @@ public class JsonUtil {
      * @return A {@link JsonElement}, constructed from the given parameters.
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public static JsonElement propertiesToJson(BlockState state) {
+    public static JsonObject propertiesToJson(BlockState state) {
         JsonObject json = new JsonObject();
         for (Property property : state.getProperties()) {
             if (property instanceof IntegerProperty ip) {

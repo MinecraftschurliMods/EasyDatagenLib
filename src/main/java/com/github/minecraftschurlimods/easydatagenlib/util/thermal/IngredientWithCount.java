@@ -20,8 +20,7 @@ public class IngredientWithCount implements JsonSerializable {
 
     @Override
     public JsonElement toJson() {
-        JsonObject result = new JsonObject();
-        result.add("ingredient", ingredient.toJson());
+        JsonObject result = ingredient.toJson().getAsJsonObject();
         if (count > 1) {
             result.addProperty("count", count);
         }
