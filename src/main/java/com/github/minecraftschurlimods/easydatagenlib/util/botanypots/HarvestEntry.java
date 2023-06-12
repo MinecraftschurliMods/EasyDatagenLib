@@ -7,9 +7,9 @@ import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
 
 public class HarvestEntry implements JsonSerializable {
-    private final PotentiallyAbsentItemStack stack;
-    private final int minRolls;
-    private final int maxRolls;
+    public final PotentiallyAbsentItemStack stack;
+    public final int minRolls;
+    public final int maxRolls;
 
     public HarvestEntry(ResourceLocation item, float chance, int minRolls, int maxRolls) {
         this.stack = new PotentiallyAbsentItemStack.WithChance(item, chance);

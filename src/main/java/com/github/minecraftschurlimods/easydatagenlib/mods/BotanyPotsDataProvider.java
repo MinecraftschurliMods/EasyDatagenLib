@@ -3,6 +3,7 @@ package com.github.minecraftschurlimods.easydatagenlib.mods;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeBuilder;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeProvider;
 import com.github.minecraftschurlimods.easydatagenlib.util.JsonUtil;
+import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentItemStack;
 import com.github.minecraftschurlimods.easydatagenlib.util.botanypots.DisplayState;
 import com.github.minecraftschurlimods.easydatagenlib.util.botanypots.HarvestEntry;
 import com.google.gson.JsonObject;
@@ -173,7 +174,14 @@ public abstract class BotanyPotsDataProvider<T extends AbstractRecipeBuilder<?>>
                     json.addProperty("lightLevel", lightLevel);
                 }
                 json.add("categories", JsonUtil.toStringList(categories));
-                json.add("drops", JsonUtil.toList(outputs));
+                json.add("drops", JsonUtil.toList(outputs, e -> {
+                    JsonObject object = new JsonObject();
+                    object.addProperty("chance", e.stack instanceof PotentiallyAbsentItemStack.WithChance withChance ? withChance.chance : 1f);
+                    JsonObject output = new JsonObject();
+                    output.addProperty("item", e.stack.item.toString());
+                    object.add("output", output);
+                    return object;
+                }));
             }
         }
     }

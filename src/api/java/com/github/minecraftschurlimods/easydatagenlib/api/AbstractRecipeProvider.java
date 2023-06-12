@@ -41,14 +41,20 @@ public abstract class AbstractRecipeProvider<T extends AbstractRecipeBuilder<?>>
         }
         JsonObject json = super.toJson(builder);
         json.addProperty("type", recipeType.toString());
-        if (!builder.conditions.isEmpty()) {
-            JsonArray array = new JsonArray();
-            for (ICondition condition : builder.conditions) {
-                array.add(CraftingHelper.serialize(condition));
-            }
-            json.add("conditions", array);
+        if (builder.conditions.isEmpty()) return json;
+        JsonObject recipe = new JsonObject();
+        recipe.addProperty("type", "forge:conditional");
+        JsonArray recipes = new JsonArray();
+        JsonObject object = new JsonObject();
+        JsonArray conditions = new JsonArray();
+        for (ICondition condition : builder.conditions) {
+            conditions.add(CraftingHelper.serialize(condition));
         }
-        return json;
+        object.add("conditions", conditions);
+        object.add("recipe", json);
+        recipes.add(object);
+        recipe.add("recipes", recipes);
+        return recipe;
     }
 
     private String makeName(ResourceLocation recipeType) {
