@@ -465,7 +465,11 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
                     }
                     input.add(fluid);
                 }
-                json.add("input", input);
+                if (inputItems.size() == 1 && inputFluids.size() == 0) {
+                    json.add("ingredient", input.get(0).getAsJsonObject().get("ingredient"));
+                } else {
+                    json.add("input", input);
+                }
                 json.add("output", JsonUtil.mergeArrays(JsonUtil.toList(outputItems), JsonUtil.toList(outputFluids)));
             }
         }
