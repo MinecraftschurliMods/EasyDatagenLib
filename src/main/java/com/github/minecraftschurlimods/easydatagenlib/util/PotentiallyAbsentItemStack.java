@@ -11,10 +11,10 @@ import net.minecraft.world.item.ItemStack;
  * When serializing to JSON, no {@link ItemStack} will be used. Instead, the correct JSON syntax is recreated by hand.
  * This means that you can use item ids that may not be valid, e.g. from other mods, in your datagen.
  */
-public class PotentiallyAbsentItemStack {
-    private final ResourceLocation item;
-    private final int count;
-    private CompoundTag tag;
+public class PotentiallyAbsentItemStack implements JsonSerializable {
+    public final ResourceLocation item;
+    public final int count;
+    public CompoundTag tag;
 
     /**
      * Creates a new instance of this class. Use this if you want the output to have additional NBT data.
@@ -59,36 +59,9 @@ public class PotentiallyAbsentItemStack {
     }
 
     /**
-     * @return The id of the item to use.
-     */
-    public ResourceLocation getItem() {
-        return item;
-    }
-
-    /**
-     * @return The count to use.
-     */
-    public int getCount() {
-        return count;
-    }
-
-    /**
-     * @return The NBT tag to use.
-     */
-    public CompoundTag getTag() {
-        return tag;
-    }
-
-    /**
-     * @param tag The NBT tag to use.
-     */
-    public void setTag(CompoundTag tag) {
-        this.tag = tag;
-    }
-
-    /**
      * @return The JSON representation of this object.
      */
+    @Override
     public JsonObject toJson() {
         JsonObject json = new JsonObject();
         if (item == null) throw new IllegalArgumentException("Cannot serialize an item stack without an item id!");
@@ -152,7 +125,7 @@ public class PotentiallyAbsentItemStack {
         @Override
         public JsonObject toJson() {
             JsonObject json = super.toJson();
-            if (chance > 0 && chance < 1) {
+            if (chance > 0 && chance != 1) {
                 json.addProperty("chance", chance);
             }
             return json;

@@ -1,6 +1,6 @@
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-package com.github.minecraftschurlimods.easydatagenlib.api;
+package com.github.minecraftschurlimods.easydatagenlib.util.thermal;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

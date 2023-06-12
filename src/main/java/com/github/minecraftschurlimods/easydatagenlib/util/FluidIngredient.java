@@ -22,12 +22,13 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 /**
  * {@see https://github.com/Creators-of-Create/Create/blob/mc1.18/dev/src/main/java/com/simibubi/create/foundation/fluid/FluidIngredient.java}
  */
-public abstract class FluidIngredient implements Predicate<FluidStack> {
+public abstract class FluidIngredient implements Predicate<FluidStack>, JsonSerializable {
     public static final FluidIngredient EMPTY = FluidIngredient.of(new FluidStack(Fluids.EMPTY, 0));
     private static final Gson GSON = new GsonBuilder().create();
     private List<FluidStack> matchingFluidStacks;
@@ -85,6 +86,7 @@ public abstract class FluidIngredient implements Predicate<FluidStack> {
         return ingredient;
     }
 
+    @Override
     public JsonObject toJson() {
         JsonObject json = new JsonObject();
         write(json);
@@ -123,7 +125,7 @@ public abstract class FluidIngredient implements Predicate<FluidStack> {
 
         @Override
         protected void write(JsonObject json) {
-            json.addProperty("fluid", ForgeRegistries.FLUIDS.getKey(fluid.getFluid()).toString());
+            json.addProperty("fluid", Objects.requireNonNull(ForgeRegistries.FLUIDS.getKey(fluid.getFluid())).toString());
             if (!tag.isEmpty()) {
                 json.add("nbt", JsonParser.parseString(tag.toString()));
             }
@@ -138,6 +140,7 @@ public abstract class FluidIngredient implements Predicate<FluidStack> {
     public static class FluidTagIngredient extends FluidIngredient {
         protected TagKey<Fluid> tag;
 
+        @SuppressWarnings("deprecation")
         @Override
         public boolean test(FluidStack t) {
             if (tag == null) {
@@ -161,7 +164,7 @@ public abstract class FluidIngredient implements Predicate<FluidStack> {
 
         @Override
         protected List<FluidStack> getMatches() {
-            return ForgeRegistries.FLUIDS.tags()
+            return Objects.requireNonNull(ForgeRegistries.FLUIDS.tags())
                     .getTag(tag)
                     .stream()
                     .map(e -> e instanceof FlowingFluid ? ((FlowingFluid) e).getSource() : e)

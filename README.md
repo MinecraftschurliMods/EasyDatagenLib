@@ -15,3 +15,7 @@ A library that provides utilities for modded datagen. These include:
 This library does not import any preexisting mods into the environment; instead, it replicates modded JSON formats.
 
 If you want to see your own mod added, please open a pull request, or come talk to us on the Discord!
+
+
+## Powered by
+[![IntelliJ IDEA logo](https://resources.jetbrains.com/storage/products/company/brand/logos/IntelliJ_IDEA.svg)](https://jb.gg/OpenSourceSupport)

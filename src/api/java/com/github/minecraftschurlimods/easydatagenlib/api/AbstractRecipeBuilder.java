@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * {@see <a href="https://github.com/MinecraftschurliMods/EasyDatagenLib/wiki/Custom-Datagen-Base-Classes">Custom Datagen Base Classes documentation</a>}
+ * The abstract parent class of builder classes used by {@link AbstractRecipeProvider} for generating recipes.
  */
 public abstract class AbstractRecipeBuilder<T extends AbstractRecipeBuilder<T>> extends AbstractDataBuilder<T> {
     public final List<ICondition> conditions = new ArrayList<>();

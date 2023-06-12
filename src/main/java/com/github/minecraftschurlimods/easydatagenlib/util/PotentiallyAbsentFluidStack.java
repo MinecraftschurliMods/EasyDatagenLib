@@ -11,10 +11,10 @@ import net.minecraftforge.fluids.FluidStack;
  * When serializing to JSON, no {@link FluidStack} will be used. Instead, the correct JSON syntax is recreated by hand.
  * This means that you can use fluid ids that may not be valid, e.g. from other mods, in your datagen.
  */
-public class PotentiallyAbsentFluidStack {
-    private final ResourceLocation fluid;
-    private final int amount;
-    private CompoundTag tag;
+public class PotentiallyAbsentFluidStack implements JsonSerializable {
+    public final ResourceLocation fluid;
+    public final int amount;
+    public CompoundTag tag;
 
     /**
      * Creates a new instance of this class. Use this if you want the output to have additional NBT data.
@@ -59,36 +59,9 @@ public class PotentiallyAbsentFluidStack {
     }
 
     /**
-     * @return The id of the fluid to use.
-     */
-    public ResourceLocation getFluid() {
-        return fluid;
-    }
-
-    /**
-     * @return The amount to use.
-     */
-    public int getAmount() {
-        return amount;
-    }
-
-    /**
-     * @return The NBT tag to use.
-     */
-    public CompoundTag getTag() {
-        return tag;
-    }
-
-    /**
-     * @param tag The NBT tag to use.
-     */
-    public void setTag(CompoundTag tag) {
-        this.tag = tag;
-    }
-
-    /**
      * @return The JSON representation of this object.
      */
+    @Override
     public JsonObject toJson() {
         JsonObject json = new JsonObject();
         if (fluid == null) throw new IllegalArgumentException("Cannot serialize an fluid stack without an fluid id!");
@@ -150,7 +123,7 @@ public class PotentiallyAbsentFluidStack {
         @Override
         public JsonObject toJson() {
             JsonObject json = super.toJson();
-            if (chance > 0 && chance < 1) {
+            if (chance > 0 && chance != 1) {
                 json.addProperty("chance", chance);
             }
             return json;
