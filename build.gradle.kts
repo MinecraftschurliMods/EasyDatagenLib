@@ -60,10 +60,10 @@ java {
 
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(java_version))
-        if (System.getenv("GITHUB_ACTIONS") == null || System.getenv("GITHUB_ACTIONS").isEmpty()) {
+        if (System.getenv("CI") == null || System.getenv("CI").isEmpty()) {
             vendor.set(JvmVendorSpec.matching("JetBrains s.r.o."))
         } else {
-            vendor.set(JvmVendorSpec.ADOPTOPENJDK)
+            vendor.set(JvmVendorSpec.ADOPTIUM)
         }
     }
 }
@@ -192,9 +192,10 @@ publishing {
         artifactId = base.archivesName.get()
         version = project.version as String
         from(components["java"])
+        val pomUrl = url
         pom {
-            name.set(name)
-            url.set(url)
+            name.set(project.name)
+            url.set(pomUrl)
             packaging = "jar"
             scm {
                 connection.set("scm:git:git://github.com/${github}.git")
@@ -227,7 +228,7 @@ publishing {
                 }
             }
             withXml {
-                val rootNode = asNode()
+                val rootNode = this.asNode()
                 val dependencies: NodeList = (rootNode.get("dependencies") as NodeList)
                 val dependencyList = dependencies.getAt("dependency")
                 for (dependency in dependencyList) {
