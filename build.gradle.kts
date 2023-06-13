@@ -119,6 +119,8 @@ tasks.javadoc {
 
 tasks {
     jar {
+        from(sourceSets.main.output)
+        from(sourceSets.api.output)
         finalizedBy("reobfJar")
     }
     named<Jar>("sourcesJar") {
