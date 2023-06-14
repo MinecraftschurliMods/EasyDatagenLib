@@ -33,7 +33,7 @@ public abstract class BotanyPotsDataProvider<T extends AbstractRecipeBuilder<?>>
          * @param duration The duration to use.
          */
         public Builder builder(String id, Ingredient input, int duration) {
-            return new Builder(new ResourceLocation(namespace, id), input, duration);
+            return new Builder(this, new ResourceLocation(namespace, id), input, duration);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -44,8 +44,8 @@ public abstract class BotanyPotsDataProvider<T extends AbstractRecipeBuilder<?>>
             private final int duration;
             private int lightLevel = 0;
 
-            public Builder(ResourceLocation id, Ingredient input, int duration) {
-                super(id);
+            protected Builder(Crop provider, ResourceLocation id, Ingredient input, int duration) {
+                super(id, provider);
                 this.input = input;
                 this.duration = duration;
             }
@@ -197,7 +197,7 @@ public abstract class BotanyPotsDataProvider<T extends AbstractRecipeBuilder<?>>
          * @param display The {@link DisplayState} to use.
          */
         public Builder builder(String id, Ingredient input, DisplayState display) {
-            return new Builder(new ResourceLocation(namespace, id), input, display);
+            return new Builder(this, new ResourceLocation(namespace, id), input, display);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -207,8 +207,8 @@ public abstract class BotanyPotsDataProvider<T extends AbstractRecipeBuilder<?>>
             private float growthModifier = 1;
             private int lightLevel = 0;
 
-            public Builder(ResourceLocation id, Ingredient input, DisplayState display) {
-                super(id);
+            protected Builder(Soil provider, ResourceLocation id, Ingredient input, DisplayState display) {
+                super(id, provider);
                 this.input = input;
                 this.display = display;
             }

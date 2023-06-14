@@ -7,10 +7,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.function.Consumer;
+
 /**
  * The abstract parent class of builder classes used by {@link AbstractDataProvider} for generating data contents.
  */
 public abstract class AbstractDataBuilder<T extends AbstractDataBuilder<T>> {
+    private final AbstractDataProvider<T> provider;
     public final ResourceLocation id;
 
     /**
@@ -18,8 +21,9 @@ public abstract class AbstractDataBuilder<T extends AbstractDataBuilder<T>> {
      *
      * @param id The id to use. Should be unique within the same data provider and the same namespace.
      */
-    public AbstractDataBuilder(ResourceLocation id) {
+    public AbstractDataBuilder(ResourceLocation id, AbstractDataProvider<T> provider) {
         this.id = id;
+        this.provider = provider;
     }
 
     /**
@@ -58,5 +62,9 @@ public abstract class AbstractDataBuilder<T extends AbstractDataBuilder<T>> {
     @SuppressWarnings("ConstantConditions")
     protected static ResourceLocation fluidId(Fluid fluid) {
         return ForgeRegistries.FLUIDS.getKey(fluid);
+    }
+
+    public void build() {
+        provider.add((T) this);
     }
 }

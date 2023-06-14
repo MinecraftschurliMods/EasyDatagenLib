@@ -29,7 +29,7 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
          * @param input The input item to use.
          */
         public Builder builder(String id, Ingredient input) {
-            return new Builder(new ResourceLocation(namespace, id), input);
+            return new Builder(this, new ResourceLocation(namespace, id), input);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -37,8 +37,8 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
             private final Ingredient input;
             private boolean skipBlockPlace = false;
 
-            public Builder(ResourceLocation id, Ingredient input) {
-                super(id);
+            protected Builder(Crushing provider, ResourceLocation id, Ingredient input) {
+                super(id, provider);
                 this.input = input;
             }
 
@@ -162,7 +162,7 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
          * @param count The output count to use.
          */
         public Builder builder(String id, ResourceLocation item, int count) {
-            return new Builder(new ResourceLocation(namespace, id), item, count);
+            return new Builder(this, new ResourceLocation(namespace, id), item, count);
         }
 
         /**
@@ -170,7 +170,7 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
          * @param item The id of the output item to use.
          */
         public Builder builder(String id, ResourceLocation item) {
-            return new Builder(new ResourceLocation(namespace, id), item);
+            return new Builder(this, new ResourceLocation(namespace, id), item);
         }
 
         /**
@@ -179,7 +179,7 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
          * @param count The output count to use.
          */
         public Builder builder(String id, Item item, int count) {
-            return new Builder(new ResourceLocation(namespace, id), item, count);
+            return new Builder(this, new ResourceLocation(namespace, id), item, count);
         }
 
         /**
@@ -187,7 +187,7 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
          * @param item The output item to use.
          */
         public Builder builder(String id, Item item) {
-            return new Builder(new ResourceLocation(namespace, id), item);
+            return new Builder(this, new ResourceLocation(namespace, id), item);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -195,21 +195,21 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
             private final PotentiallyAbsentItemStack output;
             private int experience = 0;
 
-            public Builder(ResourceLocation id, ResourceLocation item, int count) {
-                super(id);
+            protected Builder(Glyph provider, ResourceLocation id, ResourceLocation item, int count) {
+                super(id, provider);
                 output = new PotentiallyAbsentItemStack(item, count); // doesn't support NBT
             }
 
-            public Builder(ResourceLocation id, ResourceLocation item) {
-                this(id, item, 1);
+            protected Builder(Glyph provider, ResourceLocation id, ResourceLocation item) {
+                this(provider, id, item, 1);
             }
 
-            public Builder(ResourceLocation id, Item item, int count) {
-                this(id, itemId(item), count);
+            protected Builder(Glyph provider, ResourceLocation id, Item item, int count) {
+                this(provider, id, itemId(item), count);
             }
 
-            public Builder(ResourceLocation id, Item item) {
-                this(id, item, 1);
+            protected Builder(Glyph provider, ResourceLocation id, Item item) {
+                this(provider, id, item, 1);
             }
 
             /**
@@ -257,7 +257,7 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
          * @param mana   The amount of mana to use.
          */
         public Builder builder(String id, Ingredient input, ResourceLocation output, int count, int mana) {
-            return new Builder(new ResourceLocation(namespace, id), input, output, count, mana);
+            return new Builder(this, new ResourceLocation(namespace, id), input, output, count, mana);
         }
 
         /**
@@ -267,7 +267,7 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
          * @param mana   The amount of mana to use.
          */
         public Builder builder(String id, Ingredient input, ResourceLocation output, int mana) {
-            return new Builder(new ResourceLocation(namespace, id), input, output, mana);
+            return new Builder(this, new ResourceLocation(namespace, id), input, output, mana);
         }
 
         /**
@@ -278,7 +278,7 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
          * @param mana   The amount of mana to use.
          */
         public Builder builder(String id, Ingredient input, Item output, int count, int mana) {
-            return new Builder(new ResourceLocation(namespace, id), input, output, count, mana);
+            return new Builder(this, new ResourceLocation(namespace, id), input, output, count, mana);
         }
 
         /**
@@ -288,7 +288,7 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
          * @param mana   The amount of mana to use.
          */
         public Builder builder(String id, Ingredient input, Item output, int mana) {
-            return new Builder(new ResourceLocation(namespace, id), input, output, mana);
+            return new Builder(this, new ResourceLocation(namespace, id), input, output, mana);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -297,23 +297,23 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
             private final PotentiallyAbsentItemStack output;
             private final int mana;
 
-            public Builder(ResourceLocation id, Ingredient input, ResourceLocation output, int count, int mana) {
-                super(id);
+            protected Builder(Imbueing provider, ResourceLocation id, Ingredient input, ResourceLocation output, int count, int mana) {
+                super(id, provider);
                 this.input = input;
                 this.output = new PotentiallyAbsentItemStack(output, count); // doesn't support NBT
                 this.mana = mana;
             }
 
-            public Builder(ResourceLocation id, Ingredient input, ResourceLocation output, int mana) {
-                this(id, input, output, 1, mana);
+            protected Builder(Imbueing provider, ResourceLocation id, Ingredient input, ResourceLocation output, int mana) {
+                this(provider, id, input, output, 1, mana);
             }
 
-            public Builder(ResourceLocation id, Ingredient input, Item output, int count, int mana) {
-                this(id, input, itemId(output), count, mana);
+            protected Builder(Imbueing provider, ResourceLocation id, Ingredient input, Item output, int count, int mana) {
+                this(provider, id, input, itemId(output), count, mana);
             }
 
-            public Builder(ResourceLocation id, Ingredient input, Item output, int mana) {
-                this(id, input, output, 1, mana);
+            protected Builder(Imbueing provider, ResourceLocation id, Ingredient input, Item output, int mana) {
+                this(provider, id, input, output, 1, mana);
             }
 
             /**

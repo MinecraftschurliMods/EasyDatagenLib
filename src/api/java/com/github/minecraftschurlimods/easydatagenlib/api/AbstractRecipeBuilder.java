@@ -17,8 +17,8 @@ public abstract class AbstractRecipeBuilder<T extends AbstractRecipeBuilder<T>> 
      *
      * @param id The id to use. Should be unique within the same data provider and the same namespace.
      */
-    public AbstractRecipeBuilder(ResourceLocation id) {
-        super(id);
+    public AbstractRecipeBuilder(ResourceLocation id, AbstractRecipeProvider<T> provider) {
+        super(id, provider);
     }
 
     /**

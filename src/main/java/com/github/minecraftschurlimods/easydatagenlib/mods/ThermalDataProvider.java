@@ -77,25 +77,25 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
          * @param experience The amount of experience this recipe awards.
          */
         public Builder builder(String id, float experience) {
-            return new Builder(new ResourceLocation(namespace, id), experience);
+            return new Builder(this, new ResourceLocation(namespace, id), experience);
         }
 
         /**
          * @param id The recipe id to use.
          */
         public Builder builder(String id) {
-            return new Builder(new ResourceLocation(namespace, id));
+            return new Builder(this, new ResourceLocation(namespace, id));
         }
 
         public static class Builder extends Processing.Builder {
             private Float waterModifier;
 
-            public Builder(ResourceLocation id, float experience) {
-                super(id, experience);
+            protected Builder(Insolating provider, ResourceLocation id, float experience) {
+                super(provider, id, experience);
             }
 
-            public Builder(ResourceLocation id) {
-                super(id);
+            protected Builder(Insolating provider, ResourceLocation id) {
+                super(provider, id);
             }
 
             /**
@@ -180,14 +180,14 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
          * @param experience The amount of experience this recipe awards.
          */
         public Builder builder(String id, float experience) {
-            return new Builder(new ResourceLocation(namespace, id), experience);
+            return new Builder(this, new ResourceLocation(namespace, id), experience);
         }
 
         /**
          * @param id The recipe id to use.
          */
         public Builder builder(String id) {
-            return new Builder(new ResourceLocation(namespace, id));
+            return new Builder(this, new ResourceLocation(namespace, id));
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -199,13 +199,13 @@ public abstract class ThermalDataProvider<T extends AbstractRecipeBuilder<?>> ex
             private Integer energy;
             private Float energyModifier;
 
-            public Builder(ResourceLocation id, float experience) {
-                super(id);
+            protected Builder(Processing provider, ResourceLocation id, float experience) {
+                super(id, provider);
                 this.experience = experience;
             }
 
-            public Builder(ResourceLocation id) {
-                this(id, 0);
+            protected Builder(Processing provider, ResourceLocation id) {
+                this(provider, id, 0);
             }
 
             /**
