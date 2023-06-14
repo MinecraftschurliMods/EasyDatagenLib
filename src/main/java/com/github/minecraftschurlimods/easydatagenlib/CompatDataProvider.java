@@ -352,66 +352,75 @@ public abstract class CompatDataProvider {
      */
     protected void addGemOreProcessing(Item ore, Item deepslateOre, TagKey<Item> oreTag, Item gem, @Nullable Item block, @Nullable Item dust) {
         if (ore instanceof BlockItem bi) {
-            BOTANY_POTS_SOIL.add(BOTANY_POTS_SOIL.builder(toName(ore), Ingredient.of(ore), new DisplayState.Simple(bi.getBlock().defaultBlockState()))
+            BOTANY_POTS_SOIL.builder(toName(ore), Ingredient.of(ore), new DisplayState.Simple(bi.getBlock().defaultBlockState()))
                     .addCategory("stone")
                     .addCategory("mushroom")
                     .addCategory("ore")
-                    .addCategory(toName(ore)));
+                    .addCategory(toName(ore))
+                    .build();
         }
         if (deepslateOre instanceof BlockItem bi) {
-            BOTANY_POTS_SOIL.add(BOTANY_POTS_SOIL.builder(toName(deepslateOre), Ingredient.of(deepslateOre), new DisplayState.Simple(bi.getBlock().defaultBlockState()))
+            BOTANY_POTS_SOIL.builder(toName(deepslateOre), Ingredient.of(deepslateOre), new DisplayState.Simple(bi.getBlock().defaultBlockState()))
                     .addCategory("stone")
                     .addCategory("mushroom")
                     .addCategory("ore")
                     .addCategory(toName(ore))
                     .addCategory("deepslate")
-                    .addCategory(toName(deepslateOre)));
+                    .addCategory(toName(deepslateOre))
+                    .build();
         }
-        CREATE_CRUSHING.add(CREATE_CRUSHING.builder(itemId(ore).getPath(), 250)
+        CREATE_CRUSHING.builder(itemId(ore).getPath(), 250)
                 .addInput(Ingredient.of(ore))
                 .addOutput(gem)
                 .addOutput(gem, 0.75f)
                 .addOutput(EXPERIENCE_NUGGET, 0.75f)
-                .addOutput(Items.COBBLESTONE, 0.125f));
-        CREATE_CRUSHING.add(CREATE_CRUSHING.builder(itemId(deepslateOre).getPath(), 350)
+                .addOutput(Items.COBBLESTONE, 0.125f)
+                .build();
+        CREATE_CRUSHING.builder(itemId(deepslateOre).getPath(), 350)
                 .addInput(Ingredient.of(deepslateOre))
                 .addOutput(gem, 2)
                 .addOutput(gem, 0.25f)
                 .addOutput(EXPERIENCE_NUGGET, 0.75f)
-                .addOutput(Items.COBBLED_DEEPSLATE, 0.125f));
+                .addOutput(Items.COBBLED_DEEPSLATE, 0.125f)
+                .build();
         if (dust != null) {
-            MEKANISM_COMBINING.add(MEKANISM_COMBINING.builder(toName(gem) + "_to_deepslate_ore", Ingredient.of(dust), 5, DEEPSLATE_COBBLESTONE, deepslateOre));
-            MEKANISM_COMBINING.add(MEKANISM_COMBINING.builder(toName(gem) + "_to_ore", Ingredient.of(dust), 5, COBBLESTONE, ore));
-            MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(gem) + "_to_dust", Ingredient.of(gem), dust));
-            MEKANISM_ENRICHING.add(MEKANISM_ENRICHING.builder(toName(gem) + "_from_dust", Ingredient.of(dust), gem));
+            MEKANISM_COMBINING.builder(toName(gem) + "_to_deepslate_ore", Ingredient.of(dust), 5, DEEPSLATE_COBBLESTONE, deepslateOre).build();
+            MEKANISM_COMBINING.builder(toName(gem) + "_to_ore", Ingredient.of(dust), 5, COBBLESTONE, ore).build();
+            MEKANISM_CRUSHING.builder(toName(gem) + "_to_dust", Ingredient.of(gem), dust).build();
+            MEKANISM_ENRICHING.builder(toName(gem) + "_from_dust", Ingredient.of(dust), gem).build();
         }
-        MEKANISM_ENRICHING.add(MEKANISM_ENRICHING.builder(toName(gem) + "_from_ore", Ingredient.of(oreTag), gem, 2));
+        MEKANISM_ENRICHING.builder(toName(gem) + "_from_ore", Ingredient.of(oreTag), gem, 2).build();
         if (block != null) {
-            THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(gem) + "_packing")
+            THERMAL_PRESSING.builder(toName(gem) + "_packing")
                     .setEnergy(400)
                     .addInput(Ingredient.of(gem), 9)
                     .addInput(PRESS_PACKING_3x3_DIE)
-                    .addOutputItem(block));
-            THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(gem) + "_unpacking")
+                    .addOutputItem(block)
+                    .build();
+            THERMAL_PRESSING.builder(toName(gem) + "_unpacking")
                     .setEnergy(400)
                     .addInput(Ingredient.of(block))
                     .addInput(PRESS_UNPACKING_DIE)
-                    .addOutputItem(gem, 9));
+                    .addOutputItem(gem, 9)
+                    .build();
         }
         if (dust != null) {
-            THERMAL_PULVERIZING.add(THERMAL_PULVERIZING.builder(toName(gem))
+            THERMAL_PULVERIZING.builder(toName(gem))
                     .setEnergyModifier(0.5f)
                     .addInput(Ingredient.of(gem))
-                    .addOutputItem(dust));
-            THERMAL_PULVERIZING.add(THERMAL_PULVERIZING.builder(toName(oreTag), 0.2f)
+                    .addOutputItem(dust)
+                    .build();
+            THERMAL_PULVERIZING.builder(toName(oreTag), 0.2f)
                     .addInput(Ingredient.of(oreTag))
                     .addOutputItem(dust, 2.5f)
-                    .addOutputItem(GRAVEL, 0.2f));
+                    .addOutputItem(GRAVEL, 0.2f)
+                    .build();
         }
-        THERMAL_SMELTING.add(THERMAL_SMELTING.builder(toName(oreTag), 0.2f)
+        THERMAL_SMELTING.builder(toName(oreTag), 0.2f)
                 .addInput(Ingredient.of(oreTag))
                 .addOutputItem(gem, 1.5f)
-                .addOutputItem(RICH_SLAG, 0.15f));
+                .addOutputItem(RICH_SLAG, 0.15f)
+                .build();
     }
 
     /**
@@ -464,195 +473,195 @@ public abstract class CompatDataProvider {
      */
     protected void addMetalOreProcessing(Item ore, Item deepslateOre, TagKey<Item> oreTag, Item rawOre, TagKey<Item> rawOreTag, @Nullable Item rawOreBlock, @Nullable TagKey<Item> rawOreBlockTag, Item ingot, TagKey<Item> ingotTag, @Nullable Item ingotBlock, @Nullable TagKey<Item> ingotBlockTag, @Nullable Item nugget, @Nullable TagKey<Item> nuggetTag, @Nullable Item dust, @Nullable TagKey<Item> dustTag, @Nullable ResourceLocation crushedOre, @Nullable ResourceLocation secondaryIngot, @Nullable ResourceLocation secondaryDust, @Nullable TagKey<Item> secondaryDustTag) {
         if (ore instanceof BlockItem bi) {
-            BOTANY_POTS_SOIL.add(BOTANY_POTS_SOIL.builder(toName(ore), Ingredient.of(ore), new DisplayState.Simple(bi.getBlock().defaultBlockState()))
+            BOTANY_POTS_SOIL.builder(toName(ore), Ingredient.of(ore), new DisplayState.Simple(bi.getBlock().defaultBlockState()))
                     .addCategory("stone")
                     .addCategory("mushroom")
                     .addCategory("ore")
-                    .addCategory(toName(ore)));
+                    .addCategory(toName(ore)).build();
         }
         if (deepslateOre instanceof BlockItem bi) {
-            BOTANY_POTS_SOIL.add(BOTANY_POTS_SOIL.builder(toName(deepslateOre), Ingredient.of(deepslateOre), new DisplayState.Simple(bi.getBlock().defaultBlockState()))
+            BOTANY_POTS_SOIL.builder(toName(deepslateOre), Ingredient.of(deepslateOre), new DisplayState.Simple(bi.getBlock().defaultBlockState()))
                     .addCategory("stone")
                     .addCategory("mushroom")
                     .addCategory("ore")
                     .addCategory(toName(ore))
                     .addCategory("deepslate")
-                    .addCategory(toName(deepslateOre)));
+                    .addCategory(toName(deepslateOre)).build();
         }
         if (crushedOre != null) {
-            CREATE_CRUSHING.add(CREATE_CRUSHING.builder(toName(ore), 250)
+            CREATE_CRUSHING.builder(toName(ore), 250)
                     .addInput(Ingredient.of(ore))
                     .addOutput(crushedOre)
                     .addOutput(crushedOre, 0.75f)
                     .addOutput(EXPERIENCE_NUGGET, 0.75f)
-                    .addOutput(Items.COBBLESTONE, 0.125f));
-            CREATE_CRUSHING.add(CREATE_CRUSHING.builder(toName(deepslateOre), 350)
+                    .addOutput(Items.COBBLESTONE, 0.125f).build();
+            CREATE_CRUSHING.builder(toName(deepslateOre), 350)
                     .addInput(Ingredient.of(deepslateOre))
                     .addOutput(crushedOre, 2)
                     .addOutput(crushedOre, 0.25f)
                     .addOutput(EXPERIENCE_NUGGET, 0.75f)
-                    .addOutput(Items.COBBLED_DEEPSLATE, 0.125f));
-            CREATE_CRUSHING.add(CREATE_CRUSHING.builder(toName(rawOre), 400)
+                    .addOutput(Items.COBBLED_DEEPSLATE, 0.125f).build();
+            CREATE_CRUSHING.builder(toName(rawOre), 400)
                     .addInput(Ingredient.of(rawOreTag))
                     .addOutput(crushedOre)
                     .addOutput(EXPERIENCE_NUGGET, 0.75f)
-                    .addCondition(new NotCondition(new TagEmptyCondition(rawOreTag.location()))));
+                    .addCondition(new NotCondition(new TagEmptyCondition(rawOreTag.location()))).build();
         }
-        IMMERSIVE_ENGINEERING_ARC_FURNACE.add(IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(oreTag), 200, 102400, Ingredient.of(oreTag))
+        IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(oreTag), 200, 102400, Ingredient.of(oreTag))
                 .addOutput(Ingredient.of(ingotTag), 2)
                 .setSlag(SLAG)
                 .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location())))
-                .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location()))));
-        IMMERSIVE_ENGINEERING_ARC_FURNACE.add(IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(rawOreTag), 100, 25600, Ingredient.of(rawOreTag))
+                .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location()))).build();
+        IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(rawOreTag), 100, 25600, Ingredient.of(rawOreTag))
                 .addOutput(Ingredient.of(ingotTag))
                 .addSecondaryOutput(Ingredient.of(ingotTag), 0.5f)
                 .addCondition(new NotCondition(new TagEmptyCondition(rawOreTag.location())))
-                .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location()))));
+                .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location()))).build();
         if (dustTag != null) {
-            IMMERSIVE_ENGINEERING_ARC_FURNACE.add(IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(dustTag), 100, 51200, Ingredient.of(dustTag))
+            IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(dustTag), 100, 51200, Ingredient.of(dustTag))
                     .addOutput(Ingredient.of(ingotTag))
                     .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location())))
-                    .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location()))));
+                    .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location()))).build();
         }
         if (rawOreBlockTag != null) {
-            IMMERSIVE_ENGINEERING_ARC_FURNACE.add(IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(rawOreBlockTag), 900, 230400, Ingredient.of(rawOreBlockTag))
+            IMMERSIVE_ENGINEERING_ARC_FURNACE.builder(toName(rawOreBlockTag), 900, 230400, Ingredient.of(rawOreBlockTag))
                     .addOutput(Ingredient.of(ingotTag), 13)
                     .addSecondaryOutput(Ingredient.of(ingotTag), 0.5f)
                     .addCondition(new NotCondition(new TagEmptyCondition(rawOreBlockTag.location())))
-                    .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location()))));
-            IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(rawOreBlockTag), 54000, Ingredient.of(rawOreBlockTag), Ingredient.of(rawOreTag), 12)
+                    .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location()))).build();
+            IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(rawOreBlockTag), 54000, Ingredient.of(rawOreBlockTag), Ingredient.of(rawOreTag), 12)
                     .addCondition(new NotCondition(new TagEmptyCondition(rawOreBlockTag.location())))
-                    .addCondition(new NotCondition(new TagEmptyCondition(rawOreTag.location()))));
+                    .addCondition(new NotCondition(new TagEmptyCondition(rawOreTag.location()))).build();
         }
         if (dustTag != null) {
-            IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(ingotTag), 3000, Ingredient.of(ingotTag), Ingredient.of(dustTag))
+            IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(ingotTag), 3000, Ingredient.of(ingotTag), Ingredient.of(dustTag))
                     .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location())))
-                    .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
+                    .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))).build();
             if (secondaryDustTag == null) {
-                IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(oreTag), 6000, Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
+                IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(oreTag), 6000, Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
                         .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location())))
-                        .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
+                        .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))).build();
             } else {
-                IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(oreTag), 6000, Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
+                IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(oreTag), 6000, Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
                         .addSecondary(Ingredient.of(secondaryDustTag), 0.1f)
                         .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location())))
                         .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location())))
-                        .addCondition(new NotCondition(new TagEmptyCondition(secondaryDustTag.location()))));
-                IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(oreTag) + "_without_secondary", 6000, Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
+                        .addCondition(new NotCondition(new TagEmptyCondition(secondaryDustTag.location()))).build();
+                IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(oreTag) + "_without_secondary", 6000, Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
                         .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location())))
                         .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location())))
-                        .addCondition(new TagEmptyCondition(secondaryDustTag.location())));
+                        .addCondition(new TagEmptyCondition(secondaryDustTag.location())).build();
             }
-            IMMERSIVE_ENGINEERING_CRUSHER.add(IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(rawOreTag), 6000, Ingredient.of(rawOreTag), Ingredient.of(dustTag))
+            IMMERSIVE_ENGINEERING_CRUSHER.builder(toName(rawOreTag), 6000, Ingredient.of(rawOreTag), Ingredient.of(dustTag))
                     .addSecondary(Ingredient.of(dustTag), 0.33333334f)
                     .addCondition(new NotCondition(new TagEmptyCondition(rawOreTag.location())))
-                    .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
+                    .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))).build();
         }
-        INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.add(INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.builder(toName(oreTag), Ingredient.of(oreTag), 40)
+        INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.builder(toName(oreTag), Ingredient.of(oreTag), 40)
                 .addItem(rawOre, 3)
                 .addItem(rawOre, 0.5f)
                 .addItem(rawOre, 0.5f)
-                .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location()))));
-        INTEGRATED_DYNAMICS_SQUEEZING.add(INTEGRATED_DYNAMICS_SQUEEZING.builder(toName(oreTag), Ingredient.of(oreTag))
+                .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location()))).build();
+        INTEGRATED_DYNAMICS_SQUEEZING.builder(toName(oreTag), Ingredient.of(oreTag))
                 .addItem(rawOre, 3)
                 .addItem(rawOre, 0.5f)
                 .addItem(rawOre, 0.5f)
-                .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location()))));
+                .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location()))).build();
         if (dust != null) {
-            MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(dust) + "_from_ingot", Ingredient.of(ingot), dust));
-            MEKANISM_ENRICHING.add(MEKANISM_ENRICHING.builder(toName(dust) + "_from_ore", Ingredient.of(oreTag), dust));
-            MEKANISM_ENRICHING.add(MEKANISM_ENRICHING.builder(toName(dust) + "_from_raw", Ingredient.of(rawOre), 3, dust, 4));
+            MEKANISM_CRUSHING.builder(toName(dust) + "_from_ingot", Ingredient.of(ingot), dust).build();
+            MEKANISM_ENRICHING.builder(toName(dust) + "_from_ore", Ingredient.of(oreTag), dust).build();
+            MEKANISM_ENRICHING.builder(toName(dust) + "_from_raw", Ingredient.of(rawOre), 3, dust, 4).build();
             if (rawOreBlockTag != null) {
-                MEKANISM_ENRICHING.add(MEKANISM_ENRICHING.builder(toName(dust) + "_from_raw_block", Ingredient.of(rawOreBlockTag), dust, 12));
+                MEKANISM_ENRICHING.builder(toName(dust) + "_from_raw_block", Ingredient.of(rawOreBlockTag), dust, 12).build();
             }
         }
-        MEKANISM_COMBINING.add(MEKANISM_COMBINING.builder(toName(deepslateOre) + "_from_raw", Ingredient.of(rawOre), 8, DEEPSLATE_COBBLESTONE, deepslateOre));
-        MEKANISM_COMBINING.add(MEKANISM_COMBINING.builder(toName(ore) + "_from_raw", Ingredient.of(rawOre), 8, COBBLESTONE, ore));
+        MEKANISM_COMBINING.builder(toName(deepslateOre) + "_from_raw", Ingredient.of(rawOre), 8, DEEPSLATE_COBBLESTONE, deepslateOre).build();
+        MEKANISM_COMBINING.builder(toName(ore) + "_from_raw", Ingredient.of(rawOre), 8, COBBLESTONE, ore).build();
         if (dustTag != null) {
-            OCCULTISM_CRUSHING.add(OCCULTISM_CRUSHING.builder(toName(dustTag), Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
+            OCCULTISM_CRUSHING.builder(toName(dustTag), Ingredient.of(oreTag), Ingredient.of(dustTag), 2)
                     .addCondition(new NotCondition(new TagEmptyCondition(oreTag.location())))
-                    .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
-        OCCULTISM_CRUSHING.add(OCCULTISM_CRUSHING.builder(toName(dustTag) + "_from_ingot", Ingredient.of(oreTag), Ingredient.of(ingotTag))
+                    .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))).build();
+        OCCULTISM_CRUSHING.builder(toName(dustTag) + "_from_ingot", Ingredient.of(oreTag), Ingredient.of(ingotTag))
                 .ignoreCrushingMultiplier()
                 .addCondition(new NotCondition(new TagEmptyCondition(ingotTag.location())))
-                .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
-        OCCULTISM_CRUSHING.add(OCCULTISM_CRUSHING.builder(toName(dustTag) + "_from_raw", Ingredient.of(rawOreTag), Ingredient.of(dustTag), 2)
+                .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))).build();
+        OCCULTISM_CRUSHING.builder(toName(dustTag) + "_from_raw", Ingredient.of(rawOreTag), Ingredient.of(dustTag), 2)
                 .addCondition(new NotCondition(new TagEmptyCondition(rawOreTag.location())))
-                .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))));
+                .addCondition(new NotCondition(new TagEmptyCondition(dustTag.location()))).build();
         }
         if (ingotBlock != null) {
-            THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(ingot) + "_packing")
+            THERMAL_PRESSING.builder(toName(ingot) + "_packing")
                     .setEnergy(400)
                     .addInput(Ingredient.of(ingotTag), 9)
                     .addInput(PRESS_PACKING_3x3_DIE)
-                    .addOutputItem(ingotBlock));
+                    .addOutputItem(ingotBlock).build();
             if (ingotBlockTag != null) {
-                THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(ingot) + "_unpacking")
+                THERMAL_PRESSING.builder(toName(ingot) + "_unpacking")
                         .setEnergy(400)
                         .addInput(Ingredient.of(ingotBlockTag))
                         .addInput(PRESS_UNPACKING_DIE)
-                        .addOutputItem(ingot, 9));
+                        .addOutputItem(ingot, 9).build();
             }
         }
         if (rawOreBlock != null) {
-            THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(rawOre) + "_packing")
+            THERMAL_PRESSING.builder(toName(rawOre) + "_packing")
                     .setEnergy(400)
                     .addInput(Ingredient.of(rawOreTag), 9)
                     .addInput(PRESS_PACKING_3x3_DIE)
-                    .addOutputItem(rawOreBlock));
+                    .addOutputItem(rawOreBlock).build();
             if (rawOreBlockTag != null) {
-                THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(rawOre) + "_unpacking")
+                THERMAL_PRESSING.builder(toName(rawOre) + "_unpacking")
                         .setEnergy(400)
                         .addInput(Ingredient.of(rawOreBlockTag))
                         .addInput(PRESS_UNPACKING_DIE)
-                        .addOutputItem(rawOre, 9));
+                        .addOutputItem(rawOre, 9).build();
             }
         }
         if (nugget != null && nuggetTag != null) {
-            THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(nugget) + "_packing")
+            THERMAL_PRESSING.builder(toName(nugget) + "_packing")
                     .setEnergy(400)
                     .addInput(Ingredient.of(nuggetTag), 9)
                     .addInput(PRESS_PACKING_3x3_DIE)
-                    .addOutputItem(ingot));
-            THERMAL_PRESSING.add(THERMAL_PRESSING.builder(toName(nugget) + "_unpacking")
+                    .addOutputItem(ingot).build();
+            THERMAL_PRESSING.builder(toName(nugget) + "_unpacking")
                     .setEnergy(400)
                     .addInput(Ingredient.of(ingotTag))
                     .addInput(PRESS_UNPACKING_DIE)
-                    .addOutputItem(nugget, 9));
+                    .addOutputItem(nugget, 9).build();
         }
         if (dust != null) {
-            THERMAL_PULVERIZING.add(THERMAL_PULVERIZING.builder(toName(ingot))
+            THERMAL_PULVERIZING.builder(toName(ingot))
                     .setEnergyModifier(0.5f)
                     .addInput(Ingredient.of(ingot))
-                    .addOutputItem(dust));
+                    .addOutputItem(dust).build();
             if (secondaryDust == null) {
-                THERMAL_PULVERIZING.add(THERMAL_PULVERIZING.builder(toName(oreTag), 0.2f)
+                THERMAL_PULVERIZING.builder(toName(oreTag), 0.2f)
                         .addInput(Ingredient.of(oreTag))
                         .addOutputItem(dust, 2.5f)
-                        .addOutputItem(GRAVEL, 0.2f));
+                        .addOutputItem(GRAVEL, 0.2f).build();
             } else {
-                THERMAL_PULVERIZING.add(THERMAL_PULVERIZING.builder(toName(oreTag), 0.2f)
+                THERMAL_PULVERIZING.builder(toName(oreTag), 0.2f)
                         .addInput(Ingredient.of(oreTag))
                         .addOutputItem(dust, 2)
                         .addOutputItem(secondaryDust, 0.1f)
-                        .addOutputItem(GRAVEL, 0.2f));
+                        .addOutputItem(GRAVEL, 0.2f).build();
             }
-            THERMAL_SMELTING.add(THERMAL_SMELTING.builder(toName(dust))
+            THERMAL_SMELTING.builder(toName(dust))
                     .setEnergyModifier(0.5f)
                     .addInput(Ingredient.of(dust))
-                    .addOutputItem(ingot));
+                    .addOutputItem(ingot).build();
         }
         if (secondaryIngot == null) {
-            THERMAL_SMELTING.add(THERMAL_SMELTING.builder(toName(oreTag), 0.2f)
+            THERMAL_SMELTING.builder(toName(oreTag), 0.2f)
                     .addInput(Ingredient.of(oreTag))
                     .addOutputItem(ingot, 1.5f)
-                    .addOutputItem(RICH_SLAG, 0.15f));
+                    .addOutputItem(RICH_SLAG, 0.15f).build();
         } else {
-            THERMAL_PULVERIZING.add(THERMAL_PULVERIZING.builder(toName(oreTag), 0.2f)
+            THERMAL_PULVERIZING.builder(toName(oreTag), 0.2f)
                     .addInput(Ingredient.of(oreTag))
                     .addOutputItem(ingot, 1)
                     .addOutputItem(secondaryIngot, 0.2f)
-                    .addOutputItem(RICH_SLAG, 0.2f));
+                    .addOutputItem(RICH_SLAG, 0.2f).build();
         }
     }
 
@@ -773,12 +782,12 @@ public abstract class CompatDataProvider {
      */
     protected void addFlowerProcessing(Item flower, Item output1, int count1, @Nullable ResourceLocation output2, int count2, float chance2, @Nullable ResourceLocation output3, int count3, float chance3) {
         Ingredient ingredient = Ingredient.of(flower);
-        ARS_NOUVEAU_CRUSHING.add(ARS_NOUVEAU_CRUSHING.builder(toName(flower), ingredient).addOutput(output1, 2));
+        ARS_NOUVEAU_CRUSHING.builder(toName(flower), ingredient).addOutput(output1, 2).build();
         if (flower instanceof BlockItem bi) {
-            BOTANY_POTS_CROP.add(BOTANY_POTS_CROP.builder(toName(flower), ingredient, 1200)
+            BOTANY_POTS_CROP.builder(toName(flower), ingredient, 1200)
                     .addCategory("dirt")
                     .addDisplay(new DisplayState.Simple(bi.getBlock().defaultBlockState()))
-                    .addOutput(flower));
+                    .addOutput(flower).build();
         }
         var milling = CREATE_MILLING.builder(toName(flower), 50)
                 .addInput(ingredient)
@@ -789,26 +798,26 @@ public abstract class CompatDataProvider {
         if (output3 != null) {
             milling.addOutput(output3, count3, chance3);
         }
-        CREATE_MILLING.add(milling);
-        FARMERS_DELIGHT_CUTTING.add(FARMERS_DELIGHT_CUTTING.builder(toName(flower), ingredient, KNIVES)
-                .addOutput(output1, 2));
-        INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.add(INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.builder(toName(flower), ingredient, 5)
+        milling.build();
+        FARMERS_DELIGHT_CUTTING.builder(toName(flower), ingredient, KNIVES)
+                .addOutput(output1, 2).build();
+        INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.builder(toName(flower), ingredient, 5)
                 .addItem(output1, 4)
-                .addItem(output1, 2, 0.5f));
-        INTEGRATED_DYNAMICS_SQUEEZING.add(INTEGRATED_DYNAMICS_SQUEEZING.builder(toName(flower), ingredient)
-                .addItem(output1, 4));
-        MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(flower), ingredient, BIO_FUEL, 5));
-        MEKANISM_ENRICHING.add(MEKANISM_ENRICHING.builder(toName(flower), ingredient, output1, 2));
+                .addItem(output1, 2, 0.5f).build();
+        INTEGRATED_DYNAMICS_SQUEEZING.builder(toName(flower), ingredient)
+                .addItem(output1, 4).build();
+        MEKANISM_CRUSHING.builder(toName(flower), ingredient, BIO_FUEL, 5).build();
+        MEKANISM_ENRICHING.builder(toName(flower), ingredient, output1, 2).build();
         if (output1 instanceof DyeItem dye) {
-            MEKANISM_PIGMENT_EXTRACTING.add(MEKANISM_PIGMENT_EXTRACTING.builder(toName(flower), ingredient, new Chemical.Stack<>(Pigment.byDyeColor(dye.getDyeColor()), 768)));
+            MEKANISM_PIGMENT_EXTRACTING.builder(toName(flower), ingredient, new Chemical.Stack<>(Pigment.byDyeColor(dye.getDyeColor()), 768)).build();
         }
-        THERMAL_CENTRIFUGING.add(THERMAL_CENTRIFUGING.builder(toName(flower))
+        THERMAL_CENTRIFUGING.builder(toName(flower))
                 .setEnergy(1600)
                 .addInput(ingredient)
-                .addOutputItem(output1, 3));
-        THERMAL_INSOLATING.add(THERMAL_INSOLATING.builder(toName(flower))
+                .addOutputItem(output1, 3).build();
+        THERMAL_INSOLATING.builder(toName(flower))
                 .addInput(ingredient)
-                .addOutputItem(flower, 1, 2));
+                .addOutputItem(flower, 1, 2).build();
     }
 
     /**
@@ -879,13 +888,13 @@ public abstract class CompatDataProvider {
      */
     protected void addTallFlowerProcessing(Item flower, Item output1, int count1, @Nullable ResourceLocation output2, int count2, float chance2, @Nullable ResourceLocation output3, int count3, float chance3) {
         Ingredient ingredient = Ingredient.of(flower);
-        ARS_NOUVEAU_CRUSHING.add(ARS_NOUVEAU_CRUSHING.builder(itemId(flower).getPath(), ingredient).addOutput(output1, 4));
+        ARS_NOUVEAU_CRUSHING.builder(itemId(flower).getPath(), ingredient).addOutput(output1, 4).build();
         if (flower instanceof BlockItem bi && bi.getBlock() instanceof TallFlowerBlock tfb) {
-            BOTANY_POTS_CROP.add(BOTANY_POTS_CROP.builder(toName(flower), ingredient, 1200)
+            BOTANY_POTS_CROP.builder(toName(flower), ingredient, 1200)
                     .addCategory("dirt")
                     .addDisplay(new DisplayState.Simple(tfb.defaultBlockState().setValue(TallFlowerBlock.HALF, DoubleBlockHalf.LOWER)))
                     .addDisplay(new DisplayState.Simple(tfb.defaultBlockState().setValue(TallFlowerBlock.HALF, DoubleBlockHalf.UPPER)))
-                    .addOutput(flower));
+                    .addOutput(flower).build();
         }
         var milling = CREATE_MILLING.builder(itemId(flower).getPath(), 100)
                 .addInput(ingredient)
@@ -896,25 +905,25 @@ public abstract class CompatDataProvider {
         if (output3 != null) {
             milling.addOutput(output3, count3, chance3);
         }
-        CREATE_MILLING.add(milling);
-        INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.add(INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.builder(toName(flower), ingredient, 5)
+        milling.build();
+        INTEGRATED_DYNAMICS_MECHANICAL_SQUEEZING.builder(toName(flower), ingredient, 5)
                 .addItem(output1, 8)
                 .addItem(output1, 2, 0.5f)
-                .addItem(output1, 2, 0.5f));
-        INTEGRATED_DYNAMICS_SQUEEZING.add(INTEGRATED_DYNAMICS_SQUEEZING.builder(toName(flower), ingredient)
-                .addItem(output1, 8));
-        MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(flower), ingredient, BIO_FUEL, 5));
-        MEKANISM_ENRICHING.add(MEKANISM_ENRICHING.builder(toName(flower), ingredient, output1, 4));
+                .addItem(output1, 2, 0.5f).build();
+        INTEGRATED_DYNAMICS_SQUEEZING.builder(toName(flower), ingredient)
+                .addItem(output1, 8).build();
+        MEKANISM_CRUSHING.builder(toName(flower), ingredient, BIO_FUEL, 5).build();
+        MEKANISM_ENRICHING.builder(toName(flower), ingredient, output1, 4).build();
         if (output1 instanceof DyeItem dye) {
-            MEKANISM_PIGMENT_EXTRACTING.add(MEKANISM_PIGMENT_EXTRACTING.builder(toName(flower), ingredient, new Chemical.Stack<>(Pigment.byDyeColor(dye.getDyeColor()), 1536)));
+            MEKANISM_PIGMENT_EXTRACTING.builder(toName(flower), ingredient, new Chemical.Stack<>(Pigment.byDyeColor(dye.getDyeColor()), 1536)).build();
         }
-        THERMAL_CENTRIFUGING.add(THERMAL_CENTRIFUGING.builder(toName(flower))
+        THERMAL_CENTRIFUGING.builder(toName(flower))
                 .setEnergy(3200)
                 .addInput(ingredient)
-                .addOutputItem(output1, 6));
-        THERMAL_INSOLATING.add(THERMAL_INSOLATING.builder(toName(flower))
+                .addOutputItem(output1, 6).build();
+        THERMAL_INSOLATING.builder(toName(flower))
                 .addInput(ingredient)
-                .addOutputItem(flower, 1, 2));
+                .addOutputItem(flower, 1, 2).build();
     }
 
     /**
@@ -978,24 +987,24 @@ public abstract class CompatDataProvider {
      */
     protected void addMushroomProcessing(Item mushroom, @Nullable Item mushroomBlock) {
         if (mushroom instanceof BlockItem bi) {
-            BOTANY_POTS_CROP.add(BOTANY_POTS_CROP.builder(toName(mushroom), Ingredient.of(mushroom), 1200)
+            BOTANY_POTS_CROP.builder(toName(mushroom), Ingredient.of(mushroom), 1200)
                     .addCategory("stone")
                     .addCategory("mushroom")
                     .addCategory("mulch")
                     .addDisplay(new DisplayState.Simple(bi.getBlock().defaultBlockState()))
-                    .addOutput(mushroom));
+                    .addOutput(mushroom).build();
         }
-        IMMERSIVE_ENGINEERING_CLOCHE.add(IMMERSIVE_ENGINEERING_CLOCHE.builder(toName(mushroom), 480, Ingredient.of(mushroom), MUSHROOM_SOIL, ClocheRenderType.GENERIC, itemId(mushroom))
-                .addOutput(Ingredient.of(mushroom)));
-        MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(mushroom), Ingredient.of(mushroom), BIO_FUEL, 5));
+        IMMERSIVE_ENGINEERING_CLOCHE.builder(toName(mushroom), 480, Ingredient.of(mushroom), MUSHROOM_SOIL, ClocheRenderType.GENERIC, itemId(mushroom))
+                .addOutput(Ingredient.of(mushroom)).build();
+        MEKANISM_CRUSHING.builder(toName(mushroom), Ingredient.of(mushroom), BIO_FUEL, 5).build();
         if (mushroomBlock != null) {
-            MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(mushroomBlock), Ingredient.of(mushroomBlock), BIO_FUEL, 7));
+            MEKANISM_CRUSHING.builder(toName(mushroomBlock), Ingredient.of(mushroomBlock), BIO_FUEL, 7).build();
         }
-        THERMAL_INSOLATING.add(THERMAL_INSOLATING.builder(toName(mushroom))
+        THERMAL_INSOLATING.builder(toName(mushroom))
                 .setWaterModifier(1.5f)
                 .setEnergyModifier(0.5f)
                 .addInput(Ingredient.of(mushroom))
-                .addOutputItem(mushroom, 1, 2));
+                .addOutputItem(mushroom, 1, 2).build();
     }
 
     /**
@@ -1018,22 +1027,22 @@ public abstract class CompatDataProvider {
      */
     protected void addFungusAndRootsProcessing(Item fungus, Item roots, ResourceLocation nylium, ResourceLocation stem, ResourceLocation wartBlock) {
         if (fungus instanceof BlockItem bi) {
-            BOTANY_POTS_CROP.add(BOTANY_POTS_CROP.builder(toName(fungus), Ingredient.of(fungus), 1200)
+            BOTANY_POTS_CROP.builder(toName(fungus), Ingredient.of(fungus), 1200)
                     .addCategory(toName(nylium))
                     .addDisplay(new DisplayState.Simple(bi.getBlock().defaultBlockState()))
                     .addOutput(fungus)
                     .addOutput(stem)
                     .addOutput(wartBlock, 0.25f)
-                    .addOutput(SHROOMLIGHT, 0.05f));
+                    .addOutput(SHROOMLIGHT, 0.05f).build();
         }
         if (roots instanceof BlockItem bi) {
-            BOTANY_POTS_CROP.add(BOTANY_POTS_CROP.builder(toName(roots), Ingredient.of(roots), 1200)
+            BOTANY_POTS_CROP.builder(toName(roots), Ingredient.of(roots), 1200)
                     .addCategory(toName(nylium))
                     .addDisplay(new DisplayState.Simple(bi.getBlock().defaultBlockState()))
-                    .addOutput(roots));
+                    .addOutput(roots).build();
         }
-        MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(fungus), Ingredient.of(fungus), BIO_FUEL, 5));
-        MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(roots), Ingredient.of(roots), BIO_FUEL, 5));
+        MEKANISM_CRUSHING.builder(toName(fungus), Ingredient.of(fungus), BIO_FUEL, 5).build();
+        MEKANISM_CRUSHING.builder(toName(roots), Ingredient.of(roots), BIO_FUEL, 5).build();
     }
 
     /**
@@ -1056,93 +1065,93 @@ public abstract class CompatDataProvider {
         Item pressurePlate = family.getVariants().containsKey(BlockFamily.Variant.PRESSURE_PLATE) ? family.get(BlockFamily.Variant.PRESSURE_PLATE).asItem() : null;
         Item sign = family.getVariants().containsKey(BlockFamily.Variant.SIGN) ? family.get(BlockFamily.Variant.SIGN).asItem() : null;
         if (slab != null) {
-            CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(slab) + "_from_" + toName(planks), Ingredient.of(planks), slab, 2));
-            IMMERSIVE_ENGINEERING_SAWMILL.add(IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(slab), 800, Ingredient.of(planks), slab, 2)
-                    .addSecondaryOutput(WOOD_DUST, false));
+            CORAIL_WOODCUTTER_SAWING.builder(toName(slab) + "_from_" + toName(planks), Ingredient.of(planks), slab, 2).build();
+            IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(slab), 800, Ingredient.of(planks), slab, 2)
+                    .addSecondaryOutput(WOOD_DUST, false).build();
         }
         if (stairs != null) {
-            CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(stairs) + "_from_" + toName(planks), Ingredient.of(planks), stairs));
-            IMMERSIVE_ENGINEERING_SAWMILL.add(IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(stairs), 1600, Ingredient.of(stairs), planks)
-                    .addSecondaryOutput(WOOD_DUST, false));
+            CORAIL_WOODCUTTER_SAWING.builder(toName(stairs) + "_from_" + toName(planks), Ingredient.of(planks), stairs).build();
+            IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(stairs), 1600, Ingredient.of(stairs), planks)
+                    .addSecondaryOutput(WOOD_DUST, false).build();
         }
         if (fence != null) {
-            CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(fence) + "_from_" + toName(planks), Ingredient.of(planks), fence));
+            CORAIL_WOODCUTTER_SAWING.builder(toName(fence) + "_from_" + toName(planks), Ingredient.of(planks), fence).build();
         }
         if (fenceGate != null) {
-            MEKANISM_SAWING.add(MEKANISM_SAWING.builder(toName(fenceGate), Ingredient.of(fenceGate), planks, 2)
-                    .setSecondaryOutput(STICK, 4));
+            MEKANISM_SAWING.builder(toName(fenceGate), Ingredient.of(fenceGate), planks, 2)
+                    .setSecondaryOutput(STICK, 4).build();
         }
         if (door != null) {
-            CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(door) + "_from_" + toName(planks), Ingredient.of(planks), door));
-            FARMERS_DELIGHT_CUTTING.add(FARMERS_DELIGHT_CUTTING.builder(toName(door), Ingredient.of(door), AXE_DIG)
-                    .addOutput(planks));
-            IMMERSIVE_ENGINEERING_SAWMILL.add(IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(door), 800, Ingredient.of(door), planks)
-                    .addSecondaryOutput(WOOD_DUST, false));
-            MEKANISM_SAWING.add(MEKANISM_SAWING.builder(toName(door), Ingredient.of(door), planks, 2));
+            CORAIL_WOODCUTTER_SAWING.builder(toName(door) + "_from_" + toName(planks), Ingredient.of(planks), door).build();
+            FARMERS_DELIGHT_CUTTING.builder(toName(door), Ingredient.of(door), AXE_DIG)
+                    .addOutput(planks).build();
+            IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(door), 800, Ingredient.of(door), planks)
+                    .addSecondaryOutput(WOOD_DUST, false).build();
+            MEKANISM_SAWING.builder(toName(door), Ingredient.of(door), planks, 2).build();
         }
         if (trapdoor != null) {
-            CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(trapdoor) + "_from_" + toName(planks), Ingredient.of(planks), trapdoor));
-            FARMERS_DELIGHT_CUTTING.add(FARMERS_DELIGHT_CUTTING.builder(toName(trapdoor), Ingredient.of(trapdoor), AXE_DIG)
-                    .addOutput(planks));
-            MEKANISM_SAWING.add(MEKANISM_SAWING.builder(toName(trapdoor), Ingredient.of(trapdoor), planks, 3));
+            CORAIL_WOODCUTTER_SAWING.builder(toName(trapdoor) + "_from_" + toName(planks), Ingredient.of(planks), trapdoor).build();
+            FARMERS_DELIGHT_CUTTING.builder(toName(trapdoor), Ingredient.of(trapdoor), AXE_DIG)
+                    .addOutput(planks).build();
+            MEKANISM_SAWING.builder(toName(trapdoor), Ingredient.of(trapdoor), planks, 3).build();
         }
         if (button != null) {
-            CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(button) + "_from_" + toName(planks), Ingredient.of(planks), button));
+            CORAIL_WOODCUTTER_SAWING.builder(toName(button) + "_from_" + toName(planks), Ingredient.of(planks), button).build();
         }
         if (pressurePlate != null) {
-            CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(pressurePlate) + "_from_" + toName(planks), Ingredient.of(planks), pressurePlate));
-            MEKANISM_SAWING.add(MEKANISM_SAWING.builder(toName(pressurePlate), Ingredient.of(pressurePlate), planks, 2));
+            CORAIL_WOODCUTTER_SAWING.builder(toName(pressurePlate) + "_from_" + toName(planks), Ingredient.of(planks), pressurePlate).build();
+            MEKANISM_SAWING.builder(toName(pressurePlate), Ingredient.of(pressurePlate), planks, 2).build();
         }
         if (sign != null) {
-            CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(sign) + "_from_" + toName(planks), Ingredient.of(planks), sign));
-            FARMERS_DELIGHT_CUTTING.add(FARMERS_DELIGHT_CUTTING.builder(toName(sign), Ingredient.of(sign), AXE_DIG)
-                    .addOutput(planks));
+            CORAIL_WOODCUTTER_SAWING.builder(toName(sign) + "_from_" + toName(planks), Ingredient.of(planks), sign).build();
+            FARMERS_DELIGHT_CUTTING.builder(toName(sign), Ingredient.of(sign), AXE_DIG)
+                    .addOutput(planks).build();
         }
         if (boat != null) {
-            MEKANISM_SAWING.add(MEKANISM_SAWING.builder(toName(boat), Ingredient.of(boat), planks, 5));
+            MEKANISM_SAWING.builder(toName(boat), Ingredient.of(boat), planks, 5).build();
             if (chestBoat != null) {
-                MEKANISM_SAWING.add(MEKANISM_SAWING.builder(toName(chestBoat), Ingredient.of(chestBoat), boat)
-                        .setSecondaryOutput(CHEST));
+                MEKANISM_SAWING.builder(toName(chestBoat), Ingredient.of(chestBoat), boat)
+                        .setSecondaryOutput(CHEST).build();
             }
         }
         if (logs != null) {
-            CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(planks) + "_from_" + toName(logs), Ingredient.of(logs), planks, 4));
-            MEKANISM_SAWING.add(MEKANISM_SAWING.builder(toName(logs), Ingredient.of(logs), planks, 6)
-                    .setSecondaryOutput(MEKANISM_SAWDUST, 0.25f));
-            THERMAL_SAWING.add(THERMAL_SAWING.builder(toName(logs))
+            CORAIL_WOODCUTTER_SAWING.builder(toName(planks) + "_from_" + toName(logs), Ingredient.of(logs), planks, 4).build();
+            MEKANISM_SAWING.builder(toName(logs), Ingredient.of(logs), planks, 6)
+                    .setSecondaryOutput(MEKANISM_SAWDUST, 0.25f).build();
+            THERMAL_SAWING.builder(toName(logs))
                     .setEnergy(1000)
                     .addInput(Ingredient.of(logs))
                     .addOutputItem(planks, 6)
-                    .addOutputItem(THERMAL_SAWDUST, 1.25f));
+                    .addOutputItem(THERMAL_SAWDUST, 1.25f).build();
             if (slab != null) {
-                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(slab) + "_from_" + toName(logs), Ingredient.of(logs), slab, 8));
+                CORAIL_WOODCUTTER_SAWING.builder(toName(slab) + "_from_" + toName(logs), Ingredient.of(logs), slab, 8).build();
             }
             if (stairs != null) {
-                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(stairs) + "_from_" + toName(logs), Ingredient.of(logs), stairs, 4));
+                CORAIL_WOODCUTTER_SAWING.builder(toName(stairs) + "_from_" + toName(logs), Ingredient.of(logs), stairs, 4).build();
             }
             if (fence != null) {
-                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(fence) + "_from_" + toName(logs), Ingredient.of(logs), fence, 4));
+                CORAIL_WOODCUTTER_SAWING.builder(toName(fence) + "_from_" + toName(logs), Ingredient.of(logs), fence, 4).build();
             }
             if (fenceGate != null) {
-                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(fenceGate) + "_from_" + toName(logs), Ingredient.of(logs), fenceGate));
+                CORAIL_WOODCUTTER_SAWING.builder(toName(fenceGate) + "_from_" + toName(logs), Ingredient.of(logs), fenceGate).build();
             }
             if (door != null) {
-                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(door) + "_from_" + toName(logs), Ingredient.of(logs), door, 4));
+                CORAIL_WOODCUTTER_SAWING.builder(toName(door) + "_from_" + toName(logs), Ingredient.of(logs), door, 4).build();
             }
             if (trapdoor != null) {
-                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(trapdoor) + "_from_" + toName(logs), Ingredient.of(logs), trapdoor, 4));
+                CORAIL_WOODCUTTER_SAWING.builder(toName(trapdoor) + "_from_" + toName(logs), Ingredient.of(logs), trapdoor, 4).build();
             }
             if (button != null) {
-                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(button) + "_from_" + toName(logs), Ingredient.of(logs), button, 4));
+                CORAIL_WOODCUTTER_SAWING.builder(toName(button) + "_from_" + toName(logs), Ingredient.of(logs), button, 4).build();
             }
             if (pressurePlate != null) {
-                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(pressurePlate) + "_from_" + toName(logs), Ingredient.of(logs), pressurePlate, 4));
+                CORAIL_WOODCUTTER_SAWING.builder(toName(pressurePlate) + "_from_" + toName(logs), Ingredient.of(logs), pressurePlate, 4).build();
             }
             if (sign != null) {
-                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(sign) + "_from_" + toName(logs), Ingredient.of(logs), sign, 4));
+                CORAIL_WOODCUTTER_SAWING.builder(toName(sign) + "_from_" + toName(logs), Ingredient.of(logs), sign, 4).build();
             }
             if (boat != null) {
-                CORAIL_WOODCUTTER_SAWING.add(CORAIL_WOODCUTTER_SAWING.builder(toName(boat) + "_from_" + toName(logs), Ingredient.of(logs), boat));
+                CORAIL_WOODCUTTER_SAWING.builder(toName(boat) + "_from_" + toName(logs), Ingredient.of(logs), boat).build();
             }
         }
     }
@@ -1179,55 +1188,55 @@ public abstract class CompatDataProvider {
      */
     protected void addLogsProcessing(Item log, Item wood, Item strippedLog, Item strippedWood, ResourceLocation planks, @Nullable Item leaves, @Nullable Item sapling) {
         if (wood instanceof BlockItem bi) {
-            BOTANY_POTS_SOIL.add(BOTANY_POTS_SOIL.builder(toName(wood), Ingredient.of(log, wood), new DisplayState.Simple(bi.getBlock().defaultBlockState()))
+            BOTANY_POTS_SOIL.builder(toName(wood), Ingredient.of(log, wood), new DisplayState.Simple(bi.getBlock().defaultBlockState()))
                     .addCategory("wood")
                     .addCategory("log")
                     .addCategory("mushroom")
                     .addCategory(toName(wood).replace("_wood", ""))
-                    .addCategory(toName(wood)));
+                    .addCategory(toName(wood)).build();
         }
-        CREATE_CUTTING.add(CREATE_CUTTING.builder(toName(log), 50)
+        CREATE_CUTTING.builder(toName(log), 50)
                 .addInput(Ingredient.of(log))
-                .addOutput(strippedLog));
-        CREATE_CUTTING.add(CREATE_CUTTING.builder(toName(strippedLog), 50)
+                .addOutput(strippedLog).build();
+        CREATE_CUTTING.builder(toName(strippedLog), 50)
                 .addInput(Ingredient.of(strippedLog))
-                .addOutput(planks, 6));
-        CREATE_CUTTING.add(CREATE_CUTTING.builder(toName(wood), 50)
+                .addOutput(planks, 6).build();
+        CREATE_CUTTING.builder(toName(wood), 50)
                 .addInput(Ingredient.of(wood))
-                .addOutput(strippedWood));
-        CREATE_CUTTING.add(CREATE_CUTTING.builder(toName(strippedWood), 50)
+                .addOutput(strippedWood).build();
+        CREATE_CUTTING.builder(toName(strippedWood), 50)
                 .addInput(Ingredient.of(strippedWood))
-                .addOutput(planks, 6));
-        ELEMENTALCRAFT_SAWING.add(ELEMENTALCRAFT_SAWING.builder(toName(planks), Ingredient.of(strippedLog, strippedWood), planks, 6, 1000, 3));
-        ELEMENTALCRAFT_SAWING.add(ELEMENTALCRAFT_SAWING.builder(toName(strippedLog), Ingredient.of(log), strippedLog, 1000, 0));
-        ELEMENTALCRAFT_SAWING.add(ELEMENTALCRAFT_SAWING.builder(toName(strippedWood), Ingredient.of(wood), strippedWood, 1000, 0));
-        FARMERS_DELIGHT_CUTTING.add(FARMERS_DELIGHT_CUTTING.builder(toName(log), Ingredient.of(log), AXE_STRIP)
+                .addOutput(planks, 6).build();
+        ELEMENTALCRAFT_SAWING.builder(toName(planks), Ingredient.of(strippedLog, strippedWood), planks, 6, 1000, 3).build();
+        ELEMENTALCRAFT_SAWING.builder(toName(strippedLog), Ingredient.of(log), strippedLog, 1000, 0).build();
+        ELEMENTALCRAFT_SAWING.builder(toName(strippedWood), Ingredient.of(wood), strippedWood, 1000, 0).build();
+        FARMERS_DELIGHT_CUTTING.builder(toName(log), Ingredient.of(log), AXE_STRIP)
                 .setSound("minecraft:item.axe.strip")
                 .addOutput(strippedLog)
-                .addOutput(TREE_BARK));
-        FARMERS_DELIGHT_CUTTING.add(FARMERS_DELIGHT_CUTTING.builder(toName(wood), Ingredient.of(wood), AXE_STRIP)
+                .addOutput(TREE_BARK).build();
+        FARMERS_DELIGHT_CUTTING.builder(toName(wood), Ingredient.of(wood), AXE_STRIP)
                 .setSound("minecraft:item.axe.strip")
                 .addOutput(strippedWood)
-                .addOutput(TREE_BARK));
-        IMMERSIVE_ENGINEERING_SAWMILL.add(IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(log), 1600, Ingredient.of(log, wood), planks, 6)
+                .addOutput(TREE_BARK).build();
+        IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(log), 1600, Ingredient.of(log, wood), planks, 6)
                 .setStrippedOutput(Ingredient.of(strippedLog))
                 .addSecondaryOutput(WOOD_DUST, true)
-                .addSecondaryOutput(WOOD_DUST, false));
-        IMMERSIVE_ENGINEERING_SAWMILL.add(IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(strippedLog), 800, Ingredient.of(strippedLog), planks, 6)
-                .addSecondaryOutput(WOOD_DUST, false));
+                .addSecondaryOutput(WOOD_DUST, false).build();
+        IMMERSIVE_ENGINEERING_SAWMILL.builder(toName(strippedLog), 800, Ingredient.of(strippedLog), planks, 6)
+                .addSecondaryOutput(WOOD_DUST, false).build();
         if (leaves != null) {
-            BOTANIA_MANA_INFUSION.add(BOTANIA_MANA_INFUSION.builder(toName(leaves) + "_dupe", 2000, Ingredient.of(leaves), leaves, 2)
-                    .setCatalyst(CONJURATION_CATALYST));
-            MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(leaves), Ingredient.of(leaves), BIO_FUEL, 2));
+            BOTANIA_MANA_INFUSION.builder(toName(leaves) + "_dupe", 2000, Ingredient.of(leaves), leaves, 2)
+                    .setCatalyst(CONJURATION_CATALYST).build();
+            MEKANISM_CRUSHING.builder(toName(leaves), Ingredient.of(leaves), BIO_FUEL, 2).build();
         }
         if (sapling != null) {
-            MEKANISM_CRUSHING.add(MEKANISM_CRUSHING.builder(toName(sapling), Ingredient.of(sapling), BIO_FUEL, 2));
-            THERMAL_INSOLATING.add(THERMAL_INSOLATING.builder(toName(sapling))
+            MEKANISM_CRUSHING.builder(toName(sapling), Ingredient.of(sapling), BIO_FUEL, 2).build();
+            THERMAL_INSOLATING.builder(toName(sapling))
                     .setWaterModifier(3)
                     .setEnergyModifier(3)
                     .addInput(Ingredient.of(sapling))
                     .addOutputItem(log, 1, 6)
-                    .addOutputItem(sapling, 1, 1.1f));
+                    .addOutputItem(sapling, 1, 1.1f).build();
         }
     }
 

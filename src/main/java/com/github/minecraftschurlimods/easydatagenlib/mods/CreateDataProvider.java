@@ -89,7 +89,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
          * @param tag   The output NBT tag to use.
          */
         public Builder builder(String id, ResourceLocation item, int count, CompoundTag tag) {
-            return new Builder(new ResourceLocation(namespace, id), item, count, tag);
+            return new Builder(this, new ResourceLocation(namespace, id), item, count, tag);
         }
 
         /**
@@ -98,7 +98,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
          * @param count The output count to use.
          */
         public Builder builder(String id, ResourceLocation item, int count) {
-            return new Builder(new ResourceLocation(namespace, id), item, count);
+            return new Builder(this, new ResourceLocation(namespace, id), item, count);
         }
 
         /**
@@ -106,7 +106,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
          * @param item The id of the output item to use.
          */
         public Builder builder(String id, ResourceLocation item) {
-            return new Builder(new ResourceLocation(namespace, id), item);
+            return new Builder(this, new ResourceLocation(namespace, id), item);
         }
 
         /**
@@ -116,7 +116,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
          * @param tag   The output NBT tag to use.
          */
         public Builder builder(String id, Item item, int count, CompoundTag tag) {
-            return new Builder(new ResourceLocation(namespace, id), item, count, tag);
+            return new Builder(this, new ResourceLocation(namespace, id), item, count, tag);
         }
 
         /**
@@ -125,7 +125,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
          * @param count The output count to use.
          */
         public Builder builder(String id, Item item, int count) {
-            return new Builder(new ResourceLocation(namespace, id), item, count);
+            return new Builder(this, new ResourceLocation(namespace, id), item, count);
         }
 
         /**
@@ -133,7 +133,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
          * @param item The output item to use.
          */
         public Builder builder(String id, Item item) {
-            return new Builder(new ResourceLocation(namespace, id), item);
+            return new Builder(this, new ResourceLocation(namespace, id), item);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -142,29 +142,29 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             private final PotentiallyAbsentItemStack output;
             private boolean acceptMirrored = true;
 
-            public Builder(ResourceLocation id, ResourceLocation item, int count, CompoundTag tag) {
-                super(id);
+            protected Builder(MechanicalCrafting provider, ResourceLocation id, ResourceLocation item, int count, CompoundTag tag) {
+                super(id, provider);
                 output = new PotentiallyAbsentItemStack(item, count, tag);
             }
 
-            public Builder(ResourceLocation id, ResourceLocation item, int count) {
-                this(id, item, count, new CompoundTag());
+            protected Builder(MechanicalCrafting provider, ResourceLocation id, ResourceLocation item, int count) {
+                this(provider, id, item, count, new CompoundTag());
             }
 
-            public Builder(ResourceLocation id, ResourceLocation item) {
-                this(id, item, 1, new CompoundTag());
+            protected Builder(MechanicalCrafting provider, ResourceLocation id, ResourceLocation item) {
+                this(provider, id, item, 1, new CompoundTag());
             }
 
-            public Builder(ResourceLocation id, Item item, int count, CompoundTag tag) {
-                this(id, itemId(item), count, tag);
+            protected Builder(MechanicalCrafting provider, ResourceLocation id, Item item, int count, CompoundTag tag) {
+                this(provider, id, itemId(item), count, tag);
             }
 
-            public Builder(ResourceLocation id, Item item, int count) {
-                this(id, item, count, new CompoundTag());
+            protected Builder(MechanicalCrafting provider, ResourceLocation id, Item item, int count) {
+                this(provider, id, item, count, new CompoundTag());
             }
 
-            public Builder(ResourceLocation id, Item item) {
-                this(id, item, 1, new CompoundTag());
+            protected Builder(MechanicalCrafting provider, ResourceLocation id, Item item) {
+                this(provider, id, item, 1, new CompoundTag());
             }
 
             /**
@@ -262,7 +262,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
          * @param transitionalItem The id of the transitional item to use.
          */
         public Builder builder(String id, Ingredient input, ResourceLocation transitionalItem) {
-            return new Builder(new ResourceLocation(namespace, id), input, transitionalItem);
+            return new Builder(this, new ResourceLocation(namespace, id), input, transitionalItem);
         }
 
         /**
@@ -271,7 +271,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
          * @param transitionalItem The transitional item to use.
          */
         public Builder builder(String id, Ingredient input, Item transitionalItem) {
-            return new Builder(new ResourceLocation(namespace, id), input, transitionalItem);
+            return new Builder(this, new ResourceLocation(namespace, id), input, transitionalItem);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -281,14 +281,14 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             private final PotentiallyAbsentItemStack transitionalItem;
             private int loops = 1;
 
-            public Builder(ResourceLocation id, Ingredient input, ResourceLocation transitionalItem) {
-                super(id);
+            protected Builder(SequencedAssembly provider, ResourceLocation id, Ingredient input, ResourceLocation transitionalItem) {
+                super(id, provider);
                 this.input = input;
                 this.transitionalItem = new PotentiallyAbsentItemStack(transitionalItem);
             }
 
-            public Builder(ResourceLocation id, Ingredient input, Item transitionalItem) {
-                this(id, input, itemId(transitionalItem));
+            protected Builder(SequencedAssembly provider, ResourceLocation id, Ingredient input, Item transitionalItem) {
+                this(provider, id, input, itemId(transitionalItem));
             }
 
             /**
@@ -374,7 +374,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
          * @param duration The duration of this recipe.
          */
         public Builder builder(String id, int duration) {
-            return new Builder(new ResourceLocation(namespace, id), duration);
+            return new Builder(this, new ResourceLocation(namespace, id), duration);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -386,8 +386,8 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
             private boolean keepHeldItem = false;
             private HeatRequirement heatRequirement = HeatRequirement.NONE;
 
-            public Builder(ResourceLocation id, int duration) {
-                super(id);
+            protected Builder(Processing provider, ResourceLocation id, int duration) {
+                super(id, provider);
                 this.duration = duration;
             }
 

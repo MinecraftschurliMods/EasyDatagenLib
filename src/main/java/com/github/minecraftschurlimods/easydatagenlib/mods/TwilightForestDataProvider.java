@@ -27,7 +27,7 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
          * @param to   The id of the result block to use.
          */
         public Builder builder(String id, ResourceLocation from, ResourceLocation to) {
-            return new Builder(new ResourceLocation(namespace, id), from, to);
+            return new Builder(this, new ResourceLocation(namespace, id), from, to);
         }
 
         /**
@@ -36,7 +36,7 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
          * @param to   The result block to use.
          */
         public Builder builder(String id, ResourceLocation from, Block to) {
-            return new Builder(new ResourceLocation(namespace, id), from, to);
+            return new Builder(this, new ResourceLocation(namespace, id), from, to);
         }
 
         /**
@@ -45,7 +45,7 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
          * @param to   The id of the result block to use.
          */
         public Builder builder(String id, Block from, ResourceLocation to) {
-            return new Builder(new ResourceLocation(namespace, id), from, to);
+            return new Builder(this, new ResourceLocation(namespace, id), from, to);
         }
 
         /**
@@ -54,29 +54,29 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
          * @param to   The result block to use.
          */
         public Builder builder(String id, Block from, Block to) {
-            return new Builder(new ResourceLocation(namespace, id), from, to);
+            return new Builder(this, new ResourceLocation(namespace, id), from, to);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
             private final ResourceLocation from;
             private final ResourceLocation to;
 
-            public Builder(ResourceLocation id, ResourceLocation from, ResourceLocation to) {
-                super(id);
+            protected Builder(Crumbling provider, ResourceLocation id, ResourceLocation from, ResourceLocation to) {
+                super(id, provider);
                 this.from = from;
                 this.to = to;
             }
 
-            public Builder(ResourceLocation id, ResourceLocation from, Block to) {
-                this(id, from, blockId(to));
+            protected Builder(Crumbling provider, ResourceLocation id, ResourceLocation from, Block to) {
+                this(provider, id, from, blockId(to));
             }
 
-            public Builder(ResourceLocation id, Block from, ResourceLocation to) {
-                this(id, blockId(from), to);
+            protected Builder(Crumbling provider, ResourceLocation id, Block from, ResourceLocation to) {
+                this(provider, id, blockId(from), to);
             }
 
-            public Builder(ResourceLocation id, Block from, Block to) {
-                this(id, blockId(from), blockId(to));
+            protected Builder(Crumbling provider, ResourceLocation id, Block from, Block to) {
+                this(provider, id, blockId(from), blockId(to));
             }
 
             @Override
@@ -99,7 +99,7 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
          * @param reversible Whether the transformation is reversible or not.
          */
         public Builder builder(String id, ResourceLocation from, ResourceLocation to, boolean reversible) {
-            return new Builder(new ResourceLocation(namespace, id), from, to, reversible);
+            return new Builder(this, new ResourceLocation(namespace, id), from, to, reversible);
         }
 
         /**
@@ -109,7 +109,7 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
          * @param reversible Whether the transformation is reversible or not.
          */
         public Builder builder(String id, ResourceLocation from, EntityType<?> to, boolean reversible) {
-            return new Builder(new ResourceLocation(namespace, id), from, to, reversible);
+            return new Builder(this, new ResourceLocation(namespace, id), from, to, reversible);
         }
 
         /**
@@ -119,7 +119,7 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
          * @param reversible Whether the transformation is reversible or not.
          */
         public Builder builder(String id, EntityType<?> from, ResourceLocation to, boolean reversible) {
-            return new Builder(new ResourceLocation(namespace, id), from, to, reversible);
+            return new Builder(this, new ResourceLocation(namespace, id), from, to, reversible);
         }
 
         /**
@@ -129,7 +129,7 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
          * @param reversible Whether the transformation is reversible or not.
          */
         public Builder builder(String id, EntityType<?> from, EntityType<?> to, boolean reversible) {
-            return new Builder(new ResourceLocation(namespace, id), from, to, reversible);
+            return new Builder(this, new ResourceLocation(namespace, id), from, to, reversible);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -137,23 +137,23 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
             private final ResourceLocation to;
             private final boolean reversible;
 
-            public Builder(ResourceLocation id, ResourceLocation from, ResourceLocation to, boolean reversible) {
-                super(id);
+            protected Builder(Transforming provider, ResourceLocation id, ResourceLocation from, ResourceLocation to, boolean reversible) {
+                super(id, provider);
                 this.from = from;
                 this.to = to;
                 this.reversible = reversible;
             }
 
-            public Builder(ResourceLocation id, ResourceLocation from, EntityType<?> to, boolean reversible) {
-                this(id, from, Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(to)), reversible);
+            protected Builder(Transforming provider, ResourceLocation id, ResourceLocation from, EntityType<?> to, boolean reversible) {
+                this(provider, id, from, Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(to)), reversible);
             }
 
-            public Builder(ResourceLocation id, EntityType<?> from, ResourceLocation to, boolean reversible) {
-                this(id, Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(from)), to, reversible);
+            protected Builder(Transforming provider, ResourceLocation id, EntityType<?> from, ResourceLocation to, boolean reversible) {
+                this(provider, id, Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(from)), to, reversible);
             }
 
-            public Builder(ResourceLocation id, EntityType<?> from, EntityType<?> to, boolean reversible) {
-                this(id, Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(from)), Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(to)), reversible);
+            protected Builder(Transforming provider, ResourceLocation id, EntityType<?> from, EntityType<?> to, boolean reversible) {
+                this(provider, id, Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(from)), Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(to)), reversible);
             }
 
             @Override

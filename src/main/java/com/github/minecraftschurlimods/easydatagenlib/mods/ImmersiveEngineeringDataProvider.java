@@ -36,7 +36,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
          * @param count    The input count to use.
          */
         public Builder builder(String id, int duration, int energy, Ingredient input, int count) {
-            return new Builder(new ResourceLocation(namespace, id), duration, energy, input, count);
+            return new Builder(this, new ResourceLocation(namespace, id), duration, energy, input, count);
         }
 
         /**
@@ -46,7 +46,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
          * @param input    The input ingredient to use.
          */
         public Builder builder(String id, int duration, int energy, Ingredient input) {
-            return new Builder(new ResourceLocation(namespace, id), duration, energy, input);
+            return new Builder(this, new ResourceLocation(namespace, id), duration, energy, input);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -58,15 +58,15 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
             private final IngredientWithCount input;
             private IngredientWithCount slag;
 
-            public Builder(ResourceLocation id, int duration, int energy, Ingredient input, int count) {
-                super(id);
+            protected Builder(ArcFurnace provider, ResourceLocation id, int duration, int energy, Ingredient input, int count) {
+                super(id, provider);
                 this.duration = duration;
                 this.energy = energy;
                 this.input = new IngredientWithCount(input, count);
             }
 
-            public Builder(ResourceLocation id, int duration, int energy, Ingredient input) {
-                this(id, duration, energy, input, 1);
+            protected Builder(ArcFurnace provider, ResourceLocation id, int duration, int energy, Ingredient input) {
+                this(provider, id, duration, energy, input, 1);
             }
 
             /**
@@ -204,7 +204,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
          * @param block      The id of the block to use in the recipe renderer.
          */
         public Builder builder(String id, int time, Ingredient input, Ingredient soil, ClocheRenderType renderType, ResourceLocation block) {
-            return new Builder(new ResourceLocation(namespace, id), time, input, soil, renderType, block);
+            return new Builder(this, new ResourceLocation(namespace, id), time, input, soil, renderType, block);
         }
 
         /**
@@ -216,7 +216,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
          * @param block      The block to use in the recipe renderer.
          */
         public Builder builder(String id, int time, Ingredient input, Ingredient soil, ClocheRenderType renderType, Block block) {
-            return new Builder(new ResourceLocation(namespace, id), time, input, soil, renderType, block);
+            return new Builder(this, new ResourceLocation(namespace, id), time, input, soil, renderType, block);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -227,8 +227,8 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
             private final ClocheRenderType renderType;
             private final ResourceLocation block;
 
-            public Builder(ResourceLocation id, int time, Ingredient input, Ingredient soil, ClocheRenderType renderType, ResourceLocation block) {
-                super(id);
+            protected Builder(Cloche provider, ResourceLocation id, int time, Ingredient input, Ingredient soil, ClocheRenderType renderType, ResourceLocation block) {
+                super(id, provider);
                 this.time = time;
                 this.input = input;
                 this.soil = soil;
@@ -236,8 +236,8 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
                 this.block = block;
             }
 
-            public Builder(ResourceLocation id, int time, Ingredient input, Ingredient soil, ClocheRenderType renderType, Block block) {
-                this(id, time, input, soil, renderType, blockId(block));
+            protected Builder(Cloche provider, ResourceLocation id, int time, Ingredient input, Ingredient soil, ClocheRenderType renderType, Block block) {
+                this(provider, id, time, input, soil, renderType, blockId(block));
             }
 
             /**
@@ -287,7 +287,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
          * @param count  The output count to use.
          */
         public Builder builder(String id, int energy, Ingredient input, Ingredient output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), energy, input, output, count);
+            return new Builder(this, new ResourceLocation(namespace, id), energy, input, output, count);
         }
 
         /**
@@ -297,7 +297,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
          * @param output The output ingredient to use.
          */
         public Builder builder(String id, int energy, Ingredient input, Ingredient output) {
-            return new Builder(new ResourceLocation(namespace, id), energy, input, output);
+            return new Builder(this, new ResourceLocation(namespace, id), energy, input, output);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -306,15 +306,15 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
             private final Ingredient input;
             private final IngredientWithCount output;
 
-            public Builder(ResourceLocation id, int energy, Ingredient input, Ingredient output, int count) {
-                super(id);
+            protected Builder(Crusher provider, ResourceLocation id, int energy, Ingredient input, Ingredient output, int count) {
+                super(id, provider);
                 this.energy = energy;
                 this.input = input;
                 this.output = new IngredientWithCount(output, count);
             }
 
-            public Builder(ResourceLocation id, int energy, Ingredient input, Ingredient output) {
-                this(id, energy, input, output, 1);
+            protected Builder(Crusher provider, ResourceLocation id, int energy, Ingredient input, Ingredient output) {
+                this(provider, id, energy, input, output, 1);
             }
 
             /**
@@ -381,7 +381,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
          * @param count  The output count to use.
          */
         public Builder builder(String id, int energy, Ingredient input, ResourceLocation output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), energy, input, output, count);
+            return new Builder(this, new ResourceLocation(namespace, id), energy, input, output, count);
         }
 
         /**
@@ -391,7 +391,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
          * @param output The id of the output item to use.
          */
         public Builder builder(String id, int energy, Ingredient input, ResourceLocation output) {
-            return new Builder(new ResourceLocation(namespace, id), energy, input, output);
+            return new Builder(this, new ResourceLocation(namespace, id), energy, input, output);
         }
 
         /**
@@ -402,7 +402,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
          * @param count  The output count to use.
          */
         public Builder builder(String id, int energy, Ingredient input, Item output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), energy, input, output, count);
+            return new Builder(this, new ResourceLocation(namespace, id), energy, input, output, count);
         }
 
         /**
@@ -412,7 +412,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
          * @param output The output item to use.
          */
         public Builder builder(String id, int energy, Ingredient input, Item output) {
-            return new Builder(new ResourceLocation(namespace, id), energy, input, output);
+            return new Builder(this, new ResourceLocation(namespace, id), energy, input, output);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -422,23 +422,23 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
             private final PotentiallyAbsentItemStack output;
             private IngredientWithCount stripped;
 
-            public Builder(ResourceLocation id, int energy, Ingredient input, ResourceLocation output, int count) {
-                super(id);
+            protected Builder(Sawmill provider, ResourceLocation id, int energy, Ingredient input, ResourceLocation output, int count) {
+                super(id, provider);
                 this.energy = energy;
                 this.input = input;
                 this.output = new PotentiallyAbsentItemStack(output, count); // doesn't support NBT
             }
 
-            public Builder(ResourceLocation id, int energy, Ingredient input, ResourceLocation output) {
-                this(id, energy, input, output, 1);
+            protected Builder(Sawmill provider, ResourceLocation id, int energy, Ingredient input, ResourceLocation output) {
+                this(provider, id, energy, input, output, 1);
             }
 
-            public Builder(ResourceLocation id, int energy, Ingredient input, Item output, int count) {
-                this(id, energy, input, itemId(output), count);
+            protected Builder(Sawmill provider, ResourceLocation id, int energy, Ingredient input, Item output, int count) {
+                this(provider, id, energy, input, itemId(output), count);
             }
 
-            public Builder(ResourceLocation id, int energy, Ingredient input, Item output) {
-                this(id, energy, input, output, 1);
+            protected Builder(Sawmill provider, ResourceLocation id, int energy, Ingredient input, Item output) {
+                this(provider, id, energy, input, output, 1);
             }
 
             /**

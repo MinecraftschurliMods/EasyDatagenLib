@@ -33,7 +33,7 @@ public abstract class IntegratedDynamicsDataProvider<T extends AbstractRecipeBui
          * @param duration The duration to use.
          */
         public Builder builder(String id, Ingredient input, int duration) {
-            return new Builder(new ResourceLocation(namespace, id), input, duration);
+            return new Builder(this, new ResourceLocation(namespace, id), input, duration);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -42,8 +42,8 @@ public abstract class IntegratedDynamicsDataProvider<T extends AbstractRecipeBui
             private final int duration;
             private PotentiallyAbsentFluidStack outputFluid = null;
 
-            public Builder(ResourceLocation id, Ingredient input, int duration) {
-                super(id);
+            protected Builder(MechanicalSqueezing provider, ResourceLocation id, Ingredient input, int duration) {
+                super(id, provider);
                 this.input = input;
                 this.duration = duration;
             }
@@ -260,7 +260,7 @@ public abstract class IntegratedDynamicsDataProvider<T extends AbstractRecipeBui
          * @param input The input ingredient to use.
          */
         public Builder builder(String id, Ingredient input) {
-            return new Builder(new ResourceLocation(namespace, id), input);
+            return new Builder(this, new ResourceLocation(namespace, id), input);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -268,8 +268,8 @@ public abstract class IntegratedDynamicsDataProvider<T extends AbstractRecipeBui
             private final Ingredient input;
             private PotentiallyAbsentFluidStack outputFluid = null;
 
-            public Builder(ResourceLocation id, Ingredient input) {
-                super(id);
+            protected Builder(Squeezing provider, ResourceLocation id, Ingredient input) {
+                super(id, provider);
                 this.input = input;
             }
 

@@ -43,7 +43,7 @@ public abstract class ElementalcraftDataProvider<T extends AbstractRecipeBuilder
          * @param luckRatio     The luck ratio to use.
          */
         public Builder builder(String id, Ingredient input, ResourceLocation output, int count, CompoundTag tag, int elementAmount, int luckRatio) {
-            return new Builder(new ResourceLocation(namespace, id), input, output, count, tag, elementAmount, luckRatio);
+            return new Builder(this, new ResourceLocation(namespace, id), input, output, count, tag, elementAmount, luckRatio);
         }
 
         /**
@@ -55,7 +55,7 @@ public abstract class ElementalcraftDataProvider<T extends AbstractRecipeBuilder
          * @param luckRatio     The luck ratio to use.
          */
         public Builder builder(String id, Ingredient input, ResourceLocation output, int count, int elementAmount, int luckRatio) {
-            return new Builder(new ResourceLocation(namespace, id), input, output, count, new CompoundTag(), elementAmount, luckRatio);
+            return new Builder(this, new ResourceLocation(namespace, id), input, output, count, new CompoundTag(), elementAmount, luckRatio);
         }
 
         /**
@@ -66,7 +66,7 @@ public abstract class ElementalcraftDataProvider<T extends AbstractRecipeBuilder
          * @param luckRatio     The luck ratio to use.
          */
         public Builder builder(String id, Ingredient input, ResourceLocation output, int elementAmount, int luckRatio) {
-            return new Builder(new ResourceLocation(namespace, id), input, output, 1, elementAmount, luckRatio);
+            return new Builder(this, new ResourceLocation(namespace, id), input, output, 1, elementAmount, luckRatio);
         }
 
         /**
@@ -79,7 +79,7 @@ public abstract class ElementalcraftDataProvider<T extends AbstractRecipeBuilder
          * @param luckRatio     The luck ratio to use.
          */
         public Builder builder(String id, Ingredient input, Item output, int count, CompoundTag tag, int elementAmount, int luckRatio) {
-            return new Builder(new ResourceLocation(namespace, id), input, itemId(output), count, tag, elementAmount, luckRatio);
+            return new Builder(this, new ResourceLocation(namespace, id), input, itemId(output), count, tag, elementAmount, luckRatio);
         }
 
         /**
@@ -91,7 +91,7 @@ public abstract class ElementalcraftDataProvider<T extends AbstractRecipeBuilder
          * @param luckRatio     The luck ratio to use.
          */
         public Builder builder(String id, Ingredient input, Item output, int count, int elementAmount, int luckRatio) {
-            return new Builder(new ResourceLocation(namespace, id), input, output, count, new CompoundTag(), elementAmount, luckRatio);
+            return new Builder(this, new ResourceLocation(namespace, id), input, output, count, new CompoundTag(), elementAmount, luckRatio);
         }
 
         /**
@@ -102,7 +102,7 @@ public abstract class ElementalcraftDataProvider<T extends AbstractRecipeBuilder
          * @param luckRatio     The luck ratio to use.
          */
         public Builder builder(String id, Ingredient input, Item output, int elementAmount, int luckRatio) {
-            return new Builder(new ResourceLocation(namespace, id), input, output, 1, elementAmount, luckRatio);
+            return new Builder(this, new ResourceLocation(namespace, id), input, output, 1, elementAmount, luckRatio);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -111,32 +111,32 @@ public abstract class ElementalcraftDataProvider<T extends AbstractRecipeBuilder
             private final int elementAmount;
             private final int luckRatio;
 
-            public Builder(ResourceLocation id, Ingredient input, ResourceLocation output, int count, CompoundTag tag, int elementAmount, int luckRatio) {
-                super(id);
+            protected Builder(IO provider, ResourceLocation id, Ingredient input, ResourceLocation output, int count, CompoundTag tag, int elementAmount, int luckRatio) {
+                super(id, provider);
                 this.input = input;
                 this.output = new PotentiallyAbsentItemStack(output, count, tag);
                 this.elementAmount = elementAmount;
                 this.luckRatio = luckRatio;
             }
 
-            public Builder(ResourceLocation id, Ingredient input, ResourceLocation output, int count, int elementAmount, int luckRatio) {
-                this(id, input, output, count, new CompoundTag(), elementAmount, luckRatio);
+            protected Builder(IO provider, ResourceLocation id, Ingredient input, ResourceLocation output, int count, int elementAmount, int luckRatio) {
+                this(provider, id, input, output, count, new CompoundTag(), elementAmount, luckRatio);
             }
 
-            public Builder(ResourceLocation id, Ingredient input, ResourceLocation output, int elementAmount, int luckRatio) {
-                this(id, input, output, 1, elementAmount, luckRatio);
+            protected Builder(IO provider, ResourceLocation id, Ingredient input, ResourceLocation output, int elementAmount, int luckRatio) {
+                this(provider, id, input, output, 1, elementAmount, luckRatio);
             }
 
-            public Builder(ResourceLocation id, Ingredient input, Item output, int count, CompoundTag tag, int elementAmount, int luckRatio) {
-                this(id, input, itemId(output), count, tag, elementAmount, luckRatio);
+            protected Builder(IO provider, ResourceLocation id, Ingredient input, Item output, int count, CompoundTag tag, int elementAmount, int luckRatio) {
+                this(provider, id, input, itemId(output), count, tag, elementAmount, luckRatio);
             }
 
-            public Builder(ResourceLocation id, Ingredient input, Item output, int count, int elementAmount, int luckRatio) {
-                this(id, input, output, count, new CompoundTag(), elementAmount, luckRatio);
+            protected Builder(IO provider, ResourceLocation id, Ingredient input, Item output, int count, int elementAmount, int luckRatio) {
+                this(provider, id, input, output, count, new CompoundTag(), elementAmount, luckRatio);
             }
 
-            public Builder(ResourceLocation id, Ingredient input, Item output, int elementAmount, int luckRatio) {
-                this(id, input, output, 1, elementAmount, luckRatio);
+            protected Builder(IO provider, ResourceLocation id, Ingredient input, Item output, int elementAmount, int luckRatio) {
+                this(provider, id, input, output, 1, elementAmount, luckRatio);
             }
 
             @Override
