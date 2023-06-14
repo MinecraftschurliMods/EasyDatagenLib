@@ -25,7 +25,7 @@ public abstract class OccultismDataProvider<T extends AbstractRecipeBuilder<?>> 
          * @param count  The output count to use.
          */
         public Builder builder(String id, Ingredient input, Ingredient output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), input, output, count);
+            return new Builder(this, new ResourceLocation(namespace, id), input, output, count);
         }
 
         /**
@@ -34,7 +34,7 @@ public abstract class OccultismDataProvider<T extends AbstractRecipeBuilder<?>> 
          * @param output The output ingredient to use.
          */
         public Builder builder(String id, Ingredient input, Ingredient output) {
-            return new Builder(new ResourceLocation(namespace, id), input, output);
+            return new Builder(this, new ResourceLocation(namespace, id), input, output);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -45,15 +45,15 @@ public abstract class OccultismDataProvider<T extends AbstractRecipeBuilder<?>> 
             private int minTier = -1;
             private boolean ignoreCrushingMultiplier = false;
 
-            public Builder(ResourceLocation id, Ingredient input, Ingredient output, int count) {
-                super(id);
+            protected Builder(Crushing provider, ResourceLocation id, Ingredient input, Ingredient output, int count) {
+                super(id, provider);
                 this.input = input;
                 this.output = output;
                 this.count = count;
             }
 
-            public Builder(ResourceLocation id, Ingredient input, Ingredient output) {
-                this(id, input, output, 1);
+            protected Builder(Crushing provider, ResourceLocation id, Ingredient input, Ingredient output) {
+                this(provider, id, input, output, 1);
             }
 
             /**

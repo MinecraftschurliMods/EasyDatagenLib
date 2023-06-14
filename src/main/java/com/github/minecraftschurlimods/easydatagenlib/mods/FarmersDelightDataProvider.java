@@ -32,7 +32,7 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
          * @param count      The output count to use.
          */
         public Builder builder(String id, int duration, float experience, ResourceLocation output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), duration, experience, output, count);
+            return new Builder(this, new ResourceLocation(namespace, id), duration, experience, output, count);
         }
 
         /**
@@ -42,7 +42,7 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
          * @param output     The id of the output item to use.
          */
         public Builder builder(String id, int duration, float experience, ResourceLocation output) {
-            return new Builder(new ResourceLocation(namespace, id), duration, experience, output);
+            return new Builder(this, new ResourceLocation(namespace, id), duration, experience, output);
         }
 
         /**
@@ -53,7 +53,7 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
          * @param count      The output count to use.
          */
         public Builder builder(String id, int duration, float experience, Item output, int count) {
-            return new Builder(new ResourceLocation(namespace, id), duration, experience, output, count);
+            return new Builder(this, new ResourceLocation(namespace, id), duration, experience, output, count);
         }
 
         /**
@@ -63,7 +63,7 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
          * @param output     The output item to use.
          */
         public Builder builder(String id, int duration, float experience, Item output) {
-            return new Builder(new ResourceLocation(namespace, id), duration, experience, output);
+            return new Builder(this, new ResourceLocation(namespace, id), duration, experience, output);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -74,23 +74,23 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
             private PotentiallyAbsentItemStack container = null;
             private String recipeBookTab = null;
 
-            public Builder(ResourceLocation id, int duration, float experience, ResourceLocation output, int count) {
-                super(id);
+            protected Builder(Cooking provider, ResourceLocation id, int duration, float experience, ResourceLocation output, int count) {
+                super(id, provider);
                 this.duration = duration;
                 this.experience = experience;
                 this.output = new PotentiallyAbsentItemStack(output, count); // doesn't support NBT
             }
 
-            public Builder(ResourceLocation id, int duration, float experience, ResourceLocation output) {
-                this(id, duration, experience, output, 1);
+            protected Builder(Cooking provider, ResourceLocation id, int duration, float experience, ResourceLocation output) {
+                this(provider, id, duration, experience, output, 1);
             }
 
-            public Builder(ResourceLocation id, int duration, float experience, Item output, int count) {
-                this(id, duration, experience, itemId(output), count);
+            protected Builder(Cooking provider, ResourceLocation id, int duration, float experience, Item output, int count) {
+                this(provider, id, duration, experience, itemId(output), count);
             }
 
-            public Builder(ResourceLocation id, int duration, float experience, Item output) {
-                this(id, duration, experience, output, 1);
+            protected Builder(Cooking provider, ResourceLocation id, int duration, float experience, Item output) {
+                this(provider, id, duration, experience, output, 1);
             }
 
             /**
@@ -159,7 +159,7 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
          * @param tool  The tool to use.
          */
         public Builder builder(String id, Ingredient input, Ingredient tool) {
-            return new Builder(new ResourceLocation(namespace, id), input, tool);
+            return new Builder(this, new ResourceLocation(namespace, id), input, tool);
         }
 
         public static class Builder extends AbstractRecipeBuilder<Builder> {
@@ -168,8 +168,8 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
             private final Ingredient tool;
             private String sound;
 
-            public Builder(ResourceLocation id, Ingredient input, Ingredient tool) {
-                super(id);
+            protected Builder(Cutting provider, ResourceLocation id, Ingredient input, Ingredient tool) {
+                super(id, provider);
                 this.input = input;
                 this.tool = tool;
             }
