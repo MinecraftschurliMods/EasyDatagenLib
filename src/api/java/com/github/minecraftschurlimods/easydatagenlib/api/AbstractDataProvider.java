@@ -67,7 +67,7 @@ public abstract class AbstractDataProvider<T extends AbstractDataBuilder<?>> imp
      *
      * @param builder The builder to add.
      */
-    void add(T builder) {
+    protected void add(T builder) {
         values.add(builder);
     }
 
