@@ -1,31 +1,16 @@
 package com.github.minecraftschurlimods.easydatagenlib;
 
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractDataProvider;
-import com.github.minecraftschurlimods.easydatagenlib.mods.ArsNouveauDataProvider;
-import com.github.minecraftschurlimods.easydatagenlib.mods.BotaniaDataProvider;
-import com.github.minecraftschurlimods.easydatagenlib.mods.BotanyPotsDataProvider;
-import com.github.minecraftschurlimods.easydatagenlib.mods.CorailWoodcutterDataProvider;
-import com.github.minecraftschurlimods.easydatagenlib.mods.CreateDataProvider;
-import com.github.minecraftschurlimods.easydatagenlib.mods.ElementalcraftDataProvider;
-import com.github.minecraftschurlimods.easydatagenlib.mods.FarmersDelightDataProvider;
-import com.github.minecraftschurlimods.easydatagenlib.mods.ImmersiveEngineeringDataProvider;
-import com.github.minecraftschurlimods.easydatagenlib.mods.IntegratedDynamicsDataProvider;
-import com.github.minecraftschurlimods.easydatagenlib.mods.MekanismDataProvider;
-import com.github.minecraftschurlimods.easydatagenlib.mods.OccultismDataProvider;
-import com.github.minecraftschurlimods.easydatagenlib.mods.ThermalDataProvider;
-import com.github.minecraftschurlimods.easydatagenlib.mods.TwilightForestDataProvider;
+import com.github.minecraftschurlimods.easydatagenlib.mods.*;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentIngredient;
 import com.github.minecraftschurlimods.easydatagenlib.util.botanypots.DisplayState;
 import com.github.minecraftschurlimods.easydatagenlib.util.farmersdelight.ToolActionIngredient;
 import com.github.minecraftschurlimods.easydatagenlib.util.immersiveengineering.ClocheRenderType;
 import com.github.minecraftschurlimods.easydatagenlib.util.mekanism.Chemical;
 import com.github.minecraftschurlimods.easydatagenlib.util.mekanism.Pigment;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.BlockFamily;
-import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DataProvider;
-import net.minecraft.data.PackOutput;
+import net.minecraft.data.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
@@ -37,12 +22,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.TallFlowerBlock;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.common.crafting.conditions.NotCondition;
-import net.minecraftforge.common.crafting.conditions.TagEmptyCondition;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.ToolActions;
+import net.neoforged.neoforge.common.conditions.NotCondition;
+import net.neoforged.neoforge.common.conditions.TagEmptyCondition;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -283,7 +267,7 @@ public abstract class CompatDataProvider implements DataProvider {
      */
     @SuppressWarnings("ConstantConditions")
     protected static ResourceLocation blockId(Block block) {
-        return ForgeRegistries.BLOCKS.getKey(block);
+        return BuiltInRegistries.BLOCK.getKey(block);
     }
 
     /**
@@ -294,7 +278,7 @@ public abstract class CompatDataProvider implements DataProvider {
      */
     @SuppressWarnings("ConstantConditions")
     protected static ResourceLocation itemId(Item item) {
-        return ForgeRegistries.ITEMS.getKey(item);
+        return BuiltInRegistries.ITEM.getKey(item);
     }
 
     /**
@@ -305,7 +289,7 @@ public abstract class CompatDataProvider implements DataProvider {
      */
     @SuppressWarnings("ConstantConditions")
     protected static ResourceLocation fluidId(Fluid fluid) {
-        return ForgeRegistries.FLUIDS.getKey(fluid);
+        return BuiltInRegistries.FLUID.getKey(fluid);
     }
 
     /**

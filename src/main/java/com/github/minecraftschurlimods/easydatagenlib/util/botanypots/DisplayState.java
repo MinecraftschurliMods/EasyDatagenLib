@@ -4,11 +4,11 @@ import com.github.minecraftschurlimods.easydatagenlib.util.JsonSerializable;
 import com.github.minecraftschurlimods.easydatagenlib.util.JsonUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,7 @@ public abstract class DisplayState implements JsonSerializable {
          * @param block The {@link Block} associated with this display state.
          */
         public Aging(Block block) {
-            this(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block)));
+            this(Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(block)));
         }
 
         @Override

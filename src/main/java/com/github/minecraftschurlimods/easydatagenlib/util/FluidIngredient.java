@@ -1,13 +1,11 @@
 package com.github.minecraftschurlimods.easydatagenlib.util;
 
 import com.google.common.collect.ImmutableList;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
+import com.google.gson.*;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.resources.ResourceLocation;
@@ -17,8 +15,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -110,8 +107,8 @@ public abstract class FluidIngredient implements Predicate<FluidStack>, JsonSeri
         @Override
         protected void read(JsonObject json) {
             ResourceLocation id = new ResourceLocation(GsonHelper.getAsString(json, "fluid"));
-            Fluid fluid = ForgeRegistries.FLUIDS.getValue(id);
-            if (fluid == null) throw new JsonSyntaxException("Unknown fluid '" + id + "'");
+            Fluid fluid = BuiltInRegistries.FLUID.get(id);
+            if (fluid == Fluids.EMPTY) throw new JsonSyntaxException("Unknown fluid '" + id + "'");
             this.fluid = new FluidStack(fluid, GsonHelper.getAsInt(json, "amount"));
             if (json.has("nbt")) {
                 try {
@@ -125,7 +122,7 @@ public abstract class FluidIngredient implements Predicate<FluidStack>, JsonSeri
 
         @Override
         protected void write(JsonObject json) {
-            json.addProperty("fluid", Objects.requireNonNull(ForgeRegistries.FLUIDS.getKey(fluid.getFluid())).toString());
+            json.addProperty("fluid", Objects.requireNonNull(BuiltInRegistries.FLUID.getKey(fluid.getFluid())).toString());
             if (!tag.isEmpty()) {
                 json.add("nbt", JsonParser.parseString(tag.toString()));
             }
@@ -164,9 +161,10 @@ public abstract class FluidIngredient implements Predicate<FluidStack>, JsonSeri
 
         @Override
         protected List<FluidStack> getMatches() {
-            return Objects.requireNonNull(ForgeRegistries.FLUIDS.tags())
-                    .getTag(tag)
+            return BuiltInRegistries.FLUID.getTag(tag)
                     .stream()
+                    .flatMap(HolderSet::stream)
+                    .map(Holder::value)
                     .map(e -> e instanceof FlowingFluid ? ((FlowingFluid) e).getSource() : e)
                     .distinct()
                     .map(e -> new FluidStack(e, amount))

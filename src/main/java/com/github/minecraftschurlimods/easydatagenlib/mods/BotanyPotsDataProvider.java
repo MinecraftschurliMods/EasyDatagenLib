@@ -167,7 +167,7 @@ public abstract class BotanyPotsDataProvider<T extends AbstractRecipeBuilder<?>>
 
             @Override
             protected void toJson(JsonObject json) {
-                json.add("seed", input.toJson());
+                json.add("seed", JsonUtil.toJson(input));
                 json.addProperty("growthTicks", duration);
                 json.add("display", JsonUtil.singleOrArray(JsonUtil.toList(display)));
                 if (lightLevel != 0) {
@@ -245,7 +245,7 @@ public abstract class BotanyPotsDataProvider<T extends AbstractRecipeBuilder<?>>
 
             @Override
             protected void toJson(JsonObject json) {
-                json.add("input", input.toJson());
+                json.add("input", JsonUtil.toJson(input));
                 json.addProperty("growthModifier", growthModifier);
                 json.add("display", display.toJson());
                 if (lightLevel != 0) {

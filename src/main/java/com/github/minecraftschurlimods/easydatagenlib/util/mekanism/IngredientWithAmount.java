@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.easydatagenlib.util.mekanism;
 
 import com.github.minecraftschurlimods.easydatagenlib.util.JsonSerializable;
+import com.github.minecraftschurlimods.easydatagenlib.util.JsonUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -21,7 +22,7 @@ public class IngredientWithAmount implements JsonSerializable {
     @Override
     public JsonElement toJson() {
         JsonObject result = new JsonObject();
-        result.add("ingredient", ingredient.toJson());
+        result.add("ingredient", JsonUtil.toJson(ingredient));
         if (amount > 1) {
             result.addProperty("amount", amount);
         }

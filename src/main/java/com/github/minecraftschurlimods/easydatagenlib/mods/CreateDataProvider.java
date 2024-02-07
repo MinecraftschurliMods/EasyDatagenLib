@@ -197,7 +197,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
                 json.add("pattern", JsonUtil.toStringList(pattern));
                 JsonObject key = new JsonObject();
                 for (Map.Entry<Character, Ingredient> s : this.key.entrySet()) {
-                    json.add(String.valueOf(s.getKey()), s.getValue().toJson());
+                    json.add(String.valueOf(s.getKey()), JsonUtil.toJson(s.getValue()));
                 }
                 json.add("key", key);
                 json.add("result", output.toJson());
@@ -331,7 +331,7 @@ public abstract class CreateDataProvider<T extends AbstractRecipeBuilder<?>> ext
 
             @Override
             protected void toJson(JsonObject json) {
-                json.add("ingredient", input.toJson());
+                json.add("ingredient", JsonUtil.toJson(input));
                 json.add("transitionalItem", transitionalItem.toJson());
                 json.addProperty("loops", loops);
                 json.add("sequence", JsonUtil.toList(sequence, e -> {

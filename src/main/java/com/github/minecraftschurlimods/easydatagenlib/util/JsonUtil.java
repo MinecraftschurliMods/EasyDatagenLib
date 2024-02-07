@@ -1,17 +1,19 @@
 package com.github.minecraftschurlimods.easydatagenlib.util;
 
+import com.github.minecraftschurlimods.easydatagenlib.util.farmersdelight.ToolActionIngredient;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import com.mojang.serialization.JsonOps;
+import net.minecraft.Util;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 import java.util.function.Function;
@@ -102,7 +104,7 @@ public class JsonUtil {
      * @return A {@link JsonArray}, constructed from the given list.
      */
     public static JsonArray toIngredientList(List<? extends Ingredient> list) {
-        return toList(list, Ingredient::toJson);
+        return toList(list, JsonUtil::toJson);
     }
 
     /**
@@ -127,12 +129,22 @@ public class JsonUtil {
      */
     public static JsonObject toJson(BlockState state) {
         JsonObject json = new JsonObject();
-        json.addProperty("block", ForgeRegistries.BLOCKS.getKey(state.getBlock()).toString());
+        json.addProperty("block", BuiltInRegistries.BLOCK.getKey(state.getBlock()).toString());
         JsonObject properties = propertiesToJson(state);
-        if (properties.size() > 0) {
+        if (!properties.isEmpty()) {
             json.add("properties", propertiesToJson(state));
         }
         return json;
+    }
+    
+    public static JsonElement toJson(Ingredient ingredient) {
+        if (ingredient instanceof PotentiallyAbsentIngredient) {
+            return ((PotentiallyAbsentIngredient) ingredient).toJson();
+        }
+        if (ingredient instanceof ToolActionIngredient) {
+            return ((ToolActionIngredient) ingredient).toJson();
+        }
+        return Util.getOrThrow(Ingredient.CODEC.encodeStart(JsonOps.INSTANCE, ingredient), RuntimeException::new);
     }
 
     /**

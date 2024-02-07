@@ -238,7 +238,7 @@ public abstract class IntegratedDynamicsDataProvider<T extends AbstractRecipeBui
 
             @Override
             protected void toJson(JsonObject json) {
-                json.add("item", input.toJson());
+                json.add("item", JsonUtil.toJson(input));
                 json.addProperty("duration", duration);
                 JsonObject output = new JsonObject();
                 output.add("items", JsonUtil.toList(outputs));
@@ -463,7 +463,7 @@ public abstract class IntegratedDynamicsDataProvider<T extends AbstractRecipeBui
 
             @Override
             protected void toJson(JsonObject json) {
-                json.add("item", input.toJson());
+                json.add("item", JsonUtil.toJson(input));
                 JsonObject output = new JsonObject();
                 output.add("items", JsonUtil.toList(outputs));
                 if (outputFluid != null) {

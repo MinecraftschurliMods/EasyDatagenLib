@@ -3,11 +3,11 @@ package com.github.minecraftschurlimods.easydatagenlib.mods;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeBuilder;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeProvider;
 import com.google.gson.JsonObject;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Objects;
 
@@ -145,15 +145,15 @@ public abstract class TwilightForestDataProvider<T extends AbstractRecipeBuilder
             }
 
             protected Builder(Transforming provider, ResourceLocation id, ResourceLocation from, EntityType<?> to, boolean reversible) {
-                this(provider, id, from, Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(to)), reversible);
+                this(provider, id, from, Objects.requireNonNull(BuiltInRegistries.ENTITY_TYPE.getKey(to)), reversible);
             }
 
             protected Builder(Transforming provider, ResourceLocation id, EntityType<?> from, ResourceLocation to, boolean reversible) {
-                this(provider, id, Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(from)), to, reversible);
+                this(provider, id, Objects.requireNonNull(BuiltInRegistries.ENTITY_TYPE.getKey(from)), to, reversible);
             }
 
             protected Builder(Transforming provider, ResourceLocation id, EntityType<?> from, EntityType<?> to, boolean reversible) {
-                this(provider, id, Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(from)), Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(to)), reversible);
+                this(provider, id, Objects.requireNonNull(BuiltInRegistries.ENTITY_TYPE.getKey(from)), Objects.requireNonNull(BuiltInRegistries.ENTITY_TYPE.getKey(to)), reversible);
             }
 
             @Override

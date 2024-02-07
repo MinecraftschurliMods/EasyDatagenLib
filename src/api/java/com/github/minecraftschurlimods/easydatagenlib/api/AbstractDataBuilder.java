@@ -1,13 +1,11 @@
 package com.github.minecraftschurlimods.easydatagenlib.api;
 
 import com.google.gson.JsonObject;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.function.Consumer;
 
 /**
  * The abstract parent class of builder classes used by {@link AbstractDataProvider} for generating data contents.
@@ -39,7 +37,7 @@ public abstract class AbstractDataBuilder<T extends AbstractDataBuilder<T>> {
      */
     @SuppressWarnings("ConstantConditions")
     protected static ResourceLocation blockId(Block block) {
-        return ForgeRegistries.BLOCKS.getKey(block);
+        return BuiltInRegistries.BLOCK.getKey(block);
     }
 
     /**
@@ -50,7 +48,7 @@ public abstract class AbstractDataBuilder<T extends AbstractDataBuilder<T>> {
      */
     @SuppressWarnings("ConstantConditions")
     protected static ResourceLocation itemId(Item item) {
-        return ForgeRegistries.ITEMS.getKey(item);
+        return BuiltInRegistries.ITEM.getKey(item);
     }
 
     /**
@@ -61,7 +59,7 @@ public abstract class AbstractDataBuilder<T extends AbstractDataBuilder<T>> {
      */
     @SuppressWarnings("ConstantConditions")
     protected static ResourceLocation fluidId(Fluid fluid) {
-        return ForgeRegistries.FLUIDS.getKey(fluid);
+        return BuiltInRegistries.FLUID.getKey(fluid);
     }
 
     public void build() {

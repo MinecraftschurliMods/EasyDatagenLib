@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.easydatagenlib.util.immersiveengineering;
 
 import com.github.minecraftschurlimods.easydatagenlib.util.JsonSerializable;
+import com.github.minecraftschurlimods.easydatagenlib.util.JsonUtil;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -22,9 +23,9 @@ public class IngredientWithCount implements JsonSerializable {
     public JsonElement toJson() {
         JsonObject json = new JsonObject();
         if (count == 1) {
-            json = ingredient.toJson().getAsJsonObject();
+            json = JsonUtil.toJson(ingredient).getAsJsonObject();
         } else {
-            json.add("base_ingredient", ingredient.toJson());
+            json.add("base_ingredient", JsonUtil.toJson(ingredient));
             json.addProperty("count", count);
         }
         return json;

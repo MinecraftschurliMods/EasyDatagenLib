@@ -1,12 +1,11 @@
 package com.github.minecraftschurlimods.easydatagenlib.api;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.JsonOps;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.common.crafting.conditions.ICondition;
-import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
+import net.neoforged.neoforge.common.conditions.ICondition;
+import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 
 /**
  * The abstract parent class for anything that generates recipes.
@@ -41,20 +40,8 @@ public abstract class AbstractRecipeProvider<T extends AbstractRecipeBuilder<?>>
         }
         JsonObject json = super.toJson(builder);
         json.addProperty("type", recipeType.toString());
-        if (builder.conditions.isEmpty()) return json;
-        JsonObject recipe = new JsonObject();
-        recipe.addProperty("type", "forge:conditional");
-        JsonArray recipes = new JsonArray();
-        JsonObject object = new JsonObject();
-        JsonArray conditions = new JsonArray();
-        for (ICondition condition : builder.conditions) {
-            conditions.add(CraftingHelper.serialize(condition));
-        }
-        object.add("conditions", conditions);
-        object.add("recipe", json);
-        recipes.add(object);
-        recipe.add("recipes", recipes);
-        return recipe;
+        ICondition.writeConditions(JsonOps.INSTANCE, json, builder.conditions);
+        return json;
     }
 
     private String makeName(ResourceLocation recipeType) {

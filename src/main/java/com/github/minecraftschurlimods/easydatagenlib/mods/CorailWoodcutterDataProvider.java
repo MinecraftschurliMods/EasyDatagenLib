@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.easydatagenlib.mods;
 
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeBuilder;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeProvider;
+import com.github.minecraftschurlimods.easydatagenlib.util.JsonUtil;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentItemStack;
 import com.google.gson.JsonObject;
 import net.minecraft.data.PackOutput;
@@ -81,7 +82,7 @@ public abstract class CorailWoodcutterDataProvider<T extends AbstractRecipeBuild
 
             @Override
             protected void toJson(JsonObject json) {
-                json.add("ingredient", input.toJson());
+                json.add("ingredient", JsonUtil.toJson(input));
                 json.addProperty("result", output.item.toString());
                 json.addProperty("count", output.count);
             }

@@ -263,8 +263,8 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
             @Override
             protected void toJson(JsonObject json) {
                 json.addProperty("time", time);
-                json.add("input", input.toJson());
-                json.add("soil", soil.toJson());
+                json.add("input", JsonUtil.toJson(input));
+                json.add("soil", JsonUtil.toJson(soil));
                 json.add("results", JsonUtil.toList(outputs));
                 JsonObject render = new JsonObject();
                 render.addProperty("type", renderType.toString());
@@ -361,7 +361,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
             @Override
             protected void toJson(JsonObject json) {
                 json.addProperty("energy", energy);
-                json.add("input", input.toJson());
+                json.add("input", JsonUtil.toJson(input));
                 json.add("result", output.toJson());
                 json.add("secondaries", JsonUtil.toList(secondaryOutputs));
             }
@@ -486,7 +486,7 @@ public abstract class ImmersiveEngineeringDataProvider<T extends AbstractRecipeB
             @Override
             protected void toJson(JsonObject json) {
                 json.addProperty("energy", energy);
-                json.add("input", input.toJson());
+                json.add("input", JsonUtil.toJson(input));
                 json.add("result", output.toJson());
                 if (stripped != null) {
                     json.add("stripped", stripped.toJson());

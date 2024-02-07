@@ -24,7 +24,6 @@ public class PotentiallyAbsentIngredient extends Ingredient {
         return new PotentiallyAbsentIngredient(items);
     }
 
-    @Override
     public JsonElement toJson() {
         if (items.length == 1) {
             JsonObject json = new JsonObject();

@@ -3,7 +3,7 @@ package com.github.minecraftschurlimods.easydatagenlib.util;
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 /**
  * This class contains the necessary information for fluid stacks that will be written to disk by a data generator.

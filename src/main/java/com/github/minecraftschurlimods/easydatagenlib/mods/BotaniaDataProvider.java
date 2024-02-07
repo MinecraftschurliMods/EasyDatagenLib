@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.easydatagenlib.mods;
 
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeBuilder;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeProvider;
+import com.github.minecraftschurlimods.easydatagenlib.util.JsonUtil;
 import com.github.minecraftschurlimods.easydatagenlib.util.PotentiallyAbsentItemStack;
 import com.google.gson.JsonObject;
 import net.minecraft.data.PackOutput;
@@ -154,7 +155,7 @@ public abstract class BotaniaDataProvider<T extends AbstractRecipeBuilder<?>> ex
             @Override
             protected void toJson(JsonObject json) {
                 json.addProperty("mana", mana);
-                json.add("input", input.toJson());
+                json.add("input", JsonUtil.toJson(input));
                 json.add("output", output.toJson());
                 if (group != null) {
                     json.addProperty("group", group);

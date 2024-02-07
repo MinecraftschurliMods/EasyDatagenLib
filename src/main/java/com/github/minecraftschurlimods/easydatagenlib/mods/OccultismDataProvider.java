@@ -2,6 +2,7 @@ package com.github.minecraftschurlimods.easydatagenlib.mods;
 
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeBuilder;
 import com.github.minecraftschurlimods.easydatagenlib.api.AbstractRecipeProvider;
+import com.github.minecraftschurlimods.easydatagenlib.util.JsonUtil;
 import com.google.gson.JsonObject;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -93,8 +94,8 @@ public abstract class OccultismDataProvider<T extends AbstractRecipeBuilder<?>> 
                 if (ignoreCrushingMultiplier) {
                     json.addProperty("ignore_crushing_multiplier", true);
                 }
-                json.add("ingredient", input.toJson());
-                JsonObject output = this.output.toJson().getAsJsonObject();
+                json.add("ingredient", JsonUtil.toJson(input));
+                JsonObject output = JsonUtil.toJson(this.output).getAsJsonObject();
                 output.addProperty("count", count);
                 json.add("result", output);
             }

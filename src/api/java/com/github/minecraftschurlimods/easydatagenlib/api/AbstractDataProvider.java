@@ -1,6 +1,7 @@
 package com.github.minecraftschurlimods.easydatagenlib.api;
 
 import com.google.gson.JsonObject;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -8,7 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -100,7 +100,7 @@ public abstract class AbstractDataProvider<T extends AbstractDataBuilder<?>> imp
      */
     @SuppressWarnings("ConstantConditions")
     protected static ResourceLocation blockId(Block block) {
-        return ForgeRegistries.BLOCKS.getKey(block);
+        return BuiltInRegistries.BLOCK.getKey(block);
     }
 
     /**
@@ -111,7 +111,7 @@ public abstract class AbstractDataProvider<T extends AbstractDataBuilder<?>> imp
      */
     @SuppressWarnings("ConstantConditions")
     protected static ResourceLocation itemId(Item item) {
-        return ForgeRegistries.ITEMS.getKey(item);
+        return BuiltInRegistries.ITEM.getKey(item);
     }
 
     /**
@@ -122,6 +122,6 @@ public abstract class AbstractDataProvider<T extends AbstractDataBuilder<?>> imp
      */
     @SuppressWarnings("ConstantConditions")
     protected static ResourceLocation fluidId(Fluid fluid) {
-        return ForgeRegistries.FLUIDS.getKey(fluid);
+        return BuiltInRegistries.FLUID.getKey(fluid);
     }
 }

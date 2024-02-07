@@ -137,7 +137,7 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
 
             @Override
             protected void toJson(JsonObject json) {
-                json.add("input", input.toJson());
+                json.add("input", JsonUtil.toJson(input));
                 json.add("output", JsonUtil.toList(output, e -> {
                     JsonObject o = e.getFirst().toJson();
                     if (!o.has("chance")) {
@@ -328,7 +328,7 @@ public abstract class ArsNouveauDataProvider<T extends AbstractRecipeBuilder<?>>
 
             @Override
             protected void toJson(JsonObject json) {
-                json.add("input", input.toJson());
+                json.add("input", JsonUtil.toJson(input));
                 json.addProperty("output", output.item.toString());
                 json.addProperty("count", output.count);
                 json.addProperty("source", mana);

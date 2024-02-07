@@ -272,7 +272,7 @@ public abstract class FarmersDelightDataProvider<T extends AbstractRecipeBuilder
             @Override
             protected void toJson(JsonObject json) {
                 json.add("ingredients", JsonUtil.toIngredientList(List.of(input)));
-                json.add("tool", tool.toJson());
+                json.add("tool", JsonUtil.toJson(tool));
                 if (sound != null) {
                     json.addProperty("sound", sound);
                 }
