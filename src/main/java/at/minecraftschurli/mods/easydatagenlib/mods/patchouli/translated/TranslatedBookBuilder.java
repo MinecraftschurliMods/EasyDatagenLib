@@ -1,0 +1,42 @@
+package at.minecraftschurli.mods.easydatagenlib.mods.patchouli.translated;
+
+import at.minecraftschurli.mods.easydatagenlib.mods.patchouli.BookBuilder;
+import at.minecraftschurli.mods.easydatagenlib.mods.patchouli.PatchouliBookProvider;
+import at.minecraftschurli.mods.easydatagenlib.mods.patchouli.Util;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.ItemStack;
+
+import java.util.function.BiConsumer;
+
+public class TranslatedBookBuilder extends BookBuilder<TranslatedBookBuilder, TranslatedCategoryBuilder, TranslatedEntryBuilder> {
+    private final BiConsumer<String, String> languageProvider;
+
+    public TranslatedBookBuilder(Identifier id, String name, String landingText, BiConsumer<String, String> languageProvider, PatchouliBookProvider provider, HolderLookup.Provider registries) {
+        super(id, name, landingText, provider, registries);
+        this.languageProvider = languageProvider;
+        setUseI18n();
+        String key = "item.%s.%s".formatted(id.getNamespace(), id.getPath());
+        this.name = putLangKey(key+".name", name);
+        this.landingText = putLangKey(key+".landing_text", landingText);
+    }
+
+    @Override
+    public TranslatedCategoryBuilder addCategory(String id, String name, String description, ItemStack icon) {
+        return this.addCategory(id, name, description, Util.serializeStack(icon, getRegistries()));
+    }
+
+    @Override
+    public TranslatedCategoryBuilder addCategory(String id, String name, String description, String icon) {
+        String key = "item.%s.%s.%s".formatted(getId().getNamespace(), getId().getPath(), id);
+        return this.addCategory(new TranslatedCategoryBuilder(id, putLangKey(key+".name", name), putLangKey(key+".description", description), icon, this));
+    }
+
+    public String putLangKey(final String key, final String text) {
+        if (text.matches("(\\w+\\.)+\\w+")) {
+            return text;
+        }
+        languageProvider.accept(key, text);
+        return key;
+    }
+}

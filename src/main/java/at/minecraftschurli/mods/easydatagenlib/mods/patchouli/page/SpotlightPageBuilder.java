@@ -1,0 +1,49 @@
+package at.minecraftschurli.mods.easydatagenlib.mods.patchouli.page;
+
+import at.minecraftschurli.mods.easydatagenlib.mods.patchouli.AbstractPageBuilder;
+import at.minecraftschurli.mods.easydatagenlib.mods.patchouli.EntryBuilder;
+import at.minecraftschurli.mods.easydatagenlib.mods.patchouli.Util;
+import com.google.gson.JsonObject;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.ItemStack;
+
+public class SpotlightPageBuilder extends AbstractPageBuilder<SpotlightPageBuilder> {
+    private final String item;
+    private String title;
+    private Boolean linkRecipe;
+    private String text;
+
+    public SpotlightPageBuilder(ItemStack stack, EntryBuilder<?,?,?> parent) {
+        super(Identifier.fromNamespaceAndPath("patchouli", "spotlight"), parent);
+        this.item = Util.serializeStack(stack, parent.getParent().getBookBuilder().getRegistries());
+    }
+
+    @Override
+    protected void serialize(JsonObject json) {
+        json.addProperty("item", item);
+        if (title != null) {
+            json.addProperty("title", title);
+        }
+        if (linkRecipe != null) {
+            json.addProperty("link_recipe", linkRecipe);
+        }
+        if (text != null) {
+            json.addProperty("text", text);
+        }
+    }
+
+    public SpotlightPageBuilder setTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
+    public SpotlightPageBuilder setLinkRecipe(Boolean linkRecipe) {
+        this.linkRecipe = linkRecipe;
+        return this;
+    }
+
+    public SpotlightPageBuilder setText(String text) {
+        this.text = text;
+        return this;
+    }
+}
