@@ -23,6 +23,8 @@ dependencies {
     "apiCompileOnly"("org.jetbrains:annotations:23.0.0")
 }
 
+minecraft.accessTransformers.file("src/main/resources/META-INF/accesstransformer.cfg")
+
 helper.publication.pom {
     organization {
         name = "Minecraftschurli Mods"
