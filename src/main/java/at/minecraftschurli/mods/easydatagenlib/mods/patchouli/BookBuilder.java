@@ -5,7 +5,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -174,9 +174,9 @@ public abstract class BookBuilder<B extends BookBuilder<B, C, E>, C extends Cate
         consumer.accept(this.self());
     }
 
-    public abstract C addCategory(String var1, String var2, String var3, ItemStack var4);
+    public abstract C addCategory(String id, String name, String description, ItemStackTemplate icon);
 
-    public abstract C addCategory(String var1, String var2, String var3, String var4);
+    public abstract C addCategory(String id, String name, String description, String icon);
 
     protected <T extends C> T addCategory(T builder) {
         this.categories.add(builder);
@@ -267,7 +267,7 @@ public abstract class BookBuilder<B extends BookBuilder<B, C, E>, C extends Cate
         return this.self();
     }
 
-    public B setIndexIcon(ItemStack indexIcon) {
+    public B setIndexIcon(ItemStackTemplate indexIcon) {
         this.indexIcon = Util.serializeStack(indexIcon, this.registries);
         return this.self();
     }
@@ -292,7 +292,7 @@ public abstract class BookBuilder<B extends BookBuilder<B, C, E>, C extends Cate
         return this.self();
     }
 
-    public B setCustomBookItem(ItemStack customBookItem) {
+    public B setCustomBookItem(ItemStackTemplate customBookItem) {
         this.customBookItem = Util.serializeStack(customBookItem, this.registries);
         return this.self();
     }

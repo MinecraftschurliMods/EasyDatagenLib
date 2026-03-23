@@ -5,7 +5,7 @@ import at.minecraftschurli.mods.easydatagenlib.mods.patchouli.PatchouliBookProvi
 import at.minecraftschurli.mods.easydatagenlib.mods.patchouli.Util;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 
 public class RegularBookBuilder extends BookBuilder<RegularBookBuilder, RegularCategoryBuilder, RegularEntryBuilder> {
     public RegularBookBuilder(Identifier id, String name, String landingText, PatchouliBookProvider provider, HolderLookup.Provider registries) {
@@ -13,7 +13,7 @@ public class RegularBookBuilder extends BookBuilder<RegularBookBuilder, RegularC
     }
 
     @Override
-    public RegularCategoryBuilder addCategory(final String id, final String name, final String description, final ItemStack icon) {
+    public RegularCategoryBuilder addCategory(final String id, final String name, final String description, final ItemStackTemplate icon) {
         return this.addCategory(id, name, description, Util.serializeStack(icon, getRegistries()));
     }
 

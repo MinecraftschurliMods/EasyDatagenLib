@@ -12,7 +12,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +35,7 @@ public abstract class EntryBuilder<B extends BookBuilder<B, C, E>, C extends Cat
     private Boolean readByDefault;
     private Integer sortnum;
     private String turnin;
-    private Map<ItemStack, Integer> extraRecipeMappings;
+    private Map<ItemStackTemplate, Integer> extraRecipeMappings;
 
     protected EntryBuilder(String id, String name, String icon, C parent) {
         this.id = parent.getId().withSuffix("/" + id);
@@ -92,7 +92,7 @@ public abstract class EntryBuilder<B extends BookBuilder<B, C, E>, C extends Cat
         if (this.extraRecipeMappings != null) {
             JsonObject mappings = new JsonObject();
 
-            for (final Entry<ItemStack, Integer> entry : this.extraRecipeMappings.entrySet()) {
+            for (final Entry<ItemStackTemplate, Integer> entry : this.extraRecipeMappings.entrySet()) {
                 mappings.addProperty(Util.serializeStack(entry.getKey(), this.getParent().getBookBuilder().getRegistries()), entry.getValue());
             }
 
@@ -192,15 +192,15 @@ public abstract class EntryBuilder<B extends BookBuilder<B, C, E>, C extends Cat
         return this.addEntityPage(entity.toString());
     }
 
-    public E addSimpleSpotlightPage(ItemStack stack) {
+    public E addSimpleSpotlightPage(ItemStackTemplate stack) {
         return this.addSimpleSpotlightPage(stack, null, null);
     }
 
-    public E addSimpleSpotlightPage(ItemStack stack, String text) {
+    public E addSimpleSpotlightPage(ItemStackTemplate stack, String text) {
         return this.addSimpleSpotlightPage(stack, text, null);
     }
 
-    public E addSimpleSpotlightPage(ItemStack stack, String text, String title) {
+    public E addSimpleSpotlightPage(ItemStackTemplate stack, String text, String title) {
         SpotlightPageBuilder page = this.addSpotlightPage(stack);
         if (text != null) {
             page.setText(text);
@@ -213,7 +213,7 @@ public abstract class EntryBuilder<B extends BookBuilder<B, C, E>, C extends Cat
         return page.build();
     }
 
-    public SpotlightPageBuilder addSpotlightPage(ItemStack stack) {
+    public SpotlightPageBuilder addSpotlightPage(ItemStackTemplate stack) {
         return this.addPage(new SpotlightPageBuilder(stack, this));
     }
 
@@ -306,7 +306,7 @@ public abstract class EntryBuilder<B extends BookBuilder<B, C, E>, C extends Cat
         return this.self();
     }
 
-    public E addExtraRecipeMapping(ItemStack stack, int index) {
+    public E addExtraRecipeMapping(ItemStackTemplate stack, int index) {
         if (this.extraRecipeMappings == null) {
             this.extraRecipeMappings = new HashMap<>();
         }

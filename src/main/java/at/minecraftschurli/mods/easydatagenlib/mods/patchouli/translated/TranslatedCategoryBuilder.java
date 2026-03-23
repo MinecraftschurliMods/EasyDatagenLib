@@ -2,7 +2,7 @@ package at.minecraftschurli.mods.easydatagenlib.mods.patchouli.translated;
 
 import at.minecraftschurli.mods.easydatagenlib.mods.patchouli.CategoryBuilder;
 import at.minecraftschurli.mods.easydatagenlib.mods.patchouli.Util;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 
 public class TranslatedCategoryBuilder extends CategoryBuilder<TranslatedBookBuilder, TranslatedCategoryBuilder, TranslatedEntryBuilder> {
     protected TranslatedCategoryBuilder(String id, String name, String description, String icon, TranslatedBookBuilder bookBuilder) {
@@ -10,7 +10,7 @@ public class TranslatedCategoryBuilder extends CategoryBuilder<TranslatedBookBui
     }
 
     @Override
-    public TranslatedCategoryBuilder addSubCategory(String id, String name, String description, ItemStack icon) {
+    public TranslatedCategoryBuilder addSubCategory(String id, String name, String description, ItemStackTemplate icon) {
         return addSubCategory(id, name, description, Util.serializeStack(icon, getBookBuilder().getRegistries()));
     }
 
@@ -21,7 +21,7 @@ public class TranslatedCategoryBuilder extends CategoryBuilder<TranslatedBookBui
     }
 
     @Override
-    public TranslatedEntryBuilder addEntry(String id, String name, ItemStack icon) {
+    public TranslatedEntryBuilder addEntry(String id, String name, ItemStackTemplate icon) {
         return addEntry(id, name, Util.serializeStack(icon, getBookBuilder().getRegistries()));
     }
 

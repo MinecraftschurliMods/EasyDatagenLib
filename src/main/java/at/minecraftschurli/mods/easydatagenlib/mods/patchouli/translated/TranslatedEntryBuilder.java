@@ -6,7 +6,7 @@ import at.minecraftschurli.mods.easydatagenlib.mods.patchouli.page.MultiblockPag
 import at.minecraftschurli.mods.easydatagenlib.mods.patchouli.page.RecipePageBuilder;
 import at.minecraftschurli.mods.easydatagenlib.mods.patchouli.page.TextPageBuilder;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 
 public class TranslatedEntryBuilder extends EntryBuilder<TranslatedBookBuilder, TranslatedCategoryBuilder, TranslatedEntryBuilder> {
     protected TranslatedEntryBuilder(String id, String name, String icon, TranslatedCategoryBuilder parent) {
@@ -26,7 +26,7 @@ public class TranslatedEntryBuilder extends EntryBuilder<TranslatedBookBuilder, 
     }
 
     @Override
-    public TranslatedEntryBuilder addSimpleSpotlightPage(ItemStack stack, String text, String title) {
+    public TranslatedEntryBuilder addSimpleSpotlightPage(ItemStackTemplate stack, String text, String title) {
         String key = getLangKey(pageCount());
         return super.addSimpleSpotlightPage(stack, putLangKey(key+".text", text), putLangKey(key+".title", title));
     }

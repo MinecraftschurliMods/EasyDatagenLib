@@ -2,7 +2,7 @@ package at.minecraftschurli.mods.easydatagenlib.mods.patchouli;
 
 import com.google.gson.JsonObject;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,17 +72,17 @@ public abstract class CategoryBuilder<B extends BookBuilder<B, C, E>, C extends 
         return this.bookBuilder;
     }
 
-    public abstract C addSubCategory(String var1, String var2, String var3, ItemStack var4);
+    public abstract C addSubCategory(String id, String name, String description, ItemStackTemplate icon);
 
-    public abstract C addSubCategory(String var1, String var2, String var3, String var4);
+    public abstract C addSubCategory(String id, String name, String description, String icon);
 
     protected C addSubCategory(C builder) {
         return this.bookBuilder.addCategory(builder).setParent(this.self());
     }
 
-    public abstract E addEntry(String var1, String var2, ItemStack var3);
+    public abstract E addEntry(String id, String name, ItemStackTemplate icon);
 
-    public abstract E addEntry(String var1, String var2, String var3);
+    public abstract E addEntry(String id, String name, String icon);
 
     public E addEntry(E builder) {
         this.entries.add(builder);

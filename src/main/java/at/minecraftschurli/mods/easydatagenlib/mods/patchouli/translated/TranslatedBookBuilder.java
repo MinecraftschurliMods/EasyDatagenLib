@@ -5,7 +5,7 @@ import at.minecraftschurli.mods.easydatagenlib.mods.patchouli.PatchouliBookProvi
 import at.minecraftschurli.mods.easydatagenlib.mods.patchouli.Util;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 
 import java.util.function.BiConsumer;
 
@@ -22,7 +22,7 @@ public class TranslatedBookBuilder extends BookBuilder<TranslatedBookBuilder, Tr
     }
 
     @Override
-    public TranslatedCategoryBuilder addCategory(String id, String name, String description, ItemStack icon) {
+    public TranslatedCategoryBuilder addCategory(String id, String name, String description, ItemStackTemplate icon) {
         return this.addCategory(id, name, description, Util.serializeStack(icon, getRegistries()));
     }
 

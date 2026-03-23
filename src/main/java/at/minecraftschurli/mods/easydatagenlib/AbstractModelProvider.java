@@ -43,7 +43,7 @@ public abstract class AbstractModelProvider extends ModelProvider {
 
     @Override
     protected Stream<? extends Holder<Item>> getKnownItems() {
-        HolderLookup<Item> lookup = registries == null ? BuiltInRegistries.ITEM : registries.lookupOrThrow(Registries.ITEM);
+        HolderLookup<Item> lookup = registries != null ? registries.lookupOrThrow(Registries.ITEM) : BuiltInRegistries.ITEM;
         return lookup.listElements().filter(holder -> holder.key().identifier().getNamespace().equals(modId));
     }
 

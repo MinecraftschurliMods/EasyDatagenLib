@@ -13,7 +13,7 @@ import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.Map;
@@ -21,10 +21,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class Util {
-    public static String serializeStack(ItemStack stack, HolderLookup.Provider registries) {
+    public static String serializeStack(ItemStackTemplate stack, HolderLookup.Provider registries) {
         StringBuilder builder = new StringBuilder();
         builder.append(Objects.requireNonNull(stack.typeHolder().getKey()).identifier());
-        DataComponentPatch patch = stack.getComponentsPatch();
+        DataComponentPatch patch = stack.components();
         if (!patch.isEmpty()) {
             builder.append('[');
             RegistryOps<JsonElement> ops = registries.createSerializationContext(JsonOps.INSTANCE);
@@ -47,8 +47,8 @@ public class Util {
             builder.deleteCharAt(builder.length() - 1);
             builder.append(']');
         }
-        if (stack.getCount() != 1) {
-            builder.append('#').append(stack.getCount());
+        if (stack.count() != 1) {
+            builder.append('#').append(stack.count());
         }
         return builder.toString();
     }

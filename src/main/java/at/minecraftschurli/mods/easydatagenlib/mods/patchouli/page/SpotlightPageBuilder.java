@@ -5,7 +5,7 @@ import at.minecraftschurli.mods.easydatagenlib.mods.patchouli.EntryBuilder;
 import at.minecraftschurli.mods.easydatagenlib.mods.patchouli.Util;
 import com.google.gson.JsonObject;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 
 public class SpotlightPageBuilder extends AbstractPageBuilder<SpotlightPageBuilder> {
     private final String item;
@@ -13,7 +13,7 @@ public class SpotlightPageBuilder extends AbstractPageBuilder<SpotlightPageBuild
     private Boolean linkRecipe;
     private String text;
 
-    public SpotlightPageBuilder(ItemStack stack, EntryBuilder<?,?,?> parent) {
+    public SpotlightPageBuilder(ItemStackTemplate stack, EntryBuilder<?,?,?> parent) {
         super(Identifier.fromNamespaceAndPath("patchouli", "spotlight"), parent);
         this.item = Util.serializeStack(stack, parent.getParent().getBookBuilder().getRegistries());
     }
