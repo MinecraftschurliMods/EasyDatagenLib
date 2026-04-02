@@ -36,7 +36,7 @@ public class Util {
                     JsonElement value = codec.encodeStart(ops, entry.getValue().get()).getOrThrow();
                     builder.append(key.getAsString());
                     builder.append('=');
-                    builder.append(value.getAsString());
+                    builder.append(value.toString());
                     builder.append(',');
                 } else {
                     builder.append('!');
