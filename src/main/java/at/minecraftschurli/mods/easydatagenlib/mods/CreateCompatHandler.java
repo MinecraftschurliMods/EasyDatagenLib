@@ -99,7 +99,7 @@ public abstract class CreateCompatHandler<T extends AbstractRecipeBuilder<?>> ex
         public static final class Factory implements ICompatHandler.Factory {
             @Override
             public ICompatHandler create(String namespace, PackOutput output, HolderLookup.Provider registries) {
-                return new Cutting(namespace, output, registries);
+                return new Crushing(namespace, output, registries);
             }
         }
     }
