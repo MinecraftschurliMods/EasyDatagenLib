@@ -250,7 +250,7 @@ public abstract class BotanyPotsCompatHandler<T extends AbstractRecipeBuilder<?>
         public static final class Factory implements ICompatHandler.Factory {
             @Override
             public ICompatHandler create(String namespace, PackOutput output, HolderLookup.Provider registries) {
-                return new Soil(namespace, output, registries);
+                return new Crop(namespace, output, registries);
             }
         }
     }
