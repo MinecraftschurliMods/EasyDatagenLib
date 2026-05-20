@@ -22,13 +22,10 @@ public class IngredientWithCount implements JsonSerializable {
 
     @Override
     public JsonElement toJson(HolderLookup.Provider registries) {
+        if (count == 1) return JsonUtil.toJson(ingredient, registries);
         JsonObject json = new JsonObject();
-        if (count == 1) {
-            json = JsonUtil.toJson(ingredient, registries).getAsJsonObject();
-        } else {
-            json.add("base_ingredient", JsonUtil.toJson(ingredient, registries));
-            json.addProperty("count", count);
-        }
+        json.add("base_ingredient", JsonUtil.toJson(ingredient, registries));
+        json.addProperty("count", count);
         return json;
     }
 
