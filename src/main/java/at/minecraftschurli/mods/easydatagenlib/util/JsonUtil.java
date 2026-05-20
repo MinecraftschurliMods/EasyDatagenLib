@@ -19,10 +19,8 @@ import java.util.List;
 import java.util.function.Function;
 
 public class JsonUtil {
-    /**
-     * @param arrays The {@link JsonArray}s to merge.
-     * @return The merged {@link JsonArray}.
-     */
+    /// @param arrays The [JsonArray]s to merge.
+    /// @return The merged [JsonArray].
     public static JsonArray mergeArrays(JsonArray... arrays) {
         JsonArray result = new JsonArray();
         for (JsonArray array : arrays) {
@@ -31,89 +29,69 @@ public class JsonUtil {
         return result;
     }
 
-    /**
-     * @param array The {@link JsonArray} to handle.
-     * @return If the {@link JsonArray} contains one element, the element is returned. Otherwise, the {@link JsonArray} is returned.
-     */
+    /// @param array The [JsonArray] to handle.
+    /// @return If the [JsonArray] contains one element, the element is returned. Otherwise, the [JsonArray] is returned.
     public static JsonElement singleOrArray(JsonArray array) {
         return array.size() == 1 ? array.get(0) : array;
     }
 
-    /**
-     * @param list     A list.
-     * @param function A function that determines how the list elements will be converted into JSON.
-     * @param <T>      The list element type.
-     * @return A {@link JsonArray}, constructed from the given list.
-     */
+    /// @param list     A list.
+    /// @param function A function that determines how the list elements will be converted into JSON.
+    /// @param <T>      The list element type.
+    /// @return A [JsonArray], constructed from the given list.
     public static <T> JsonArray toList(List<T> list, Function<? super T, JsonElement> function) {
         JsonArray array = new JsonArray();
         list.forEach(e -> array.add(function.apply(e)));
         return array;
     }
 
-    /**
-     * @param list       A list of {@link JsonSerializable}s.
-     * @param registries
-     * @return A {@link JsonArray}, constructed from the given list.
-     */
+    /// @param list       A list of [JsonSerializable]s.
+    /// @param registries
+    /// @return A [JsonArray], constructed from the given list.
     public static JsonArray toList(List<? extends JsonSerializable> list, HolderLookup.Provider registries) {
         return toList(list, jsonSerializable -> jsonSerializable.toJson(registries));
     }
 
-    /**
-     * @param list A list of {@link Boolean}s.
-     * @return A {@link JsonArray}, constructed from the given list.
-     */
+    /// @param list A list of [Boolean]s.
+    /// @return A [JsonArray], constructed from the given list.
     public static JsonArray toBooleanList(List<Boolean> list) {
         return toList(list, JsonPrimitive::new);
     }
 
-    /**
-     * @param list A list of {@link Number}s.
-     * @return A {@link JsonArray}, constructed from the given list.
-     */
+    /// @param list A list of [Number]s.
+    /// @return A [JsonArray], constructed from the given list.
     public static JsonArray toNumberList(List<Number> list) {
         return toList(list, JsonPrimitive::new);
     }
 
-    /**
-     * @param list A list of {@link String}s.
-     * @return A {@link JsonArray}, constructed from the given list.
-     */
+    /// @param list A list of [String]s.
+    /// @return A [JsonArray], constructed from the given list.
     public static JsonArray toStringList(List<String> list) {
         return toList(list, JsonPrimitive::new);
     }
 
-    /**
-     * @param list A list of {@link Character}s.
-     * @return A {@link JsonArray}, constructed from the given list.
-     */
+    /// @param list A list of [Character]s.
+    /// @return A [JsonArray], constructed from the given list.
     public static JsonArray toCharList(List<Character> list) {
         return toStringList(list.stream().map(Object::toString).toList());
     }
 
-    /**
-     * @param list A list of {@link Enum} values.
-     * @return A {@link JsonArray}, constructed from the given list.
-     */
+    /// @param list A list of [Enum] values.
+    /// @return A [JsonArray], constructed from the given list.
     public static JsonArray toEnumList(List<? extends Enum<?>> list) {
         return toStringList(list.stream().map(Enum::name).toList());
     }
 
-    /**
-     * @param list A list of {@link Ingredient}s.
-     * @return A {@link JsonArray}, constructed from the given list.
-     */
+    /// @param list A list of [Ingredient]s.
+    /// @return A [JsonArray], constructed from the given list.
     public static JsonArray toIngredientList(List<? extends Ingredient> list, HolderLookup.Provider registries) {
         return toList(list, ingredient -> toJson(ingredient, registries));
     }
 
-    /**
-     * Converts a {@link Vec3} to a {@link JsonObject}.
-     *
-     * @param vec3 The {@link Vec3} to convert.
-     * @return A {@link JsonObject}, constructed from the given parameters.
-     */
+    /// Converts a [Vec3] to a [JsonObject].
+    ///
+    /// @param vec3 The [Vec3] to convert.
+    /// @return A [JsonObject], constructed from the given parameters.
     public static JsonObject toJson(Vec3 vec3) {
         JsonObject json = new JsonObject();
         json.addProperty("x", vec3.x);
@@ -122,12 +100,10 @@ public class JsonUtil {
         return json;
     }
 
-    /**
-     * Converts a {@link BlockState} to a {@link JsonObject}.
-     *
-     * @param state The {@link BlockState} to convert.
-     * @return A {@link JsonObject}, constructed from the given parameters.
-     */
+    /// Converts a [BlockState] to a [JsonObject].
+    ///
+    /// @param state The [BlockState] to convert.
+    /// @return A [JsonObject], constructed from the given parameters.
     public static JsonObject toJson(BlockState state) {
         JsonObject json = new JsonObject();
         json.addProperty("block", BuiltInRegistries.BLOCK.getKey(state.getBlock()).toString());
@@ -148,12 +124,10 @@ public class JsonUtil {
         return Ingredient.CODEC.encodeStart(registries.createSerializationContext(JsonOps.INSTANCE), ingredient).getOrThrow();
     }
 
-    /**
-     * Converts a {@link BlockState}'s properties to a {@link JsonElement}.
-     *
-     * @param state The {@link BlockState} of which to convert the properties.
-     * @return A {@link JsonElement}, constructed from the given parameters.
-     */
+    /// Converts a [BlockState]'s properties to a [JsonElement].
+    ///
+    /// @param state The [BlockState] of which to convert the properties.
+    /// @return A [JsonElement], constructed from the given parameters.
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static JsonObject propertiesToJson(BlockState state) {
         JsonObject json = new JsonObject();

@@ -27,40 +27,32 @@ public abstract class CorailWoodcutterCompatHandler<T extends AbstractRecipeBuil
             super("woodcutting", namespace, output, registries);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param input  The input ingredient to use.
-         * @param output The id of the output item to use.
-         * @param count  The output count to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param input  The input ingredient to use.
+        /// @param output The id of the output item to use.
+        /// @param count  The output count to use.
         public Builder builder(String id, Ingredient input, Identifier output, int count) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, count);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param input  The input ingredient to use.
-         * @param output The id of the output item to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param input  The input ingredient to use.
+        /// @param output The id of the output item to use.
         public Builder builder(String id, Ingredient input, Identifier output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param input  The input ingredient to use.
-         * @param output The output item to use.
-         * @param count  The output count to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param input  The input ingredient to use.
+        /// @param output The output item to use.
+        /// @param count  The output count to use.
         public Builder builder(String id, Ingredient input, Item output, int count) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, count);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param input  The input ingredient to use.
-         * @param output The output item to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param input  The input ingredient to use.
+        /// @param output The output item to use.
         public Builder builder(String id, Ingredient input, Item output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output);
         }

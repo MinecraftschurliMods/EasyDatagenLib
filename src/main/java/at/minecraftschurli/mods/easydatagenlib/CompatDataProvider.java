@@ -16,9 +16,7 @@ import java.util.ServiceLoader;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-/**
- * Extend this class and override {@link CompatDataProvider#generate(HolderLookup.Provider)} to add your own datagen entries.
- */
+/// Extend this class and override [CompatDataProvider#generate(HolderLookup.Provider)] to add your own datagen entries.
 @SuppressWarnings({"unused", "DuplicatedCode", "SameParameterValue"})
 public abstract class CompatDataProvider implements DataProvider, ICompatHandler {
     private final String namespace;
@@ -26,21 +24,17 @@ public abstract class CompatDataProvider implements DataProvider, ICompatHandler
     private final CompletableFuture<HolderLookup.Provider> registries;
     private @Nullable Map<Class<? extends ICompatHandler>, ICompatHandler> handlers;
 
-    /**
-     * Constructs a new {@link CompatDataProvider}. Initializes the providers and calls {@link CompatDataProvider#generate(HolderLookup.Provider)}.
-     *
-     * @param namespace The namespace to use. In most cases, this is your own mod id.
-     * @param output    The {@link DataGenerator} to use. Get this via {@link GatherDataEvent#getGenerator()}.
-     */
+    /// Constructs a new [CompatDataProvider]. Initializes the providers and calls [CompatDataProvider#generate(HolderLookup.Provider)].
+    ///
+    /// @param namespace The namespace to use. In most cases, this is your own mod id.
+    /// @param output    The [DataGenerator] to use. Get this via [GatherDataEvent#getGenerator()].
     protected CompatDataProvider(String namespace, PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         this.namespace = namespace;
         this.output = output;
         this.registries = registries;
     }
 
-    /**
-     * Override this to add your recipes.
-     */
+    /// Override this to add your recipes.
     protected abstract void generate(HolderLookup.Provider context);
 
     @Override

@@ -18,9 +18,7 @@ import java.util.Objects;
 public abstract class DisplayState implements JsonSerializable {
     protected final Identifier id;
 
-    /**
-     * @param id The id of the display state.
-     */
+    /// @param id The id of the display state.
     public DisplayState(Identifier id) {
         this.id = id;
     }
@@ -29,17 +27,13 @@ public abstract class DisplayState implements JsonSerializable {
         private static final Identifier ID = Identifier.fromNamespaceAndPath("botanypots", "aging");
         private final Identifier block;
 
-        /**
-         * @param block The id of the {@link Block} associated with this display state.
-         */
+        /// @param block The id of the [Block] associated with this display state.
         public Aging(Identifier block) {
             super(ID);
             this.block = block;
         }
 
-        /**
-         * @param block The {@link Block} associated with this display state.
-         */
+        /// @param block The [Block] associated with this display state.
         public Aging(Block block) {
             this(Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(block)));
         }
@@ -61,45 +55,35 @@ public abstract class DisplayState implements JsonSerializable {
         private Vec3 offset = null;
         private boolean renderFluid = false;
 
-        /**
-         * @param state The {@link BlockState} associated with this display state.
-         */
+        /// @param state The [BlockState] associated with this display state.
         public Simple(BlockState state) {
             super(ID);
             this.state = state;
         }
 
-        /**
-         * @param scale The scale to set.
-         * @return This object, for chaining.
-         */
+        /// @param scale The scale to set.
+        /// @return This object, for chaining.
         public Simple setScale(Vec3 scale) {
             this.scale = scale;
             return this;
         }
 
-        /**
-         * @param offset The offset to set.
-         * @return This object, for chaining.
-         */
+        /// @param offset The offset to set.
+        /// @return This object, for chaining.
         public Simple setOffset(Vec3 offset) {
             this.offset = offset;
             return this;
         }
 
-        /**
-         * Enables fluid rendering.
-         * @return This object, for chaining.
-         */
+        /// Enables fluid rendering.
+        /// @return This object, for chaining.
         public Simple renderFluid() {
             renderFluid = true;
             return this;
         }
 
-        /**
-         * @param rotation The {@link AxisAlignedRotation} to add.
-         * @return This object, for chaining.
-         */
+        /// @param rotation The [AxisAlignedRotation] to add.
+        /// @return This object, for chaining.
         public Simple addRotation(AxisAlignedRotation rotation) {
             this.rotation.add(rotation);
             return this;
@@ -132,10 +116,8 @@ public abstract class DisplayState implements JsonSerializable {
             super(ID);
         }
 
-        /**
-         * @param phase The {@link DisplayState} to add.
-         * @return This object, for chaining.
-         */
+        /// @param phase The [DisplayState] to add.
+        /// @return This object, for chaining.
         public Transitional addPhase(DisplayState phase) {
             phases.add(phase);
             return this;

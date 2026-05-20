@@ -203,56 +203,44 @@ public abstract class CreateCompatHandler<T extends AbstractRecipeBuilder<?>> ex
             super("mechanical_crafting", namespace, output, registries);
         }
 
-        /**
-         * @param id    The recipe id to use.
-         * @param item  The id of the output item to use.
-         * @param count The output count to use.
-         * @param patch The output components to use.
-         */
+        /// @param id    The recipe id to use.
+        /// @param item  The id of the output item to use.
+        /// @param count The output count to use.
+        /// @param patch The output components to use.
         public Builder builder(String id, Identifier item, int count, DataComponentPatch patch) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), item, count, patch);
         }
 
-        /**
-         * @param id    The recipe id to use.
-         * @param item  The id of the output item to use.
-         * @param count The output count to use.
-         */
+        /// @param id    The recipe id to use.
+        /// @param item  The id of the output item to use.
+        /// @param count The output count to use.
         public Builder builder(String id, Identifier item, int count) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), item, count);
         }
 
-        /**
-         * @param id   The recipe id to use.
-         * @param item The id of the output item to use.
-         */
+        /// @param id   The recipe id to use.
+        /// @param item The id of the output item to use.
         public Builder builder(String id, Identifier item) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), item);
         }
 
-        /**
-         * @param id    The recipe id to use.
-         * @param item  The output item to use.
-         * @param count The output count to use.
-         * @param patch The output components to use.
-         */
+        /// @param id    The recipe id to use.
+        /// @param item  The output item to use.
+        /// @param count The output count to use.
+        /// @param patch The output components to use.
         public Builder builder(String id, Item item, int count, DataComponentPatch patch) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), item, count, patch);
         }
 
-        /**
-         * @param id    The recipe id to use.
-         * @param item  The output item to use.
-         * @param count The output count to use.
-         */
+        /// @param id    The recipe id to use.
+        /// @param item  The output item to use.
+        /// @param count The output count to use.
         public Builder builder(String id, Item item, int count) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), item, count);
         }
 
-        /**
-         * @param id   The recipe id to use.
-         * @param item The output item to use.
-         */
+        /// @param id   The recipe id to use.
+        /// @param item The output item to use.
         public Builder builder(String id, Item item) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), item);
         }
@@ -288,30 +276,24 @@ public abstract class CreateCompatHandler<T extends AbstractRecipeBuilder<?>> ex
                 this(provider, id, item, 1, DataComponentPatch.EMPTY);
             }
 
-            /**
-             * Sets this recipe's acceptMirrored property to false.
-             */
+            /// Sets this recipe's acceptMirrored property to false.
             public Builder dontAcceptMirrored() {
                 acceptMirrored = false;
                 return this;
             }
 
-            /**
-             * Adds a pattern line to this recipe.
-             *
-             * @param pattern The pattern line to add.
-             */
+            /// Adds a pattern line to this recipe.
+            ///
+            /// @param pattern The pattern line to add.
             public Builder pattern(String pattern) {
                 this.pattern.add(pattern);
                 return this;
             }
 
-            /**
-             * Adds a key to this recipe.
-             *
-             * @param key   The key to add.
-             * @param value The value to associate with the key.
-             */
+            /// Adds a key to this recipe.
+            ///
+            /// @param key   The key to add.
+            /// @param value The value to associate with the key.
             public Builder key(char key, Ingredient value) {
                 this.key.put(key, value);
                 return this;
@@ -442,20 +424,16 @@ public abstract class CreateCompatHandler<T extends AbstractRecipeBuilder<?>> ex
             super("sequenced_assembly", namespace, output, registries);
         }
 
-        /**
-         * @param id               The recipe id to use.
-         * @param input            The input ingredient to use.
-         * @param transitionalItem The id of the transitional item to use.
-         */
+        /// @param id               The recipe id to use.
+        /// @param input            The input ingredient to use.
+        /// @param transitionalItem The id of the transitional item to use.
         public Builder builder(String id, Ingredient input, Identifier transitionalItem) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, transitionalItem);
         }
 
-        /**
-         * @param id               The recipe id to use.
-         * @param input            The input ingredient to use.
-         * @param transitionalItem The transitional item to use.
-         */
+        /// @param id               The recipe id to use.
+        /// @param input            The input ingredient to use.
+        /// @param transitionalItem The transitional item to use.
         public Builder builder(String id, Ingredient input, Item transitionalItem) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, transitionalItem);
         }
@@ -477,11 +455,9 @@ public abstract class CreateCompatHandler<T extends AbstractRecipeBuilder<?>> ex
                 this(provider, id, input, itemId(transitionalItem));
             }
 
-            /**
-             * Sets the amount of loops of this recipe.
-             *
-             * @param loops The amount of loops to use.
-             */
+            /// Sets the amount of loops of this recipe.
+            ///
+            /// @param loops The amount of loops to use.
             public Builder setLoops(int loops) {
                 if (loops < 1)
                     throw new IllegalArgumentException("Recipe " + id + "has an illegal loop count of " + loops);
@@ -489,32 +465,26 @@ public abstract class CreateCompatHandler<T extends AbstractRecipeBuilder<?>> ex
                 return this;
             }
 
-            /**
-             * Adds a processing step to this recipe.
-             *
-             * @param processing The processing step to add.
-             */
+            /// Adds a processing step to this recipe.
+            ///
+            /// @param processing The processing step to add.
             public Builder addProcessing(Processing.Builder processing) {
                 sequence.add(processing);
                 return this;
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param output The output item to use.
-             * @param weight The weight of this output.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param output The output item to use.
+            /// @param weight The weight of this output.
             public Builder addOutput(Item output, float weight) {
                 return addOutput(itemId(output), weight);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param output The id of the output item to use.
-             * @param weight The weight of this output.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param output The id of the output item to use.
+            /// @param weight The weight of this output.
             public Builder addOutput(Identifier output, float weight) {
                 outputs.add(new Pair<>(new PotentiallyAbsentItemStack(output), weight));
                 return this;
@@ -560,19 +530,15 @@ public abstract class CreateCompatHandler<T extends AbstractRecipeBuilder<?>> ex
         }
     }
 
-    /**
-     * Note: Not all recipes can actually handle all information. However, Create's recipe specification allows everything to be specified for all recipes.
-     * {@see https://github.com/Creators-of-Create/Create/blob/mc1.18/dev/src/main/java/com/simibubi/create/content/contraptions/processing/ProcessingRecipeBuilder.java}
-     */
+    /// Note: Not all recipes can actually handle all information. However, Create's recipe specification allows everything to be specified for all recipes.
+    /// {@see https://github.com/Creators-of-Create/Create/blob/mc1.18/dev/src/main/java/com/simibubi/create/content/contraptions/processing/ProcessingRecipeBuilder.java}
     public static abstract class Processing extends CreateCompatHandler<Processing.Builder> {
         protected Processing(String folder, String namespace, PackOutput output, HolderLookup.Provider registries) {
             super(folder, namespace, output, registries);
         }
 
-        /**
-         * @param id       The id of this recipe.
-         * @param duration The duration of this recipe.
-         */
+        /// @param id       The id of this recipe.
+        /// @param duration The duration of this recipe.
         public Builder builder(String id, int duration) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), duration);
         }
@@ -591,200 +557,160 @@ public abstract class CreateCompatHandler<T extends AbstractRecipeBuilder<?>> ex
                 this.duration = duration;
             }
 
-            /**
-             * Sets this recipe's keepHeldItem property to true.
-             */
+            /// Sets this recipe's keepHeldItem property to true.
             public void keepHeldItem() {
                 keepHeldItem = true;
             }
 
-            /**
-             * Sets the heat requirement of this recipe.
-             *
-             * @param heatRequirement The heat requirement to use.
-             */
+            /// Sets the heat requirement of this recipe.
+            ///
+            /// @param heatRequirement The heat requirement to use.
             public void setHeatRequirement(HeatRequirement heatRequirement) {
                 this.heatRequirement = heatRequirement;
             }
 
-            /**
-             * Adds an input ingredient to this recipe.
-             *
-             * @param input The input ingredient to add.
-             */
+            /// Adds an input ingredient to this recipe.
+            ///
+            /// @param input The input ingredient to add.
             public Builder addInput(Ingredient input) {
                 inputs.add(input);
                 return this;
             }
 
-            /**
-             * Adds an input fluid ingredient to this recipe.
-             *
-             * @param input The input fluid ingredient to add.
-             */
+            /// Adds an input fluid ingredient to this recipe.
+            ///
+            /// @param input The input fluid ingredient to add.
             public Builder addInput(SizedFluidIngredient input) {
                 fluidInputs.add(input);
                 return this;
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item   The output item to use.
-             * @param count  The output count to use.
-             * @param chance The chance that this output will be used.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item   The output item to use.
+            /// @param count  The output count to use.
+            /// @param chance The chance that this output will be used.
             public Builder addOutput(Identifier item, int count, float chance) {
                 outputs.add(new PotentiallyAbsentItemStack.WithChance(item, count, chance));
                 return this;
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item  The output item to use.
-             * @param count The output count to use.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item  The output item to use.
+            /// @param count The output count to use.
             public Builder addOutput(Identifier item, int count) {
                 return addOutput(item, count, 1);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item   The output item to use.
-             * @param chance The chance that this output will be used.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item   The output item to use.
+            /// @param chance The chance that this output will be used.
             public Builder addOutput(Identifier item, float chance) {
                 return addOutput(item, 1, chance);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item The output item to use.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item The output item to use.
             public Builder addOutput(Identifier item) {
                 return addOutput(item, 1, 1);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item   The output item to use.
-             * @param count  The output count to use.
-             * @param chance The chance that this output will be used.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item   The output item to use.
+            /// @param count  The output count to use.
+            /// @param chance The chance that this output will be used.
             public Builder addOutput(Item item, int count, float chance) {
                 return addOutput(itemId(item), count, chance);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item  The output item to use.
-             * @param count The output count to use.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item  The output item to use.
+            /// @param count The output count to use.
             public Builder addOutput(Item item, int count) {
                 return addOutput(item, count, 1);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item   The output item to use.
-             * @param chance The chance that this output will be used.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item   The output item to use.
+            /// @param chance The chance that this output will be used.
             public Builder addOutput(Item item, float chance) {
                 return addOutput(item, 1, chance);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item The output item to use.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item The output item to use.
             public Builder addOutput(Item item) {
                 return addOutput(item, 1, 1);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param fluid  The output fluid.
-             * @param count  The output count.
-             * @param chance The chance that this output will be used.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param fluid  The output fluid.
+            /// @param count  The output count.
+            /// @param chance The chance that this output will be used.
             public Builder addOutputFluid(Identifier fluid, int count, float chance) {
                 fluidOutputs.add(new PotentiallyAbsentFluidStack.WithChance(fluid, count, chance));
                 return this;
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param fluid The output fluid.
-             * @param count The output count.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param fluid The output fluid.
+            /// @param count The output count.
             public Builder addOutputFluid(Identifier fluid, int count) {
                 return addOutputFluid(fluid, count, 1);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param fluid  The output fluid.
-             * @param chance The chance that this output will be used.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param fluid  The output fluid.
+            /// @param chance The chance that this output will be used.
             public Builder addOutputFluid(Identifier fluid, float chance) {
                 return addOutputFluid(fluid, 1, chance);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param fluid The output fluid.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param fluid The output fluid.
             public Builder addOutputFluid(Identifier fluid) {
                 return addOutputFluid(fluid, 1, 1);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param fluid  The output fluid.
-             * @param count  The output count.
-             * @param chance The chance that this output will be used.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param fluid  The output fluid.
+            /// @param count  The output count.
+            /// @param chance The chance that this output will be used.
             public Builder addOutputFluid(Fluid fluid, int count, float chance) {
                 return addOutputFluid(fluidId(fluid), count, chance);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param fluid The output fluid.
-             * @param count The output count.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param fluid The output fluid.
+            /// @param count The output count.
             public Builder addOutputFluid(Fluid fluid, int count) {
                 return addOutputFluid(fluid, count, 1);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param fluid  The output fluid.
-             * @param chance The chance that this output will be used.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param fluid  The output fluid.
+            /// @param chance The chance that this output will be used.
             public Builder addOutputFluid(Fluid fluid, float chance) {
                 return addOutputFluid(fluid, 1, chance);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param fluid The output fluid.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param fluid The output fluid.
             public Builder addOutputFluid(Fluid fluid) {
                 return addOutputFluid(fluid, 1, 1);
             }

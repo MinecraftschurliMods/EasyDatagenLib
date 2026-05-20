@@ -14,10 +14,8 @@ import net.neoforged.neoforge.common.crafting.IngredientType;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-/**
- * Class that allows mimicking an ingredient of an item that is not present during compile time by simply using the item's registry name.
- * This should not be used outside datagen, as there is no validation whatsoever!
- */
+/// Class that allows mimicking an ingredient of an item that is not present during compile time by simply using the item's registry name.
+/// This should not be used outside datagen, as there is no validation whatsoever!
 public class PotentiallyAbsentIngredient implements ICustomIngredient {
     private final Identifier[] items;
 

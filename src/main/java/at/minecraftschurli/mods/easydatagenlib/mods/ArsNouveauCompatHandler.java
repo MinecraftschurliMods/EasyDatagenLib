@@ -27,10 +27,8 @@ public abstract class ArsNouveauCompatHandler<T extends AbstractRecipeBuilder<?>
             super("crush", namespace, output, registries);
         }
 
-        /**
-         * @param id    The recipe id to use.
-         * @param input The input item to use.
-         */
+        /// @param id    The recipe id to use.
+        /// @param input The input item to use.
         public Builder builder(String id, Ingredient input) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input);
         }
@@ -57,95 +55,77 @@ public abstract class ArsNouveauCompatHandler<T extends AbstractRecipeBuilder<?>
                 this.input = input;
             }
 
-            /**
-             * Sets this recipe's skipBlockPlace property to true.
-             */
+            /// Sets this recipe's skipBlockPlace property to true.
             public Builder skipBlockPlace() {
                 skipBlockPlace = true;
                 return this;
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item     The output item to use.
-             * @param count    The output count to use.
-             * @param chance   The chance that this output will be used.
-             * @param maxRange The max range to use.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item     The output item to use.
+            /// @param count    The output count to use.
+            /// @param chance   The chance that this output will be used.
+            /// @param maxRange The max range to use.
             public Builder addOutput(Item item, int count, float chance, int maxRange) {
                 return addOutput(itemId(item), count, chance, maxRange);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item   The output item to use.
-             * @param count  The output count to use.
-             * @param chance The chance that this output will be used.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item   The output item to use.
+            /// @param count  The output count to use.
+            /// @param chance The chance that this output will be used.
             public Builder addOutput(Item item, int count, float chance) {
                 return addOutput(item, count, chance, 1);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item  The output item to use.
-             * @param count The output count to use.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item  The output item to use.
+            /// @param count The output count to use.
             public Builder addOutput(Item item, int count) {
                 return addOutput(item, count, 1);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item The output item to use.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item The output item to use.
             public Builder addOutput(Item item) {
                 return addOutput(item, 1);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item     The output item to use.
-             * @param count    The output count to use.
-             * @param chance   The chance that this output will be used.
-             * @param maxRange The max range to use.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item     The output item to use.
+            /// @param count    The output count to use.
+            /// @param chance   The chance that this output will be used.
+            /// @param maxRange The max range to use.
             public Builder addOutput(Identifier item, int count, float chance, int maxRange) {
                 output.add(Pair.of(new PotentiallyAbsentItemStack.WithChance(item, count, chance), maxRange)); // doesn't support NBT
                 return this;
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item   The output item to use.
-             * @param count  The output count to use.
-             * @param chance The chance that this output will be used.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item   The output item to use.
+            /// @param count  The output count to use.
+            /// @param chance The chance that this output will be used.
             public Builder addOutput(Identifier item, int count, float chance) {
                 return addOutput(item, count, chance, 1);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item  The output item to use.
-             * @param count The output count to use.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item  The output item to use.
+            /// @param count The output count to use.
             public Builder addOutput(Identifier item, int count) {
                 return addOutput(item, count, 1);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item The output item to use.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item The output item to use.
             public Builder addOutput(Identifier item) {
                 return addOutput(item, 1);
             }
@@ -178,36 +158,28 @@ public abstract class ArsNouveauCompatHandler<T extends AbstractRecipeBuilder<?>
             super("glyph", namespace, output, registries);
         }
 
-        /**
-         * @param id    The recipe id to use.
-         * @param item  The id of the output item to use.
-         * @param count The output count to use.
-         */
+        /// @param id    The recipe id to use.
+        /// @param item  The id of the output item to use.
+        /// @param count The output count to use.
         public Builder builder(String id, Identifier item, int count) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), item, count);
         }
 
-        /**
-         * @param id   The recipe id to use.
-         * @param item The id of the output item to use.
-         */
+        /// @param id   The recipe id to use.
+        /// @param item The id of the output item to use.
         public Builder builder(String id, Identifier item) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), item);
         }
 
-        /**
-         * @param id    The recipe id to use.
-         * @param item  The output item to use.
-         * @param count The output count to use.
-         */
+        /// @param id    The recipe id to use.
+        /// @param item  The output item to use.
+        /// @param count The output count to use.
         public Builder builder(String id, Item item, int count) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), item, count);
         }
 
-        /**
-         * @param id   The recipe id to use.
-         * @param item The output item to use.
-         */
+        /// @param id   The recipe id to use.
+        /// @param item The output item to use.
         public Builder builder(String id, Item item) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), item);
         }
@@ -234,21 +206,17 @@ public abstract class ArsNouveauCompatHandler<T extends AbstractRecipeBuilder<?>
                 this(provider, id, item, 1);
             }
 
-            /**
-             * Sets the amount of experience this recipe awards.
-             *
-             * @param experience The amount of experience this recipe awards.
-             */
+            /// Sets the amount of experience this recipe awards.
+            ///
+            /// @param experience The amount of experience this recipe awards.
             public Builder setExperience(int experience) {
                 this.experience = experience;
                 return this;
             }
 
-            /**
-             * Adds an input ingredient to this recipe.
-             *
-             * @param input The input ingredient to add.
-             */
+            /// Adds an input ingredient to this recipe.
+            ///
+            /// @param input The input ingredient to add.
             public Builder addInput(Ingredient input) {
                 inputItems.add(input);
                 return this;
@@ -278,44 +246,36 @@ public abstract class ArsNouveauCompatHandler<T extends AbstractRecipeBuilder<?>
             super("imbuement", namespace, output, registries);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param input  The input item to use.
-         * @param output The id of the output item to use.
-         * @param count  The output count to use.
-         * @param mana   The amount of mana to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param input  The input item to use.
+        /// @param output The id of the output item to use.
+        /// @param count  The output count to use.
+        /// @param mana   The amount of mana to use.
         public Builder builder(String id, Ingredient input, Identifier output, int count, int mana) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, count, mana);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param input  The input item to use.
-         * @param output The id of the output item to use.
-         * @param mana   The amount of mana to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param input  The input item to use.
+        /// @param output The id of the output item to use.
+        /// @param mana   The amount of mana to use.
         public Builder builder(String id, Ingredient input, Identifier output, int mana) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, mana);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param input  The input item to use.
-         * @param output The id of the output item to use.
-         * @param count  The output count to use.
-         * @param mana   The amount of mana to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param input  The input item to use.
+        /// @param output The id of the output item to use.
+        /// @param count  The output count to use.
+        /// @param mana   The amount of mana to use.
         public Builder builder(String id, Ingredient input, Item output, int count, int mana) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, count, mana);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param input  The input item to use.
-         * @param output The id of the output item to use.
-         * @param mana   The amount of mana to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param input  The input item to use.
+        /// @param output The id of the output item to use.
+        /// @param mana   The amount of mana to use.
         public Builder builder(String id, Ingredient input, Item output, int mana) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, mana);
         }
@@ -345,11 +305,9 @@ public abstract class ArsNouveauCompatHandler<T extends AbstractRecipeBuilder<?>
                 this(provider, id, input, output, 1, mana);
             }
 
-            /**
-             * Adds a secondary input to this recipe.
-             *
-             * @param secondaryInput The secondary input to add.
-             */
+            /// Adds a secondary input to this recipe.
+            ///
+            /// @param secondaryInput The secondary input to add.
             public Builder addSecondaryIngredient(Ingredient secondaryInput) {
                 secondaryInputs.add(secondaryInput);
                 return this;

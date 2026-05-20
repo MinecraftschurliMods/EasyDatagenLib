@@ -33,44 +33,36 @@ public abstract class FarmersDelightCompatHandler<T extends AbstractRecipeBuilde
             super("cooking", namespace, output, registries);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param duration   The duration to use.
-         * @param experience The amount of experience this recipe awards.
-         * @param output     The id of the output item to use.
-         * @param count      The output count to use.
-         */
+        /// @param id         The recipe id to use.
+        /// @param duration   The duration to use.
+        /// @param experience The amount of experience this recipe awards.
+        /// @param output     The id of the output item to use.
+        /// @param count      The output count to use.
         public Builder builder(String id, int duration, float experience, Identifier output, int count) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), duration, experience, output, count);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param duration   The duration to use.
-         * @param experience The amount of experience this recipe awards.
-         * @param output     The id of the output item to use.
-         */
+        /// @param id         The recipe id to use.
+        /// @param duration   The duration to use.
+        /// @param experience The amount of experience this recipe awards.
+        /// @param output     The id of the output item to use.
         public Builder builder(String id, int duration, float experience, Identifier output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), duration, experience, output);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param duration   The duration to use.
-         * @param experience The amount of experience this recipe awards.
-         * @param output     The output item to use.
-         * @param count      The output count to use.
-         */
+        /// @param id         The recipe id to use.
+        /// @param duration   The duration to use.
+        /// @param experience The amount of experience this recipe awards.
+        /// @param output     The output item to use.
+        /// @param count      The output count to use.
         public Builder builder(String id, int duration, float experience, Item output, int count) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), duration, experience, output, count);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param duration   The duration to use.
-         * @param experience The amount of experience this recipe awards.
-         * @param output     The output item to use.
-         */
+        /// @param id         The recipe id to use.
+        /// @param duration   The duration to use.
+        /// @param experience The amount of experience this recipe awards.
+        /// @param output     The output item to use.
         public Builder builder(String id, int duration, float experience, Item output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), duration, experience, output);
         }
@@ -102,40 +94,32 @@ public abstract class FarmersDelightCompatHandler<T extends AbstractRecipeBuilde
                 this(provider, id, duration, experience, output, 1);
             }
 
-            /**
-             * Sets the container item of this recipe.
-             *
-             * @param container The id of the container item to use.
-             */
+            /// Sets the container item of this recipe.
+            ///
+            /// @param container The id of the container item to use.
             public Builder setContainer(Identifier container) {
                 this.container = new PotentiallyAbsentItemStack(container);
                 return this;
             }
 
-            /**
-             * Sets the container item of this recipe.
-             *
-             * @param container The container item to use.
-             */
+            /// Sets the container item of this recipe.
+            ///
+            /// @param container The container item to use.
             public Builder setContainer(Item container) {
                 return setContainer(itemId(container));
             }
 
-            /**
-             * Sets the recipe book tab of this recipe.
-             *
-             * @param recipeBookTab The recipe book tab to use.
-             */
+            /// Sets the recipe book tab of this recipe.
+            ///
+            /// @param recipeBookTab The recipe book tab to use.
             public Builder setRecipeBookTab(String recipeBookTab) {
                 this.recipeBookTab = recipeBookTab;
                 return this;
             }
 
-            /**
-             * Adds an input ingredient to this recipe.
-             *
-             * @param input The input ingredient to add.
-             */
+            /// Adds an input ingredient to this recipe.
+            ///
+            /// @param input The input ingredient to add.
             public Builder addInput(Ingredient input) {
                 ingredients.add(input);
                 return this;
@@ -208,11 +192,9 @@ public abstract class FarmersDelightCompatHandler<T extends AbstractRecipeBuilde
                 .addOutput(TREE_BARK).build();*/
         }
 
-        /**
-         * @param id    The recipe id to use.
-         * @param input The input ingredient to use.
-         * @param tool  The tool to use.
-         */
+        /// @param id    The recipe id to use.
+        /// @param input The input ingredient to use.
+        /// @param tool  The tool to use.
         public Builder builder(String id, Ingredient input, Ingredient tool) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, tool);
         }
@@ -229,97 +211,79 @@ public abstract class FarmersDelightCompatHandler<T extends AbstractRecipeBuilde
                 this.tool = tool;
             }
 
-            /**
-             * Sets the sound of this recipe.
-             *
-             * @param sound The sound to use.
-             */
+            /// Sets the sound of this recipe.
+            ///
+            /// @param sound The sound to use.
             public Builder setSound(String sound) {
                 this.sound = sound;
                 return this;
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item   The id of the output item to use.
-             * @param count  The output count to use.
-             * @param patch  The output components to use.
-             * @param chance The chance that this output will be used.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item   The id of the output item to use.
+            /// @param count  The output count to use.
+            /// @param patch  The output components to use.
+            /// @param chance The chance that this output will be used.
             public Builder addOutput(Identifier item, int count, DataComponentPatch patch, float chance) {
                 outputs.add(new PotentiallyAbsentItemStack.WithChance(item, count, patch, chance));
                 return this;
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item  The id of the output item to use.
-             * @param count The output count to use.
-             * @param patch The output components to use.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item  The id of the output item to use.
+            /// @param count The output count to use.
+            /// @param patch The output components to use.
             public Builder addOutput(Identifier item, int count, DataComponentPatch patch) {
                 return addOutput(item, count, patch, 1);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item  The id of the output item to use.
-             * @param count The output count to use.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item  The id of the output item to use.
+            /// @param count The output count to use.
             public Builder addOutput(Identifier item, int count) {
                 return addOutput(item, count, DataComponentPatch.EMPTY);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item The id of the output item to use.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item The id of the output item to use.
             public Builder addOutput(Identifier item) {
                 return addOutput(item, 1);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item   The item to use.
-             * @param count  The output count to use.
-             * @param patch  The output components to use.
-             * @param chance The chance that this output will be used.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item   The item to use.
+            /// @param count  The output count to use.
+            /// @param patch  The output components to use.
+            /// @param chance The chance that this output will be used.
             public Builder addOutput(Item item, int count, DataComponentPatch patch, float chance) {
                 return addOutput(itemId(item), count, patch, chance);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item  The item to use.
-             * @param count The output count to use.
-             * @param patch The output components to use.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item  The item to use.
+            /// @param count The output count to use.
+            /// @param patch The output components to use.
             public Builder addOutput(Item item, int count, DataComponentPatch patch) {
                 return addOutput(item, count, patch, 1);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item  The item to use.
-             * @param count The output count to use.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item  The item to use.
+            /// @param count The output count to use.
             public Builder addOutput(Item item, int count) {
                 return addOutput(item, count, DataComponentPatch.EMPTY);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param item The item to use.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param item The item to use.
             public Builder addOutput(Item item) {
                 return addOutput(item, 1);
             }

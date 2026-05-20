@@ -65,23 +65,19 @@ public abstract class ImmersiveEngineeringCompatHandler<T extends AbstractRecipe
             }
         }
 
-        /**
-         * @param id       The recipe id to use.
-         * @param duration The duration to use.
-         * @param energy   The amount of energy to use.
-         * @param input    The input ingredient to use.
-         * @param count    The input count to use.
-         */
+        /// @param id       The recipe id to use.
+        /// @param duration The duration to use.
+        /// @param energy   The amount of energy to use.
+        /// @param input    The input ingredient to use.
+        /// @param count    The input count to use.
         public Builder builder(String id, int duration, int energy, Ingredient input, int count) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), duration, energy, input, count);
         }
 
-        /**
-         * @param id       The recipe id to use.
-         * @param duration The duration to use.
-         * @param energy   The amount of energy to use.
-         * @param input    The input ingredient to use.
-         */
+        /// @param id       The recipe id to use.
+        /// @param duration The duration to use.
+        /// @param energy   The amount of energy to use.
+        /// @param input    The input ingredient to use.
         public Builder builder(String id, int duration, int energy, Ingredient input) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), duration, energy, input);
         }
@@ -106,103 +102,83 @@ public abstract class ImmersiveEngineeringCompatHandler<T extends AbstractRecipe
                 this(provider, id, duration, energy, input, 1);
             }
 
-            /**
-             * Sets the slag output of this recipe.
-             *
-             * @param slag The slag output to use.
-             */
+            /// Sets the slag output of this recipe.
+            ///
+            /// @param slag The slag output to use.
             public Builder setSlag(Ingredient slag) {
                 return setSlag(slag, 1);
             }
 
-            /**
-             * Sets the slag output of this recipe.
-             *
-             * @param slag  The slag output to use.
-             * @param count The slag output count to use.
-             */
+            /// Sets the slag output of this recipe.
+            ///
+            /// @param slag  The slag output to use.
+            /// @param count The slag output count to use.
             public Builder setSlag(Ingredient slag, int count) {
                 this.slag = new IngredientWithCount(slag, count);
                 return this;
             }
 
-            /**
-             * Adds a secondary input to this recipe.
-             *
-             * @param input The secondary input to add.
-             * @param count The secondary input count to use.
-             */
+            /// Adds a secondary input to this recipe.
+            ///
+            /// @param input The secondary input to add.
+            /// @param count The secondary input count to use.
             public Builder addSecondaryInput(Ingredient input, int count) {
                 secondaryInputs.add(new IngredientWithCount(input, count));
                 return this;
             }
 
-            /**
-             * Adds a secondary input to this recipe.
-             *
-             * @param input The secondary input ingredient to add.
-             */
+            /// Adds a secondary input to this recipe.
+            ///
+            /// @param input The secondary input ingredient to add.
             public Builder addSecondaryInput(Ingredient input) {
                 return addSecondaryInput(input, 1);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param output The output ingredient to add.
-             * @param count  The output count to use.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param output The output ingredient to add.
+            /// @param count  The output count to use.
             public Builder addOutput(Ingredient output, int count) {
                 outputs.add(new IngredientWithCount(output, count));
                 return this;
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param output The output ingredient to add.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param output The output ingredient to add.
             public Builder addOutput(Ingredient output) {
                 return addOutput(output, 1);
             }
 
-            /**
-             * Adds a secondary output to this recipe.
-             *
-             * @param secondary The secondary output to add.
-             * @param count     The secondary output count to use.
-             * @param chance    The chance that this output will be used.
-             */
+            /// Adds a secondary output to this recipe.
+            ///
+            /// @param secondary The secondary output to add.
+            /// @param count     The secondary output count to use.
+            /// @param chance    The chance that this output will be used.
             public Builder addSecondaryOutput(Ingredient secondary, int count, float chance) {
                 secondaryOutputs.add(new IngredientWithCount.WithChance(secondary, count, chance));
                 return this;
             }
 
-            /**
-             * Adds a secondary output to this recipe.
-             *
-             * @param secondary The secondary output to add.
-             * @param chance    The chance that this output will be used.
-             */
+            /// Adds a secondary output to this recipe.
+            ///
+            /// @param secondary The secondary output to add.
+            /// @param chance    The chance that this output will be used.
             public Builder addSecondaryOutput(Ingredient secondary, float chance) {
                 return addSecondaryOutput(secondary, 1, chance);
             }
 
-            /**
-             * Adds a secondary output to this recipe.
-             *
-             * @param secondary The secondary ingredient to add.
-             * @param count     The secondary output count to use.
-             */
+            /// Adds a secondary output to this recipe.
+            ///
+            /// @param secondary The secondary ingredient to add.
+            /// @param count     The secondary output count to use.
             public Builder addSecondaryOutput(Ingredient secondary, int count) {
                 return addSecondaryOutput(secondary, count, 1);
             }
 
-            /**
-             * Adds a secondary output to this recipe.
-             *
-             * @param secondary The secondary ingredient to add.
-             */
+            /// Adds a secondary output to this recipe.
+            ///
+            /// @param secondary The secondary ingredient to add.
             public Builder addSecondaryOutput(Ingredient secondary) {
                 return addSecondaryOutput(secondary, 1);
             }
@@ -245,26 +221,22 @@ public abstract class ImmersiveEngineeringCompatHandler<T extends AbstractRecipe
                 .addOutput(ingredient(mushroom)).build();
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param time       The time this recipe requires.
-         * @param input      The input ingredient to use.
-         * @param soil       The soil ingredient to use.
-         * @param renderType The render type to use in the recipe renderer.
-         * @param block      The id of the block to use in the recipe renderer.
-         */
+        /// @param id         The recipe id to use.
+        /// @param time       The time this recipe requires.
+        /// @param input      The input ingredient to use.
+        /// @param soil       The soil ingredient to use.
+        /// @param renderType The render type to use in the recipe renderer.
+        /// @param block      The id of the block to use in the recipe renderer.
         public Builder builder(String id, int time, Ingredient input, Ingredient soil, ClocheRenderType renderType, Identifier block) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), time, input, soil, renderType, block);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param time       The time this recipe requires.
-         * @param input      The input ingredient to use.
-         * @param soil       The soil ingredient to use.
-         * @param renderType The render type to use in the recipe renderer.
-         * @param block      The block to use in the recipe renderer.
-         */
+        /// @param id         The recipe id to use.
+        /// @param time       The time this recipe requires.
+        /// @param input      The input ingredient to use.
+        /// @param soil       The soil ingredient to use.
+        /// @param renderType The render type to use in the recipe renderer.
+        /// @param block      The block to use in the recipe renderer.
         public Builder builder(String id, int time, Ingredient input, Ingredient soil, ClocheRenderType renderType, Block block) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), time, input, soil, renderType, block);
         }
@@ -290,22 +262,18 @@ public abstract class ImmersiveEngineeringCompatHandler<T extends AbstractRecipe
                 this(provider, id, time, input, soil, renderType, blockId(block));
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param output The output ingredient to add.
-             * @param count  The output ingredient count to use.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param output The output ingredient to add.
+            /// @param count  The output ingredient count to use.
             public Builder addOutput(Ingredient output, int count) {
                 outputs.add(new IngredientWithCount(output, count));
                 return this;
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param output The output ingredient to add.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param output The output ingredient to add.
             public Builder addOutput(Ingredient output) {
                 return addOutput(output, 1);
             }
@@ -369,23 +337,19 @@ public abstract class ImmersiveEngineeringCompatHandler<T extends AbstractRecipe
             }
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param energy The amount of energy to use.
-         * @param input  The input ingredient to use.
-         * @param output The output ingredient to use.
-         * @param count  The output count to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param energy The amount of energy to use.
+        /// @param input  The input ingredient to use.
+        /// @param output The output ingredient to use.
+        /// @param count  The output count to use.
         public Builder builder(String id, int energy, Ingredient input, Ingredient output, int count) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), energy, input, output, count);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param energy The amount of energy to use.
-         * @param input  The input ingredient to use.
-         * @param output The output ingredient to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param energy The amount of energy to use.
+        /// @param input  The input ingredient to use.
+        /// @param output The output ingredient to use.
         public Builder builder(String id, int energy, Ingredient input, Ingredient output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), energy, input, output);
         }
@@ -407,43 +371,35 @@ public abstract class ImmersiveEngineeringCompatHandler<T extends AbstractRecipe
                 this(provider, id, energy, input, output, 1);
             }
 
-            /**
-             * Adds a secondary output to this recipe.
-             *
-             * @param secondary The secondary output to add.
-             * @param count     The secondary output count to use.
-             * @param chance    The chance that this output will be used.
-             */
+            /// Adds a secondary output to this recipe.
+            ///
+            /// @param secondary The secondary output to add.
+            /// @param count     The secondary output count to use.
+            /// @param chance    The chance that this output will be used.
             public Builder addSecondary(Ingredient secondary, int count, float chance) {
                 secondaryOutputs.add(new IngredientWithCount.WithChance(secondary, count, chance));
                 return this;
             }
 
-            /**
-             * Adds a secondary output to this recipe.
-             *
-             * @param secondary The secondary output to add.
-             * @param chance    The chance that this output will be used.
-             */
+            /// Adds a secondary output to this recipe.
+            ///
+            /// @param secondary The secondary output to add.
+            /// @param chance    The chance that this output will be used.
             public Builder addSecondary(Ingredient secondary, float chance) {
                 return addSecondary(secondary, 1, chance);
             }
 
-            /**
-             * Adds a secondary output to this recipe.
-             *
-             * @param secondary The secondary output to add.
-             * @param count     The secondary output count to use.
-             */
+            /// Adds a secondary output to this recipe.
+            ///
+            /// @param secondary The secondary output to add.
+            /// @param count     The secondary output count to use.
             public Builder addSecondary(Ingredient secondary, int count) {
                 return addSecondary(secondary, count, 1);
             }
 
-            /**
-             * Adds a secondary output to this recipe.
-             *
-             * @param secondary The secondary output to add.
-             */
+            /// Adds a secondary output to this recipe.
+            ///
+            /// @param secondary The secondary output to add.
             public Builder addSecondary(Ingredient secondary) {
                 return addSecondary(secondary, 1);
             }
@@ -500,44 +456,36 @@ public abstract class ImmersiveEngineeringCompatHandler<T extends AbstractRecipe
                 .addSecondaryOutput(ingredient(WOOD_DUST), false).build();
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param energy The amount of energy to use.
-         * @param input  The input ingredient to use.
-         * @param output The id of the output item to use.
-         * @param count  The output count to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param energy The amount of energy to use.
+        /// @param input  The input ingredient to use.
+        /// @param output The id of the output item to use.
+        /// @param count  The output count to use.
         public Builder builder(String id, int energy, Ingredient input, Identifier output, int count) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), energy, input, output, count);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param energy The amount of energy to use.
-         * @param input  The input ingredient to use.
-         * @param output The id of the output item to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param energy The amount of energy to use.
+        /// @param input  The input ingredient to use.
+        /// @param output The id of the output item to use.
         public Builder builder(String id, int energy, Ingredient input, Identifier output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), energy, input, output);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param energy The amount of energy to use.
-         * @param input  The input ingredient to use.
-         * @param output The output item to use.
-         * @param count  The output count to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param energy The amount of energy to use.
+        /// @param input  The input ingredient to use.
+        /// @param output The output item to use.
+        /// @param count  The output count to use.
         public Builder builder(String id, int energy, Ingredient input, Item output, int count) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), energy, input, output, count);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param energy The amount of energy to use.
-         * @param input  The input ingredient to use.
-         * @param output The output item to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param energy The amount of energy to use.
+        /// @param input  The input ingredient to use.
+        /// @param output The output item to use.
         public Builder builder(String id, int energy, Ingredient input, Item output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), energy, input, output);
         }
@@ -568,44 +516,36 @@ public abstract class ImmersiveEngineeringCompatHandler<T extends AbstractRecipe
                 this(provider, id, energy, input, output, 1);
             }
 
-            /**
-             * Sets the stripped output of this recipe.
-             *
-             * @param stripped The stripped output to use.
-             */
+            /// Sets the stripped output of this recipe.
+            ///
+            /// @param stripped The stripped output to use.
             public Builder setStrippedOutput(Ingredient stripped) {
                 return setStrippedOutput(stripped, 1);
             }
 
-            /**
-             * Sets the stripped output of this recipe.
-             *
-             * @param stripped The stripped output to use.
-             * @param count    The stripped output count to use.
-             */
+            /// Sets the stripped output of this recipe.
+            ///
+            /// @param stripped The stripped output to use.
+            /// @param count    The stripped output count to use.
             public Builder setStrippedOutput(Ingredient stripped, int count) {
                 this.stripped = new IngredientWithCount(stripped, count);
                 return this;
             }
 
-            /**
-             * Adds a secondary output to this recipe.
-             *
-             * @param secondary The secondary output to add.
-             * @param count     The secondary output count to use.
-             * @param stripping Whether this should apply during a stripping or during a non-stripping operation.
-             */
+            /// Adds a secondary output to this recipe.
+            ///
+            /// @param secondary The secondary output to add.
+            /// @param count     The secondary output count to use.
+            /// @param stripping Whether this should apply during a stripping or during a non-stripping operation.
             public Builder addSecondaryOutput(Ingredient secondary, int count, boolean stripping) {
                 secondaryOutputs.add(Pair.of(new IngredientWithCount(secondary, count), stripping));
                 return this;
             }
 
-            /**
-             * Adds a secondary output to this recipe.
-             *
-             * @param secondary The secondary output to add.
-             * @param stripping Whether this should apply during a stripping or during a non-stripping operation.
-             */
+            /// Adds a secondary output to this recipe.
+            ///
+            /// @param secondary The secondary output to add.
+            /// @param stripping Whether this should apply during a stripping or during a non-stripping operation.
             public Builder addSecondaryOutput(Ingredient secondary, boolean stripping) {
                 return addSecondaryOutput(secondary, 1, stripping);
             }

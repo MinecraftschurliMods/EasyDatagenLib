@@ -34,12 +34,10 @@ public abstract class PatchouliBookProvider implements DataProvider {
         this.includeServer = includeServer;
     }
 
-    /**
-     * Performs this provider's action.
-     *
-     * @param cache the cache
-     * @return
-     */
+    /// Performs this provider's action.
+    ///
+    /// @param cache the cache
+    /// @return
     @NotNull
     @Override
     public CompletableFuture<?> run(@NotNull CachedOutput cache) {
@@ -87,9 +85,7 @@ public abstract class PatchouliBookProvider implements DataProvider {
         return new TranslatedBookBuilder(Identifier.fromNamespaceAndPath(this.namespace, id), name, landingText, langProvider, this, registries);
     }
 
-    /**
-     * Gets a name for this provider, to use in logging.
-     */
+    /// Gets a name for this provider, to use in logging.
     @NotNull
     @Override
     public String getName() {

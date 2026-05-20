@@ -37,11 +37,9 @@ public abstract class BotanyPotsCompatHandler<T extends AbstractRecipeBuilder<?>
             super("crop", namespace, output, registries);
         }
 
-        /**
-         * @param id       The recipe id to use.
-         * @param input    The input ingredient to use.
-         * @param duration The duration to use.
-         */
+        /// @param id       The recipe id to use.
+        /// @param input    The input ingredient to use.
+        /// @param duration The duration to use.
         public Builder builder(String id, Ingredient input, int duration) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, duration);
         }
@@ -112,117 +110,95 @@ public abstract class BotanyPotsCompatHandler<T extends AbstractRecipeBuilder<?>
                 this.duration = duration;
             }
 
-            /**
-             * Sets the light level of this recipe.
-             *
-             * @param lightLevel The light level to use.
-             */
+            /// Sets the light level of this recipe.
+            ///
+            /// @param lightLevel The light level to use.
             public Builder setLightLevel(int lightLevel) {
                 this.lightLevel = Mth.clamp(lightLevel, 0, 15);
                 return this;
             }
 
-            /**
-             * Adds a category to this recipe.
-             *
-             * @param category The category to add.
-             */
+            /// Adds a category to this recipe.
+            ///
+            /// @param category The category to add.
             public Builder addCategory(String category) {
                 categories.add(category);
                 return this;
             }
 
-            /**
-             * Adds a display state to this recipe.
-             *
-             * @param display The display state to add.
-             */
+            /// Adds a display state to this recipe.
+            ///
+            /// @param display The display state to add.
             public Builder addDisplay(DisplayState display) {
                 this.display.add(display);
                 return this;
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param output   The id of the output item to add.
-             * @param chance The chance that this output will be used.
-             * @param minRolls The min rolls of this output.
-             * @param maxRolls The max rolls of this output.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param output   The id of the output item to add.
+            /// @param chance The chance that this output will be used.
+            /// @param minRolls The min rolls of this output.
+            /// @param maxRolls The max rolls of this output.
             public Builder addOutput(Identifier output, float chance, int minRolls, int maxRolls) {
                 outputs.add(new HarvestEntry(output, chance, minRolls, maxRolls));
                 return this;
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param output   The id of the output item to add.
-             * @param minRolls The min rolls of this output.
-             * @param maxRolls The max rolls of this output.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param output   The id of the output item to add.
+            /// @param minRolls The min rolls of this output.
+            /// @param maxRolls The max rolls of this output.
             public Builder addOutput(Identifier output, int minRolls, int maxRolls) {
                 return addOutput(output, 1, minRolls, maxRolls);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param output The id of the output item to add.
-             * @param chance The chance of this output to occur.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param output The id of the output item to add.
+            /// @param chance The chance of this output to occur.
             public Builder addOutput(Identifier output, float chance) {
                 return addOutput(output, chance, 1, 1);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param output The id of the output item to add.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param output The id of the output item to add.
             public Builder addOutput(Identifier output) {
                 return addOutput(output, 1);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param output   The output item to add.
-             * @param chance The chance that this output will be used.
-             * @param minRolls The min rolls of this output.
-             * @param maxRolls The max rolls of this output.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param output   The output item to add.
+            /// @param chance The chance that this output will be used.
+            /// @param minRolls The min rolls of this output.
+            /// @param maxRolls The max rolls of this output.
             public Builder addOutput(Item output, float chance, int minRolls, int maxRolls) {
                 return addOutput(itemId(output), chance, minRolls, maxRolls);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param output   The output item to add.
-             * @param minRolls The min rolls of this output.
-             * @param maxRolls The max rolls of this output.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param output   The output item to add.
+            /// @param minRolls The min rolls of this output.
+            /// @param maxRolls The max rolls of this output.
             public Builder addOutput(Item output, int minRolls, int maxRolls) {
                 return addOutput(output, 1, minRolls, maxRolls);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param output The output item to add.
-             * @param chance The chance of this output to occur.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param output The output item to add.
+            /// @param chance The chance of this output to occur.
             public Builder addOutput(Item output, float chance) {
                 return addOutput(output, chance, 1, 1);
             }
 
-            /**
-             * Adds an output to this recipe.
-             *
-             * @param output The output item to add.
-             */
+            /// Adds an output to this recipe.
+            ///
+            /// @param output The output item to add.
             public Builder addOutput(Item output) {
                 return addOutput(output, 1);
             }
@@ -260,11 +236,9 @@ public abstract class BotanyPotsCompatHandler<T extends AbstractRecipeBuilder<?>
             super("soil", namespace, output, registries);
         }
 
-        /**
-         * @param id      The recipe id to use.
-         * @param input   The input ingredient to use.
-         * @param display The {@link DisplayState} to use.
-         */
+        /// @param id      The recipe id to use.
+        /// @param input   The input ingredient to use.
+        /// @param display The [DisplayState] to use.
         public Builder builder(String id, Ingredient input, DisplayState display) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, display);
         }
@@ -336,31 +310,25 @@ public abstract class BotanyPotsCompatHandler<T extends AbstractRecipeBuilder<?>
                 this.display = display;
             }
 
-            /**
-             * Sets the growth modifier of this recipe.
-             *
-             * @param growthModifier The growth modifier to use.
-             */
+            /// Sets the growth modifier of this recipe.
+            ///
+            /// @param growthModifier The growth modifier to use.
             public Builder setGrowthModifier(float growthModifier) {
                 this.growthModifier = growthModifier;
                 return this;
             }
 
-            /**
-             * Sets the light level of this recipe.
-             *
-             * @param lightLevel The light level to use.
-             */
+            /// Sets the light level of this recipe.
+            ///
+            /// @param lightLevel The light level to use.
             public Builder setLightLevel(int lightLevel) {
                 this.lightLevel = Mth.clamp(lightLevel, 0, 15);
                 return this;
             }
 
-            /**
-             * Adds a category to this recipe.
-             *
-             * @param category The category to add.
-             */
+            /// Adds a category to this recipe.
+            ///
+            /// @param category The category to add.
             public Builder addCategory(String category) {
                 categories.add(category);
                 return this;

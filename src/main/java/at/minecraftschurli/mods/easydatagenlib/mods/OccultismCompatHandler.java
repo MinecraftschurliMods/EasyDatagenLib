@@ -44,21 +44,17 @@ public abstract class OccultismCompatHandler<T extends AbstractRecipeBuilder<?>>
             }
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param input  The input ingredient to use.
-         * @param output The output ingredient to use.
-         * @param count  The output count to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param input  The input ingredient to use.
+        /// @param output The output ingredient to use.
+        /// @param count  The output count to use.
         public Builder builder(String id, Ingredient input, Ingredient output, int count) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, count);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param input  The input ingredient to use.
-         * @param output The output ingredient to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param input  The input ingredient to use.
+        /// @param output The output ingredient to use.
         public Builder builder(String id, Ingredient input, Ingredient output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output);
         }
@@ -82,29 +78,23 @@ public abstract class OccultismCompatHandler<T extends AbstractRecipeBuilder<?>>
                 this(provider, id, input, output, 1);
             }
 
-            /**
-             * Sets the duration of this recipe.
-             *
-             * @param duration The duration to use.
-             */
+            /// Sets the duration of this recipe.
+            ///
+            /// @param duration The duration to use.
             public Builder setDuration(int duration) {
                 this.duration = duration;
                 return this;
             }
 
-            /**
-             * Sets the min tier of this recipe.
-             *
-             * @param minTier The min tier to use.
-             */
+            /// Sets the min tier of this recipe.
+            ///
+            /// @param minTier The min tier to use.
             public Builder setMinTier(int minTier) {
                 this.minTier = minTier;
                 return this;
             }
 
-            /**
-             * Sets this recipe's ignoreCrushingMultiplier property to true.
-             */
+            /// Sets this recipe's ignoreCrushingMultiplier property to true.
             public Builder ignoreCrushingMultiplier() {
                 ignoreCrushingMultiplier = true;
                 return this;

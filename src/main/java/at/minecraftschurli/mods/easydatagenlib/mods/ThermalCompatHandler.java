@@ -185,17 +185,13 @@ public abstract class ThermalCompatHandler<T extends AbstractRecipeBuilder<?>> e
             }
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param experience The amount of experience this recipe awards.
-         */
+        /// @param id         The recipe id to use.
+        /// @param experience The amount of experience this recipe awards.
         public Builder builder(String id, float experience) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), experience);
         }
 
-        /**
-         * @param id The recipe id to use.
-         */
+        /// @param id The recipe id to use.
         public Builder builder(String id) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id));
         }
@@ -211,11 +207,9 @@ public abstract class ThermalCompatHandler<T extends AbstractRecipeBuilder<?>> e
                 super(provider, id);
             }
 
-            /**
-             * Sets the water modifier to use.
-             *
-             * @param waterModifier The water modifier to use.
-             */
+            /// Sets the water modifier to use.
+            ///
+            /// @param waterModifier The water modifier to use.
             public Builder setWaterModifier(float waterModifier) {
                 this.waterModifier = waterModifier;
                 return this;
@@ -485,26 +479,20 @@ public abstract class ThermalCompatHandler<T extends AbstractRecipeBuilder<?>> e
         }
     }
 
-    /**
-     * Note: Not all recipes can actually handle all information. However, Thermal's recipe specification allows everything to be specified for all recipes.
-     * {@see https://github.com/CoFH/ThermalCore/blob/1.19.x/src/main/java/cofh/thermal/lib/util/recipes/MachineRecipeSerializer.java}
-     */
+    /// Note: Not all recipes can actually handle all information. However, Thermal's recipe specification allows everything to be specified for all recipes.
+    /// {@see https://github.com/CoFH/ThermalCore/blob/1.19.x/src/main/java/cofh/thermal/lib/util/recipes/MachineRecipeSerializer.java}
     public static abstract class Processing extends ThermalCompatHandler<Processing.Builder> {
         protected Processing(String folder, String namespace, PackOutput output, HolderLookup.Provider registries) {
             super(folder, namespace, output, registries);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param experience The amount of experience this recipe awards.
-         */
+        /// @param id         The recipe id to use.
+        /// @param experience The amount of experience this recipe awards.
         public Builder builder(String id, float experience) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), experience);
         }
 
-        /**
-         * @param id The recipe id to use.
-         */
+        /// @param id The recipe id to use.
         public Builder builder(String id) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id));
         }
@@ -527,239 +515,193 @@ public abstract class ThermalCompatHandler<T extends AbstractRecipeBuilder<?>> e
                 this(provider, id, 0);
             }
 
-            /**
-             * Sets the energy of this recipe.
-             *
-             * @param energy The amount of energy to use.
-             */
+            /// Sets the energy of this recipe.
+            ///
+            /// @param energy The amount of energy to use.
             public Builder setEnergy(int energy) {
                 this.energy = energy;
                 return this;
             }
 
-            /**
-             * Sets the energy modifier of this recipe.
-             *
-             * @param energyModifier The energy modifier to use.
-             */
+            /// Sets the energy modifier of this recipe.
+            ///
+            /// @param energyModifier The energy modifier to use.
             public Builder setEnergyModifier(float energyModifier) {
                 this.energyModifier = energyModifier;
                 return this;
             }
 
-            /**
-             * Adds an input ingredient to this recipe.
-             *
-             * @param input The input ingredient to add.
-             */
+            /// Adds an input ingredient to this recipe.
+            ///
+            /// @param input The input ingredient to add.
             public Builder addInput(Ingredient input, int count) {
                 inputItems.add(new IngredientWithCount(input, count));
                 return this;
             }
 
-            /**
-             * Adds an input ingredient to this recipe.
-             *
-             * @param input The input ingredient to add.
-             */
+            /// Adds an input ingredient to this recipe.
+            ///
+            /// @param input The input ingredient to add.
             public Builder addInput(Ingredient input) {
                 return addInput(input, 1);
             }
 
-            /**
-             * Adds an input ingredient to this recipe.
-             *
-             * @param input The input ingredient to add.
-             */
+            /// Adds an input ingredient to this recipe.
+            ///
+            /// @param input The input ingredient to add.
             public Builder addInput(SizedFluidIngredient input) {
                 inputFluids.add(input);
                 return this;
             }
 
-            /**
-             * Adds an output item to this recipe.
-             *
-             * @param output The id of the output item to use.
-             * @param count  The output count to use.
-             * @param patch  The output components to use.
-             * @param chance The chance that this output will be used.
-             */
+            /// Adds an output item to this recipe.
+            ///
+            /// @param output The id of the output item to use.
+            /// @param count  The output count to use.
+            /// @param patch  The output components to use.
+            /// @param chance The chance that this output will be used.
             public Builder addOutputItem(Identifier output, int count, DataComponentPatch patch, float chance) {
                 outputItems.add(new PotentiallyAbsentItemStack.WithChance(output, count, patch, chance));
                 return this;
             }
 
-            /**
-             * Adds an output item to this recipe.
-             *
-             * @param output The id of the output item to use.
-             * @param count  The output count to use.
-             * @param chance The chance that this output will be used.
-             */
+            /// Adds an output item to this recipe.
+            ///
+            /// @param output The id of the output item to use.
+            /// @param count  The output count to use.
+            /// @param chance The chance that this output will be used.
             public Builder addOutputItem(Identifier output, int count, float chance) {
                 return addOutputItem(output, count, DataComponentPatch.EMPTY, chance);
             }
 
-            /**
-             * Adds an output item to this recipe.
-             *
-             * @param output The id of the output item to use.
-             * @param chance The chance that this output will be used.
-             */
+            /// Adds an output item to this recipe.
+            ///
+            /// @param output The id of the output item to use.
+            /// @param chance The chance that this output will be used.
             public Builder addOutputItem(Identifier output, float chance) {
                 return addOutputItem(output, 1, chance);
             }
 
-            /**
-             * Adds an output item to this recipe.
-             *
-             * @param output The output item to use.
-             * @param count  The output count to use.
-             * @param patch  The output components to use.
-             * @param chance The chance that this output will be used.
-             */
+            /// Adds an output item to this recipe.
+            ///
+            /// @param output The output item to use.
+            /// @param count  The output count to use.
+            /// @param patch  The output components to use.
+            /// @param chance The chance that this output will be used.
             public Builder addOutputItem(Item output, int count, DataComponentPatch patch, float chance) {
                 return addOutputItem(itemId(output), count, patch, chance);
             }
 
-            /**
-             * Adds an output item to this recipe.
-             *
-             * @param output The output item to use.
-             * @param count  The output count to use.
-             * @param chance The chance that this output will be used.
-             */
+            /// Adds an output item to this recipe.
+            ///
+            /// @param output The output item to use.
+            /// @param count  The output count to use.
+            /// @param chance The chance that this output will be used.
             public Builder addOutputItem(Item output, int count, float chance) {
                 return addOutputItem(output, count, DataComponentPatch.EMPTY, chance);
             }
 
-            /**
-             * Adds an output item to this recipe.
-             *
-             * @param output The output item to use.
-             * @param chance The chance that this output will be used.
-             */
+            /// Adds an output item to this recipe.
+            ///
+            /// @param output The output item to use.
+            /// @param chance The chance that this output will be used.
             public Builder addOutputItem(Item output, float chance) {
                 return addOutputItem(output, 1, chance);
             }
 
-            /**
-             * Adds an output item to this recipe.
-             *
-             * @param output The id of the output item to use.
-             * @param count  The output count to use.
-             * @param patch  The output components to use.
-             */
+            /// Adds an output item to this recipe.
+            ///
+            /// @param output The id of the output item to use.
+            /// @param count  The output count to use.
+            /// @param patch  The output components to use.
             public Builder addOutputItem(Identifier output, int count, DataComponentPatch patch) {
                 return addOutputItem(output, count, patch, 1f);
             }
 
-            /**
-             * Adds an output item to this recipe.
-             *
-             * @param output The id of the output item to use.
-             * @param count  The output count to use.
-             */
+            /// Adds an output item to this recipe.
+            ///
+            /// @param output The id of the output item to use.
+            /// @param count  The output count to use.
             public Builder addOutputItem(Identifier output, int count) {
                 return addOutputItem(output, count, 1f);
             }
 
-            /**
-             * Adds an output item to this recipe.
-             *
-             * @param output The id of the output item to use.
-             */
+            /// Adds an output item to this recipe.
+            ///
+            /// @param output The id of the output item to use.
             public Builder addOutputItem(Identifier output) {
                 return addOutputItem(output, 1f);
             }
 
-            /**
-             * Adds an output item to this recipe.
-             *
-             * @param output The output item to use.
-             * @param count  The output count to use.
-             * @param patch  The output components to use.
-             */
+            /// Adds an output item to this recipe.
+            ///
+            /// @param output The output item to use.
+            /// @param count  The output count to use.
+            /// @param patch  The output components to use.
             public Builder addOutputItem(Item output, int count, DataComponentPatch patch) {
                 return addOutputItem(itemId(output), count, patch, 1f);
             }
 
-            /**
-             * Adds an output item to this recipe.
-             *
-             * @param output The output item to use.
-             * @param count  The output count to use.
-             */
+            /// Adds an output item to this recipe.
+            ///
+            /// @param output The output item to use.
+            /// @param count  The output count to use.
             public Builder addOutputItem(Item output, int count) {
                 return addOutputItem(output, count, 1f);
             }
 
-            /**
-             * Adds an output item to this recipe.
-             *
-             * @param output The output item to use.
-             */
+            /// Adds an output item to this recipe.
+            ///
+            /// @param output The output item to use.
             public Builder addOutputItem(Item output) {
                 return addOutputItem(output, 1f);
             }
 
-            /**
-             * Adds an output fluid to this recipe.
-             *
-             * @param output The id of the output fluid to use.
-             * @param amount The output amount to use.
-             * @param patch  The output components to use.
-             */
+            /// Adds an output fluid to this recipe.
+            ///
+            /// @param output The id of the output fluid to use.
+            /// @param amount The output amount to use.
+            /// @param patch  The output components to use.
             public Builder addOutputFluid(Identifier output, int amount, DataComponentPatch patch) {
                 outputFluids.add(new PotentiallyAbsentFluidStack(output, amount, patch));
                 return this;
             }
 
-            /**
-             * Adds an output fluid to this recipe.
-             *
-             * @param output The id of the output fluid to use.
-             * @param amount The output amount to use.
-             */
+            /// Adds an output fluid to this recipe.
+            ///
+            /// @param output The id of the output fluid to use.
+            /// @param amount The output amount to use.
             public Builder addOutputFluid(Identifier output, int amount) {
                 return addOutputFluid(output, amount, DataComponentPatch.EMPTY);
             }
 
-            /**
-             * Adds an output fluid to this recipe.
-             *
-             * @param output The id of the output fluid to use.
-             */
+            /// Adds an output fluid to this recipe.
+            ///
+            /// @param output The id of the output fluid to use.
             public Builder addOutputFluid(Identifier output) {
                 return addOutputFluid(output, 1);
             }
 
-            /**
-             * Adds an output fluid to this recipe.
-             *
-             * @param output The output fluid to use.
-             * @param amount The output amount to use.
-             * @param patch  The output components to use.
-             */
+            /// Adds an output fluid to this recipe.
+            ///
+            /// @param output The output fluid to use.
+            /// @param amount The output amount to use.
+            /// @param patch  The output components to use.
             public Builder addOutputFluid(Fluid output, int amount, DataComponentPatch patch) {
                 return addOutputFluid(fluidId(output), amount, patch);
             }
 
-            /**
-             * Adds an output fluid to this recipe.
-             *
-             * @param output The output fluid to use.
-             * @param amount The output amount to use.
-             */
+            /// Adds an output fluid to this recipe.
+            ///
+            /// @param output The output fluid to use.
+            /// @param amount The output amount to use.
             public Builder addOutputFluid(Fluid output, int amount) {
                 return addOutputFluid(output, amount, DataComponentPatch.EMPTY);
             }
 
-            /**
-             * Adds an output fluid to this recipe.
-             *
-             * @param output The output fluid to use.
-             */
+            /// Adds an output fluid to this recipe.
+            ///
+            /// @param output The output fluid to use.
             public Builder addOutputFluid(Fluid output) {
                 return addOutputFluid(output, 1);
             }

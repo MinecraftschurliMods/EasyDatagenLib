@@ -60,74 +60,62 @@ public abstract class ElementalcraftCompatHandler<T extends AbstractRecipeBuilde
             super(folder, namespace, output, registries);
         }
 
-        /**
-         * @param id            The recipe id to use.
-         * @param input         The input ingredient to use.
-         * @param output        The id of the output item to use.
-         * @param count         The output count to use.
-         * @param patch         The output components to use.
-         * @param elementAmount The element amount to use.
-         * @param luckRatio     The luck ratio to use.
-         */
+        /// @param id            The recipe id to use.
+        /// @param input         The input ingredient to use.
+        /// @param output        The id of the output item to use.
+        /// @param count         The output count to use.
+        /// @param patch         The output components to use.
+        /// @param elementAmount The element amount to use.
+        /// @param luckRatio     The luck ratio to use.
         public Builder builder(String id, Ingredient input, Identifier output, int count, DataComponentPatch patch, int elementAmount, int luckRatio) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, count, patch, elementAmount, luckRatio);
         }
 
-        /**
-         * @param id            The recipe id to use.
-         * @param input         The input ingredient to use.
-         * @param output        The id of the output item to use.
-         * @param count         The output count to use.
-         * @param elementAmount The element amount to use.
-         * @param luckRatio     The luck ratio to use.
-         */
+        /// @param id            The recipe id to use.
+        /// @param input         The input ingredient to use.
+        /// @param output        The id of the output item to use.
+        /// @param count         The output count to use.
+        /// @param elementAmount The element amount to use.
+        /// @param luckRatio     The luck ratio to use.
         public Builder builder(String id, Ingredient input, Identifier output, int count, int elementAmount, int luckRatio) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, count, DataComponentPatch.EMPTY, elementAmount, luckRatio);
         }
 
-        /**
-         * @param id            The recipe id to use.
-         * @param input         The input ingredient to use.
-         * @param output        The id of the output item to use.
-         * @param elementAmount The element amount to use.
-         * @param luckRatio     The luck ratio to use.
-         */
+        /// @param id            The recipe id to use.
+        /// @param input         The input ingredient to use.
+        /// @param output        The id of the output item to use.
+        /// @param elementAmount The element amount to use.
+        /// @param luckRatio     The luck ratio to use.
         public Builder builder(String id, Ingredient input, Identifier output, int elementAmount, int luckRatio) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, 1, elementAmount, luckRatio);
         }
 
-        /**
-         * @param id            The recipe id to use.
-         * @param input         The input ingredient to use.
-         * @param output        The output item to use.
-         * @param count         The output count to use.
-         * @param patch         The output components to use.
-         * @param elementAmount The element amount to use.
-         * @param luckRatio     The luck ratio to use.
-         */
+        /// @param id            The recipe id to use.
+        /// @param input         The input ingredient to use.
+        /// @param output        The output item to use.
+        /// @param count         The output count to use.
+        /// @param patch         The output components to use.
+        /// @param elementAmount The element amount to use.
+        /// @param luckRatio     The luck ratio to use.
         public Builder builder(String id, Ingredient input, Item output, int count, DataComponentPatch patch, int elementAmount, int luckRatio) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, itemId(output), count, patch, elementAmount, luckRatio);
         }
 
-        /**
-         * @param id            The recipe id to use.
-         * @param input         The input ingredient to use.
-         * @param output        The output item to use.
-         * @param count         The output count to use.
-         * @param elementAmount The element amount to use.
-         * @param luckRatio     The luck ratio to use.
-         */
+        /// @param id            The recipe id to use.
+        /// @param input         The input ingredient to use.
+        /// @param output        The output item to use.
+        /// @param count         The output count to use.
+        /// @param elementAmount The element amount to use.
+        /// @param luckRatio     The luck ratio to use.
         public Builder builder(String id, Ingredient input, Item output, int count, int elementAmount, int luckRatio) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, count, DataComponentPatch.EMPTY, elementAmount, luckRatio);
         }
 
-        /**
-         * @param id            The recipe id to use.
-         * @param input         The input ingredient to use.
-         * @param output        The output item to use.
-         * @param elementAmount The element amount to use.
-         * @param luckRatio     The luck ratio to use.
-         */
+        /// @param id            The recipe id to use.
+        /// @param input         The input ingredient to use.
+        /// @param output        The output item to use.
+        /// @param elementAmount The element amount to use.
+        /// @param luckRatio     The luck ratio to use.
         public Builder builder(String id, Ingredient input, Item output, int elementAmount, int luckRatio) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, 1, elementAmount, luckRatio);
         }

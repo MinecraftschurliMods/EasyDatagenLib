@@ -23,38 +23,30 @@ public abstract class TwilightForestCompatHandler<T extends AbstractRecipeBuilde
             super("crumble_horn", namespace, output, registries);
         }
 
-        /**
-         * @param id   The recipe id to use.
-         * @param from The id of the base block to use.
-         * @param to   The id of the result block to use.
-         */
+        /// @param id   The recipe id to use.
+        /// @param from The id of the base block to use.
+        /// @param to   The id of the result block to use.
         public Builder builder(String id, Identifier from, Identifier to) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), from, to);
         }
 
-        /**
-         * @param id   The recipe id to use.
-         * @param from The id of the base block to use.
-         * @param to   The result block to use.
-         */
+        /// @param id   The recipe id to use.
+        /// @param from The id of the base block to use.
+        /// @param to   The result block to use.
         public Builder builder(String id, Identifier from, Block to) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), from, to);
         }
 
-        /**
-         * @param id   The recipe id to use.
-         * @param from The base block to use.
-         * @param to   The id of the result block to use.
-         */
+        /// @param id   The recipe id to use.
+        /// @param from The base block to use.
+        /// @param to   The id of the result block to use.
         public Builder builder(String id, Block from, Identifier to) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), from, to);
         }
 
-        /**
-         * @param id   The recipe id to use.
-         * @param from The base block to use.
-         * @param to   The result block to use.
-         */
+        /// @param id   The recipe id to use.
+        /// @param from The base block to use.
+        /// @param to   The result block to use.
         public Builder builder(String id, Block from, Block to) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), from, to);
         }
@@ -101,42 +93,34 @@ public abstract class TwilightForestCompatHandler<T extends AbstractRecipeBuilde
             super("transformation_powder", namespace, output, registries);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param from       The id of the base entity type to use.
-         * @param to         The id of the result entity type to use.
-         * @param reversible Whether the transformation is reversible or not.
-         */
+        /// @param id         The recipe id to use.
+        /// @param from       The id of the base entity type to use.
+        /// @param to         The id of the result entity type to use.
+        /// @param reversible Whether the transformation is reversible or not.
         public Builder builder(String id, Identifier from, Identifier to, boolean reversible) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), from, to, reversible);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param from       The id of the base entity type to use.
-         * @param to         The result entity type to use.
-         * @param reversible Whether the transformation is reversible or not.
-         */
+        /// @param id         The recipe id to use.
+        /// @param from       The id of the base entity type to use.
+        /// @param to         The result entity type to use.
+        /// @param reversible Whether the transformation is reversible or not.
         public Builder builder(String id, Identifier from, EntityType<?> to, boolean reversible) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), from, to, reversible);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param from       The base entity type to use.
-         * @param to         The id of the result entity type to use.
-         * @param reversible Whether the transformation is reversible or not.
-         */
+        /// @param id         The recipe id to use.
+        /// @param from       The base entity type to use.
+        /// @param to         The id of the result entity type to use.
+        /// @param reversible Whether the transformation is reversible or not.
         public Builder builder(String id, EntityType<?> from, Identifier to, boolean reversible) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), from, to, reversible);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param from       The base entity type to use.
-         * @param to         The result entity type to use.
-         * @param reversible Whether the transformation is reversible or not.
-         */
+        /// @param id         The recipe id to use.
+        /// @param from       The base entity type to use.
+        /// @param to         The result entity type to use.
+        /// @param reversible Whether the transformation is reversible or not.
         public Builder builder(String id, EntityType<?> from, EntityType<?> to, boolean reversible) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), from, to, reversible);
         }

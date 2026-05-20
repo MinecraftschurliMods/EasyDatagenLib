@@ -9,52 +9,40 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-/**
- * {@see <a href="https://github.com/MinecraftschurliMods/EasyDatagenLib/wiki/Datapack-Registries">Datapack Registries documentation</a>}
- */
+/// {@see [Datapack Registries documentation](https://github.com/MinecraftschurliMods/EasyDatagenLib/wiki/Datapack-Registries)}
 public final class DatapackRegistryGenerator extends DatapackBuiltinEntriesProvider {
 
-    /**
-     * @param output The {@link PackOutput} provided by the {@link net.neoforged.neoforge.data.event.GatherDataEvent}.
-     * @param lookupProvider The {@link HolderLookup.Provider} provided by the {@link net.neoforged.neoforge.data.event.GatherDataEvent}.
-     * @param namespace The namespace that should be written to disk.
-     * @param providers The {@link AbstractDatapackRegistryProvider}s to add to the generator.
-     */
+    /// @param output The [PackOutput] provided by the [net.neoforged.neoforge.data.event.GatherDataEvent].
+    /// @param lookupProvider The [HolderLookup.Provider] provided by the [net.neoforged.neoforge.data.event.GatherDataEvent].
+    /// @param namespace The namespace that should be written to disk.
+    /// @param providers The [AbstractDatapackRegistryProvider]s to add to the generator.
     public DatapackRegistryGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, String namespace, AbstractDatapackRegistryProvider<?>... providers) {
         this(output, lookupProvider, Set.of(namespace), List.of(providers));
     }
 
-    /**
-     * @param output The {@link PackOutput} provided by the {@link net.neoforged.neoforge.data.event.GatherDataEvent}.
-     * @param lookupProvider The {@link HolderLookup.Provider} provided by the {@link net.neoforged.neoforge.data.event.GatherDataEvent}.
-     * @param namespaces A {@link Set} of namespaces that should be written to disk.
-     * @param providers The {@link AbstractDatapackRegistryProvider}s to add to the generator.
-     */
+    /// @param output The [PackOutput] provided by the [net.neoforged.neoforge.data.event.GatherDataEvent].
+    /// @param lookupProvider The [HolderLookup.Provider] provided by the [net.neoforged.neoforge.data.event.GatherDataEvent].
+    /// @param namespaces A [Set] of namespaces that should be written to disk.
+    /// @param providers The [AbstractDatapackRegistryProvider]s to add to the generator.
     public DatapackRegistryGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, Set<String> namespaces, AbstractDatapackRegistryProvider<?>... providers) {
         this(output, lookupProvider, namespaces, List.of(providers));
     }
 
-    /**
-     * @param output The {@link PackOutput} provided by the {@link net.neoforged.neoforge.data.event.GatherDataEvent}.
-     * @param lookupProvider The {@link HolderLookup.Provider} provided by the {@link net.neoforged.neoforge.data.event.GatherDataEvent}.
-     * @param namespaces A {@link Set} of namespaces that should be written to disk.
-     * @param providers A {@link List} of {@link AbstractDatapackRegistryProvider}s to add to the generator.
-     */
+    /// @param output The [PackOutput] provided by the [net.neoforged.neoforge.data.event.GatherDataEvent].
+    /// @param lookupProvider The [HolderLookup.Provider] provided by the [net.neoforged.neoforge.data.event.GatherDataEvent].
+    /// @param namespaces A [Set] of namespaces that should be written to disk.
+    /// @param providers A [List] of [AbstractDatapackRegistryProvider]s to add to the generator.
     public DatapackRegistryGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, Set<String> namespaces, List<AbstractDatapackRegistryProvider<?>> providers) {
         super(output, lookupProvider, makeRegistrySetBuilder(providers), namespaces);
     }
 
-    /**
-     * @return The {@link HolderLookup.Provider} associated with this {@link DatapackRegistryGenerator}, encapsulated into a {@link CompletableFuture}.
-     */
+    /// @return The [HolderLookup.Provider] associated with this [DatapackRegistryGenerator], encapsulated into a [CompletableFuture].
     @Deprecated
     public CompletableFuture<HolderLookup.Provider> getHolderLookupProvider() {
         return getRegistryProvider();
     }
 
-    /**
-     * @return The {@link DatapackBuiltinEntriesProvider} associated with this {@link DatapackRegistryGenerator}.
-     */
+    /// @return The [DatapackBuiltinEntriesProvider] associated with this [DatapackRegistryGenerator].
     @Deprecated
     public DatapackBuiltinEntriesProvider getDatapackBuiltinEntriesProvider() {
         return this;

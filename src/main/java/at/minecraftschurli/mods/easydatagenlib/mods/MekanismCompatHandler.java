@@ -76,290 +76,242 @@ public abstract class MekanismCompatHandler<T extends AbstractRecipeBuilder<?>> 
             builder(toName(ore) + "_from_raw", ingredient(rawOre), 8, ingredient(Tags.Items.COBBLESTONES_NORMAL), ore).build();
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param inputCount  The input ingredient count to use.
-         * @param extraInput  The extra input ingredient to use.
-         * @param extraCount  The extra input ingredient count to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         * @param patch       The output components to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param inputCount  The input ingredient count to use.
+        /// @param extraInput  The extra input ingredient to use.
+        /// @param extraCount  The extra input ingredient count to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
+        /// @param patch       The output components to use.
         public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, int extraCount, Identifier output, int outputCount, DataComponentPatch patch) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, extraInput, extraCount, output, outputCount, patch);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param inputCount  The input ingredient count to use.
-         * @param extraInput  The extra input ingredient to use.
-         * @param extraCount  The extra input ingredient count to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param inputCount  The input ingredient count to use.
+        /// @param extraInput  The extra input ingredient to use.
+        /// @param extraCount  The extra input ingredient count to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
         public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, int extraCount, Identifier output, int outputCount) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, extraInput, extraCount, output, outputCount);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param input      The input ingredient to use.
-         * @param inputCount The input ingredient count to use.
-         * @param extraInput The extra input ingredient to use.
-         * @param extraCount The extra input ingredient count to use.
-         * @param output     The id of the output item to use.
-         */
+        /// @param id         The recipe id to use.
+        /// @param input      The input ingredient to use.
+        /// @param inputCount The input ingredient count to use.
+        /// @param extraInput The extra input ingredient to use.
+        /// @param extraCount The extra input ingredient count to use.
+        /// @param output     The id of the output item to use.
         public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, int extraCount, Identifier output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, extraInput, extraCount, output);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param inputCount  The input ingredient count to use.
-         * @param extraInput  The extra input ingredient to use.
-         * @param extraCount  The extra input ingredient count to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         * @param patch       The output components to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param inputCount  The input ingredient count to use.
+        /// @param extraInput  The extra input ingredient to use.
+        /// @param extraCount  The extra input ingredient count to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
+        /// @param patch       The output components to use.
         public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, int extraCount, Item output, int outputCount, DataComponentPatch patch) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, extraInput, extraCount, output, outputCount, patch);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param inputCount  The input ingredient count to use.
-         * @param extraInput  The extra input ingredient to use.
-         * @param extraCount  The extra input ingredient count to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param inputCount  The input ingredient count to use.
+        /// @param extraInput  The extra input ingredient to use.
+        /// @param extraCount  The extra input ingredient count to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
         public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, int extraCount, Item output, int outputCount) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, extraInput, extraCount, output, outputCount);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param input      The input ingredient to use.
-         * @param inputCount The input ingredient count to use.
-         * @param extraInput The extra input ingredient to use.
-         * @param extraCount The extra input ingredient count to use.
-         * @param output     The id of the output item to use.
-         */
+        /// @param id         The recipe id to use.
+        /// @param input      The input ingredient to use.
+        /// @param inputCount The input ingredient count to use.
+        /// @param extraInput The extra input ingredient to use.
+        /// @param extraCount The extra input ingredient count to use.
+        /// @param output     The id of the output item to use.
         public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, int extraCount, Item output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, extraInput, extraCount, output);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param extraInput  The extra input ingredient to use.
-         * @param extraCount  The extra input ingredient count to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         * @param patch       The output components to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param extraInput  The extra input ingredient to use.
+        /// @param extraCount  The extra input ingredient count to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
+        /// @param patch       The output components to use.
         public Builder builder(String id, Ingredient input, Ingredient extraInput, int extraCount, Identifier output, int outputCount, DataComponentPatch patch) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, extraInput, extraCount, output, outputCount, patch);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param extraInput  The extra input ingredient to use.
-         * @param extraCount  The extra input ingredient count to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param extraInput  The extra input ingredient to use.
+        /// @param extraCount  The extra input ingredient count to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
         public Builder builder(String id, Ingredient input, Ingredient extraInput, int extraCount, Identifier output, int outputCount) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, extraInput, extraCount, output, outputCount);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param input      The input ingredient to use.
-         * @param extraInput The extra input ingredient to use.
-         * @param extraCount The extra input ingredient count to use.
-         * @param output     The id of the output item to use.
-         */
+        /// @param id         The recipe id to use.
+        /// @param input      The input ingredient to use.
+        /// @param extraInput The extra input ingredient to use.
+        /// @param extraCount The extra input ingredient count to use.
+        /// @param output     The id of the output item to use.
         public Builder builder(String id, Ingredient input, Ingredient extraInput, int extraCount, Identifier output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, extraInput, extraCount, output);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param extraInput  The extra input ingredient to use.
-         * @param extraCount  The extra input ingredient count to use.
-         * @param output      The output item to use.
-         * @param outputCount The output count to use.
-         * @param patch       The output components to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param extraInput  The extra input ingredient to use.
+        /// @param extraCount  The extra input ingredient count to use.
+        /// @param output      The output item to use.
+        /// @param outputCount The output count to use.
+        /// @param patch       The output components to use.
         public Builder builder(String id, Ingredient input, Ingredient extraInput, int extraCount, Item output, int outputCount, DataComponentPatch patch) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, extraInput, extraCount, output, outputCount, patch);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param extraInput  The extra input ingredient to use.
-         * @param extraCount  The extra input ingredient count to use.
-         * @param output      The output item to use.
-         * @param outputCount The output count to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param extraInput  The extra input ingredient to use.
+        /// @param extraCount  The extra input ingredient count to use.
+        /// @param output      The output item to use.
+        /// @param outputCount The output count to use.
         public Builder builder(String id, Ingredient input, Ingredient extraInput, int extraCount, Item output, int outputCount) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, extraInput, extraCount, output, outputCount);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param input      The input ingredient to use.
-         * @param extraInput The extra input ingredient to use.
-         * @param extraCount The extra input ingredient count to use.
-         * @param output     The output item to use.
-         */
+        /// @param id         The recipe id to use.
+        /// @param input      The input ingredient to use.
+        /// @param extraInput The extra input ingredient to use.
+        /// @param extraCount The extra input ingredient count to use.
+        /// @param output     The output item to use.
         public Builder builder(String id, Ingredient input, Ingredient extraInput, int extraCount, Item output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, extraInput, extraCount, output);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param inputCount  The input ingredient count to use.
-         * @param extraInput  The extra input ingredient to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         * @param patch       The output components to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param inputCount  The input ingredient count to use.
+        /// @param extraInput  The extra input ingredient to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
+        /// @param patch       The output components to use.
         public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, Identifier output, int outputCount, DataComponentPatch patch) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, extraInput, output, outputCount, patch);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param inputCount  The input ingredient count to use.
-         * @param extraInput  The extra input ingredient to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param inputCount  The input ingredient count to use.
+        /// @param extraInput  The extra input ingredient to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
         public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, Identifier output, int outputCount) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, extraInput, output, outputCount);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param input      The input ingredient to use.
-         * @param inputCount The input ingredient count to use.
-         * @param extraInput The extra input ingredient to use.
-         * @param output     The id of the output item to use.
-         */
+        /// @param id         The recipe id to use.
+        /// @param input      The input ingredient to use.
+        /// @param inputCount The input ingredient count to use.
+        /// @param extraInput The extra input ingredient to use.
+        /// @param output     The id of the output item to use.
         public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, Identifier output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, extraInput, output);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param inputCount  The input ingredient count to use.
-         * @param extraInput  The extra input ingredient to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         * @param patch       The output components to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param inputCount  The input ingredient count to use.
+        /// @param extraInput  The extra input ingredient to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
+        /// @param patch       The output components to use.
         public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, Item output, int outputCount, DataComponentPatch patch) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, extraInput, output, outputCount, patch);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param inputCount  The input ingredient count to use.
-         * @param extraInput  The extra input ingredient to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param inputCount  The input ingredient count to use.
+        /// @param extraInput  The extra input ingredient to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
         public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, Item output, int outputCount) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, extraInput, output, outputCount);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param input      The input ingredient to use.
-         * @param inputCount The input ingredient count to use.
-         * @param extraInput The extra input ingredient to use.
-         * @param output     The id of the output item to use.
-         */
+        /// @param id         The recipe id to use.
+        /// @param input      The input ingredient to use.
+        /// @param inputCount The input ingredient count to use.
+        /// @param extraInput The extra input ingredient to use.
+        /// @param output     The id of the output item to use.
         public Builder builder(String id, Ingredient input, int inputCount, Ingredient extraInput, Item output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, extraInput, output);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param extraInput  The extra input ingredient to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         * @param patch       The output components to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param extraInput  The extra input ingredient to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
+        /// @param patch       The output components to use.
         public Builder builder(String id, Ingredient input, Ingredient extraInput, Identifier output, int outputCount, DataComponentPatch patch) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, extraInput, output, outputCount, patch);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param extraInput  The extra input ingredient to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param extraInput  The extra input ingredient to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
         public Builder builder(String id, Ingredient input, Ingredient extraInput, Identifier output, int outputCount) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, extraInput, output, outputCount);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param input      The input ingredient to use.
-         * @param extraInput The extra input ingredient to use.
-         * @param output     The id of the output item to use.
-         */
+        /// @param id         The recipe id to use.
+        /// @param input      The input ingredient to use.
+        /// @param extraInput The extra input ingredient to use.
+        /// @param output     The id of the output item to use.
         public Builder builder(String id, Ingredient input, Ingredient extraInput, Identifier output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, extraInput, output);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param extraInput  The extra input ingredient to use.
-         * @param output      The output item to use.
-         * @param outputCount The output count to use.
-         * @param patch       The output components to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param extraInput  The extra input ingredient to use.
+        /// @param output      The output item to use.
+        /// @param outputCount The output count to use.
+        /// @param patch       The output components to use.
         public Builder builder(String id, Ingredient input, Ingredient extraInput, Item output, int outputCount, DataComponentPatch patch) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, extraInput, output, outputCount, patch);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param extraInput  The extra input ingredient to use.
-         * @param output      The output item to use.
-         * @param outputCount The output count to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param extraInput  The extra input ingredient to use.
+        /// @param output      The output item to use.
+        /// @param outputCount The output count to use.
         public Builder builder(String id, Ingredient input, Ingredient extraInput, Item output, int outputCount) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, extraInput, output, outputCount);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param input      The input ingredient to use.
-         * @param extraInput The extra input ingredient to use.
-         * @param output     The output item to use.
-         */
+        /// @param id         The recipe id to use.
+        /// @param input      The input ingredient to use.
+        /// @param extraInput The extra input ingredient to use.
+        /// @param output     The output item to use.
         public Builder builder(String id, Ingredient input, Ingredient extraInput, Item output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, extraInput, output);
         }
@@ -704,128 +656,104 @@ public abstract class MekanismCompatHandler<T extends AbstractRecipeBuilder<?>> 
             }
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param inputCount  The input ingredient count to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         * @param patch       The output components to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param inputCount  The input ingredient count to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
+        /// @param patch       The output components to use.
         public Builder builder(String id, Ingredient input, int inputCount, Identifier output, int outputCount, DataComponentPatch patch) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, output, outputCount, patch);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param inputCount  The input ingredient count to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param inputCount  The input ingredient count to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
         public Builder builder(String id, Ingredient input, int inputCount, Identifier output, int outputCount) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, output, outputCount);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param input      The input ingredient to use.
-         * @param inputCount The input ingredient count to use.
-         * @param output     The id of the output item to use.
-         */
+        /// @param id         The recipe id to use.
+        /// @param input      The input ingredient to use.
+        /// @param inputCount The input ingredient count to use.
+        /// @param output     The id of the output item to use.
         public Builder builder(String id, Ingredient input, int inputCount, Identifier output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, output);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param inputCount  The input ingredient count to use.
-         * @param output      The output item to use.
-         * @param outputCount The output count to use.
-         * @param patch       The output components to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param inputCount  The input ingredient count to use.
+        /// @param output      The output item to use.
+        /// @param outputCount The output count to use.
+        /// @param patch       The output components to use.
         public Builder builder(String id, Ingredient input, int inputCount, Item output, int outputCount, DataComponentPatch patch) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, output, outputCount, patch);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param inputCount  The input ingredient count to use.
-         * @param output      The output item to use.
-         * @param outputCount The output count to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param inputCount  The input ingredient count to use.
+        /// @param output      The output item to use.
+        /// @param outputCount The output count to use.
         public Builder builder(String id, Ingredient input, int inputCount, Item output, int outputCount) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, output, outputCount);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param input      The input ingredient to use.
-         * @param inputCount The input ingredient count to use.
-         * @param output     The output item to use.
-         */
+        /// @param id         The recipe id to use.
+        /// @param input      The input ingredient to use.
+        /// @param inputCount The input ingredient count to use.
+        /// @param output     The output item to use.
         public Builder builder(String id, Ingredient input, int inputCount, Item output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, output);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         * @param patch       The output components to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
+        /// @param patch       The output components to use.
         public Builder builder(String id, Ingredient input, Identifier output, int outputCount, DataComponentPatch patch) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, outputCount, patch);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
         public Builder builder(String id, Ingredient input, Identifier output, int outputCount) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, outputCount);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param input  The input ingredient to use.
-         * @param output The id of the output item to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param input  The input ingredient to use.
+        /// @param output The id of the output item to use.
         public Builder builder(String id, Ingredient input, Identifier output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param output      The output item to use.
-         * @param outputCount The output count to use.
-         * @param patch       The output components to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param output      The output item to use.
+        /// @param outputCount The output count to use.
+        /// @param patch       The output components to use.
         public Builder builder(String id, Ingredient input, Item output, int outputCount, DataComponentPatch patch) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, outputCount, patch);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param output      The output item to use.
-         * @param outputCount The output count to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param output      The output item to use.
+        /// @param outputCount The output count to use.
         public Builder builder(String id, Ingredient input, Item output, int outputCount) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, outputCount);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param input  The input ingredient to use.
-         * @param output The output item to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param input  The input ingredient to use.
+        /// @param output The output item to use.
         public Builder builder(String id, Ingredient input, Item output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output);
         }
@@ -882,130 +810,106 @@ public abstract class MekanismCompatHandler<T extends AbstractRecipeBuilder<?>> 
                 this(provider, id, input, output, 1);
             }
 
-            /**
-             * Sets the secondary output of this recipe.
-             *
-             * @param output The id of the output item to use.
-             */
+            /// Sets the secondary output of this recipe.
+            ///
+            /// @param output The id of the output item to use.
             public Builder setSecondaryOutput(Identifier output) {
                 return setSecondaryOutput(output, 1);
             }
 
-            /**
-             * Sets the secondary output of this recipe.
-             *
-             * @param output The output item to use.
-             */
+            /// Sets the secondary output of this recipe.
+            ///
+            /// @param output The output item to use.
             public Builder setSecondaryOutput(Item output) {
                 return setSecondaryOutput(output, 1);
             }
 
-            /**
-             * Sets the secondary output of this recipe.
-             *
-             * @param output      The id of the output item to use.
-             * @param outputCount The output count to use.
-             * @param patch       The output components to use.
-             * @param chance      The chance that this output will be used.
-             */
+            /// Sets the secondary output of this recipe.
+            ///
+            /// @param output      The id of the output item to use.
+            /// @param outputCount The output count to use.
+            /// @param patch       The output components to use.
+            /// @param chance      The chance that this output will be used.
             public Builder setSecondaryOutput(Identifier output, int outputCount, DataComponentPatch patch, float chance) {
                 this.secondaryOutput = new PotentiallyAbsentItemStack(output, outputCount, patch);
                 this.chance = chance;
                 return this;
             }
 
-            /**
-             * Sets the secondary output to use.
-             *
-             * @param output      The id of the output item to use.
-             * @param outputCount The output count to use.
-             * @param chance      The chance that this output will be used.
-             */
+            /// Sets the secondary output to use.
+            ///
+            /// @param output      The id of the output item to use.
+            /// @param outputCount The output count to use.
+            /// @param chance      The chance that this output will be used.
             public Builder setSecondaryOutput(Identifier output, int outputCount, float chance) {
                 return setSecondaryOutput(output, outputCount, DataComponentPatch.EMPTY, chance);
             }
 
-            /**
-             * Sets the secondary output to use.
-             *
-             * @param output The id of the output item to use.
-             * @param chance The chance that this output will be used.
-             */
+            /// Sets the secondary output to use.
+            ///
+            /// @param output The id of the output item to use.
+            /// @param chance The chance that this output will be used.
             public Builder setSecondaryOutput(Identifier output, float chance) {
                 return setSecondaryOutput(output, 1, chance);
             }
 
-            /**
-             * Sets the secondary output to use.
-             *
-             * @param output      The id of the output item to use.
-             * @param outputCount The output count to use.
-             * @param patch       The output components to use.
-             */
+            /// Sets the secondary output to use.
+            ///
+            /// @param output      The id of the output item to use.
+            /// @param outputCount The output count to use.
+            /// @param patch       The output components to use.
             public Builder setSecondaryOutput(Identifier output, int outputCount, DataComponentPatch patch) {
                 return setSecondaryOutput(output, outputCount, patch, 1);
             }
 
-            /**
-             * Sets the secondary output to use.
-             *
-             * @param output      The id of the output item to use.
-             * @param outputCount The output count to use.
-             */
+            /// Sets the secondary output to use.
+            ///
+            /// @param output      The id of the output item to use.
+            /// @param outputCount The output count to use.
             public Builder setSecondaryOutput(Identifier output, int outputCount) {
                 return setSecondaryOutput(output, outputCount, DataComponentPatch.EMPTY);
             }
 
-            /**
-             * Sets the secondary output to use.
-             *
-             * @param output      The output item to use.
-             * @param outputCount The output count to use.
-             * @param patch       The output components to use.
-             * @param chance      The chance that this output will be used.
-             */
+            /// Sets the secondary output to use.
+            ///
+            /// @param output      The output item to use.
+            /// @param outputCount The output count to use.
+            /// @param patch       The output components to use.
+            /// @param chance      The chance that this output will be used.
             public Builder setSecondaryOutput(Item output, int outputCount, DataComponentPatch patch, float chance) {
                 return setSecondaryOutput(itemId(output), outputCount, patch, chance);
             }
 
-            /**
-             * Sets the secondary output to use.
-             *
-             * @param output      The output item to use.
-             * @param outputCount The output count to use.
-             * @param chance      The chance that this output will be used.
-             */
+            /// Sets the secondary output to use.
+            ///
+            /// @param output      The output item to use.
+            /// @param outputCount The output count to use.
+            /// @param chance      The chance that this output will be used.
             public Builder setSecondaryOutput(Item output, int outputCount, float chance) {
                 return setSecondaryOutput(output, outputCount, DataComponentPatch.EMPTY, chance);
             }
 
-            /**
-             * Sets the secondary output to use.
-             *
-             * @param output The output item to use.
-             * @param chance The chance that this output will be used.
-             */
+            /// Sets the secondary output to use.
+            ///
+            /// @param output The output item to use.
+            /// @param chance The chance that this output will be used.
             public Builder setSecondaryOutput(Item output, float chance) {
                 return setSecondaryOutput(output, 1, chance);
             }
 
-            /**
-             * Sets the secondary output to use.
-             *
-             * @param output      The output item to use.
-             * @param outputCount The output count to use.
-             * @param patch       The output components to use.
-             */
+            /// Sets the secondary output to use.
+            ///
+            /// @param output      The output item to use.
+            /// @param outputCount The output count to use.
+            /// @param patch       The output components to use.
             public Builder setSecondaryOutput(Item output, int outputCount, DataComponentPatch patch) {
                 return setSecondaryOutput(itemId(output), outputCount, patch);
             }
 
-            /**
-             * Sets the secondary output to use.
-             *
-             * @param output      The output item to use.
-             * @param outputCount The output count to use.
-             */
+            /// Sets the secondary output to use.
+            ///
+            /// @param output      The output item to use.
+            /// @param outputCount The output count to use.
             public Builder setSecondaryOutput(Item output, int outputCount) {
                 return setSecondaryOutput(output, outputCount, DataComponentPatch.EMPTY);
             }
@@ -1070,21 +974,17 @@ public abstract class MekanismCompatHandler<T extends AbstractRecipeBuilder<?>> 
             super(folder, namespace, output, registries);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param outputCount The input ingredient count to use.
-         * @param output      The output chemical to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param outputCount The input ingredient count to use.
+        /// @param output      The output chemical to use.
         public Builder<T> builder(String id, Ingredient input, int outputCount, T output) {
             return new Builder<>(this, Identifier.fromNamespaceAndPath(namespace, id), input, outputCount, output);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param input  The input ingredient to use.
-         * @param output The output chemical to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param input  The input ingredient to use.
+        /// @param output The output chemical to use.
         public Builder<T> builder(String id, Ingredient input, T output) {
             return new Builder<>(this, Identifier.fromNamespaceAndPath(namespace, id), input, output);
         }
@@ -1105,62 +1005,50 @@ public abstract class MekanismCompatHandler<T extends AbstractRecipeBuilder<?>> 
             super(folder, namespace, output, registries);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         * @param patch       The output components to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
+        /// @param patch       The output components to use.
         public Builder<T> builder(String id, T input, Identifier output, int outputCount, DataComponentPatch patch) {
             return new Builder<>(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, outputCount, patch);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
         public Builder<T> builder(String id, T input, Identifier output, int outputCount) {
             return new Builder<>(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, outputCount);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param input  The input ingredient to use.
-         * @param output The id of the output item to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param input  The input ingredient to use.
+        /// @param output The id of the output item to use.
         public Builder<T> builder(String id, T input, Identifier output) {
             return new Builder<>(this, Identifier.fromNamespaceAndPath(namespace, id), input, output);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param output      The output item to use.
-         * @param outputCount The output count to use.
-         * @param patch       The output components to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param output      The output item to use.
+        /// @param outputCount The output count to use.
+        /// @param patch       The output components to use.
         public Builder<T> builder(String id, T input, Item output, int outputCount, DataComponentPatch patch) {
             return new Builder<>(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, outputCount, patch);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param output      The output item to use.
-         * @param outputCount The output count to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param output      The output item to use.
+        /// @param outputCount The output count to use.
         public Builder<T> builder(String id, T input, Item output, int outputCount) {
             return new Builder<>(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, outputCount);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param input  The input ingredient to use.
-         * @param output The output item to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param input  The input ingredient to use.
+        /// @param output The output item to use.
         public Builder<T> builder(String id, T input, Item output) {
             return new Builder<>(this, Identifier.fromNamespaceAndPath(namespace, id), input, output);
         }
@@ -1197,128 +1085,104 @@ public abstract class MekanismCompatHandler<T extends AbstractRecipeBuilder<?>> 
             super(folder, namespace, output, registries);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param inputCount  The input ingredient count to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         * @param patch       The output components to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param inputCount  The input ingredient count to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
+        /// @param patch       The output components to use.
         public Builder builder(String id, Ingredient input, int inputCount, Identifier output, int outputCount, DataComponentPatch patch) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, output, outputCount, patch);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param inputCount  The input ingredient count to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param inputCount  The input ingredient count to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
         public Builder builder(String id, Ingredient input, int inputCount, Identifier output, int outputCount) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, output, outputCount);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param input      The input ingredient to use.
-         * @param inputCount The input ingredient count to use.
-         * @param output     The id of the output item to use.
-         */
+        /// @param id         The recipe id to use.
+        /// @param input      The input ingredient to use.
+        /// @param inputCount The input ingredient count to use.
+        /// @param output     The id of the output item to use.
         public Builder builder(String id, Ingredient input, int inputCount, Identifier output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, output);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param inputCount  The input ingredient count to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         * @param patch       The output components to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param inputCount  The input ingredient count to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
+        /// @param patch       The output components to use.
         public Builder builder(String id, Ingredient input, int inputCount, Item output, int outputCount, DataComponentPatch patch) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, output, outputCount, patch);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param inputCount  The input ingredient count to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param inputCount  The input ingredient count to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
         public Builder builder(String id, Ingredient input, int inputCount, Item output, int outputCount) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, output, outputCount);
         }
 
-        /**
-         * @param id         The recipe id to use.
-         * @param input      The input ingredient to use.
-         * @param inputCount The input ingredient count to use.
-         * @param output     The id of the output item to use.
-         */
+        /// @param id         The recipe id to use.
+        /// @param input      The input ingredient to use.
+        /// @param inputCount The input ingredient count to use.
+        /// @param output     The id of the output item to use.
         public Builder builder(String id, Ingredient input, int inputCount, Item output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, inputCount, output);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         * @param patch       The output components to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
+        /// @param patch       The output components to use.
         public Builder builder(String id, Ingredient input, Identifier output, int outputCount, DataComponentPatch patch) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, outputCount, patch);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param output      The id of the output item to use.
-         * @param outputCount The output count to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param output      The id of the output item to use.
+        /// @param outputCount The output count to use.
         public Builder builder(String id, Ingredient input, Identifier output, int outputCount) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, outputCount);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param input  The input ingredient to use.
-         * @param output The id of the output item to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param input  The input ingredient to use.
+        /// @param output The id of the output item to use.
         public Builder builder(String id, Ingredient input, Identifier output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param output      The output item to use.
-         * @param outputCount The output count to use.
-         * @param patch       The output components to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param output      The output item to use.
+        /// @param outputCount The output count to use.
+        /// @param patch       The output components to use.
         public Builder builder(String id, Ingredient input, Item output, int outputCount, DataComponentPatch patch) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, outputCount, patch);
         }
 
-        /**
-         * @param id          The recipe id to use.
-         * @param input       The input ingredient to use.
-         * @param output      The output item to use.
-         * @param outputCount The output count to use.
-         */
+        /// @param id          The recipe id to use.
+        /// @param input       The input ingredient to use.
+        /// @param output      The output item to use.
+        /// @param outputCount The output count to use.
         public Builder builder(String id, Ingredient input, Item output, int outputCount) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output, outputCount);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param input  The input ingredient to use.
-         * @param output The output item to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param input  The input ingredient to use.
+        /// @param output The output item to use.
         public Builder builder(String id, Ingredient input, Item output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output);
         }
@@ -1379,11 +1243,9 @@ public abstract class MekanismCompatHandler<T extends AbstractRecipeBuilder<?>> 
             super(folder, namespace, output, registries);
         }
 
-        /**
-         * @param id     The recipe id to use.
-         * @param input  The input gas stack to use.
-         * @param output The output gas stack to use.
-         */
+        /// @param id     The recipe id to use.
+        /// @param input  The input gas stack to use.
+        /// @param output The output gas stack to use.
         public Builder builder(String id, Chemical.Stack<Gas> input, Chemical.Stack<Gas> output) {
             return new Builder(this, Identifier.fromNamespaceAndPath(namespace, id), input, output);
         }
