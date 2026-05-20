@@ -13,15 +13,11 @@ import at.minecraftschurli.mods.easydatagenlib.util.mekanism.Pigment;
 import com.google.gson.JsonObject;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentPatch;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
@@ -649,16 +645,16 @@ public abstract class MekanismCompatHandler<T extends AbstractRecipeBuilder<?>> 
         @Override
         public void addFlowerProcessing(Item flower, Item output1, int count1, @Nullable Identifier output2, int count2, float chance2, @Nullable Identifier output3, int count3, float chance3) {
             Ingredient ingredient = ingredient(flower);
-            if (output1 instanceof DyeItem dye) {
-                builder(toName(flower), ingredient, new Chemical.Stack<>(Pigment.byDyeColor(new ItemStackTemplate(dye).getOrDefault(DataComponents.DYE, DyeColor.WHITE)), 768)).build();
+            if (DYES.containsKey(output1)) {
+                builder(toName(flower), ingredient, new Chemical.Stack<>(Pigment.byDyeColor(DYES.get(output1)), 768)).build();
             }
         }
 
         @Override
         public void addTallFlowerProcessing(Item flower, Item output1, int count1, @Nullable Identifier output2, int count2, float chance2, @Nullable Identifier output3, int count3, float chance3) {
             Ingredient ingredient = ingredient(flower);
-            if (output1 instanceof DyeItem dye) {
-                builder(toName(flower), ingredient, new Chemical.Stack<>(Pigment.byDyeColor(new ItemStackTemplate(dye).getOrDefault(DataComponents.DYE, DyeColor.WHITE)), 1536)).build();
+            if (DYES.containsKey(output1)) {
+                builder(toName(flower), ingredient, new Chemical.Stack<>(Pigment.byDyeColor(DYES.get(output1)), 1536)).build();
             }
         }
 
