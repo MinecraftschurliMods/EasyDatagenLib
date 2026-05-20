@@ -722,7 +722,7 @@ public abstract class ThermalCompatHandler<T extends AbstractRecipeBuilder<?>> e
                     input.add(SizedFluidIngredient.CODEC.encodeStart(registries.createSerializationContext(JsonOps.INSTANCE), ingredient).result().orElseThrow());
                 }
                 if (inputItems.size() == 1 && inputFluids.isEmpty()) {
-                    json.add("ingredient", input.get(0).getAsJsonObject());
+                    json.add("ingredient", input.get(0));
                 } else {
                     json.add("input", input);
                 }
