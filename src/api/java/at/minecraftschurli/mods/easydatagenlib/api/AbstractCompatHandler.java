@@ -2,7 +2,6 @@ package at.minecraftschurli.mods.easydatagenlib.api;
 
 import com.google.gson.JsonObject;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
@@ -118,6 +117,6 @@ public abstract class AbstractCompatHandler<T extends AbstractDataBuilder<?>> im
     }
 
     protected final Ingredient ingredient(TagKey<Item> tag) {
-        return Ingredient.of(HolderSet.emptyNamed(registries.lookupOrThrow(tag.registry()), tag));
+        return Ingredient.of(registries.lookupOrThrow(tag.registry()).getOrThrow(tag));
     }
 }
