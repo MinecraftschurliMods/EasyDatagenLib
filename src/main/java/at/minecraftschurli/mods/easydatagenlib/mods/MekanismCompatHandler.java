@@ -21,6 +21,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
@@ -649,7 +650,7 @@ public abstract class MekanismCompatHandler<T extends AbstractRecipeBuilder<?>> 
         public void addFlowerProcessing(Item flower, Item output1, int count1, @Nullable Identifier output2, int count2, float chance2, @Nullable Identifier output3, int count3, float chance3) {
             Ingredient ingredient = ingredient(flower);
             if (output1 instanceof DyeItem dye) {
-                builder(toName(flower), ingredient, new Chemical.Stack<>(Pigment.byDyeColor(dye.builtInRegistryHolder().components().getOrDefault(DataComponents.DYE, DyeColor.WHITE)), 768)).build();
+                builder(toName(flower), ingredient, new Chemical.Stack<>(Pigment.byDyeColor(new ItemStackTemplate(dye).getOrDefault(DataComponents.DYE, DyeColor.WHITE)), 768)).build();
             }
         }
 
@@ -657,7 +658,7 @@ public abstract class MekanismCompatHandler<T extends AbstractRecipeBuilder<?>> 
         public void addTallFlowerProcessing(Item flower, Item output1, int count1, @Nullable Identifier output2, int count2, float chance2, @Nullable Identifier output3, int count3, float chance3) {
             Ingredient ingredient = ingredient(flower);
             if (output1 instanceof DyeItem dye) {
-                builder(toName(flower), ingredient, new Chemical.Stack<>(Pigment.byDyeColor(dye.builtInRegistryHolder().components().getOrDefault(DataComponents.DYE, DyeColor.WHITE)), 1536)).build();
+                builder(toName(flower), ingredient, new Chemical.Stack<>(Pigment.byDyeColor(new ItemStackTemplate(dye).getOrDefault(DataComponents.DYE, DyeColor.WHITE)), 1536)).build();
             }
         }
 
