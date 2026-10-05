@@ -234,14 +234,12 @@ public abstract class IntegratedDynamicsCompatHandler<T extends AbstractRecipeBu
 
             @Override
             protected void toJson(JsonObject json, HolderLookup.Provider registries) {
-                json.add("item", JsonUtil.toJson(input, registries));
                 json.addProperty("duration", duration);
-                JsonObject output = new JsonObject();
-                output.add("items", JsonUtil.toList(outputs, registries));
+                json.add("input_item", JsonUtil.toJson(input, registries));
+                json.add("output_items", JsonUtil.toList(outputs, registries));
                 if (outputFluid != null) {
-                    output.add("fluid", outputFluid.toJson(registries));
+                    json.add("output_fluid", outputFluid.toJson(registries));
                 }
-                json.add("result", output);
             }
         }
         
@@ -451,13 +449,11 @@ public abstract class IntegratedDynamicsCompatHandler<T extends AbstractRecipeBu
 
             @Override
             protected void toJson(JsonObject json, HolderLookup.Provider registries) {
-                json.add("item", JsonUtil.toJson(input, registries));
-                JsonObject output = new JsonObject();
-                output.add("items", JsonUtil.toList(outputs, registries));
+                json.add("input_item", JsonUtil.toJson(input, registries));
+                json.add("output_items", JsonUtil.toList(outputs, registries));
                 if (outputFluid != null) {
-                    output.add("fluid", outputFluid.toJson(registries));
+                    json.add("output_fluid", outputFluid.toJson(registries));
                 }
-                json.add("result", output);
             }
         }
         
