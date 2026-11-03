@@ -6,6 +6,7 @@ import at.minecraftschurli.mods.easydatagenlib.api.ICompatHandler;
 import at.minecraftschurli.mods.easydatagenlib.util.JsonUtil;
 import at.minecraftschurli.mods.easydatagenlib.util.PotentiallyAbsentFluidStack;
 import at.minecraftschurli.mods.easydatagenlib.util.PotentiallyAbsentItemStack;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentPatch;
@@ -450,7 +451,13 @@ public abstract class IntegratedDynamicsCompatHandler<T extends AbstractRecipeBu
             @Override
             protected void toJson(JsonObject json, HolderLookup.Provider registries) {
                 json.add("input_item", JsonUtil.toJson(input, registries));
-                json.add("output_items", JsonUtil.toList(outputs, registries));
+                JsonArray outputsJson = new JsonArray();
+                for (PotentiallyAbsentItemStack output : outputs) {
+                    JsonObject object = new JsonObject();
+                    object.add("item", output.toJson(registries));
+                    outputsJson.add(object);
+                }
+                json.add("output_items", outputsJson);
                 if (outputFluid != null) {
                     json.add("output_fluid", outputFluid.toJson(registries));
                 }
